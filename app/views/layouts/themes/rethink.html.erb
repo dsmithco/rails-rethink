@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RailsRethink</title>
+    <%= csrf_meta_tags %>
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="fixed-nav">
+      <nav>
+        <div class="container">
+          <div class="logo">
+            <h3 class="nopad"><strong><%= @website.name %></strong></h3>
+          </div>
+          <div class="top-menu right">
+            <a class="toggle" href="#"><span class="hamburger"></span> Menu</a>
+            <ul>
+              <% @website.pages.where(page_id: [nil,'']).each do |page| %>
+                <li>
+                  <%= link_to page.name, page_url(page) %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

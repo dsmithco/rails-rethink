@@ -1,0 +1,45 @@
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Account:</strong>
+    <%= @website.account %>
+  </p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @website.name %>
+  </p>
+
+  <p>
+    <strong>About:</strong>
+    <%= @website.about %>
+  </p>
+
+  <p>
+    <strong>Domain url:</strong>
+    <%= @website.domain_url %>
+  </p>
+
+  <p>
+    <strong>Google analytics:</strong>
+    <%= @website.google_analytics %>
+  </p>
+
+  <p>
+    <strong>Facebook:</strong>
+    <%= @website.facebook %>
+  </p>
+
+  <p>
+    <strong>Twitter:</strong>
+    <%= @website.twitter %>
+  </p>
+
+  <p>
+    <strong>Tags:</strong>
+    <%= @website.tags %>
+  </p>
+
+  <%= link_to 'Edit', edit_website_path(@website) %> |
+  <%= link_to 'Back', websites_path %>
