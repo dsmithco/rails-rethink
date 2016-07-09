@@ -11,7 +11,7 @@ threads threads_count, threads_count
 #
 # port        ENV.fetch("PORT") { 3000 }
 if ENV['RAILS_ENV'] == 'production'
-  bind "unix:///home/rethinkwebdesign/shared/tmp/sockets/rethinkwebdesign-puma.sock"
+  bind "unix:///home/deploy/rethinkwebdesign/shared/tmp/sockets/rethinkwebdesign-puma.sock"
 else
   port ENV.fetch("PORT") { 3000 }
 end
