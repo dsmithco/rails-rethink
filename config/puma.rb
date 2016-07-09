@@ -11,11 +11,10 @@ threads threads_count, threads_count
 #
 # port        ENV.fetch("PORT") { 3000 }
 
-if ENV.fetch("RAILS_ENV") == 'production'
-  bind "server unix:///home/deploy/rethinkwebdesign/shared/tmp/sockets/rethinkwebdesign-puma.sock"
-else
-  port ENV.fetch("PORT") { 3000 }
-end
+bind "unix://#{shared_path}/sockets/rethinkwebdesign-puma.sock"
+port ENV.fetch("PORT") { 3000 }
+
+daemonize true
 
 # Specifies the `environment` that Puma will run in.
 #
