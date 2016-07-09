@@ -10,7 +10,9 @@ threads threads_count, threads_count
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
 # port        ENV.fetch("PORT") { 3000 }
-bind "unix:///home/deploy/rethinkwebdesign/shared/tmp/sockets/rethinkwebdesign-puma.sock"  if ENV['RAILS_ENV'] == 'production'
+bind "unix://tmp/sockets/rethinkwebdesign-puma.sock"  if ENV['RAILS_ENV'] == 'production'
+pidfile 'tmp/pids/rethinkwebdesign-puma.pid'
+
 port ENV.fetch("PORT") { 3000 } if ENV['RAILS_ENV'] != 'production'
 
 daemonize true if ENV['RAILS_ENV'] == 'production'
@@ -18,7 +20,7 @@ daemonize true if ENV['RAILS_ENV'] == 'production'
 # Specifies the `environment` that Puma will run in.
 #
 
-environment ENV.fetch("RAILS_ENV") { "development" }
+environment ENV.fetch("RAILS_ENV") { ENV['RAILS_ENV'] }
 
 # Specifies the number of `workers` to boot in clustered mode.
 # Workers are forked webserver processes. If using threads and workers together
