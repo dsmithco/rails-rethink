@@ -10,9 +10,11 @@ threads threads_count, threads_count
 # Specifies the `port` that Puma will listen on to receive requests, default is 3000.
 #
 # port        ENV.fetch("PORT") { 3000 }
-
-bind "unix://#{Rails.root}/tmp/sockets/rethinkwebdesign-puma.sock"
-# port ENV.fetch("PORT") { 3000 }
+if ENV['RAILS_ENV'] == 'production'
+  bind "unix:///home/rethinkwebdesign/shared/tmp/sockets/rethinkwebdesign-puma.sock"
+else
+  port ENV.fetch("PORT") { 3000 }
+end
 
 daemonize true if ENV['RAILS_ENV'] == 'production'
 
