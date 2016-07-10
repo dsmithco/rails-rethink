@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709061728) do
+ActiveRecord::Schema.define(version: 20160709235653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(version: 20160709061728) do
   create_table "accounts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "asset_file_name"
+    t.string   "asset_content_type"
+    t.integer  "asset_file_size"
+    t.datetime "asset_updated_at"
+    t.integer  "{:polymorphic=>true, :index=>true}_id"
+    t.string   "type"
+    t.index ["{:polymorphic=>true, :index=>true}_id"], name: "index_attachments_on_{:polymorphic=>true, :index=>true}_id", using: :btree
   end
 
   create_table "blocks", force: :cascade do |t|
