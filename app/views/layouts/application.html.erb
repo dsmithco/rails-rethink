@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsRethink</title>
+    <title>Rethink Web Design</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+
+    <div class="fixed-nav">
+      <nav>
+        <div class="container">
+          <div class="logo">
+            <h3 class="nopad"><strong>Rethink Web Design</strong></h3>
+          </div>
+          <div class="top-menu right">
+            <a class="toggle" href="#"><span class="hamburger"></span> Menu</a>
+            <ul>
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/features">Features</a>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
   </body>
+
 </html>
