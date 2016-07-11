@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :attachments
   resources :blocks
   resources :pages

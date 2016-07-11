@@ -1,29 +1,10 @@
 <p id="notice"><%= notice %></p>
+<%= link_to '<i class="glyphicon glyphicon-pencil"></i>  Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary pull-right inverse' %>
 
-<p>
-  <strong>Name:</strong>
+<h2>
   <%= @page.name %>
-</p>
+</h2>
 
 <p>
-  <strong>About:</strong>
   <%= @page.about %>
 </p>
-
-<p>
-  <strong>Website:</strong>
-  <%= @page.website %>
-</p>
-
-<p>
-  <strong>Position:</strong>
-  <%= @page.position %>
-</p>
-
-<p>
-  <strong>Page:</strong>
-  <%= @page.page %>
-</p>
-
-<%= link_to 'Edit', edit_page_path(@page) %> |
-<%= link_to 'Back', pages_path %>

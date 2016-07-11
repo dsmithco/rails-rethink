@@ -11,51 +11,51 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :account_id %>
-    <%= f.text_field :account_id %>
+    <%= f.text_field :account_id, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :about %>
-    <%= f.text_area :about %>
+    <%= f.text_area :about, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :domain_url %>
-    <%= f.text_field :domain_url %>
+    <%= f.text_field :domain_url, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :google_analytics %>
-    <%= f.text_field :google_analytics %>
+    <%= f.text_field :google_analytics, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :facebook %>
-    <%= f.text_field :facebook %>
+    <%= f.text_field :facebook, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :twitter %>
-    <%= f.text_field :twitter %>
+    <%= f.text_field :twitter, class: 'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :tags %>
-    <%= f.text_field :tags %>
+    <%= f.text_field :tags, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :theme %>
-    <%= f.text_field :theme %>
+    <%= f.text_field :theme, class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Save', class: 'btn btn-info' %>
   </div>
 <% end %>
