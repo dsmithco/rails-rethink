@@ -5,6 +5,7 @@
     <%= csrf_meta_tags %>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width,initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,300italic,400italic' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,6 +32,21 @@
             <% @website.pages.where(page_id: [nil,'']).each do |page| %>
               <li>
                 <%= link_to page.name, page_url(page) %>
+              </li>
+            <% end %>
+            <% if user_signed_in? %>
+              <li>
+                <span>
+                  <%= link_to 'Logout', destroy_user_session_url, method: :delete, class: 'btn btn-primary btn-block btn-inverse navbar-btn' %>
+                </span>
+              </li>
+            <% else %>
+              <li>
+                <span>
+                  <%= link_to 'Login', new_user_session_url, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
+
+                  <%= link_to 'Sign Up', new_user_registration_url, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                </span>
               </li>
             <% end %>
             <!-- <li class="dropdown">

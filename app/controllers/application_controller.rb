@@ -6,4 +6,9 @@ class ApplicationController < ActionController::Base
     @website = Website.where("domain_url like ?", "%#{request.host}%").first
     ApplicationController.layout "themes/#{@website.theme}"
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
 end
