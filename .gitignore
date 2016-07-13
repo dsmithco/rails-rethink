@@ -12,6 +12,5 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-config/deploy.rb
 # Ignore Byebug command history file.
 .byebug_history
