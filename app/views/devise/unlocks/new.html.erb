@@ -1,14 +1,23 @@
+<div class="col-md-6 col-md-push-3">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+    </div>
+    <div class="panel-body">
+    </div>
+  </div>
+</div>
+
 <h2>Resend unlock instructions</h2>
 
 <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true %>
   </div>
 
-  <div class="actions">
+  <div class="form-group">
     <%= f.submit "Resend unlock instructions" %>
   </div>
 <% end %>
