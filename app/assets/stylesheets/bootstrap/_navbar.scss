@@ -345,7 +345,7 @@
 // Vertically center a button within a navbar (when *not* in a form).
 
 .navbar-btn {
-  &:first-child:not(:last-child) {
+  &:first-child {
     margin-left: 1em;
   }
   &:not(:first-child) {
