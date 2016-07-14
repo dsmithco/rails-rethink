@@ -345,6 +345,12 @@
 // Vertically center a button within a navbar (when *not* in a form).
 
 .navbar-btn {
+  &:first-child {
+    margin-left: 1em;
+  }
+  &:not(:first-child) {
+    margin-left: .3em;
+  }
   @include navbar-vertical-align($input-height-base);
 
   &.btn-sm {
