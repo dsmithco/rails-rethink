@@ -29,7 +29,7 @@
           ['insert', ['link', 'hr']],
           ['view', ['fullscreen']]
         ],
-          styleTags: ['p', 'h1'],
+          styleTags: ['p', 'h1', 'h2', 'h3'],
           minHeight: '260px',
         callbacks: {
           onPaste: function (e) {
@@ -43,19 +43,22 @@
   }
 
   var setup_affix = function(){
-    // affix_offset = $('.description').offset().top;
-    // $('.note-toolbar').affix({
-    //   offset: {
-    //     top: affix_offset
-    //   }
-    // });
+    affix_offset = $('#about').offset().top;
+    $('.note-toolbar').affix({
+      offset: {
+        top: affix_offset
+      }
+    });
   }
+
+  // setup_affix();
 
   var note_affix_toolbar = function(){
     $('.note-toolbar').on('affix.bs.affix', function () {
-        $('.description').css('padding-top',$('.note-toolbar').height()+30);
+        $('#about').css('padding-top',$('.note-toolbar').height()+30);
     });
   }
+  note_affix_toolbar();
 
   var document_scrolling = function(){
     // $(document).scroll(function() { //.box is the class of the div
