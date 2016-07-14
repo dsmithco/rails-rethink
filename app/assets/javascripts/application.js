@@ -51,33 +51,30 @@
     });
   }
 
-  // setup_affix();
 
   var note_affix_toolbar = function(){
     $('.note-toolbar').on('affix.bs.affix', function () {
         $('#about').css('padding-top',$('.note-toolbar').height()+30);
     });
   }
-  note_affix_toolbar();
 
   var document_scrolling = function(){
-    // $(document).scroll(function() { //.box is the class of the div
-    //   if($(this).scrollTop() > $('.job_level').offset().top - ($('.note-toolbar').height()+30) || $(this).scrollTop() < $('.description').offset().top ) {
-    //     $(window).off('.affix');
-    //     $('.note-toolbar').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
-    //       $('.description').css('padding-top',0);
-    //   }else{
-    //     setup_affix();
-    //   }
-    // });
+    $(document).scroll(function() { //.box is the class of the div
+      if($(this).scrollTop() > $('#name').offset().top - ($('.note-toolbar').height()+30) || $(this).scrollTop() < $('#about').offset().top ) {
+        $(window).off('.affix');
+        $('.note-toolbar').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
+          $('#about').css('padding-top',0);
+      }else{
+        setup_affix();
+      }
+    });
   }
 
   var document_load = function(){
     document.addEventListener("turbolinks:load", function() {
-      document_scrolling();
-      note_affix_toolbar();
-      setup_affix();
       set_summernote();
+      note_affix_toolbar();
+      document_scrolling();
     });
   }();
 
