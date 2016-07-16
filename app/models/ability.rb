@@ -8,11 +8,38 @@ class Ability
     # can [:edit], [:all] do |a|
     #   o.account_id==user.account_id
     # end
-    if user.email == 'dsmithco@gmail.com'
-      can :manage, :all
-    else
-      can :read, :all
+
+    can [:read,:index], :all
+
+    can [:index, :read, :update], Account do |account|
+      user.account_ids.include? account.id
     end
+
+    can [:index, :manage], Website do |website|
+      user.account_ids.include? website.account_id
+    end
+
+    can [:create], Website do |website|
+      user.account_ids.present?
+    end
+
+    can [:manage], User do |u|
+      user.id == u.id
+    end
+
+    can [:index, :manage], Page do |page|
+      if page.website.present?
+        user.account_ids.include? page.website.account_id
+      else
+        true
+      end
+    end
+
+    # if user.email == 'dsmithco@gmail.com'
+    #   can :manage, :all
+    # else
+    #   can :read, :all
+    # end
     #
     # The first argument to `can` is the action you are giving the user
     # permission to do.

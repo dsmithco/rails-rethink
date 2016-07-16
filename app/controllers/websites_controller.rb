@@ -1,22 +1,21 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy]
-  before_action :set_theme
   load_and_authorize_resource
-
-  def set_theme
-    @website = Website.where("domain_url like ?", "%#{request.host}%").first
-    ApplicationController.layout "themes/#{@website.theme}"
-  end
 
   # GET /websites
   # GET /websites.json
   def index
-    @websites = Website.all
+    @websites = current_user.websites
   end
 
   # GET /websites/1
   # GET /websites/1.json
   def show
+  end
+
+  def home
+    @website = Website.where("domain_url = ?", "#{request.host}").first
+    render :show
   end
 
   # GET /websites/new

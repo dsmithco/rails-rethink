@@ -13,27 +13,27 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name , class: 'form-control'%>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" id="about">
     <%= f.label :about %>
-    <%= f.text_area :about %>
+    <%= f.text_area :about, class: 'form-control summernote' %>
   </div>
 
   <div class="form-group">
     <%= f.label :website_id %>
-    <%= f.text_field :website_id %>
+    <%= f.select :website_id, Website.select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {}, :multiple => false, :class => 'form-control' %>
   </div>
 
   <div class="form-group">
     <%= f.label :position %>
-    <%= f.text_field :position %>
+    <%= f.text_field :position, class: 'form-control' %>
   </div>
 
   <div class="form-group">
     <%= f.label :page_id %>
-    <%= f.text_field :page_id %>
+    <%= f.text_field :page_id, class: 'form-control' %>
   </div>
 
   <div>

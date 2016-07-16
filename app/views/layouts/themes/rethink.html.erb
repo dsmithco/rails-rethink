@@ -25,11 +25,11 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="pull-right"><i class="glyphicon glyphicon-menu-hamburger"></i> MENU</span>
           </button>
-          <a class="navbar-brand" href="/"><%= @website.name %></a>
+          <a class="navbar-brand" href="/"><%= @current_website.name %></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <% @website.pages.where(page_id: [nil,'']).each do |page| %>
+            <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
               <li>
                 <%= link_to page.name, page_url(page) %>
               </li>
@@ -37,6 +37,7 @@
             <% if user_signed_in? %>
               <li>
                 <span>
+                  <%= link_to "<i class='glyphicon glyphicon-user'></i> #{current_user.name}".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
                   <%= link_to 'Logout', destroy_user_session_url, method: :delete, class: 'btn btn-primary btn-inverse navbar-btn' %>
                 </span>
               </li>

@@ -5,7 +5,11 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.json
   def index
-    @pages = Page.all
+    if @current_website.present?
+      @pages = @current_website.pages
+    else
+      @pages = Page.all
+    end
   end
 
   # GET /pages/1
@@ -65,9 +69,10 @@ class PagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_page
-      @page = Page.friendly.find(params[:id])
-      @website = @page.website
-      redirect_to '/' if @website.domain_url != request.host
+      @page = @current_website.pages.friendly.find(params[:id])
+      if @page.website.domain_url != request.host
+        redirect_to '/'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
