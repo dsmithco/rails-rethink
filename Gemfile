@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
 gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', '~> 2.3'
+gem "jquery-fileupload-rails"
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

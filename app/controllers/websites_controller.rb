@@ -76,6 +76,6 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:account_id, :name, :about, :domain_url, :google_analytics, :facebook, :twitter, :tags, :theme)
+      params.require(:website).permit(:account_id, :name, :about, :domain_url, :google_analytics, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
     end
 end

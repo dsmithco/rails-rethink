@@ -16,6 +16,9 @@
 //= require bootstrap.min
 //= require summernote
 //= require ie10-viewport-bug-workaround
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
+//= require attachments
 
 (function(){
 
@@ -43,12 +46,12 @@
   }
 
   var setup_affix = function(){
-    affix_offset = $('#about').offset().top;
-    $('.note-toolbar').affix({
-      offset: {
-        top: affix_offset
-      }
-    });
+    // affix_offset = $('#about').offset().top;
+    // $('.note-toolbar').affix({
+    //   offset: {
+    //     top: affix_offset
+    //   }
+    // });
   }
 
 
@@ -59,15 +62,15 @@
   }
 
   var document_scrolling = function(){
-    $(document).scroll(function() { //.box is the class of the div
-      if($(this).scrollTop() > $('#name').offset().top - ($('.note-toolbar').height()+30) || $(this).scrollTop() < $('#about').offset().top ) {
-        $(window).off('.affix');
-        $('.note-toolbar').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
-          $('#about').css('padding-top',0);
-      }else{
-        setup_affix();
-      }
-    });
+    // $(document).scroll(function() { //.box is the class of the div
+    //   if($(this).scrollTop() > $('#name').offset().top - ($('.note-toolbar').height()+30) || $(this).scrollTop() < $('#about').offset().top ) {
+    //     $(window).off('.affix');
+    //     $('.note-toolbar').removeData('bs.affix').removeClass('affix affix-top affix-bottom');
+    //       $('#about').css('padding-top',0);
+    //   }else{
+    //     setup_affix();
+    //   }
+    // });
   }
 
   var document_load = function(){

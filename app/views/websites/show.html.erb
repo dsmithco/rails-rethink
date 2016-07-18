@@ -1,5 +1,5 @@
 
-  
+
 
   <p>
     <strong>Account:</strong>
@@ -43,3 +43,24 @@
 
   <%= link_to 'Edit', edit_website_path(@website) %> |
   <%= link_to 'Back', websites_path %>
+  <div id="logo" class="thumbnail">
+    <%= image_tag @website.logo.asset(:medium) if @website.logo.present?%>
+
+  </div>
+  <%= form_for(@website.logo||=Logo.new, remote: true, authenticity_token: true, format: 'js') do |f| %>
+    <label class="btn btn-primary btn-file">
+    Upload Logo <%= f.file_field :asset, multiple: true, name: "attachment[asset]", style: 'display: none;' %>
+    </label>
+
+  <% end %>
+
+  <script id="template-upload" type="text/x-tmpl">
+    <div class="upload">
+      {%=o.name%}
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width:0%">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    </div>
+  </script>

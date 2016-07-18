@@ -1,25 +1,19 @@
-
-
-<h1>Attachments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @attachments.each do |attachment| %>
-      <tr>
-        <td><%= link_to 'Show', attachment %></td>
-        <td><%= link_to 'Edit', edit_attachment_path(attachment) %></td>
-        <td><%= link_to 'Destroy', attachment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'attachments/attachments', '@attachments': @logos%>
 
 <br>
 
-<%= link_to 'New Attachment', new_attachment_path %>
+<%= link_to 'New Attachment', new_attachment_path, class: 'btn btn-primary' %>
+
+
+<%= form_for Logo.new do |f| %>
+  <%= f.label :image, "Upload attachment:" %>
+  <%= f.file_field :asset, multiple: true, name: "attachment[asset]" %>
+  <%= f.submit %>
+<% end %>
+
+<script id="template-upload" type="text/x-tmpl">
+<div class="upload">
+  {%=o.name%}
+  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+</div>
+</script>

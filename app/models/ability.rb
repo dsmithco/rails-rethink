@@ -27,6 +27,10 @@ class Ability
       user.id == u.id
     end
 
+    can [:manage], Attachment do |u|
+      true
+    end
+
     can [:index, :manage], Page do |page|
       if page.website.present?
         user.account_ids.include? page.website.account_id

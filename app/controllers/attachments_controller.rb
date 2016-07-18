@@ -5,7 +5,7 @@ class AttachmentsController < ApplicationController
   # GET /attachments
   # GET /attachments.json
   def index
-    @attachments = Attachment.all
+    @resources = instance_variable_set("@#{resources_name}", attachment_class.all)
   end
 
   # GET /attachments/1
@@ -15,7 +15,7 @@ class AttachmentsController < ApplicationController
 
   # GET /attachments/new
   def new
-    @attachment = Attachment.new
+    @resource = instance_variable_set("@#{resource_name}", attachment_class.new)
   end
 
   # GET /attachments/1/edit
@@ -25,15 +25,16 @@ class AttachmentsController < ApplicationController
   # POST /attachments
   # POST /attachments.json
   def create
-    @attachment = Attachment.new(attachment_params)
+    @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
 
     respond_to do |format|
-      if @attachment.save
-        format.html { redirect_to @attachment, notice: 'Attachment was successfully created.' }
-        format.json { render :show, status: :created, location: @attachment }
+      if @resource.save
+        format.html { redirect_to @resource, notice: 'Attachment was successfully created.' }
+        format.json { render :show, status: :created, location: @resource }
+        format.js { render :create, status: :created }
       else
         format.html { render :new }
-        format.json { render json: @attachment.errors, status: :unprocessable_entity }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,12 +43,13 @@ class AttachmentsController < ApplicationController
   # PATCH/PUT /attachments/1.json
   def update
     respond_to do |format|
-      if @attachment.update(attachment_params)
-        format.html { redirect_to @attachment, notice: 'Attachment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @attachment }
+      if @resource.update(attachment_params)
+        format.html { redirect_to @resource, notice: 'Attachment was successfully updated.' }
+        format.json { render :show, status: :ok, location: @resource }
+        format.js { render :update, status: :created }
       else
         format.html { render :edit }
-        format.json { render json: @attachment.errors, status: :unprocessable_entity }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -55,7 +57,7 @@ class AttachmentsController < ApplicationController
   # DELETE /attachments/1
   # DELETE /attachments/1.json
   def destroy
-    @attachment.destroy
+    @resource.destroy
     respond_to do |format|
       format.html { redirect_to attachments_url, notice: 'Attachment was successfully destroyed.' }
       format.json { head :no_content }
@@ -65,11 +67,27 @@ class AttachmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attachment
-      @attachment = Attachment.find(params[:id])
+      @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
+    end
+
+    def resources_name
+      attachment.tableize
+    end
+
+    def resource_name
+      attachment.downcase
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attachment_params
-      params.require(:attachment).permit(:asset)
+      params.require(:attachment).permit(:asset, :type, :attachable_id, :attachable_type)
+    end
+
+    def attachment
+      params[:type] || "Attachment"
+    end
+
+    def attachment_class
+      attachment.constantize
     end
 end

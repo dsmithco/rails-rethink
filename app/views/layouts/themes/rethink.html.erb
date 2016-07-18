@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RailsRethink</title>
+    <title><%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %></title>
     <%= csrf_meta_tags %>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width,initial-scale=1">
@@ -16,7 +16,6 @@
   </head>
 
   <body>
-
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
