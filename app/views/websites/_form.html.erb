@@ -67,7 +67,7 @@
         Logo
       </div>
       <div class="panel-body">
-        <div id="logo" class="logo thumbnail <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" %>">
+        <div id="logo" class="logo thumbnail <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" if @website.logo.present?%>">
           <%= image_tag @website.logo.asset(:medium) if @website.logo.present?%>
         </div>
         <%= form_for(@website.logo||=Logo.new, remote: true, authenticity_token: true, format: 'js') do |f| %>

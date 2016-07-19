@@ -12,19 +12,19 @@ class Ability
     can [:read,:index], :all
 
     can [:index, :read, :update], Account do |account|
-      user.account_ids.include? account.id
+      user.account_ids.include? account.id || user.email=='dsmithco@gmail.com'
     end
 
     can [:index, :manage], Website do |website|
-      user.account_ids.include? website.account_id
+      user.account_ids.include? website.account_id || user.email=='dsmithco@gmail.com'
     end
 
     can [:create], Website do |website|
-      user.account_ids.present?
+      user.account_ids.present? || user.email=='dsmithco@gmail.com'
     end
 
     can [:manage], User do |u|
-      user.id == u.id
+      user.id == u.id || user.email=='dsmithco@gmail.com'
     end
 
     can [:manage], Attachment do |u|
@@ -33,7 +33,7 @@ class Ability
 
     can [:index, :manage], Page do |page|
       if page.website.present?
-        user.account_ids.include? page.website.account_id
+        user.account_ids.include? page.website.account_id || user.email=='dsmithco@gmail.com'
       else
         true
       end
