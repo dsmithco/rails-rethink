@@ -25,7 +25,7 @@
             <span class="pull-right"><i class="glyphicon glyphicon-menu-hamburger"></i> MENU</span>
           </button>
           <% if @current_website.logo.try(:asset).present?  %>
-            <a class="logo navbar-brand <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" %>" href="/"><%= image_tag @current_website.logo.asset(:medium)%></a>
+            <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/"><%= image_tag @current_website.logo.asset(:medium)%></a>
           <% else %>
             <a class="logo navbar-brand" href="/"><%= @current_website.name %></a>
           <% end %>
