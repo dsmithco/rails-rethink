@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   resources :blocks
   resources :pages
   resources :attachments, controller: 'attachments', type: 'Attachment'
-  resources :logos, controller: 'attachments', type: 'Logo'
+  resources :logos, controller: 'logos', type: 'Logo'
   resources :icons, controller: 'attachments', type: 'Icon'
   resources :images, controller: 'attachments', type: 'Image'
-  resources :hero_images, controller: 'attachments', type: 'HeroImage'
+  resources :hero_images, controller: 'hero_images', type: 'HeroImage'
   resources :users
   resources :websites do
     resources :blocks

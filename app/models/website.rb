@@ -9,5 +9,16 @@ class Website < ApplicationRecord
   validates :domain_url, uniqueness: true, allow_blank: true
   validates :account, presence: true
 
-  accepts_nested_attributes_for :logo
+  after_save :push_changes
+
+  attr_accessor :testing
+
+  def push_changes
+    puts "\n\n\n\n\n#{self.changes.to_json}\n\n\n\n\n"
+  end
+
+  def testing
+    status_will_change!
+    "#{self.name.snakecase}_#{self.id.to_s}"
+  end
 end

@@ -15,7 +15,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body id="body">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
@@ -24,7 +24,12 @@
             <span class="sr-only">Toggle navigation</span>
             <span class="pull-right"><i class="glyphicon glyphicon-menu-hamburger"></i> MENU</span>
           </button>
-          <a class="navbar-brand" href="/"><%= @current_website.name %></a>
+          <% if @current_website.logo.try(:asset).present?  %>
+            <a class="navbar-brand" href="/"><%= image_tag @current_website.logo.asset(:medium), style: 'max-height:80%; max-width: 60%; top: 50%; transform: translateY(-50%); position: absolute;'%></a>
+          <% else %>
+            <a class="navbar-brand" href="/"><%= @current_website.name %></a>
+          <% end %>
+
         </div>
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">

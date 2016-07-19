@@ -1,26 +1,6 @@
-class AttachmentsController < ApplicationController
+class HeroImagesController < AttachmentsController
   before_action :set_attachment, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
-
-  # GET /attachments
-  # GET /attachments.json
-  def index
-    @resources = instance_variable_set("@#{resources_name}", attachment_class.all)
-  end
-
-  # GET /attachments/1
-  # GET /attachments/1.json
-  def show
-  end
-
-  # GET /attachments/new
-  def new
-    @resource = instance_variable_set("@#{resource_name}", attachment_class.new)
-  end
-
-  # GET /attachments/1/edit
-  def edit
-  end
 
   # POST /attachments
   # POST /attachments.json
@@ -61,6 +41,7 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to attachments_url, notice: 'Attachment was successfully destroyed.' }
       format.json { head :no_content }
+      format.js { render :destroy }
     end
   end
 
@@ -80,7 +61,7 @@ class AttachmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attachment_params
-      params.require(:attachment).permit(:asset, :type, :attachable_id, :attachable_type, :attachable)
+      params.require(:attachment).permit(:asset, :type, :attachable_id, :attachable_type)
     end
 
     def attachment

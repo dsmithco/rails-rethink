@@ -1,0 +1,7 @@
+<div class="thumbnail hero_image_<%= hero_image.id %>">
+  <%= image_tag hero_image.asset(:medium) if hero_image.present?%>
+  <div class="">
+    <%= link_to 'Remove Image', hero_image_path(hero_image), method: :delete, class: 'btn btn-danger btn-block', remote: true if hero_image.asset.present? %>
+  </div>
+
+</div>

@@ -9,7 +9,7 @@
   background-color: $panel-bg;
   border: 0px solid transparent;
   border-radius: $panel-border-radius;
-  @include box-shadow(0 1px 1px rgba(0,0,0,.55));
+  @include box-shadow(0 1px 1px rgba(0,0,0,.35));
 }
 
 // Panel contents
@@ -21,6 +21,8 @@
 // Optional heading
 .panel-heading {
   padding: $panel-heading-padding;
+  font-size: 1.1em;
+  font-weight: 300;
   border-bottom: 1px solid transparent;
   @include border-top-radius(($panel-border-radius - 1));
 

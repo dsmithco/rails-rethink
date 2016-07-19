@@ -1,4 +1,5 @@
 class HeroImage < Attachment
+  belongs_to :attachable, :polymorphic => true
 
   # This method associates the attribute ":avatar" with a file attachment
   has_attached_file :asset, styles: {

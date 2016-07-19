@@ -1,0 +1,5 @@
+<% if @resource.new_record? %>
+  alert("Failed to upload painting: <%= j @attachment.errors.full_messages.join(', ').html_safe %>");
+<% else %>
+  $(".hero_images").append("<%=j render 'hero_images/hero_image', hero_image: @resource %>");
+<% end %>
