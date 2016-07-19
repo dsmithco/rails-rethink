@@ -99,3 +99,11 @@ code {
 img {
   max-width: 100%;
 }
+
+.navbar .logo img {
+  max-height: 80%;
+  max-width: 60%;
+  top: 50%;
+  transform: translateY(-50%);
+  position: absolute;
+}

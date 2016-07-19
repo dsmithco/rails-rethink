@@ -18,7 +18,7 @@ class Website < ApplicationRecord
   end
 
   def testing
-    status_will_change!
+    testing_will_change!
     "#{self.name.snakecase}_#{self.id.to_s}"
   end
 end

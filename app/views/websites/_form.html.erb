@@ -12,7 +12,6 @@
           </ul>
         </div>
       <% end %>
-
       <div class="form-group">
         <%= f.label :account_id %>
         <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
@@ -68,7 +67,7 @@
         Logo
       </div>
       <div class="panel-body">
-        <div id="logo" class="thumbnail">
+        <div id="logo" class="logo thumbnail <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" %>">
           <%= image_tag @website.logo.asset(:medium) if @website.logo.present?%>
         </div>
         <%= form_for(@website.logo||=Logo.new, remote: true, authenticity_token: true, format: 'js') do |f| %>

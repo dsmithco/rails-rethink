@@ -1,5 +1,7 @@
 <% if @resource.new_record? %>
   alert("Failed to upload painting: <%= j @attachment.errors.full_messages.join(', ').html_safe %>");
 <% else %>
-  $("#logo").html("<%=j image_tag @resource.asset(:medium) %>");
+  // alert('<%=j "#{ @resource.previous_changes }" %>')
+  var slug = '<%=j "#{@resource.class.name.tableize}_#{@resource.id}" %>';
+  $("." + slug).html('<%=j image_tag @resource.asset(:medium) %>');
 <% end %>
