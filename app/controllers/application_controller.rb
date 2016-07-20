@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     if !@current_website.present?
       redirect_to Rails.application.config.host_domain
     else
-      ApplicationController.layout "themes/#{@current_website.theme}"
+      ApplicationController.layout "themes/#{@current_website.theme}/layout"
     end
   end
 

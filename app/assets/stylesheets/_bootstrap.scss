@@ -107,3 +107,81 @@ img {
   transform: translateY(-50%);
   position: absolute;
 }
+
+
+.hero-unit h1 {
+    color: #FFFFFF;
+    font-size: 60px;
+    letter-spacing: -1px;
+    line-height: 1.3;
+    padding: 0;
+    display: inline;
+    background-color: rgba(0,0,0,.7);
+}
+.hero-unit h2 {
+    font-size: 35px;
+    padding: 0;
+    color: #FFFFFF;
+    margin-top: 0;
+    background-color: rgba(0,0,0,.4);
+    display: inline;
+    line-height: 1.4;
+}
+
+.hero-unit {
+  margin-top: -23px;
+  margin-top: -25px;
+  background-size: cover;
+  background-position: center;
+  background-image: url('https://unsplash.it/1440/600/?random');
+  height:600px;
+  display: table;
+  width: 100%;
+}
+.hero-unit-cell {
+  display: table-cell;
+  vertical-align: bottom;
+}
+.hero-unit-content {
+  max-width: 960px;
+  margin: auto;
+  margin-bottom: 10%;
+  padding: 0 15px;
+}
+
+/* Large desktop */
+@media (min-width: 1921px) {
+
+  .hero-unit {
+
+  }
+ }
+
+/* Large desktop */
+@media (max-width: 1920px) {
+  .hero-unit {
+
+
+  }
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) {
+  .hero-unit {
+    height:400px;
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+  .hero-unit {
+    height:400px;
+  }
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {
+  .hero-unit {
+    height:340px;
+  }
+}

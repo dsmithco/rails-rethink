@@ -58,7 +58,7 @@
 
 @mixin button-variant-inverse($color, $background, $border) {
   color: $color;
-  background-color: $background;
+  background-color: rgba(255,255,255,0.2);
   border-color: $border;
 
   &:focus,
