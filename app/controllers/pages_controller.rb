@@ -71,6 +71,9 @@ class PagesController < ApplicationController
     def set_page
       if @current_website.present?
         @page = @current_website.pages.friendly.find(params[:id])
+        if !@page.present?
+          redirect_to '/', status: 404, notice: 'This is not the page you are looking for...move along.'
+        end
       else
         redirect_to '/'
       end
