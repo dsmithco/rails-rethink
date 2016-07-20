@@ -73,7 +73,7 @@ class PagesController < ApplicationController
         begin
           @page = @current_website.pages.friendly.find(params[:id])
         rescue
-          redirect_to '/', status: 404, notice: 'This is not the page you are looking for...move along.'
+          redirect_to '/', status: 302, notice: 'This is not the page you are looking for...move along.'
         end
       else
         redirect_to '/'
