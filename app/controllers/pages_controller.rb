@@ -70,8 +70,7 @@ class PagesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_page
       if @current_website.present?
-        @page = @current_website.pages.friendly.find(params[:id])
-        if !@page.present?
+        unless @page = @current_website.pages.friendly.find(params[:id])
           redirect_to '/', status: 404, notice: 'This is not the page you are looking for...move along.'
         end
       else
