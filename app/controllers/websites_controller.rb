@@ -14,7 +14,7 @@ class WebsitesController < ApplicationController
   end
 
   def home
-    @website = Website.where("domain_url = ?", "#{request.host}").first
+    @website = @current_website || Website.where("domain_url = ?", "#{request.host}").first
     render :show
   end
 

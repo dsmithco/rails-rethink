@@ -70,9 +70,6 @@ class PagesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_page
       @page = @current_website.pages.friendly.find(params[:id])
-      if @page.website.domain_url != request.host
-        redirect_to '/'
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

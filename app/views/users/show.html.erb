@@ -15,3 +15,42 @@
     <% end %>
   <% end %>
 </dl>
+<% @user.accounts.each do |account| %>
+  <h3>Account: <%= account.id %></h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          Website name
+        </th>
+        <th>
+          Domain URL
+        </th>
+        <th>
+          Pg count
+        </th>
+        <th>
+
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% account.websites.each do |website| %>
+        <tr>
+          <td>
+            <%= website.name %>
+          </td>
+          <td>
+            <%= "#{website.rethink_url}, #{website.domain_url}" %>
+          </td>
+          <td>
+            <%= website.pages.count %>
+          </td>
+          <td class="text-right">
+            <%= link_to 'Go to', "#{website.rethink_href}:#{request.port}", class: 'btn btn-info btn-sm', target: '_blank' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -21,4 +21,13 @@ class Website < ApplicationRecord
     testing_will_change!
     "#{self.name.snakecase}_#{self.id.to_s}"
   end
+
+  def rethink_url
+    return "#{self.account_id}-#{self.id}.#{Rails.application.config.host_domain}"
+  end
+
+  def rethink_href
+    return "//#{self.rethink_url}"
+  end
+
 end

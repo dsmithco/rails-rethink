@@ -53,6 +53,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  config.host_domain = 'rethink.dev'
+
+
   Paperclip.options[:command_path] = "/usr/local/bin/"
   # config/environments/production.rb
   config.paperclip_defaults = {
