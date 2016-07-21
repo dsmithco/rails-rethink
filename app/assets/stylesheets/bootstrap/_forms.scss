@@ -24,6 +24,7 @@ legend {
   margin-bottom: $line-height-computed;
   font-size: ($font-size-base * 1.5);
   line-height: inherit;
+  font-weight: 300;
   color: $legend-color;
   border: 0;
   border-bottom: 1px solid $legend-border-color;

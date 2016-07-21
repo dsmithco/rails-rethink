@@ -61,7 +61,7 @@ class HeroImagesController < AttachmentsController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attachment_params
-      params.require(:attachment).permit(:asset, :type, :attachable_id, :attachable_type)
+      params.permit(:asset, :type, :attachable_id, :attachable_type)
     end
 
     def attachment

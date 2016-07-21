@@ -129,8 +129,8 @@ img {
 }
 
 .hero-unit {
-  margin-top: -23px;
   margin-top: -25px;
+  margin-bottom: 2em;
   background-size: cover;
   background-position: center;
   background-image: url('https://unsplash.it/1440/600/?random');
@@ -177,6 +177,12 @@ img {
   .hero-unit {
     height:400px;
   }
+  .hero-unit h1 {
+      font-size: 40px;
+  }
+  .hero-unit h2 {
+      font-size: 25px;
+  }
 }
 
 /* Landscape phones and down */
@@ -184,4 +190,7 @@ img {
   .hero-unit {
     height:340px;
   }
+}
+
+section {
 }

@@ -1,106 +1,126 @@
 <div class="row">
-  <div class="col-sm-8">
-    <%= form_for(website) do |f| %>
-      <% if website.errors.any? %>
-        <div class="alert alert-danger">
-          <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
-
-          <ul>
-          <% website.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div class="form-group">
-        <%= f.label :account_id %>
-        <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-      </div>
-
-      <div class="form-group" id="name">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
-
-      <div class="form-group" id="about">
-        <%= f.label :about %>
-        <%= f.text_area :about, class: 'form-control summernote' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :css_override %>
-        <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
-      </div>
-
-
-      <div class="form-group">
-        <%= f.label :domain_url %>
-        <%= f.text_field :domain_url, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :google_analytics %>
-        <%= f.text_field :google_analytics, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :facebook %>
-        <%= f.text_field :facebook, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :twitter %>
-        <%= f.text_field :twitter, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :tags %>
-        <%= f.text_field :tags, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :theme %>
-        <%= f.text_field :theme, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.submit 'Save', class: 'btn btn-info' %>
+  <div class="col-sm-12">
+    <% if website.errors.any? %>
+      <div class="alert alert-danger">
+        <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
+        <ul>
+        <% website.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       </div>
     <% end %>
-  </div>
-  <div class="col-sm-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Logo
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home page</a></li>
+      <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Site wide</a></li>
+    </ul>
+    <%= form_for(website) do |f| %>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="home">
+        <br/>
+        <fieldset>
+          <legend>
+            Hero Images
+          </legend>
+          <div class="form-group">
+            <div id="heros" class="hero_images">
+              <% @website.hero_images.each do |hero_image| %>
+                <%= render 'hero_images/hero_image', hero_image: hero_image %>
+              <% end %>
+            </div>
+            <div id="new_hero_image" data-form-data='{"attachable_id": <%= @website.id %>,"attachable_type": "Website"}'>
+                <label class="btn btn-primary btn-file">
+                  Add Hero Images
+                  <input style="display:none;" type="file" name="asset" multiple>
+                  <%# file_field_tag 'files', name: "attachment[asset]", style: 'display: none;' %>
+                </label>
+            </div>
+          </div>
+        </fieldset>
+          <div class="form-group" id="name">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+          </div>
+
+          <div class="form-group" id="about">
+            <%= f.label :about %>
+            <%= f.text_area :about, class: 'form-control summernote' %>
+          </div>
+
       </div>
-      <div class="panel-body">
-        <div id="logo" class="logo thumbnail <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" if @website.logo.present?%>">
-          <%= image_tag @website.logo.asset(:medium) if @website.logo.present?%>
+      <div role="tabpanel" class="tab-pane" id="site">
+        <br/>
+        <div class="form-group">
+          <legend>
+            Account
+          </legend>
+          <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+        </div class="form-group">
+
+        <div class="form-group">
+          <%= f.label :css_override %>
+          <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
         </div>
-        <%= form_for(@website.logo||=Logo.new, remote: true, authenticity_token: true, format: 'js') do |f| %>
-          <label class="btn btn-primary btn-file btn-block">
-          Upload Logo <%= f.file_field :asset, multiple: false, name: "attachment[asset]", style: 'display: none;' %>
-        </label>
-          <%= link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger btn-block', remote: true if @website.logo.asset.present? %>
-        <% end %>
-      </div>
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Hero Images
-      </div>
-      <div class="panel-body">
-        <div id="heros" class="hero_images">
-          <% @website.hero_images.each do |hero_image| %>
-            <%= render 'hero_images/hero_image', hero_image: hero_image %>
-          <% end %>
+
+        <div class="form-group">
+          <%= f.label :domain_url %>
+          <%= f.text_field :domain_url, class: 'form-control' %>
         </div>
-        <%= form_for(HeroImage.new, attachable: @website, remote: true, authenticity_token: true, format: 'js') do |f| %>
-          <%= f.hidden_field :attachable_id, value: @website.id, name: "attachment[attachable_id]" %>
-          <%= f.hidden_field :attachable_type, value: 'Website', name: "attachment[attachable_type]" %>
-          <label class="btn btn-primary btn-file btn-block">
-          Upload Logo <%= f.file_field :asset, multiple: true, name: "attachment[asset]", style: 'display: none;' %>
-        </label>
-        <% end %>
+
+        <div class="form-group">
+          <%= f.label :google_analytics %>
+          <%= f.text_field :google_analytics, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :facebook %>
+          <%= f.text_field :facebook, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :twitter %>
+          <%= f.text_field :twitter, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :tags %>
+          <%= f.text_field :tags, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :theme %>
+          <%= f.text_field :theme, class: 'form-control' %>
+        </div>
+
+        <fieldset>
+          <legend>
+            Logo
+          </legend>
+          <div class="form-group">
+            <div id="logo" class="logo thumbnail <%= "#{@website.logo.class.name.tableize}_#{@website.logo.id}" if @website.logo.present?%>">
+              <%= image_tag @website.logo.asset(:medium) if @website.logo.present?%>
+            </div>
+            <% @website.logo||=Logo.new %>
+            <div id="logo_uploader" data-form-data='{"id": <%= @website.logo.try(:id)%>, "attachable_id": <%= @website.id %>,"attachable_type": "Website"}'>
+              <label class="btn btn-primary btn-file">
+                Upload Logo
+                <input style="display:none;" type="file" name="asset" multiple>
+              </label>
+            </div>
+
+              <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+          </div>
+
+        </fieldset>
+
       </div>
+      <hr/>
+      <div class="form-group">
+        <%= f.submit 'Save Website', class: 'btn btn-success btn-lg' %>
+        <%= link_to 'Cancel', @website, class: "btn btn-default btn-lg" %>
+      </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -27,7 +27,7 @@ $brand-danger:          #ff3300 !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #fff !default;
+$body-bg:               #fafafa !default;
 //** Global text color on `<body>`.
 $text-color:            $gray-dark !default;
 
@@ -370,8 +370,8 @@ $navbar-padding-vertical:          (($navbar-height - $line-height-computed) / 2
 $navbar-collapse-max-height:       340px !default;
 
 $navbar-default-color:             #555 !default;
-$navbar-default-bg:                #fcfcfc !default;
-$navbar-default-border:            darken($navbar-default-bg, 4.5%) !default;
+$navbar-default-bg:                #f9f9f9 !default;
+$navbar-default-border:            rgba(0,0,0,0.1) !default;
 
 // Navbar links
 $navbar-default-link-color:                #444 !default;
@@ -433,7 +433,7 @@ $nav-disabled-link-hover-color:             $gray-light !default;
 //== Tabs
 $nav-tabs-border-color:                     #ddd !default;
 
-$nav-tabs-link-hover-border-color:          $gray-lighter !default;
+$nav-tabs-link-hover-border-color:          $brand-primary !default;
 
 $nav-tabs-active-link-hover-bg:             $body-bg !default;
 $nav-tabs-active-link-hover-color:          $gray !default;
