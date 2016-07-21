@@ -45,7 +45,7 @@
               <li>
                 <span>
                   <%= link_to "<i class='glyphicon glyphicon-user'></i> #{current_user.name}".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                  <%= link_to 'Logout', destroy_user_session_url, method: :delete, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                  <%= link_to 'Logout', destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
                 </span>
               </li>
             <% else %>
