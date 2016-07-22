@@ -114,18 +114,19 @@ img {
     font-size: 60px;
     letter-spacing: -1px;
     line-height: 1.3;
-    padding: 0;
+    padding: 0px 10px;
+    margin-bottom: 0px;
     display: inline;
     background-color: rgba(0,0,0,.7);
 }
 .hero-unit h2 {
     font-size: 35px;
-    padding: 0;
+    padding: 0px 10px;
     color: #FFFFFF;
-    margin-top: 0;
-    background-color: rgba(0,0,0,.4);
+    margin-bottom: 1em;
+    background-color: rgba(0,0,0,.3);
     display: inline;
-    line-height: 1.4;
+    line-height: 1.3;
 }
 
 .hero-unit {
@@ -188,7 +189,8 @@ img {
 /* Landscape phones and down */
 @media (max-width: 480px) {
   .hero-unit {
-    height:340px;
+    height:400px;
+    padding-bottom: 30px;
   }
 }
 

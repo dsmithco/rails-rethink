@@ -78,10 +78,13 @@
       <div class="hero-unit">
         <div class="hero-unit-cell">
           <div class="hero-unit-content text-center">
-            <h1>Is your website easy to maintain?</h1>
+            <div>
+              <h1>Is your website easy to maintain?</h1>
+            </div>
             <br/>
-            <h2>RETHINK Your Site</h2>
-            <br/>
+            <div>
+              <h2>RETHINK Your Site and make one that is awesome!</h2>
+            </div>
             <br/>
             <p><a class="btn btn-primary btn-lg">Create Website</a></p>
           </div>
@@ -94,6 +97,41 @@
     <div class="">
       <div class="container">
         <%= render partial: 'layouts/messages' %>
+        <div class="row">
+          <div class="col-md-12">
+            <h2 class="text-center">
+              Features you want and usabilty you need.
+            </h2>
+            <hr/>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+              <img src="https://unsplash.it/500/200/?random" alt="" />
+              <div class="panel-body">
+                Making sites with beauty and simplicity.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+              <img src="https://unsplash.it/500/200/?random=green" alt="" />
+              <div class="panel-body">
+                Bringing beauty and simplicity into your websites.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+              <img src="https://unsplash.it/500/200/?random=blue" alt="" />
+              <div class="panel-body">
+                Bringing beauty and simplicity into your websites.
+              </div>
+              <div class="panel-footer">
+                <a href="#" class="btn btn-default btn-block">Check it soudd</a>
+              </div>
+            </div>
+          </div>
+        </div>
         <%= yield %>
       </div>
     </div>
