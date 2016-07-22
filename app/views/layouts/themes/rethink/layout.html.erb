@@ -42,10 +42,13 @@
               </li>
             <% end %>
             <% if user_signed_in? %>
+            <li>
+                <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
+            </li>
               <li>
                 <span>
-                  <%= link_to "<i class='glyphicon glyphicon-user'></i> #{current_user.name}".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                  <%= link_to 'Logout', destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                  <%= link_to "<i class='glyphicon glyphicon-user'></i> <span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
+                  <%= link_to "<i class='glyphicon glyphicon-log-out'></i> <span class='hidden-sm'>Logout</span>".html_safe, destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
                 </span>
               </li>
             <% else %>
@@ -90,6 +93,52 @@
           </div>
         </div>
       </div>
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h2 class="text-center">
+                Features you want and usabilty you need.
+              </h2>
+              <hr/>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="panel panel-default">
+                <img src="https://unsplash.it/700/300/?random" alt="" style="width: 100% !important;"/>
+                <div class="panel-body">
+                  Making sites with beauty and simplicity.
+                </div>
+                <div class="panel-footer">
+                  <a href="#" class="btn btn-block">Check it out</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="panel panel-default">
+                <img src="https://unsplash.it/700/300/?random=green" alt="" style="width: 100% !important;"/>
+                <div class="panel-body">
+                  Bringing beauty and simplicity into your websites.
+                </div>
+                <div class="panel-footer">
+                  <a href="#" class="btn btn-block">Check it out</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="panel panel-default">
+                <img src="https://unsplash.it/700/300/?random=blue" alt="" style="width: 100% !important;"/>
+                <div class="panel-body">
+                  Bringing beauty and simplicity into your websites.
+                </div>
+                <div class="panel-footer">
+                  <a href="#" class="btn btn-block">Check it out</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     <% end %>
 
 
@@ -97,41 +146,6 @@
     <div class="">
       <div class="container">
         <%= render partial: 'layouts/messages' %>
-        <div class="row">
-          <div class="col-md-12">
-            <h2 class="text-center">
-              Features you want and usabilty you need.
-            </h2>
-            <hr/>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="panel panel-default">
-              <img src="https://unsplash.it/500/200/?random" alt="" />
-              <div class="panel-body">
-                Making sites with beauty and simplicity.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="panel panel-default">
-              <img src="https://unsplash.it/500/200/?random=green" alt="" />
-              <div class="panel-body">
-                Bringing beauty and simplicity into your websites.
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="panel panel-default">
-              <img src="https://unsplash.it/500/200/?random=blue" alt="" />
-              <div class="panel-body">
-                Bringing beauty and simplicity into your websites.
-              </div>
-              <div class="panel-footer">
-                <a href="#" class="btn btn-default btn-block">Check it soudd</a>
-              </div>
-            </div>
-          </div>
-        </div>
         <%= yield %>
       </div>
     </div>

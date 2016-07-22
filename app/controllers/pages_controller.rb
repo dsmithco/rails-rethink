@@ -20,6 +20,7 @@ class PagesController < ApplicationController
   # GET /pages/new
   def new
     @page = Page.new
+    @page.website_id = params[:website_id] if params[:website_id].present?
   end
 
   # GET /pages/1/edit
