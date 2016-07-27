@@ -18,8 +18,8 @@
 //= require ie10-viewport-bug-workaround
 //= require angular
 //= require angular-sanitize
-//= require ng-file-upload-shim.min
-//= require ng-file-upload.min
+// require ng-file-upload-shim.min
+// require ng-file-upload.min
 
 (function(){
 
