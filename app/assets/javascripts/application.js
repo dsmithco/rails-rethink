@@ -16,7 +16,10 @@
 //= require bootstrap.min
 //= require summernote
 //= require ie10-viewport-bug-workaround
-
+//= require angular
+//= require angular-sanitize
+//= require ng-file-upload-shim.min
+//= require ng-file-upload.min
 
 (function(){
 
@@ -82,6 +85,6 @@
 
 })();
 
-// document.addEventListener("turbolinks:load", function () {
-//   angular.bootstrap(document.body, ['app','ngFileUpload']);
-// });
+document.addEventListener("turbolinks:load", function () {
+  angular.bootstrap(document.body, ['app','ngFileUpload']);
+});
