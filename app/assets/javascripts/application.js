@@ -85,6 +85,6 @@
 
 })();
 
-document.addEventListener("turbolinks:load", function () {
-  angular.bootstrap(document.body, ['app','ngFileUpload']);
-});
+// document.addEventListener("turbolinks:load", function () {
+//   angular.bootstrap(document.body, ['app','ngFileUpload']);
+// });
