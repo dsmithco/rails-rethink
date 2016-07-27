@@ -16,11 +16,8 @@
 //= require bootstrap.min
 //= require summernote
 //= require ie10-viewport-bug-workaround
-//= require jquery-fileupload/basic
-//= require jquery-fileupload/vendor/tmpl
 //= require angular
 //= require angular-sanitize
-//= require attachments
 //= require ng-file-upload-shim.min
 //= require ng-file-upload.min
 
