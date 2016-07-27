@@ -5,7 +5,7 @@ $(function () {
       var inlineFormData = logo_uploader.data('formData');
       var url = '/logos';
       var method = 'POST'
-      if(inlineFormData.id){
+      if(inlineFormData && inlineFormData.id){
         url = url + '/' + inlineFormData.id;
         method = 'PUT'
       }
@@ -52,7 +52,7 @@ $(function () {
           file = data.files[0];
           if (types.test(file.type) || types.test(file.name)) {
             data.context = $(tmpl("template-upload", file).trim())
-            $('.new_hero_image').append(data.context);
+            $('#new_hero_image').append(data.context);
             return data.submit();
           } else {
             return alert(file.name + " is not a gif, jpeg, or png image file");

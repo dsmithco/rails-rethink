@@ -16,10 +16,12 @@
     <style media="screen">
       <%= @current_website.try(:css_override)%>
     </style>
+    <%= yield :head %>
 
   </head>
 
-  <body id="body">
+  <body class="<%= controller_name %> <%= action_name %>" id="body">
+
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
@@ -78,7 +80,7 @@
     </nav>
 
     <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" %>
-      <div class="hero-unit">
+      <div class="hero-unit" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
         <div class="hero-unit-cell">
           <div class="hero-unit-content text-center">
             <div>

@@ -1,5 +1,6 @@
 <% if @resource.new_record? %>
-  alert("Failed to upload painting: <%= j @attachment.errors.full_messages.join(', ').html_safe %>");
+  alert("Failed to upload painting: <%= j @resource.errors.full_messages.join(', ').html_safe %>");
 <% else %>
-  $(".hero_images").append("<%=j render 'hero_images/hero_image', hero_image: @resource %>");
+  $(".hero_images").html("<%=j render 'hero_images/heros', hero_images: @resource.attachable.hero_images %>");
+  $scope.$apply();
 <% end %>

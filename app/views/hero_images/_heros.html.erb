@@ -1,0 +1,7 @@
+<% hero_images.each_slice(3) do |herows| %>
+  <div class="row">
+    <% herows.each do |hero_image| %>
+        <%= render 'hero_images/hero_image', hero_image: hero_image %>
+    <% end %>
+  </div>
+<% end %>

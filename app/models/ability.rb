@@ -9,7 +9,12 @@ class Ability
     #   o.account_id==user.account_id
     # end
 
-    can [:manage], :all
+    can [:manage], :all do |item|
+      user.email=='dsmithco@gmail.com'
+    end
+    can [:read], :all do |item|
+      true
+    end
 
     # can [:index, :read, :update], Account do |account|
     #   user.account_ids.include? account.id || user.email=='dsmithco@gmail.com'
@@ -31,13 +36,9 @@ class Ability
     #   true
     # end
     #
-    # can [:index, :manage], Page do |page|
-    #   if page.website.present?
-    #     user.account_ids.include? page.website.account_id || user.email=='dsmithco@gmail.com'
-    #   else
-    #     true
-    #   end
-    # end
+    can [:index, :manage], Page do |page|
+      user.account_ids.include? page.website.account_id
+    end
 
     # if user.email == 'dsmithco@gmail.com'
     #   can :manage, :all
