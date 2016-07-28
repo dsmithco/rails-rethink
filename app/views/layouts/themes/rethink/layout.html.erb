@@ -81,7 +81,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <% cache @current_website.hero_images do %>
+    <% cache @current_website.hero_images.first do %>
       <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
         <%= render 'layouts/hero_image' %>
       <% end %>
