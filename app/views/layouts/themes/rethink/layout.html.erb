@@ -20,8 +20,6 @@
     <%= yield :head %>
 
   </head>
-  <% cache current_user do %>
-
   <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" >
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
@@ -39,29 +37,33 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-            <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
-              <li>
-                <%= link_to page.name, page_url(page) %>
-              </li>
+            <% cache @current_website.pages do %>
+              <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
+                <li>
+                  <%= link_to page.name, page_url(page) %>
+                </li>
+              <% end %>
             <% end %>
-            <% if user_signed_in? %>
-            <li>
-                <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
-            </li>
+            <% cache @current_website.pages do %>
+              <% if user_signed_in? %>
               <li>
-                <span>
-                  <%= link_to "<i class='glyphicon glyphicon-user'></i> <span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                  <%= link_to "<i class='glyphicon glyphicon-log-out'></i> <span class='hidden-sm'>Logout</span>".html_safe, destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
-                </span>
+                  <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
               </li>
-            <% else %>
-              <li>
-                <span>
-                  <%= link_to 'Login', new_user_session_url, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
+                <li>
+                  <span>
+                    <%= link_to "<i class='glyphicon glyphicon-user'></i> <span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
+                    <%= link_to "<i class='glyphicon glyphicon-log-out'></i> <span class='hidden-sm'>Logout</span>".html_safe, destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                  </span>
+                </li>
+              <% else %>
+                <li>
+                  <span>
+                    <%= link_to 'Login', new_user_session_url, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
 
-                  <%= link_to 'Sign Up', new_user_registration_url, class: 'btn btn-primary btn-inverse navbar-btn' %>
-                </span>
-              </li>
+                    <%= link_to 'Sign Up', new_user_registration_url, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                  </span>
+                </li>
+              <% end %>
             <% end %>
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -79,9 +81,10 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-      <%= render 'layouts/hero_image' %>
+    <% cache @current_website.hero_images do %>
+      <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
+        <%= render 'layouts/hero_image' %>
+      <% end %>
     <% end %>
 
 
@@ -93,7 +96,6 @@
       </div>
     </div>
   </body>
-  <% end %>
   <footer class="footer">
     <div class="container">
       <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
