@@ -88,3 +88,10 @@
 document.addEventListener("turbolinks:load", function () {
   angular.bootstrap(document.body, ['app','ngFileUpload']);
 });
+
+angular.module('app', ['ngSanitize']);
+angular
+  .module('app')
+  .controller('BaseController', BaseController);
+
+function BaseController($scope, $http, Upload, $timeout) {}

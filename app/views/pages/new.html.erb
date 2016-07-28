@@ -1,3 +1,4 @@
-<h1>New Page</h1>
+<ng-init="page={}"/>
+<h1 ng-bind="page.name||'New Page'">New Page</h1>
 
 <%= render 'form', page: @page %>
