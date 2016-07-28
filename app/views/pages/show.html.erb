@@ -1,10 +1,7 @@
-<% cache @page do %>
+<% cache [@page, current_user] do %>
   <h2 class="page-title">
     <%= @page.name %>
-    <% cache current_user do %>
-      <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary btn-sm inverse pull-right' if can? :update, @page %>
-    <% end %>
-
+    <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary btn-sm inverse pull-right' if can? :update, @page %>
   </h2>
   <%= @page.about.html_safe %>
 <% end %>
