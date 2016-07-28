@@ -1,6 +1,6 @@
-<%= link_to '<i class="glyphicon glyphicon-pencil"></i>  Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary pull-right inverse' if can? :update, @page %>
+<%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page), class: 'edit_link' if can? :update, @page %>
+
 <h2 class="page-title">
   <%= @page.name %>
 </h2>
 <%= @page.about.html_safe %>
-<%=can? :update, @page%>

@@ -198,3 +198,26 @@ img {
 
 section {
 }
+
+.edit_link {
+  position: fixed;
+  left: 0;
+  top: 100px;
+  padding: 10px 15px;
+  border-radius: 0px 3px 3px 0px;
+  opacity: .85;
+  color: #fff;
+  background-color: $brand-primary;
+  box-shadow: 0px 100px 0px rgba(0,0,0,0) inset;
+  transition: .2s;
+}
+
+.edit_link:hover {
+  color: #fff;
+  text-decoration: none;
+  box-shadow: 0px 100px 0px rgba(0,0,0,0.2) inset;
+}
+
+.edit_link:active {
+  box-shadow: 0px 100px 0px rgba(0,0,0,0.3) inset;
+}

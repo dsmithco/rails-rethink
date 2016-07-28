@@ -11,6 +11,10 @@ class WebsitesController < ApplicationController
   # GET /websites/1
   # GET /websites/1.json
   def show
+    respond_to do |format|
+      format.html {redirect_to @website.rethink_href }
+      format.json {}
+    end
   end
 
   def home

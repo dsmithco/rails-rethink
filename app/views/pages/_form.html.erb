@@ -32,12 +32,16 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :page_id %>
-    <%= f.text_field :page_id, class: 'form-control' %>
+    <%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %>
+    <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
   </div>
 
   <div>
-    <%= f.submit 'Save', class: 'btn btn-success' %>
-    <a href="/" class="btn btn-default">Cancel</a>
+    <button type="submit" class="btn btn-success">
+        <i class='glyphicon glyphicon-floppy-disk'></i> Save
+    </button>
+    <%= link_to 'Cancel', @page || @current_website, class: "btn btn-default" %>
   </div>
+  <br/>
+  <br/>
 <% end %>

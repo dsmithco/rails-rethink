@@ -79,68 +79,8 @@
       </div>
     </nav>
 
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" %>
-      <div class="hero-unit" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
-        <div class="hero-unit-cell">
-          <div class="hero-unit-content text-center">
-            <div>
-              <h1>Is your website easy to maintain?</h1>
-            </div>
-            <br/>
-            <div>
-              <h2>RETHINK Your Site and make one that is awesome!</h2>
-            </div>
-            <br/>
-            <p><a class="btn btn-primary btn-lg">Create Website</a></p>
-          </div>
-        </div>
-      </div>
-      <section>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <h2 class="text-center">
-                Features you want and usabilty you need.
-              </h2>
-              <hr/>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
-                <img src="https://unsplash.it/700/300/?random" alt="" style="width: 100% !important;"/>
-                <div class="panel-body">
-                  Making sites with beauty and simplicity.
-                </div>
-                <div class="panel-footer">
-                  <a href="#" class="btn btn-block">Check it out</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
-                <img src="https://unsplash.it/700/300/?random=green" alt="" style="width: 100% !important;"/>
-                <div class="panel-body">
-                  Bringing beauty and simplicity into your websites.
-                </div>
-                <div class="panel-footer">
-                  <a href="#" class="btn btn-block">Check it out</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-              <div class="panel panel-default">
-                <img src="https://unsplash.it/700/300/?random=blue" alt="" style="width: 100% !important;"/>
-                <div class="panel-body">
-                  Bringing beauty and simplicity into your websites.
-                </div>
-                <div class="panel-footer">
-                  <a href="#" class="btn btn-block">Check it out</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
+    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
+      <%= render 'layouts/hero_image' %>
     <% end %>
 
 

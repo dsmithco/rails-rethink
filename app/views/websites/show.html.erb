@@ -1,4 +1,5 @@
-<section class="section">
+<section class="section text-center">
   <%= @website.try(:about).try(:html_safe) %>
-  <%= link_to 'Edit', edit_website_path(@website), class: 'btn btn-primary inverse' if @website.present? %>
 </section>
+<br/>
+<br/>
