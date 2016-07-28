@@ -8,4 +8,4 @@ angular
   .controller('BaseController', BaseController);
 
 function BaseController() {}
-BaseController.$inject = ['$scope', '$http', '$timeout']
+BaseController.$inject = ['$scope', '$http', '$timeout'];
