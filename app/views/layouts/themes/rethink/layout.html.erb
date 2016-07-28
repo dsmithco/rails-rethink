@@ -20,6 +20,7 @@
     <%= yield :head %>
 
   </head>
+  <% cache current_user do %>
 
   <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" >
     <!-- Fixed navbar -->
@@ -92,6 +93,7 @@
       </div>
     </div>
   </body>
+  <% end %>
   <footer class="footer">
     <div class="container">
       <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
