@@ -44,11 +44,11 @@
                 </li>
               <% end %>
             <% end %>
-            <% if user_signed_in? %>
             <% cache current_user do %>
-              <li>
-                  <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
-              </li>
+              <% if user_signed_in? %>
+                <li>
+                    <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
+                </li>
                 <li>
                   <span>
                     <%= link_to "<i class='glyphicon glyphicon-user'></i> <span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
