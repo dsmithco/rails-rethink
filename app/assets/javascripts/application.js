@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap.min
 //= require summernote
 //= require ie10-viewport-bug-workaround
@@ -20,6 +19,7 @@
 //= require angular-sanitize
 //= require ng-file-upload-shim.min
 //= require ng-file-upload.min
+//= require ng_app
 
 (function(){
 
@@ -75,23 +75,11 @@
   }
 
   var document_load = function(){
-    document.addEventListener("turbolinks:load", function() {
+    $(document).ready(function() {
       set_summernote();
       note_affix_toolbar();
       document_scrolling();
     });
   }();
 
-
 })();
-
-document.addEventListener("turbolinks:load", function () {
-  angular.bootstrap(document.body, ['app','ngFileUpload']);
-});
-
-angular.module('app', ['ngSanitize']);
-angular
-  .module('app')
-  .controller('BaseController', BaseController);
-
-function BaseController($scope, $http, Upload, $timeout) {}
