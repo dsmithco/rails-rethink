@@ -1,5 +1,7 @@
-<section class="section text-center">
-  <%= @website.try(:about).try(:html_safe) %>
-</section>
+<% cache [@website, current_user] do %>
+  <section class="section text-center">
+    <%= @website.try(:about).try(:html_safe) %>
+  </section>
+<% end %>
 <br/>
 <br/>
