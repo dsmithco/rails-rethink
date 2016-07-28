@@ -44,7 +44,7 @@
                 </li>
               <% end %>
             <% end %>
-            <% cache @current_website.pages do %>
+            <% cache current_user do %>
               <% if user_signed_in? %>
               <li>
                   <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
@@ -81,11 +81,11 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <% cache @current_website.hero_images do %>
       <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-        <%= render 'layouts/hero_image' %>
+        <% cache @current_website.hero_images do %>
+          <%= render 'layouts/hero_image' %>
+        <% end %>
       <% end %>
-    <% end %>
 
 
 

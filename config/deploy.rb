@@ -92,7 +92,7 @@ task :deploy => :environment do
       # queue "rm -f #{deploy_to}/#{current_path}/tmp/pids/rethinkwebdesign-puma.pid"
       # queue "rm -f #{deploy_to}/#{current_path}/tmp/sockets/rethinkwebdesign-puma.sock"
       # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb stop"
-      # queue "ps -ef | grep puma | grep -v grep | awk '{print $2}' | xargs kill"
+      queue "ps -ef | grep puma | grep -v grep | awk '{print $2}' | xargs kill -9"
       queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb start"
     end
   end
