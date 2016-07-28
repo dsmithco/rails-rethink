@@ -2,7 +2,9 @@ angular
   .module('app')
   .controller('WebsiteController', WebsiteController);
 
-function WebsiteController($scope, $http, Upload, $timeout) {
+BaseController.$inject = ['$scope', '$http', 'Upload', '$timeout']
+
+function WebsiteController() {
   var webCtrl = this;
 
   webCtrl.save_hero = function(hero){

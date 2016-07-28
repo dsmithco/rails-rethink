@@ -13,14 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
+//= require turbolinks
 //= require summernote
 //= require ie10-viewport-bug-workaround
 //= require angular
 //= require angular-sanitize
 //= require ng-file-upload-shim.min
 //= require ng-file-upload.min
-//= require ng_app
-
+//= require ng-app
 (function(){
 
   var set_summernote = function(){
@@ -75,11 +75,12 @@
   }
 
   var document_load = function(){
-    $(document).ready(function() {
+    document.addEventListener("turbolinks:load", function () {
       set_summernote();
       note_affix_toolbar();
       document_scrolling();
     });
   }();
+
 
 })();
