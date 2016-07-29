@@ -3,6 +3,8 @@ class Page < ApplicationRecord
   friendly_id :name, :scope => :website_id, use: [:slugged, :scoped, :history]
 
   belongs_to :website
+  acts_as_list scope: :website
+
   belongs_to :page, optional: true
   has_many :pages
 
