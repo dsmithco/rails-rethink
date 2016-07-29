@@ -44,7 +44,7 @@
               <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
                 <% if page.pages.present? %>
                   <li class='dropdown'>
-                    <%= link_to "#{page.name} <span class='caret'></span>".html_safe, page_url(page), class: 'dropdown-toggle', 'data-toggle': '' %>
+                    <%= link_to "#{page.name} <span class='caret'></span>".html_safe, page_path(page), class: 'dropdown-toggle', 'data-toggle': '' %>
                     <ul class="dropdown-menu">
                       <% page.pages.each do |page2| %>
                         <li>
@@ -68,15 +68,15 @@
                 <li>
                   <span>
                     <%= link_to "<i class='glyphicon glyphicon-user'></i> <span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                    <%= link_to "<i class='glyphicon glyphicon-log-out'></i> <span class='hidden-sm'>Logout</span>".html_safe, destroy_user_session_url, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                    <%= link_to "<i class='glyphicon glyphicon-log-out'></i> <span class='hidden-sm'>Logout</span>".html_safe, destroy_user_session_path, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
                   </span>
                 </li>
               <% else %>
                 <li>
                   <span>
-                    <%= link_to 'Login', new_user_session_url, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
+                    <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
 
-                    <%= link_to 'Sign Up', new_user_registration_url, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                    <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary btn-inverse navbar-btn' %>
                   </span>
                 </li>
               <% end %>
