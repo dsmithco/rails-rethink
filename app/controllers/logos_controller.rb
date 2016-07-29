@@ -5,10 +5,16 @@ class LogosController < AttachmentsController
   # POST /attachments
   # POST /attachments.json
   def create
-    @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+    if params[:id].present?
+      @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
+      @resource.update(attachment_params)
+    else
+      @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+      @resource.save
+    end
 
     respond_to do |format|
-      if @resource.save
+      if !@resource.errors.present?
         format.html { redirect_to @resource, notice: 'Attachment was successfully created.' }
         format.json { render :show, status: :created, location: @resource }
         format.js { render :create, status: :created }

@@ -13,26 +13,34 @@ function WebsiteController($scope, $http, Upload, $timeout) {
   }
 
   webCtrl.destroy_hero = function(hero){
-    var url = '/attachments/' + hero.id + '.json';
-    $http.delete(url, hero).then(function(response){
-      console.log(response);
-      webCtrl.heros.splice(webCtrl.heros.indexOf(hero), 1);
-    })
+    var confirm_action = confirm('Are you sure you want to delete ' + hero.name + ' hero image?')
+    if(confirm_action){
+      var url = '/attachments/' + hero.id + '.json';
+      $http.delete(url, hero).then(function(response){
+        console.log(response);
+        webCtrl.heros.splice(webCtrl.heros.indexOf(hero), 1);
+      })
+    }
   }
-
-  webCtrl.uploadFiles = function(files, errFiles, website_id) {
-      $scope.files = files;
-      $scope.errFiles = errFiles;
+  $scope.files = {};
+  $scope.errFiles = {};
+  webCtrl.uploadFiles = function(files, errFiles, route, type, attachable_type, attachable_id, list) {
+      $scope.files[type + attachable_id] = files;
+      $scope.errFiles[type + attachable_id] = errFiles;
       angular.forEach(files, function(file) {
           file.upload = Upload.upload({
-              url: '/hero_images.json',
-              data: {asset: file, attachable_type: 'Website', attachable_id: website_id}
+              url: route,
+              data: {id: list.id, asset: file, attachable_type: attachable_type, attachable_id: attachable_id}
           });
 
           file.upload.then(function (response) {
               $timeout(function () {
                   file.result = response.data;
-                  webCtrl.heros.push(file.result);
+                  if (list instanceof Array) {
+                    list.push(file.result);
+                  } else {
+                    angular.copy(file.result, list);
+                  }
               });
           }, function (response) {
               if (response.status > 0)
@@ -43,5 +51,22 @@ function WebsiteController($scope, $http, Upload, $timeout) {
           });
       });
   }
+
+  webCtrl.dragControlListeners = {
+      // accept: function (sourceItemHandleScope, destSortableScope) {return boolean}//override to determine drag is allowed or not. default is true.
+      // itemMoved: function (event) {//Do what you want},
+      orderChanged: function(event) {
+        var index = event.dest.index
+        var heros = event.dest.sortableScope.modelValue
+        var hero = heros[index]
+        hero.position = index + 1
+        webCtrl.save_hero(hero);
+      }
+      //Do what you want},
+      // containment: '#board'//optional param.
+      // clone: true //optional param for clone feature.
+      // allowDuplicates: false //optional param allows duplicates to be dropped.
+  };
+
 
 }

@@ -1,4 +1,9 @@
 class HeroImage < Attachment
+  belongs_to :attachable, :polymorphic => true
+
+  acts_as_list scope: :attachable
+
+  default_scope { order('attachments.position ASC') }
 
   # This method associates the attribute ":avatar" with a file attachment
   has_attached_file :asset, styles: {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728023046) do
+ActiveRecord::Schema.define(version: 20160728192026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(version: 20160728023046) do
     t.text     "about"
     t.integer  "website_id"
     t.string   "block_type"
-    t.string   "position"
     t.string   "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "position"
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end
 
@@ -78,9 +78,9 @@ ActiveRecord::Schema.define(version: 20160728023046) do
     t.integer  "page_id"
     t.integer  "block_id"
     t.string   "location"
-    t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "position"
     t.index ["block_id"], name: "index_page_blocks_on_block_id", using: :btree
     t.index ["page_id"], name: "index_page_blocks_on_page_id", using: :btree
   end
@@ -89,11 +89,11 @@ ActiveRecord::Schema.define(version: 20160728023046) do
     t.string   "name"
     t.text     "about"
     t.integer  "website_id"
-    t.string   "position"
     t.integer  "page_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "slug"
+    t.integer  "position"
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
     t.index ["slug"], name: "index_pages_on_slug", using: :btree
