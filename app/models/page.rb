@@ -1,6 +1,6 @@
 class Page < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, :scope => :website_id, use: [:slugged, :finders, :scoped, :history]
+  friendly_id :name, :scope => :website_id, use: [:slugged, :scoped, :history]
 
   belongs_to :website
   belongs_to :page, optional: true

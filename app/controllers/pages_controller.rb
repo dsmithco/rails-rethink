@@ -31,7 +31,6 @@ class PagesController < ApplicationController
   # POST /pages.json
   def create
     @page = Page.new(page_params)
-
     respond_to do |format|
       if @page.save
         format.html { redirect_to @page, notice: 'Page was successfully created.' }
@@ -46,6 +45,7 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1
   # PATCH/PUT /pages/1.json
   def update
+    @page.slug = nil
     respond_to do |format|
       if @page.update(page_params)
         format.html { redirect_to @page, notice: 'Page was successfully updated.' }
@@ -72,7 +72,10 @@ class PagesController < ApplicationController
     def set_page
       if @current_website.present?
         begin
-          @page = @current_website.pages.friendly.find(params[:id])
+          @page = @current_website.pages.find_by(slug: params[:id])
+          if !@page.present?
+            @page = @current_website.pages.friendly.find(params[:id])
+          end
         rescue
           redirect_to '/', status: 302, notice: 'This is not the page you are looking for...move along.'
         end
