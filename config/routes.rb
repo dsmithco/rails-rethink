@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
   resources :blocks
   resources :pages
+  get "pages/:page_id/:id" => "pages#show"
+  match "pages/:page_id/:id" => "pages#update", via: [:put, :patch]
+  delete "pages/:page_id/:id" => "pages#destroy"
+  post "pages/:page_id/:id" => "pages#create"
   resources :attachments, controller: 'attachments', type: 'Attachment'
   resources :logos, controller: 'logos', type: 'Logo'
   resources :icons, controller: 'attachments', type: 'Icon'

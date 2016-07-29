@@ -48,14 +48,14 @@
                     <ul class="dropdown-menu">
                       <% page.pages.each do |page2| %>
                         <li>
-                          <%= link_to page2.name, page_url(page2) %>
+                          <%= link_to page2.name, page_path(page2) %>
                         </li>
                       <% end %>
                     </ul>
                   </li>
                 <% else %>
                   <li>
-                    <%= link_to page.name, page_url(page) %>
+                    <%= link_to page.name, page_path(page) %>
                   </li>
                 <% end %>
               <% end %>
