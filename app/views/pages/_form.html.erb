@@ -1,46 +1,73 @@
-<%= form_for(page) do |f| %>
-  <% if page.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:</h2>
+<script type="text/javascript">
+  angular
+    .module('app')
+    .controller('PageController', PageController);
 
-      <ul>
-      <% page.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  function PageController($scope, $http, Upload, $timeout) {
+    var pageCtrl = this;
+    pageCtrl.test = 'testing';
+  }
+</script>
+
+<div ng-controller="PageController as pageCtrl">
+
+  <%= form_for(page) do |f| %>
+    <% if page.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+        <% page.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Page Info</a></li>
+      <li role="presentation"><a href="#blocks" aria-controls="blocks" role="tab" data-toggle="tab">Blocks</a></li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="page">
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
+        </div>
+
+        <div class="form-group" id="about">
+          <%= f.text_area :about, class: 'form-control summernote' %>
+        </div>
+
+        <div class="form-group hide">
+          <%= f.label :website_id %>
+          <%= f.select :website_id, Website.select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :position %>
+          <%= f.text_field :position, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %>
+          <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
+        </div>
+      </div>
+
+      <div role="tabpanel" class="tab-pane active" id="blocks">
+        {{pageCtrl.test}}
+      </div>
     </div>
+
+    <div>
+      <button type="submit" class="btn btn-success">
+          <i class='glyphicon glyphicon-floppy-disk'></i> Save
+      </button>
+      <%= link_to 'Cancel', @page || @current_website, class: "btn btn-default" %>
+    </div>
+    <br/>
+    <br/>
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
-  </div>
-
-  <div class="form-group" id="about">
-    <%= f.text_area :about, class: 'form-control summernote' %>
-  </div>
-
-  <div class="form-group hide">
-    <%= f.label :website_id %>
-    <%= f.select :website_id, Website.select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :position %>
-    <%= f.text_field :position, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %>
-    <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
-  </div>
-
-  <div>
-    <button type="submit" class="btn btn-success">
-        <i class='glyphicon glyphicon-floppy-disk'></i> Save
-    </button>
-    <%= link_to 'Cancel', @page || @current_website, class: "btn btn-default" %>
-  </div>
-  <br/>
-  <br/>
-<% end %>
+</div>

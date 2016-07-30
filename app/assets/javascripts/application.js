@@ -22,6 +22,7 @@
 //= require ng-file-upload.min
 //= require ng-sortable.min
 //= require ng-app
+
 (function(){
 
   var set_summernote = function(){
