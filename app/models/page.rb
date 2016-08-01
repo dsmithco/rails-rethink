@@ -15,4 +15,28 @@ class Page < ApplicationRecord
 
   validates :website, presence: true
 
+  def main_left_blocks
+    self.blocks.where(location: 'main_left')
+  end
+
+  def main_right_blocks
+    self.blocks.where(location: 'main_right')
+  end
+
+  def main_top_blocks
+    self.blocks.where(location: 'main_top')
+  end
+
+  def main_bottom_blocks
+    self.blocks.where(location: 'main_bottom')
+  end
+
+  def top_blocks
+    self.blocks.where(location: 'top')
+  end
+
+  def bottom_blocks
+    self.blocks.where(location: 'bottom')
+  end
+
 end

@@ -222,3 +222,12 @@ section {
 .edit_link:active {
   box-shadow: 0px 100px 0px rgba(0,0,0,0.3) inset;
 }
+
+h4.box-title {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 3px;
+}
+
+.main_right_blocks, .main_left_blocks {
+  margin-top: 6px;
+}

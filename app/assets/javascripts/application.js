@@ -58,6 +58,14 @@
     });
   }
 
+  var fade_in_alert =  function(){
+    $(function() {
+      $('#alerts').delay(100).slideDown('normal', function() {
+        $(this).delay(5500).slideUp();
+      });
+    });
+  }
+
   var document_scrolling = function(){
     // $(document).scroll(function() { //.box is the class of the div
     //   if($(this).scrollTop() > $('#name').offset().top - ($('.note-toolbar').height()+30) || $(this).scrollTop() < $('#about').offset().top ) {
@@ -75,6 +83,7 @@
       set_summernote();
       note_affix_toolbar();
       document_scrolling();
+      fade_in_alert();
     });
   }();
 

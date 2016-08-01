@@ -1,0 +1,36 @@
+<!-- block edit modal -->
+<div class="modal fade" id="edit_block" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit {{blocksCtrl.edit_block.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="block_name" class="form-control" ng-model="blocksCtrl.edit_block.name">
+        </div>
+        <div class="form-group">
+          <textarea type="text" name="block_abotu" class="form-control" ng-model="blocksCtrl.edit_block.about"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Block Type</label>
+          <input type="text" name="block_type" class="form-control" ng-model="blocksCtrl.edit_block.block_type">
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" name="location" class="form-control" ng-model="blocksCtrl.edit_block.location">
+        </div>
+        <div class="form-group">
+          <label>Default Position</label>
+          <input type="text" name="position" class="form-control" ng-model="blocksCtrl.edit_block.position">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="blocksCtrl.save_block(blocksCtrl.edit_block)" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

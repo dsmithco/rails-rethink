@@ -100,6 +100,8 @@
       </div>
     </nav>
 
+    <%= render partial: 'layouts/messages' %>
+
     <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
       <% cache [@current_website.hero_images, current_user] do %>
         <%= render 'layouts/hero_image' %>
@@ -110,7 +112,6 @@
 
     <div class="">
       <div class="container">
-        <%= render partial: 'layouts/messages' %>
         <%= yield %>
       </div>
     </div>

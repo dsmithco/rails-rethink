@@ -30,7 +30,7 @@ class BlocksController < ApplicationController
     respond_to do |format|
       if @block.save
         format.html { redirect_to @block, notice: 'Block was successfully created.' }
-        format.json { render :show, status: :created, location: @block }
+        format.json { render json: @block.to_json, status: :created}
       else
         format.html { render :new }
         format.json { render json: @block.errors, status: :unprocessable_entity }
@@ -41,10 +41,13 @@ class BlocksController < ApplicationController
   # PATCH/PUT /blocks/1
   # PATCH/PUT /blocks/1.json
   def update
+    params[:page_ids] = params[:page_ids] - [params[:remove_page_id]] if params[:remove_page_id].present?
+    params[:page_ids] = params[:page_ids] + [params[:add_page_id]] if params[:add_page_id].present?
+
     respond_to do |format|
       if @block.update(block_params)
         format.html { redirect_to @block, notice: 'Block was successfully updated.' }
-        format.json { render :show, status: :ok, location: @block }
+        format.json { render json: @block.to_json, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @block.errors, status: :unprocessable_entity }
@@ -70,6 +73,6 @@ class BlocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_params
-      params.require(:block).permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
+      params.permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
     end
 end

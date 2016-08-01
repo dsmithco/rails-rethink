@@ -1,0 +1,8 @@
+<% blocks.each do |block| %>
+  <div class="panel panel-default block-<%= block.id %>">
+    <img src="https://unsplash.it/700/300/?random=green" alt="" />
+    <div class="panel-body">
+      <%= block.about %>
+    </div>
+  </div>
+<% end %>

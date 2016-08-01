@@ -1,0 +1,31 @@
+angular
+  .module('app')
+  .controller('BlocksController', BlocksController);
+
+function BlocksController($scope, $http, Upload, $timeout) {
+  var blocksCtrl = this;
+  blocksCtrl.edit_block = {};
+
+  blocksCtrl.edit_block_modal = function(block){
+    console.log(block);
+    blocksCtrl.edit_block = block;
+    $('#edit_block').modal('show');
+  }
+
+  blocksCtrl.save_block = function(block){
+    if(block.id){
+      var url = "/blocks/" + block.id + ".json";
+      $http.put(url, block).then(function(response){
+        $('#edit_block').modal('hide');
+        angular.copy(response.data, block);
+      });
+    }else{
+      var url = "/blocks.json";
+      $http.post(url, block).then(function(response){
+        blocksCtrl.blocks.push(response.data);
+        $('#edit_block').modal('hide');
+      });
+    }
+
+  }
+}

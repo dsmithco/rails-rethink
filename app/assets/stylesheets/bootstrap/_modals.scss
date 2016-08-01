@@ -30,7 +30,7 @@
 
   // When fading in the modal, animate it to slide down
   &.fade .modal-dialog {
-    @include translate(0, -25%);
+    @include translate(0, 1%);
     @include transition-transform(0.3s ease-out);
   }
   &.in .modal-dialog { @include translate(0, 0) }
@@ -51,10 +51,10 @@
 .modal-content {
   position: relative;
   background-color: $modal-content-bg;
-  border: 1px solid $modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
-  border: 1px solid $modal-content-border-color;
-  border-radius: $border-radius-large;
-  @include box-shadow(0 3px 9px rgba(0,0,0,.5));
+  border: 0px solid $modal-content-fallback-border-color; //old browsers fallback (ie8 etc)
+  border: 0px solid $modal-content-border-color;
+  border-radius: $border-radius-large/2;
+  @include box-shadow(0 3px 9px rgba(0,0,0,.1));
   background-clip: padding-box;
   // Remove focus outline from opened modal
   outline: 0;
@@ -71,6 +71,7 @@
   background-color: $modal-backdrop-bg;
   // Fade for backdrop
   &.fade { @include opacity(0); }
+  &.in { @include opacity($modal-backdrop-opacity); }
   &.in { @include opacity($modal-backdrop-opacity); }
 }
 
@@ -102,7 +103,7 @@
 // Footer (for actions)
 .modal-footer {
   padding: $modal-inner-padding;
-  text-align: right; // right align buttons
+  text-align: left; // right align buttons
   border-top: 1px solid $modal-footer-border-color;
   @include clearfix; // clear it in case folks use .pull-* classes on buttons
 
@@ -138,7 +139,7 @@
     margin: 30px auto;
   }
   .modal-content {
-    @include box-shadow(0 5px 15px rgba(0,0,0,.5));
+    @include box-shadow(0 5px 15px rgba(0,0,0,.1));
   }
 
   // Modal sizes
