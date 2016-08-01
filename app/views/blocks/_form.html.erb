@@ -31,6 +31,20 @@
     <%= f.label :block_type %>
     <%= f.text_field :block_type, class: 'form-control' %>
   </div>
+  <div class="form-group">
+    <div ng-init="pages=<%=@current_website.pages.to_json%>;block.page_ids=<%= @block.page_ids %>"></div>
+    <ui-select multiple ng-model="block.page_ids" theme="bootstrap">
+      <ui-select-match placeholder="Select Pages to attach to...">{{$item.name}}</ui-select-match>
+      <ui-select-choices repeat="item.id as item in pages | filter: $select.search">
+        <div ng-bind-html="item.name | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <select multiple name="block[page_ids][]" ng-model="block.page_ids">
+    <% @current_website.pages.each do |page| %>
+      <option value="<%=page.id%>"><%=page.name%></option>
+    <% end %>
+  </select>
 
   <div class="form-group">
     <%= f.label :position %>

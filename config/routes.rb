@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :blocks
   resources :pages
+  resources :page_blocks
   get "pages/:page_id/:id" => "pages#show"
   match "pages/:page_id/:id" => "pages#update", via: [:put, :patch]
   delete "pages/:page_id/:id" => "pages#destroy"

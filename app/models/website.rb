@@ -1,6 +1,7 @@
 class Website < ApplicationRecord
   belongs_to :account
   has_many :pages
+  has_many :blocks
   has_one :logo, as: :attachable
   has_one :icon, as: :attachable
   has_many :hero_images, -> { order(position: :asc) }, as: :attachable
