@@ -1,4 +1,4 @@
-<% cache [@page, current_user] do %>
+<% cache [@page, @page.blocks, current_user] do %>
   <div class="row">
 
     <%= content_tag('div', (render 'blocks/top', blocks: @page.top_blocks), class: 'col-sm-12 top_blocks') if @page.top_blocks.present? %>
