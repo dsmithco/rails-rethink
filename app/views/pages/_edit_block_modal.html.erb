@@ -16,11 +16,13 @@
         </div>
         <div class="form-group">
           <label>Block Type</label>
-          <input type="text" name="block_type" class="form-control" ng-model="blocksCtrl.edit_block.block_type">
+          <select class="form-control" ng-model="blocksCtrl.edit_block.block_type" ng-options="type for type in <%= Block::BLOCK_TYPES.to_json %>">
+          </select>
         </div>
         <div class="form-group">
           <label>Location</label>
-          <input type="text" name="location" class="form-control" ng-model="blocksCtrl.edit_block.location">
+          <select class="form-control" ng-model="blocksCtrl.edit_block.location" ng-options="loc for loc in <%= Block::REGIONS.to_json %>">
+          </select>
         </div>
         <div class="form-group">
           <label>Default Position</label>
