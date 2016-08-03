@@ -1,7 +1,7 @@
 <% blocks.each do |block| %>
   <div class="panel panel-default block-<%= block.id %>">
     <div class="panel-body">
-      <%= block.about %>
+      <%= block.about.html_safe %>
     </div>
   </div>
 <% end %>

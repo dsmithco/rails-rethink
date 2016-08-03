@@ -29,7 +29,7 @@
 
   <div class="form-group">
     <%= f.label :block_type %>
-    <%= f.text_field :block_type, class: 'form-control' %>
+    <%= f.text_field :block_type, {:include_blank => false}, class: 'form-control' %>
   </div>
   <div class="form-group">
     <div ng-init="pages=<%=@current_website.pages.to_json%>;block.page_ids=<%= @block.page_ids %>"></div>
@@ -53,7 +53,7 @@
 
   <div class="form-group">
     <%= f.label :location %>
-    <%= f.text_field :location, class: 'form-control' %>
+    <%= f.text_field :location, {:include_blank => false}, class: 'form-control' %>
   </div>
 
   <div class="form-group">

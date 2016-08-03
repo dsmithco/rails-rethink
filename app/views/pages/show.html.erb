@@ -1,8 +1,6 @@
 <% cache [@page, @page.blocks, current_user] do %>
   <div class="row">
-
     <%= content_tag('div', (render 'blocks/top', blocks: @page.top_blocks), class: 'col-sm-12 top_blocks') if @page.top_blocks.present? %>
-
     <div class="col-sm-<%= @page.main_left_blocks.present? ? '8 col-sm-push-4' : '12 '%>">
       <h2 class="page-title">
         <%= @page.name %>
@@ -21,9 +19,7 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <%= content_tag('div', (render 'blocks/bottom', blocks: @page.bottom_blocks), class: 'col-sm-4 bottom_blocks') if @page.bottom_blocks.present? %>
   </div>
-
 <% end %>

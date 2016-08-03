@@ -13,19 +13,38 @@ function BlocksController($scope, $http, Upload, $timeout) {
   }
 
   blocksCtrl.save_block = function(block){
+    angular.element('.error_message').remove();
     if(block.id){
       var url = "/blocks/" + block.id + ".json";
       $http.put(url, block).then(function(response){
         $('#edit_block').modal('hide');
         angular.copy(response.data, block);
+      },function(errors){
+        angular.forEach(errors.data, function(errs, key){
+          angular.element("#" + key).append("<div class='text-danger error_message'>" + key + " " + errs + "</div>");
+        });
       });
     }else{
       var url = "/blocks.json";
       $http.post(url, block).then(function(response){
         blocksCtrl.blocks.push(response.data);
         $('#edit_block').modal('hide');
+      },function(errors){
+        angular.forEach(errors.data, function(errs, key){
+          angular.element("#" + key).append("<div class='text-danger error_message'>" + key + " " + errs + "</div>");
+        });
       });
     }
-
   }
+
+  blocksCtrl.delete_block = function(block){
+    // console.log(block);
+    var url = '/blocks/' + block.id + '.json';
+    $http.delete(url).then(function(response){
+      var index = blocksCtrl.blocks.indexOf(block);
+      blocksCtrl.blocks.splice(index, 1);
+      $('#edit_block').modal('hide');
+    });
+  }
+
 }
