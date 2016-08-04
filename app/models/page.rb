@@ -6,8 +6,9 @@ class Page < ApplicationRecord
 
   belongs_to :website
   belongs_to :page, optional: true
-  has_many :page_blocks
+  has_many :page_blocks, dependent: :destroy
   has_many :blocks, through: :page_blocks
+  has_many :images, as: :attachable, dependent: :destroy
 
   acts_as_list scope: [:website_id, :page_id]
 

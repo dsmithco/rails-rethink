@@ -20,6 +20,30 @@
 (function(){
 
   var set_summernote = function(){
+    var sendFile;
+    sendFile = function(file, toSummernote) {
+      var data;
+      var attachable_id = toSummernote.context.dataset.attachableId
+      var attachable_type = toSummernote.context.dataset.attachableType
+      data = new FormData;
+      data.append('attachment[asset]', file);
+      data.append('attachment[attachable_id]', attachable_id);
+      data.append('attachment[attachable_type]', attachable_type);
+      return $.ajax({
+        data: data,
+        type: 'POST',
+        url: '/images.json',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+          console.log('file uploading...');
+          return toSummernote.summernote("insertImage", data.medium);
+        }
+      });
+    };
+
+
     $('.summernote').each(function(){
       $(this).summernote({
         toolbar: [
@@ -36,6 +60,9 @@
               var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
               e.preventDefault();
               document.execCommand('insertText', true, bufferText);
+          },
+          onImageUpload: function(files) {
+            return sendFile(files[0], $(this));
           }
         }
       });
@@ -50,7 +77,6 @@
     //   }
     // });
   }
-
 
   var note_affix_toolbar = function(){
     $('.note-toolbar').on('affix.bs.affix', function () {

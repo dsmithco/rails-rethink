@@ -2,7 +2,7 @@
   <%= render 'pages/edit_blocks_table_script.js'%>
 </script>
 
-<div ng-init="blocksCtrl.page_id=<%=@page.id%>; blocksCtrl.blocks = <%= @page.website.blocks.to_json %>" ng-controller="BlocksController as blocksCtrl">
+<div ng-init="blocksCtrl.page_id=<%=@page.id || '0'%>; blocksCtrl.blocks = <%= @page.website.blocks.to_json %>" ng-controller="BlocksController as blocksCtrl">
   <div class="">
     <div class="btn-group" ng-init="block_list='Page'">
       <a href ng-click="block_list='Page'" class="btn btn-primary btn-sm {{block_list=='Page' ? '':'inverse'}}">Page Blocks</a>
