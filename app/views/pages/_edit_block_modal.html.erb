@@ -6,18 +6,18 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Edit {{blocksCtrl.edit_block.name}}</h4>
       </div>
-      <div class="modal-body" id="name">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="block_name" class="form-control" ng-model="blocksCtrl.edit_block.name">
-        </div>
-        <div class="form-group" id="name">
-          <textarea type="text" name="block_about" class="form-control" ng-model="blocksCtrl.edit_block.about"></textarea>
-        </div>
+      <div class="modal-body">
         <div class="form-group" id="block_type">
           <label>Block Type</label>
           <select class="form-control" name="block_type" ng-required="true" ng-model="blocksCtrl.edit_block.block_type" ng-options="type for type in <%= Block::BLOCK_TYPES.to_json %>">
           </select>
+        </div>
+        <div class="form-group" id="name" ng-hide="blocksCtrl.edit_block.block_type=='navigation'">
+          <label>Name</label>
+          <input type="text" name="block_name" class="form-control" ng-model="blocksCtrl.edit_block.name">
+        </div>
+        <div class="form-group" id="about"  ng-hide="blocksCtrl.edit_block.block_type=='navigation'">
+          <textarea type="text" name="block_about" class="form-control" ng-model="blocksCtrl.edit_block.about"></textarea>
         </div>
         <div class="form-group" id="location">
           <label>Location</label>

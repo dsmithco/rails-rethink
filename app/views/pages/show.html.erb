@@ -1,7 +1,7 @@
 <% cache [@page, @page.blocks, current_user] do %>
   <div class="row">
     <%= content_tag('div', (render 'blocks/top', blocks: @page.top_blocks), class: 'col-sm-12 top_blocks') if @page.top_blocks.present? %>
-    <div class="col-sm-<%= @page.main_left_blocks.present? ? '8 col-sm-push-4' : '12 '%>">
+    <div class="col-sm-<%= @page.main_left_blocks.present? ? '9 col-sm-push-3' : '12 '%>">
       <h2 class="page-title">
         <%= @page.name %>
         <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary btn-sm inverse pull-right' if can? :update, @page %>
@@ -9,13 +9,13 @@
     </div>
     <div class="col-sm-12">
       <div class="row">
-        <div class="main col-sm-<%= (4 + (@page.main_left_blocks.present? ? 0 : 4) + ( @page.main_right_blocks.present? ? 0 : 4)).to_s %> <%= @page.main_left_blocks.present? ? 'col-sm-push-4' : ''%>">
+        <div class="main col-sm-<%= (5 + (@page.main_left_blocks.present? ? 0 :3) + ( @page.main_right_blocks.present? ? 0 : 4)).to_s %> <%= @page.main_left_blocks.present? ? 'col-sm-push-3' : ''%>">
           <%= @page.about.html_safe %>
           <%= content_tag('div', (render 'blocks/main_bottom', blocks: @page.main_bottom_blocks), class: 'main_bottom_blocks') if @page.main_bottom_blocks.present? %>
           <br/>
         </div>
-        <%= content_tag('div', (render 'blocks/main_left', blocks: @page.main_left_blocks), class: "col-sm-4 main_left_blocks #{@page.main_right_blocks.present? ? 'col-sm-pull-4' : 'col-sm-pull-8' }") if @page.main_left_blocks.present? %>
-        <%= content_tag('div', (render 'blocks/main_right', blocks: @page.main_right_blocks), class: 'col-sm-4 main_right_blocks') if @page.main_right_blocks.present? %>
+        <%= content_tag('div', (render 'blocks/main_left_right', blocks: @page.main_left_blocks), class: "col-sm-3 main_left_blocks #{@page.main_right_blocks.present? ? 'col-sm-pull-5' : 'col-sm-pull-9' }") if @page.main_left_blocks.present? %>
+        <%= content_tag('div', (render 'blocks/main_left_right', blocks: @page.main_right_blocks), class: 'col-sm-4 main_right_blocks') if @page.main_right_blocks.present? %>
       </div>
     </div>
   </div>

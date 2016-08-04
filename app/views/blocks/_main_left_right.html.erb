@@ -1,0 +1,25 @@
+<% blocks.each do |block| %>
+  <div class="form-group block-<%= block.id %>">
+    <% if block.block_type == 'navigation'%>
+      <div class="list-group navigation">
+          <%= link_to @page.page.name, page_path(@page.page), class: 'list-group-item' if @page.page.present? %>
+          <%= link_to @page.name, page_path(@page), class: 'list-group-item' if @page.pages.present? %>
+        <% @page.try(:page).try(:pages).try(:each) do |page|%>
+          <%= link_to page.name, page_path(page), class: 'list-group-item' %>
+        <% end %>
+        <% @page.try(:pages).try(:each) do |page|%>
+          <%= link_to page.name, page_path(page), class: 'list-group-item' %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="block-body">
+        <strong>
+          <%= block.name.html_safe %>
+        </strong>
+        <div>
+          <%= block.about.html_safe %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
