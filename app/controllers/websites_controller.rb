@@ -19,7 +19,8 @@ class WebsitesController < ApplicationController
 
   def home
     @website = @current_website || Website.where("domain_url = ?", "#{request.host}").first
-    render :show
+
+    render :show, {layout: "themes/#{@current_website.theme}/layout"}
   end
 
   # GET /websites/new

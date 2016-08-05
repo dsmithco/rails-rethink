@@ -73,14 +73,6 @@
                     <%= link_to "<span class='hidden-sm'>Sign out</span>".html_safe, destroy_user_session_path, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
                   </span>
                 </li>
-              <% else %>
-                <li>
-                  <span>
-                    <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary inverse btn-inverse navbar-btn' %>
-
-                    <%= link_to 'Create a Website', new_user_registration_path, class: 'btn btn-primary btn-inverse navbar-btn' %>
-                  </span>
-                </li>
               <% end %>
             <% end %>
             <!-- <li class="dropdown">

@@ -29,6 +29,8 @@ Rails.application.configure do
   config.assets.digest = true
   config.action_mailer.delivery_method = :postmark
   config.action_mailer.postmark_settings = { :api_token => ENV['POSTMARK'] }
+  config.action_mailer.default_url_options = { :host => 'rethinkwebdesign.com' }
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.

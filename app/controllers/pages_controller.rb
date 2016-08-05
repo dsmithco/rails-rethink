@@ -10,21 +10,25 @@ class PagesController < ApplicationController
     else
       @pages = Page.all
     end
+    render layout: "themes/#{@current_website.theme}/layout"
   end
 
   # GET /pages/1
   # GET /pages/1.json
   def show
+    render layout: "themes/#{@current_website.theme}/layout"
   end
 
   # GET /pages/new
   def new
     @page = Page.new
     @page.website_id = params[:website_id] if params[:website_id].present?
+    render layout: "themes/#{@current_website.theme}/layout"
   end
 
   # GET /pages/1/edit
   def edit
+    render layout: "themes/#{@current_website.theme}/layout"
   end
 
   # POST /pages
@@ -62,7 +66,7 @@ class PagesController < ApplicationController
   def destroy
     @page.destroy
     respond_to do |format|
-      format.html { redirect_to @current_website || pages_url, notice: 'Page was successfully deleted.' }
+      format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
