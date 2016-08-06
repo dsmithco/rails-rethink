@@ -37,7 +37,7 @@
         processData: false,
         success: function(data) {
           console.log('file uploading...');
-          return toSummernote.summernote("insertImage", data.medium);
+          return toSummernote.summernote("insertImage", data.large);
         }
       });
     };
