@@ -50,7 +50,7 @@
           ['font', ['bold', 'italic', 'underline', 'clear']],
           ['para', ['ul', 'ol', 'paragraph']],
           ['insert', ['link', 'picture', 'hr']],
-          ['view', ['fullscreen']]
+          ['view', ['fullscreen','codeview']]
         ],
           styleTags: ['p', 'h1', 'h2', 'h3'],
           minHeight: '260px',
