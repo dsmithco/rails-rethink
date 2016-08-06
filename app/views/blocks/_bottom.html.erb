@@ -1,3 +1,9 @@
 <% blocks.each do |block| %>
-  <%= block.about.html_safe %>
+  <h2 class="text-center">
+    <%= block.name.html_safe %>
+  </h2>
+  <hr/>
+  <div class="text-center">
+    <%= block.about.html_safe %>
+  </div>
 <% end %>

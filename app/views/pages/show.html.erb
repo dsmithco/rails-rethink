@@ -20,6 +20,6 @@
     </div>
   </div>
   <div class="row">
-    <%= content_tag('div', (render 'blocks/bottom', blocks: @page.bottom_blocks), class: 'col-sm-4 bottom_blocks') if @page.bottom_blocks.present? %>
+    <%= content_tag('div', (render 'blocks/bottom', blocks: @page.bottom_blocks), class: 'col-sm-12 bottom_blocks') if @page.bottom_blocks.present? %>
   </div>
 <% end %>
