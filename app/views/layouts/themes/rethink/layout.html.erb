@@ -116,9 +116,7 @@
   </body>
   <footer class="footer">
     <div class="container">
-      <% cache [@current_website, current_user] do %>
-        <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
-      <% end %>
+      <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
     </div>
   </footer>
 </html>
