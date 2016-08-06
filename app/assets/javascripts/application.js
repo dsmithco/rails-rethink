@@ -16,7 +16,6 @@
 //= require turbolinks
 //= require ie10-viewport-bug-workaround
 
-
 (function(){
 
   var set_summernote = function(){
