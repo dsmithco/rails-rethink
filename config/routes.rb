@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     member do
       delete "delete_image/:image_id" => "pages#delete_image"
       post "add_image" => "pages#add_image"
+      put "add_block/:block_id" => "pages#add_block"
+      put "remove_block/:block_id" => "pages#remove_block"
     end
   end
   resources :page_blocks

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :set_page, only: [:show, :edit, :update, :destroy, :delete_image, :add_image, :edit_block, :save_block]
+  before_action :set_page, only: [:show, :edit, :update, :destroy, :delete_image, :add_image, :add_block, :remove_block]
   load_and_authorize_resource
 
   # GET /pages
@@ -26,6 +26,18 @@ class PagesController < ApplicationController
   def save_block
     @block = Block.find(params[:block_id])
     @block.save(block_params)
+  end
+
+  def add_block
+    new_block_ids = @page.block_ids + [ params[:block_id].to_i ]
+    @page.update(block_ids: new_block_ids)
+    render :update
+  end
+
+  def remove_block
+    new_block_ids = @page.block_ids - [ params[:block_id].to_i ]
+    @page.update(block_ids: new_block_ids)
+    render :update
   end
 
   # GET /pages/new

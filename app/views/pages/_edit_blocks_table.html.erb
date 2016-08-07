@@ -36,6 +36,7 @@
             <tr id="block_<%=block.id%>">
               <td>
                 <%= block.id %>
+                <%= block.page_ids %>
               </td>
               <td>
                 <%= block.name %>
@@ -51,6 +52,8 @@
               </td>
               <td class="text-right">
                 <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
+                <%= link_to 'Add to page', "/pages/#{@page.id}/add_block/#{block.id}", method: :put, remote: true, data: {disable_with:'loading...'},class: 'btn btn-sm btn-success' if !@page.block_ids.include?(block.id)%>
+                <%= link_to 'Remove from page', "/pages/#{@page.id}/remove_block/#{block.id}", method: :put, remote: true, data: {disable_with:'loading...'},class: 'btn btn-sm btn-danger' if @page.block_ids.include?(block.id)%>
                 <%= link_to 'Remove', block_path(block), remote: true, method: :delete, data: {confirm: "Are you sure you want to delete the block #{block.name}"}, class: 'btn btn-sm btn-danger' %>
               </td>
             </tr>
