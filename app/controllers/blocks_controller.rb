@@ -64,6 +64,7 @@ class BlocksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to blocks_url, notice: 'Block was successfully destroyed.' }
       format.json { head :no_content }
+      format.js {}
     end
   end
 

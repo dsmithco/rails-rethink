@@ -4,10 +4,6 @@
 
 <div>
   <div class="">
-    <div class="btn-group" ng-init="block_list='Page'">
-      <a href ng-click="block_list='Page'" class="btn btn-primary btn-sm {{block_list=='Page' ? '':'inverse'}}">Page Blocks</a>
-      <a href ng-click="block_list='Website'" class="btn btn-primary btn-sm {{block_list=='Website' ? '':'inverse'}}">All Blocks</a>
-    </div>
     <div class="form-group">
       <h3>
         Blocks
@@ -37,7 +33,7 @@
         </thead>
         <tbody>
           <% @page.website.blocks.each do |block| %>
-            <tr>
+            <tr id="block_<%=block.id%>">
               <td>
                 <%= block.id %>
               </td>
