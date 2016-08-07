@@ -22,7 +22,8 @@
     <%= yield :head %>
 
   </head>
-  <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" ng-init="baseCtrl.website = <%= @current_website.to_json %>; baseCtrl.website.logo = <%= @current_website.logo.to_json %>" >
+  <body class="<%= controller_name %> <%= action_name %>">
+    <div id="body">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
@@ -113,6 +114,8 @@
         <%= yield %>
       </div>
     </div>
+  </div>
+
   </body>
   <footer class="footer">
     <div class="container">
