@@ -50,10 +50,8 @@
                 <%= block.location %>
               </td>
               <td class="text-right">
-                <%= link_to 'Edit', edit_block_path(block), remote: true %>
-                <button ng-click="blocksCtrl.edit_block_modal(block)" type="button" name="button" class="btn btn-sm btn-info "><i class="fa fa-pencil"></i> Edit</button>
-                <button ng-show="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.remove_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i> Remove from page</button>
-                <button ng-hide="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.add_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-success "><i class="fa fa-plus"></i> Add to page</button>
+                <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
+                <%= link_to 'Remove', block_path(block), remote: true, method: :delete, data: {confirm: "Are you sure you want to delete the block #{block.name}"}, class: 'btn btn-sm btn-danger' %>
               </td>
             </tr>
           <% end %>

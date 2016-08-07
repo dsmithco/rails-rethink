@@ -1,81 +1,79 @@
-<script type="text/javascript">
-  angular
-    .module('app')
-    .controller('PageController', PageController);
-
-  function PageController($scope, $http, Upload, $timeout) {
-    var pageCtrl = this;
-    pageCtrl.test = 'testing';
-  }
-</script>
-
-<div ng-controller="PageController as pageCtrl">
-
+<div>
     <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#page" aria-controls="page" role="tab" data-toggle="tab">Page Info</a></li>
-      <li role="presentation"><a href="#blocks" aria-controls="blocks" role="tab" data-toggle="tab">Blocks</a></li>
-      <li role="presentation"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Images</a></li>
+      <li class="<%= !params[:tab].present? ? 'active' : '' %>">
+        <%= link_to 'Page Info', "#{@browser_request.path}" %>
+      </li>
+      <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
+        <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
+      </li>
+      <li class="<%= params[:tab] == 'images' ? 'active' : '' %>">
+        <%= link_to 'Images', "#{@browser_request.path}?tab=images" %>
+      </li>
     </ul>
     <br/>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="page">
-        <%= form_for(page) do |f| %>
-          <% if page.errors.any? %>
-            <div id="error_explanation">
-              <h2>
-                <%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:
-              </h2>
-              <ul>
-              <% page.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-              </ul>
-            </div>
+      <% if !params[:tab].present? %>
+        <div id="page">
+          <%= form_for(page) do |f| %>
+            <% if page.errors.any? %>
+              <div id="error_explanation">
+                <h2>
+                  <%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:
+                </h2>
+                <ul>
+                <% page.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
+          </div>
+
+          <div class="form-group" id="about">
+            <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @page.id, attachable_type: "Page"} %>
+          </div>
+
+          <div class="form-group hide">
+            <%= f.label :website_id %>
+            <%= f.select :website_id, Website.select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :position %>
+            <%= f.text_field :position, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %>
+            <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>
+            <%= link_to 'Cancel', @page || @current_website, class: "btn btn-default" %>
+            <%= link_to 'Delete', @page, method: :delete, class: "btn btn-danger pull-right", :data => {:confirm => 'Are you sure you want to delete this page?'} if @page.id.present? %>
+          </div>
           <% end %>
-        <div class="form-group">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
-        </div>
 
-        <div class="form-group" id="about">
-          <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @page.id, attachable_type: "Page"} %>
         </div>
-
-        <div class="form-group hide">
-          <%= f.label :website_id %>
-          <%= f.select :website_id, Website.select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :position %>
-          <%= f.text_field :position, class: 'form-control' %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %>
-          <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| can? :update, w }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
-        </div>
-        <div>
-          <button type="submit" class="btn btn-success">
-              Save
-          </button>
-          <%= link_to 'Cancel', @page || @current_website, class: "btn btn-default" %>
-          <%= link_to 'Delete', @page, method: :delete, class: "btn btn-danger pull-right", :data => {:confirm => 'Are you sure you want to delete this page?'} if @page.id.present? %>
-        </div>
-        <% end %>
-
-      </div>
-
+      <% end %>
       <!-- Blocks tab content -->
-      <div role="tabpanel" class="tab-pane" id="blocks">
-        <%= render 'pages/edit_blocks_table', blocks: @page.blocks %>
-      </div>
-      <%= render 'pages/edit_block_modal' %>
-
+      <% if params[:tab] == 'blocks' %>
+        <div id="blocks">
+          <%= render 'pages/edit_blocks_table', blocks: @page.blocks %>
+        </div>
+        <%= render 'pages/edit_block_modal' %>
+      <% end %>
       <!-- Images tab content -->
-      <div role="tabpanel" class="tab-pane" id="images">
-        <%= render 'pages/edit_page_images', images: @page.images %>
-      </div>
+      <% if params[:tab] == 'images' %>
+        <div id="images">
+          <%= render 'pages/edit_page_images', images: @page.images %>
+        </div>
+      <% end %>
 
     </div>
 

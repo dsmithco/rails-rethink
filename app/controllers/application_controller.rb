@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 	end
 
   def set_current_website
+    @browser_request = request
     if request.domain == Rails.application.config.host_domain
       if ['','www'].include? request.subdomain
         @current_website = Website.where(domain_url: Rails.application.config.host_domain).first
