@@ -1,0 +1,69 @@
+<div class="row form-group">
+  <% @page.images.each do |image| %>
+    <div id="images" class="col-sm-3 image_<%=image.id%>">
+      <%= image_tag image.thumb, class: 'form-group' %>
+      <%= link_to 'delete', "/pages/#{@page.id}/delete_image/#{image.id}", method: :delete, remote: true, data: {confirm: 'Are you sure?', disable_with: "<i class='fa fa-gear fa-spin'></i> deleting".html_safe}, class: 'btn btn-sm btn-danger' %>
+    </div>
+  <% end %>
+</div>
+<hr/>
+<span class="btn btn-success fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Select files...</span>
+    <!-- The file input field used as target for the file upload widget -->
+    <input id="fileupload" type="file" name="asset">
+</span>
+<br>
+<br>
+
+<!-- The container for the uploaded files -->
+<div id="files" class="files"></div>
+<!-- The global progress bar -->
+<div id="progress" class="hide progress">
+    <div class="progress-bar progress-bar-success"></div>
+</div>
+
+<script>
+  /*jslint unparam: true */
+  /*global window, $ */
+  $(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    $('#fileupload').fileupload({
+      dataType: 'script',
+      url: '/pages/' + <%= @page.id %> + '/add_image',
+      type: 'POST',
+      multipart: true,
+      add: function(e, data) {
+        data.formData = {};
+        data.formData.attachable_id = <%= @page.id %>;
+        data.formData.attachable_type = 'Page';
+        var file, types;
+        types = /(\.|\/)(gif|jpe?g|png)$/i;
+        file = data.files[0];
+        if (types.test(file.type) || types.test(file.name)) {
+          data.context = $('<div>' + file.name + '</div>');
+          $('#files').append(data.context);
+          return data.submit();
+        } else {
+          return alert(file.name + " is not a gif, jpeg, or png image file");
+        }
+      },
+      progress: function(e, data) {
+        var progress;
+        if (data.context) {
+          progress = parseInt(data.loaded / data.total * 100, 10);
+          $('.progress').removeClass('hide');
+          return $('.progress-bar').css('width', progress + '%');
+          console.log(progress)
+        }
+      },
+      done: function(e, data){
+        if (data.context) {
+          console.log('done')
+          return data.context.remove();
+        }
+      }
+    });
+  });
+</script>

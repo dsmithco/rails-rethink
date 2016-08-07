@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :blocks
-  resources :pages
+  resources :pages do
+    member do
+      delete "delete_image/:image_id" => "pages#delete_image"
+      post "add_image" => "pages#add_image"
+    end
+  end
   resources :page_blocks
   get "pages/:page_id/:id" => "pages#show"
   match "pages/:page_id/:id" => "pages#update", via: [:put, :patch]

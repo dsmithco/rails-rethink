@@ -2,7 +2,7 @@
   <%= render 'pages/edit_blocks_table_script.js'%>
 </script>
 
-<div ng-init="blocksCtrl.page_id=<%=@page.id || '0'%>; blocksCtrl.blocks = <%= @page.website.blocks.to_json %>" ng-controller="BlocksController as blocksCtrl">
+<div>
   <div class="">
     <div class="btn-group" ng-init="block_list='Page'">
       <a href ng-click="block_list='Page'" class="btn btn-primary btn-sm {{block_list=='Page' ? '':'inverse'}}">Page Blocks</a>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <h3>
-        {{block_list}} Blocks
+        Blocks
       </h3>
       <table class="table table-striped">
         <thead>
@@ -36,28 +36,31 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="block in blocksCtrl.blocks" ng-if="block_list=='Website' ? true : block.page_ids.indexOf(blocksCtrl.page_id)>-1">
-            <td>
-              {{block.id}}
-            </td>
-            <td>
-              {{block.name}}
-            </td>
-            <td>
-              {{block.block_type}}
-            </td>
-            <td>
-              {{block.position}}
-            </td>
-            <td>
-              {{block.location}}
-            </td>
-            <td class="text-right">
-              <button ng-click="blocksCtrl.edit_block_modal(block)" type="button" name="button" class="btn btn-sm btn-info "><i class="fa fa-pencil"></i> Edit</button>
-              <button ng-show="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.remove_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i> Remove from page</button>
-              <button ng-hide="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.add_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-success "><i class="fa fa-plus"></i> Add to page</button>
-            </td>
-          </tr>
+          <% @page.website.blocks.each do |block| %>
+            <tr>
+              <td>
+                <%= block.id %>
+              </td>
+              <td>
+                <%= block.name %>
+              </td>
+              <td>
+                <%= block.block_type %>
+              </td>
+              <td>
+                <%= block.position %>
+              </td>
+              <td>
+                <%= block.location %>
+              </td>
+              <td class="text-right">
+                <%= link_to 'Edit', edit_block_path(block), remote: true %>
+                <button ng-click="blocksCtrl.edit_block_modal(block)" type="button" name="button" class="btn btn-sm btn-info "><i class="fa fa-pencil"></i> Edit</button>
+                <button ng-show="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.remove_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-danger "><i class="fa fa-remove"></i> Remove from page</button>
+                <button ng-hide="block.page_ids.indexOf(blocksCtrl.page_id)>-1" ng-click="block.add_page_id=blocksCtrl.page_id;blocksCtrl.save_block(block)" type="button" name="button" class="btn btn-sm btn-success "><i class="fa fa-plus"></i> Add to page</button>
+              </td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>

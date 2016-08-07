@@ -5,6 +5,7 @@
 //= require ng-file-upload.min
 //= require ng-sortable.min
 //= require select.min
+//= require jquery-fileupload/basic
 
 document.addEventListener("turbolinks:load", function () {
   angular.bootstrap(document.body, ['app']);

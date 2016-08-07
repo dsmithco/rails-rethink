@@ -48,9 +48,11 @@ class BlocksController < ApplicationController
       if @block.update(block_params)
         format.html { redirect_to @block, notice: 'Block was successfully updated.' }
         format.json { render json: @block.to_json, status: :ok }
+        format.js {}
       else
         format.html { render :edit }
         format.json { render json: @block.errors, status: :unprocessable_entity }
+        format.js {}
       end
     end
   end
@@ -73,6 +75,6 @@ class BlocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_params
-      params.permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
+      params.require(:block).permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
     end
 end

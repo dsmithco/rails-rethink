@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_action :set_page, only: [:show, :edit, :update, :destroy, :delete_image, :add_image, :edit_block, :save_block]
   load_and_authorize_resource
 
   # GET /pages
@@ -17,6 +17,15 @@ class PagesController < ApplicationController
   # GET /pages/1.json
   def show
     render layout: "themes/#{@current_website.theme}/layout"
+  end
+
+  def edit_block
+    @block = Block.find(params[:block_id])
+  end
+
+  def save_block
+    @block = Block.find(params[:block_id])
+    @block.save(block_params)
   end
 
   # GET /pages/new
@@ -61,6 +70,16 @@ class PagesController < ApplicationController
     end
   end
 
+  def delete_image
+    @image = Image.find(params[:image_id])
+    @image.destroy
+  end
+
+  def add_image
+    @image = Image.new(image_params)
+    @image.save
+  end
+
   # DELETE /pages/1
   # DELETE /pages/1.json
   def destroy
@@ -91,5 +110,13 @@ class PagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
       params.require(:page).permit(:name, :about, :website_id, :position, :page_id)
+    end
+
+    def image_params
+      params.permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
+    end
+
+    def block_params
+      params.permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
     end
 end
