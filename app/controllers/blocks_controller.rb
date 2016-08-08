@@ -15,7 +15,7 @@ class BlocksController < ApplicationController
 
   # GET /blocks/new
   def new
-    @block = Block.new
+    @block||= Block.new
   end
 
   # GET /blocks/1/edit
@@ -26,14 +26,17 @@ class BlocksController < ApplicationController
   # POST /blocks.json
   def create
     @block = Block.new(block_params)
+    @block.website_id ||= @current_website.id if @current_website.present?
 
     respond_to do |format|
       if @block.save
         format.html { redirect_to @block, notice: 'Block was successfully created.' }
         format.json { render json: @block.to_json, status: :created}
+        format.js {}
       else
         format.html { render :new }
         format.json { render json: @block.errors, status: :unprocessable_entity }
+        format.js {}
       end
     end
   end

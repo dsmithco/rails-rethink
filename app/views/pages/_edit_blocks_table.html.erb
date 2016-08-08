@@ -60,9 +60,7 @@
         </tbody>
       </table>
     </div>
-    <button type="button" class="btn btn-success" ng-click="blocksCtrl.edit_block_modal({website_id: <%= @page.website_id %>, page_ids: [<%= @page.id %>]})">
-      New Page Block
-    </button>
+    <%= link_to 'New Block', new_block_path, remote: true, class: 'btn btn-success' %>
   </div>
 
 </div>

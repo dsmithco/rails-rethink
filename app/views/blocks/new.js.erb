@@ -1,0 +1,2 @@
+$('#edit_block').modal('show');
+$('#edit_block_content').html("<%=j render 'blocks/form', block: @block||=Block.new, remote: true %>");
