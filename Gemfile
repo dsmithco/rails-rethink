@@ -37,7 +37,7 @@ gem 'postmark-rails', '~> 0.12.0'
 gem 'summernote-rails'
 gem "font-awesome-rails"
 gem 'acts_as_list'
-gem 'angularjs-rails'
+# gem 'angularjs-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

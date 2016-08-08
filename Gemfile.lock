@@ -40,7 +40,6 @@ GEM
       tzinfo (~> 1.1)
     acts_as_list (0.7.6)
       activerecord (>= 3.0)
-    angularjs-rails (1.5.6)
     arel (7.0.0)
     aws-sdk (2.3.21)
       aws-sdk-resources (= 2.3.21)
@@ -217,7 +216,6 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list
-  angularjs-rails
   aws-sdk (~> 2.3)
   byebug
   cancancan (~> 1.10)
