@@ -5,276 +5,269 @@
 <div class="row" id="website_form" ng-controller="WebsiteController as webCtrl" >
   <div class="col-sm-12">
     <% if website.errors.any? %>
-    <div class="alert alert-danger">
-      <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
-      <ul>
-        <% website.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+      <div class="alert alert-danger">
+        <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
+        <ul>
+          <% website.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Website Info</a></li>
-      <li role="presentation"><a href="#hero" aria-controls="home" role="tab" data-toggle="tab">Hero Images</a></li>
-      <li role="presentation"><a href="#site" aria-controls="site" role="tab" data-toggle="tab">Site wide</a></li>
-      <li role="presentation"><a href="#blocks" aria-controls="blocks" role="tab" data-toggle="tab">Blocks</a></li>
+    <ul class="nav nav-tabs">
+      <li class="<%= !params[:tab].present? ? 'active' : '' %>">
+        <%= link_to 'Website Info', "#{@browser_request.path}" %>
+      </li>
+      <li class="<%= params[:tab] == 'hero' ? 'active' : '' %>">
+        <%= link_to 'Hero Images', "#{@browser_request.path}?tab=hero" %>
+      </li>
+      <li class="<%= params[:tab] == 'site' ? 'active' : '' %>">
+        <%= link_to 'Site Wide', "#{@browser_request.path}?tab=site" %>
+      </li>
+      <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
+        <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
+      </li>
     </ul>
     <br/>
 
     <%= form_for(website, remote: true) do |f| %>
-
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div role="tabpanel" class="tab-pane active" id="home">
-        </fieldset>
-        <div class="form-group" id="name">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control' %>
-        </div>
-
-        <div class="form-group" id="about">
-          <%= f.label :about %>
-          <%= f.text_area :about, class: 'form-control summernote' %>
-        </div>
-        <div class="form-group">
-          <%= f.submit 'Save Website', class: 'btn btn-success' %>
-          <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-        </div>
-      </div>
-
-      <!-- Hero tab content -->
-      <div role="tabpanel" class="tab-pane" id="hero">
-
-        <fieldset>
-          <legend>
-            Hero Images
-          </legend>
-          <div class="row" ng-init="webCtrl.heros = <%= @website.hero_images.to_json %>; webCtrl.website_id = <%= @website.id %>" data-as-sortable="webCtrl.dragControlListeners" ng-model="webCtrl.heros">
-            <div class="clearfix" ng-if="$index % 3 == 0">
+      <div class="tab-content">
+        <!-- Home tab content -->
+        <% if !params[:tab].present? %>
+          <div role="tabpanel" class="tab-pane active" id="home">
+            <div class="form-group" id="name">
+              <%= f.label :name %>
+              <%= f.text_field :name, class: 'form-control' %>
             </div>
-            <span class="col-sm-12" ng-repeat="hero in webCtrl.heros" data-as-sortable-item data-id='{{hero.id}}'>
-              <div class="hero_image_{{hero.id}}">
-                <div class="panel panel-default">
-                  <div class="panel-body">
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <div data-as-sortable-item-handle>
-                          <img ng-src="{{hero.medium}}" alt="{{hero.name}}" />
-                          <label class="label label-success" ng-show="$first">Active</label>
-                        </div>
-                      </div>
-                      <div class="col-sm-8">
-                        <div class="row">
-                          <div class="col-sm-9">
-                            <div class="form-group">
-                              <input type="text"
-                                     name="title"
-                                     ng-model="hero.name"
-                                     ng-blur="webCtrl.save_hero(hero)"
-                                     class="form-control"
-                                     placeholder="Title"/>
-                            </div>
-                          </div>
-                          <div class="col-sm-3">
-                            <button type="button" ng-click="webCtrl.destroy_hero(hero)" class="btn btn-danger btn-block">
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                          <div class="form-group">
-                            <input type="text"
-                                      name="sub_title"
-                                      ng-blur="webCtrl.save_hero(hero)"
-                                      ng-model="hero.about"
-                                      class="form-control"
-                                      placeholder="Subtitle"/>
-                          </div>
+
+            <div class="form-group" id="about">
+              <%= f.label :about %>
+              <%= f.text_area :about, class: 'form-control summernote' %>
+            </div>
+            <div class="form-group">
+              <%= f.submit 'Save Website', class: 'btn btn-success' %>
+              <%= link_to 'Cancel', @website, class: "btn btn-default" %>
+            </div>
+          </div>
+        <% end %>
+        <!-- Hero tab content -->
+        <% if params[:tab] == 'hero' %>
+          <div id="hero">
+
+          <fieldset>
+            <legend>
+              Hero Images
+            </legend>
+            <div class="row" ng-init="webCtrl.heros = <%= @website.hero_images.to_json %>; webCtrl.website_id = <%= @website.id %>" data-as-sortable="webCtrl.dragControlListeners" ng-model="webCtrl.heros">
+              <div class="clearfix" ng-if="$index % 3 == 0">
+              </div>
+              <% @website.hero_images.each do |hero| %>
+                <span class="col-sm-12">
+                  <div class="hero_image_<%=hero.id%>">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <%= form_for(hero, remote: true) do |f|%>
                           <div class="row">
-                            <div class="col-sm-6">
-                              <div class="form-group">
-                                <input  type="text"
-                                        name="link"
-                                        ng-blur="webCtrl.save_hero(hero)"
-                                        ng-model="hero.link"
-                                        class="form-control"
-                                        placeholder="Link"/>
-
+                            <div class="col-sm-4">
+                              <div data-as-sortable-item-handle>
+                                <img src="<%=hero.medium%>" alt="<%=hero.name%>" />
+                                <label class="label label-success <%= @website.hero_images.first != hero ? 'hide':''%>">Active</label>
                               </div>
                             </div>
-                            <div class="col-sm-6">
-                              <div class="form-group">
-                                <input  type="text"
-                                        name="link"
-                                        ng-blur="webCtrl.save_hero(hero)"
-                                        ng-model="hero.link_text"
-                                        class="form-control"
-                                        placeholder="Link text"/>
-
+                            <div class="col-sm-8">
+                              <div class="row">
+                                <div class="col-sm-9">
+                                  <div class="form-group">
+                                    <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+                                  </div>
+                                </div>
+                                <div class="col-sm-3">
+                                  <%= link_to 'Remove' ,hero_image_path(hero), class: 'btn btn-danger btn-block', remote: true, data: {confirm: "Delete Hero #{hero.name}"}%>
+                                </div>
                               </div>
+                                <div class="form-group">
+                                  <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle' %>
+                                </div>
+                                <div class="row">
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <%= f.text_field :link, class: 'form-control', placeholder: 'Link' %>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <div class="form-group">
+                                      <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text' %>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
+
                           </div>
+                        <% end %>
                       </div>
 
                     </div>
                   </div>
-
-                </div>
-              </div>
-            </span>
-
-          </div>
-          <button type="button" class="btn btn-primary" ngf-select="webCtrl.uploadFiles($files, $invalidFiles, '/hero_images.json', 'HeroImage', 'Website', webCtrl.website_id, webCtrl.heros)" multiple
-                  accept="image/*" ngf-max-size="10MB">
-              Select Files</button>
-          <br/><br/>
-          <div>
-            <div ng-if="!f.result" ng-repeat="f in files['HeroImage'+webCtrl.website_id]">{{f.name}} {{f.$errorParam}}
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width:{{f.progress}}%">
-                  <span class="sr-only"></span>
-                </div>
-              </div>
+                </span>
+              <% end %>
             </div>
-            <div ng-repeat="f in errFiles['HeroImage'+webCtrl.website_id]" class="alert alert-danger">{{f.name}} {{f.$error}} {{f.$errorParam}}
-            </div>
-          </div>
-      </div>
-
-      <!-- Site tab content -->
-      <div role="tabpanel" class="tab-pane" id="site">
-        <fieldset ng-init="webCtrl.logo = <%= @website.logo.to_json %>;">
-          <legend>
-            Logo
-          </legend>
-          <div class="form-group">
+            <button type="button" class="btn btn-primary" ngf-select="webCtrl.uploadFiles($files, $invalidFiles, '/hero_images.json', 'HeroImage', 'Website', webCtrl.website_id, webCtrl.heros)" multiple
+                    accept="image/*" ngf-max-size="10MB">
+                Select Files</button>
+            <br/><br/>
             <div>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary" ngf-select="webCtrl.uploadFiles($files, $invalidFiles, '/logos.json', 'Logo', 'Website', webCtrl.website_id, baseCtrl.website.logo)"
-                        accept="image/*" ngf-max-size="10MB">
-                    Upload Logo</button>
-              </div>
-              <br/>
-              <div ng-if="!f.result" ng-repeat="f in files['Logo'+webCtrl.website_id]">{{f.name}} {{f.$errorParam}}
+              <div ng-if="!f.result" ng-repeat="f in files['HeroImage'+webCtrl.website_id]">{{f.name}} {{f.$errorParam}}
                 <div class="progress">
                   <div class="progress-bar" role="progressbar" style="width:{{f.progress}}%">
                     <span class="sr-only"></span>
                   </div>
                 </div>
               </div>
-              <div ng-repeat="f in errFiles['Logo'+webCtrl.website_id]" class="alert alert-danger">{{f.name}} {{f.$error}} {{f.$errorParam}}
+              <div ng-repeat="f in errFiles['HeroImage'+webCtrl.website_id]" class="alert alert-danger">{{f.name}} {{f.$error}} {{f.$errorParam}}
               </div>
             </div>
+        </div>
+        <% end %>
 
-            <div id="logo" class="logo thumbnail">
-              <img ng-src="{{baseCtrl.website.logo.medium}}" alt="Logo" ng-show='baseCtrl.website.logo.medium'/>
-              <%= image_tag @website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
+        <!-- Site tab content -->
+        <% if params[:tab] == 'site' %>
+          <div id="site">
+          <fieldset ng-init="webCtrl.logo = <%= @website.logo.to_json %>;">
+            <legend>
+              Logo
+            </legend>
+            <div class="form-group">
+              <div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary" ngf-select="webCtrl.uploadFiles($files, $invalidFiles, '/logos.json', 'Logo', 'Website', webCtrl.website_id, baseCtrl.website.logo)"
+                          accept="image/*" ngf-max-size="10MB">
+                      Upload Logo</button>
+                </div>
+                <br/>
+                <div ng-if="!f.result" ng-repeat="f in files['Logo'+webCtrl.website_id]">{{f.name}} {{f.$errorParam}}
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width:{{f.progress}}%">
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
+                </div>
+                <div ng-repeat="f in errFiles['Logo'+webCtrl.website_id]" class="alert alert-danger">{{f.name}} {{f.$error}} {{f.$errorParam}}
+                </div>
+              </div>
+
+              <div id="logo" class="logo thumbnail">
+                <img ng-src="{{baseCtrl.website.logo.medium}}" alt="Logo" ng-show='baseCtrl.website.logo.medium'/>
+                <%= image_tag @website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
+              </div>
+
+              <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
             </div>
 
-            <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+          </fieldset>
+          <div class="form-group">
+            <legend>
+              Account
+            </legend>
+            <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
           </div>
 
-        </fieldset>
-        <div class="form-group">
-          <legend>
-            Account
-          </legend>
-          <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :css_override %>
+            <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :css_override %>
-          <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :domain_url %>
+            <%= f.text_field :domain_url, class: 'form-control' %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :domain_url %>
-          <%= f.text_field :domain_url, class: 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :google_analytics %>
+            <%= f.text_field :google_analytics, class: 'form-control' %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :google_analytics %>
-          <%= f.text_field :google_analytics, class: 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :facebook %>
+            <%= f.text_field :facebook, class: 'form-control' %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :facebook %>
-          <%= f.text_field :facebook, class: 'form-control' %>
-        </div>
+          <div class="form-group">
+            <%= f.label :twitter %>
+            <%= f.text_field :twitter, class: 'form-control' %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :twitter %>
-          <%= f.text_field :twitter, class: 'form-control' %>
-        </div>
-
-        <div class="form-group">
-          <%= f.label :tags %>
-          <%= f.text_field :tags, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :theme %>
-          <%= f.text_field :theme, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.submit 'Save Website', class: 'btn btn-success' %>
-          <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-        </div>
-      </div>
-      <!-- Blocks tab content -->
-      <div role="tabpanel" class="tab-pane" id="blocks" ng-init="blocks = <%= @website.blocks.to_json %>">
-        <div class="">
-          <div class="">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Title
-                  </th>
-                  <th>
-                    Type
-                  </th>
-                  <th>
-                    Position
-                  </th>
-                  <th>
-                    Location
-                  </th>
-                  <th>
-
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="block in blocks">
-                  <td>
-                    {{block.id}}
-                  </td>
-                  <td>
-                    {{block.name}}
-                  </td>
-                  <td>
-                    {{block.block_type}}
-                  </td>
-                  <td>
-                    {{block.position}}
-                  </td>
-                  <td>
-                    {{block.location}}
-                  </td>
-                  <td class="text-right">
-                    <!-- <button type="button" name="button" class="btn btn-sm btn-primary inverse "><i class="fa fa-pencil"></i> Edit</button> -->
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="form-group">
+            <%= f.label :tags %>
+            <%= f.text_field :tags, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :theme %>
+            <%= f.text_field :theme, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.submit 'Save Website', class: 'btn btn-success' %>
+            <%= link_to 'Cancel', @website, class: "btn btn-default" %>
           </div>
         </div>
+        <% end %>
+
+        <!-- Blocks tab content -->
+        <% if params[:tab] == 'blocks' %>
+          <div id="blocks" ng-init="blocks = <%= @website.blocks.to_json %>">
+            <div class="">
+              <div class="">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>
+                        ID
+                      </th>
+                      <th>
+                        Title
+                      </th>
+                      <th>
+                        Type
+                      </th>
+                      <th>
+                        Position
+                      </th>
+                      <th>
+                        Location
+                      </th>
+                      <th>
+
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="block in blocks">
+                      <td>
+                        {{block.id}}
+                      </td>
+                      <td>
+                        {{block.name}}
+                      </td>
+                      <td>
+                        {{block.block_type}}
+                      </td>
+                      <td>
+                        {{block.position}}
+                      </td>
+                      <td>
+                        {{block.location}}
+                      </td>
+                      <td class="text-right">
+                        <!-- <button type="button" name="button" class="btn btn-sm btn-primary inverse "><i class="fa fa-pencil"></i> Edit</button> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
-    </div>
     <% end %>
   </div>
 
