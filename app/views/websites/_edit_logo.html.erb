@@ -1,0 +1,77 @@
+<fieldset>
+  <legend>
+    Logo
+  </legend>
+  <div class="form-group">
+    <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select files...</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="asset">
+    </span>
+    <br/>
+    <br/>
+
+    <!-- The container for the uploaded files -->
+    <div id="files" class="files"></div>
+    <!-- The global progress bar -->
+    <div id="progress" class="hide progress">
+        <div class="progress-bar progress-bar-success"></div>
+    </div>
+
+    <div id="logo" class="logo thumbnail">
+      <%= image_tag @website.logo.asset %>
+    </div>
+
+    <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+  </div>
+
+  <script type="text/javascript">
+    /*jslint unparam: true */
+    /*global window, $ */
+    $(function () {
+      'use strict';
+      // Change this to the location of your server-side upload handler:
+      $('#fileupload').fileupload({
+        dataType: 'script',
+        url: '/logos',
+        type: 'POST',
+        multipart: true,
+        add: function(e, data) {
+          data.formData = {};
+          <% if @website.logo.present? %>
+            data.formData.id = <%= @website.logo.id %>;
+          <% end %>
+          data.formData.attachable_id = <%= @website.id %>;
+          data.formData.attachable_type = 'Website';
+          var file, types;
+          types = /(\.|\/)(gif|jpe?g|png)$/i;
+          file = data.files[0];
+          if (types.test(file.type) || types.test(file.name)) {
+            data.context = $('<div>' + file.name + '</div>');
+            $('#files').append(data.context);
+            return data.submit();
+          } else {
+            return alert(file.name + " is not a gif, jpeg, or png image file");
+          }
+        },
+        progress: function(e, data) {
+          var progress;
+          if (data.context) {
+            progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.progress').removeClass('hide');
+            return $('.progress-bar').css('width', progress + '%');
+            console.log(progress)
+          }
+        },
+        done: function(e, data){
+          if (data.context) {
+            console.log('done')
+            return data.context.remove();
+          }
+        }
+      });
+    });
+  </script>
+
+</fieldset>

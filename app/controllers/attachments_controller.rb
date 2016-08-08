@@ -50,6 +50,8 @@ class AttachmentsController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @resource.errors, status: :unprocessable_entity }
+        format.js {}
+
       end
     end
   end
@@ -61,6 +63,8 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to attachments_url, notice: 'Attachment was successfully destroyed.' }
       format.json { head :no_content }
+      format.js {}
+
     end
   end
 

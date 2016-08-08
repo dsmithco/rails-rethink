@@ -112,5 +112,16 @@
     });
   }();
 
-
 })();
+
+var turbolinks_go = function(url, no_scroll){
+  if(no_scroll){
+    addEventListener("turbolinks:before-render", function() {
+      scroll = $(document).scrollTop();
+    })
+    addEventListener("turbolinks:render", function() {
+      $(document).scrollTop(scroll);
+    })
+  }
+  Turbolinks.visit(url);
+}
