@@ -5,7 +5,7 @@ class HeroImagesController < AttachmentsController
   # POST /attachments
   # POST /attachments.json
   def create
-    @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+    @resource = instance_variable_set("@#{resource_name}", attachment_class.new(hero_image_params))
 
     respond_to do |format|
       if @resource.save
@@ -23,7 +23,7 @@ class HeroImagesController < AttachmentsController
   # PATCH/PUT /attachments/1.json
   def update
     respond_to do |format|
-      if @resource.update(attachment_params)
+      if @resource.update(hero_image_params)
         format.html { redirect_to @resource, notice: 'Attachment was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
         format.js { render :update, status: :created }
@@ -59,9 +59,8 @@ class HeroImagesController < AttachmentsController
       attachment.downcase
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def attachment_params
-      params.permit(:asset, :type, :attachable_id, :attachable_type)
+    def hero_image_params
+      params.require(:hero_image).permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
     end
 
     def attachment

@@ -1,1 +1,15 @@
-turbolinks_go(location.toString(), 'no_scroll');
+$('.errors').remove();
+$('.has-error').removeClass('has-error');
+
+<% if @block.errors.present? %>
+  <% @block.errors.each do |key,error| %>
+    $("#<%= key %>").addClass('has-error');
+    $("#<%= key %>").append("<div class='errors text-danger'><%=error%></div>")
+    console.log("<%= error.to_s %>");
+  <% end %>
+<% else %>
+  $('.modal').on('hidden.bs.modal', function () {
+    turbolinks_go(location.toString(), 'no_scroll');
+  });
+  $('.modal').modal('hide');
+<% end %>

@@ -115,13 +115,19 @@
 })();
 
 var turbolinks_go = function(url, no_scroll){
+  var scroll;
   if(no_scroll){
-    addEventListener("turbolinks:before-render", function() {
+    function getScroll(){
       scroll = $(document).scrollTop();
-    })
-    addEventListener("turbolinks:render", function() {
+    }
+    function scrollPage(){
       $(document).scrollTop(scroll);
-    })
+      removeEventListener("turbolinks:before-render", getScroll, false);
+      removeEventListener("turbolinks:render", scrollPage, false);
+    }
+    addEventListener("turbolinks:before-render", getScroll, false);
+    addEventListener("turbolinks:render", scrollPage, false);
   }
+  Turbolinks.clearCache();
   Turbolinks.visit(url);
 }

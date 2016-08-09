@@ -1,17 +1,13 @@
 <fieldset>
   <legend>
     Logo
-  </legend>
-  <div class="form-group">
-    <span class="btn btn-success fileinput-button">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Select files...</span>
+    <span class="btn btn-success btn-sm fileinput-button">
+        <span>Upload Logo Image</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="asset">
     </span>
-    <br/>
-    <br/>
-
+  </legend>
+  <div class="form-group">
     <!-- The container for the uploaded files -->
     <div id="files" class="files"></div>
     <!-- The global progress bar -->
@@ -22,7 +18,6 @@
     <div id="logo" class="logo thumbnail">
       <%= image_tag @website.logo.asset %>
     </div>
-
     <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
   </div>
 
@@ -37,7 +32,7 @@
         url: '/logos',
         type: 'POST',
         multipart: true,
-        add: function(e, data) {
+        add: function(e, data){
           data.formData = {};
           <% if @website.logo.present? %>
             data.formData.id = <%= @website.logo.id %>;
@@ -57,7 +52,7 @@
         },
         progress: function(e, data) {
           var progress;
-          if (data.context) {
+          if(data.context) {
             progress = parseInt(data.loaded / data.total * 100, 10);
             $('.progress').removeClass('hide');
             return $('.progress-bar').css('width', progress + '%');

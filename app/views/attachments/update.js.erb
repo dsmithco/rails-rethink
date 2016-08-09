@@ -1,7 +1,7 @@
-<% if @resource.new_record? %>
-  alert("Failed to upload painting: <%= j @attachment.errors.full_messages.join(', ').html_safe %>");
+<% if @resource.errors.present? %>
+  <% @resource.errors.each do |key,error| %>
+    console.log("<%= error.to_s %>");
+  <% end %>
 <% else %>
-  // alert('<%=j "#{ @resource.previous_changes }" %>')
-  var slug = '<%=j "#{@resource.class.name.tableize}_#{@resource.id}" %>';
-  $("." + slug).html('<%=j image_tag @resource.asset(:medium) %>');
+  turbolinks_go(location.toString(), 'no_scroll');
 <% end %>

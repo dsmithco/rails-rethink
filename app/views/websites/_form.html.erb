@@ -31,21 +31,26 @@
         <!-- Home tab content -->
         <% if !params[:tab].present? %>
           <%= form_for(@website, remote: true) do |f| %>
-            <div role="tabpanel" class="tab-pane active" id="home">
-              <div class="form-group" id="name">
-                <%= f.label :name %>
-                <%= f.text_field :name, class: 'form-control' %>
-              </div>
+            <fieldset>
+              <legend>
+                Website Info
+              </legend>
+              <div id="home">
+                <div class="form-group" id="name">
+                  <%= f.label :name %>
+                  <%= f.text_field :name, class: 'form-control' %>
+                </div>
 
-              <div class="form-group" id="about">
-                <%= f.label :about %>
-                <%= f.text_area :about, class: 'form-control summernote' %>
+                <div class="form-group" id="about">
+                  <%= f.label :about %>
+                  <%= f.text_area :about, class: 'form-control summernote' %>
+                </div>
+                <div class="form-group">
+                  <%= f.submit 'Save Website', class: 'btn btn-success' %>
+                  <%= link_to 'Cancel', @website, class: "btn btn-default" %>
+                </div>
               </div>
-              <div class="form-group">
-                <%= f.submit 'Save Website', class: 'btn btn-success' %>
-                <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-              </div>
-            </div>
+            </fieldset>
           <% end %>
         <% end %>
         <!-- Hero tab content -->
@@ -59,58 +64,64 @@
         <% if params[:tab] == 'site' %>
           <div id="site">
             <%= render 'websites/edit_logo' %>
-          <div class="form-group">
-            <legend>
-              Account
-            </legend>
-            <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :css_override %>
-            <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
-          </div>
+            <%= form_for(@website, remote: true) do |f| %>
+            <div class="form-group">
+              <legend>
+                Account
+              </legend>
+              <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :domain_url %>
-            <%= f.text_field :domain_url, class: 'form-control' %>
-          </div>
+            <div class="form-group">
+              <%= f.label :css_override %>
+              <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :google_analytics %>
-            <%= f.text_field :google_analytics, class: 'form-control' %>
-          </div>
+            <div class="form-group">
+              <%= f.label :domain_url %>
+              <%= f.text_field :domain_url, class: 'form-control' %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :facebook %>
-            <%= f.text_field :facebook, class: 'form-control' %>
-          </div>
+            <div class="form-group">
+              <%= f.label :google_analytics %>
+              <%= f.text_field :google_analytics, class: 'form-control' %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :twitter %>
-            <%= f.text_field :twitter, class: 'form-control' %>
-          </div>
+            <div class="form-group">
+              <%= f.label :facebook %>
+              <%= f.text_field :facebook, class: 'form-control' %>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :tags %>
-            <%= f.text_field :tags, class: 'form-control' %>
+            <div class="form-group">
+              <%= f.label :twitter %>
+              <%= f.text_field :twitter, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :tags %>
+              <%= f.text_field :tags, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= f.label :theme %>
+              <%= f.text_field :theme, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= f.submit 'Save Website', class: 'btn btn-success' %>
+              <%= link_to 'Cancel', @website, class: "btn btn-default" %>
+            </div>
+            <% end %>
           </div>
-          <div class="form-group">
-            <%= f.label :theme %>
-            <%= f.text_field :theme, class: 'form-control' %>
-          </div>
-          <div class="form-group">
-            <%= f.submit 'Save Website', class: 'btn btn-success' %>
-            <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-          </div>
-        </div>
         <% end %>
 
         <!-- Blocks tab content -->
         <% if params[:tab] == 'blocks' %>
-          <div id="blocks" ng-init="blocks = <%= @website.blocks.to_json %>">
-            <div class="">
-              <div class="">
+          <div id="blocks">
+            <fieldset>
+              <legend>
+                Blocks <%= link_to 'New Block', new_block_path, remote: true, class: 'btn btn-success btn-sm' %>
+              </legend>
+              <div class="form-group">
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -130,38 +141,48 @@
                         Location
                       </th>
                       <th>
+                        Front
+                      </th>
+                      <th>
 
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="block in blocks">
-                      <td>
-                        {{block.id}}
-                      </td>
-                      <td>
-                        {{block.name}}
-                      </td>
-                      <td>
-                        {{block.block_type}}
-                      </td>
-                      <td>
-                        {{block.position}}
-                      </td>
-                      <td>
-                        {{block.location}}
-                      </td>
-                      <td class="text-right">
-                        <!-- <button type="button" name="button" class="btn btn-sm btn-primary inverse "><i class="fa fa-pencil"></i> Edit</button> -->
-                      </td>
-                    </tr>
+                    <% @website.blocks.each do |block| %>
+                      <tr id="block_<%=block.id%>">
+                        <td>
+                          <%= block.id %>
+                        </td>
+                        <td>
+                          <%= block.name %>
+                        </td>
+                        <td>
+                          <%= block.block_type %>
+                        </td>
+                        <td>
+                          <%= block.position %>
+                        </td>
+                        <td>
+                          <%= block.location %>
+                        </td>
+                        <td class="">
+                          <%= "<i class='fa fa-star fa-fw'></i>".html_safe if block.front_page.present? %>
+                        </td>
+                        <td class="text-right">
+                          <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
+                          <%= link_to 'Remove', block_path(block), remote: true, method: :delete, data: {confirm: "Are you sure you want to delete the block #{block.name}"}, class: 'btn btn-sm btn-danger' %>
+                        </td>
+                      </tr>
+                    <% end %>
                   </tbody>
                 </table>
               </div>
-            </div>
+            </fieldset>
           </div>
         <% end %>
       </div>
   </div>
+  <%= render 'pages/edit_block_modal' %>
 
 </div>

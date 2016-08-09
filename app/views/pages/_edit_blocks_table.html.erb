@@ -2,7 +2,7 @@
   <div class="">
     <div class="form-group">
       <h3>
-        Blocks
+        Blocks <%= link_to 'New Block', new_block_path, remote: true, class: 'btn btn-success' %>
       </h3>
       <table class="table table-striped">
         <thead>
@@ -21,6 +21,9 @@
             </th>
             <th>
               Location
+            </th>
+            <th>
+              Front
             </th>
             <th>
 
@@ -45,6 +48,9 @@
               <td>
                 <%= block.location %>
               </td>
+              <td>
+                <%= "<i class='fa fa-star'></i>" if block.front_page %>
+              </td>
               <td class="text-right">
                 <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
                 <%= link_to 'Add to page', "/pages/#{@page.id}/add_block/#{block.id}", method: :put, remote: true, data: {disable_with:'loading...'},class: 'btn btn-sm btn-success' if !@page.block_ids.include?(block.id)%>
@@ -56,7 +62,6 @@
         </tbody>
       </table>
     </div>
-    <%= link_to 'New Block', new_block_path, remote: true, class: 'btn btn-success' %>
   </div>
 
 </div>
