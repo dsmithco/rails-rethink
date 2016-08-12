@@ -38,22 +38,27 @@
 
   <div class="form-group" id="block_type">
     <label>Block Type</label>
-    <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
+    <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control', ng_model: 'block_type' %>
   </div>
 
   <script type="text/javascript">
-    var block_type_select = $('#block_type > select');
-    block_type_select.empty();
-    // var block_type_options = [];
-    // function hide_navigation_fields(){
-    //   if(block_block_type.val() == 'navigation'){
-    //     $('#name, #about').hide();
-    //   }else{
-    //     $('#name, #about').show();
-    //   }
-    // }
-    // block_type_select.change(hide_navigation_fields);
-    // block_type_select.ready(hide_navigation_fields);
+    var block_type_select = $('#block_type select');
+    var default_options = <%= Block::REGIONS.to_json.html_safe %>;
+
+    function set_options(){
+      var location_select = $('#location select');
+      if(['3 panels','4 panels'].indexOf(block_type_select.val())>-1){
+        location_select.empty();
+        location_select.append("<option>main</option>");
+      }else{
+        location_select.empty();
+        default_options.forEach(function(option){
+          location_select.append("<option>" + option + "</option>");
+        })
+      }
+    }
+    block_type_select.change(set_options);
+    block_type_select.ready(set_options);
   </script>
 
 

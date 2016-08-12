@@ -49,7 +49,7 @@
                 <%= block.location %>
               </td>
               <td>
-                <%= "<i class='fa fa-star'></i>" if block.front_page %>
+                <%= "<i class='fa fa-star'></i>".html_safe if block.front_page %>
               </td>
               <td class="text-right">
                 <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
