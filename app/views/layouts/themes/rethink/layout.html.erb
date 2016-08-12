@@ -107,13 +107,25 @@
       <% cache [@current_website.hero_images, current_user] do %>
         <%= render 'layouts/hero_image' %>
       <% end %>
+      <% @website.blocks.where(front_page: true).each do |block| %>
+        <div class="container">
+          <h2 class="text-center">
+            <%= block.name %>
+          </h2>
+          <hr/>
+          <div class="row">
+            <div class="col-sm-12">
+              <%= block.about %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     <% end %>
 
-    <div class="">
-      <div class="container">
-        <%= yield %>
-      </div>
+    <div class="container">
+      <%= yield %>
     </div>
+
   </div>
 
   </body>
