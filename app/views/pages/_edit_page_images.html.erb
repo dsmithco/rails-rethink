@@ -1,6 +1,6 @@
 <div class="row form-group">
   <% @page.images.each do |image| %>
-    <div id="images" class="col-sm-3 image_<%=image.id%>">
+    <div id="images" class="col-sm-3 <%=dom_id(image)%>">
       <%= image_tag image.thumb, class: 'form-group' %>
       <%= link_to 'delete', "/pages/#{@page.id}/delete_image/#{image.id}", method: :delete, remote: true, data: {confirm: 'Are you sure?', disable_with: "<i class='fa fa-gear fa-spin'></i> deleting".html_safe}, class: 'btn btn-sm btn-danger' %>
     </div>
@@ -11,7 +11,7 @@
     <i class="glyphicon glyphicon-plus"></i>
     <span>Select files...</span>
     <!-- The file input field used as target for the file upload widget -->
-    <input id="fileupload" type="file" name="asset">
+    <input id="fileupload" type="file" name="asset" multiple>
 </span>
 <br/>
 <br/>

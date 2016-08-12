@@ -110,7 +110,8 @@
       <% @website.blocks.where(front_page: true).each do |block| %>
         <div class="container">
           <h2 class="text-center">
-            <%= block.name %>
+            <%= block.name %>   <%= link_to 'edit', edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm pull-right' if can? :update, block  %>
+
           </h2>
           <hr/>
           <div class="row">

@@ -1,2 +1,5 @@
+if(!$('#edit_block').length){
+  $('body').append("<%=j render 'blocks/edit_block_modal' %>");
+}
 $('#edit_block').modal('show');
 $('#edit_block_content').html("<%=j render 'blocks/form', block: @block, remote: true %>");
