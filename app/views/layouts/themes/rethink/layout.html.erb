@@ -4,8 +4,10 @@
     <title><%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %></title>
     <%= csrf_meta_tags %>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
-    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,300italic,400italic' rel='stylesheet' type='text/css'>
+    <meta name="HandheldFriendly" content="true">
+
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track': 'reload' if current_user.present?%>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -70,8 +72,8 @@
                 </li>
                 <li>
                   <span>
-                    <%= link_to "<span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                    <%= link_to "<span class='hidden-sm'>Sign out</span>".html_safe, destroy_user_session_path, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
+                    <%= link_to "<span>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
+                    <%= link_to "<span>Sign out</span>".html_safe, destroy_user_session_path, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
                   </span>
                 </li>
               <% else %>
