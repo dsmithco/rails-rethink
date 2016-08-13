@@ -1,0 +1,3 @@
+<% blocks.each do |block| %>
+  <%= content_tag('div', "#{render 'blocks/block', block: block}".html_safe, id: "#{dom_id(block)}") %>
+<% end %>

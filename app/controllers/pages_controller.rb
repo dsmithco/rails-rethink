@@ -117,6 +117,7 @@ class PagesController < ApplicationController
       else
         redirect_to '/'
       end
+      @resource = @page
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -38,12 +38,15 @@
     <script>
       var block_block_type = $('#block_block_type');
       var default_options = <%= Block::REGIONS.to_json.html_safe %>;
+      var main_options = <%= Block::CONTENT_REGIONS.to_json.html_safe %>;
 
       function set_options(){
         var location_select = $('#location select');
         location_select.empty();
-        if(['3 panels','4 panels'].indexOf(block_block_type.val())>-1){
-          location_select.append("<option>main</option>");
+        if(['container'].indexOf(block_block_type.val())>-1){
+          main_options.forEach(function(option){
+            location_select.append("<option>" + option + "</option>");
+          })
         }else{
           default_options.forEach(function(option){
             location_select.append("<option>" + option + "</option>");
@@ -92,6 +95,11 @@
     <%= f.text_field :position, class: 'form-control' %>
   </div>
 
+
+  <div class="form-group" id="position">
+    <label>Container Block</label>
+    <%= f.select :block_id, @current_website.blocks.where(block_type: 'container').collect {|x| [x.name, x.id]}, {:include_blank => "-- No container --"}, :class => 'form-control' %>
+  </div>
 </div>
 <div class="modal-footer">
   <div class="">

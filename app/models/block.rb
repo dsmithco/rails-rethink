@@ -7,9 +7,14 @@ class Block < ApplicationRecord
   has_many :page_blocks
   has_many :pages, through: :page_blocks
   has_one :image, as: :attachable
+  has_many :blocks
+  belongs_to :blocks
 
-  BLOCK_TYPES = ['custom', 'navigation', 'banner', '3 panels', '4 panels']
-  REGIONS = ['top', 'bottom', 'main', 'main_top', 'main_bottom', 'main_left', 'main_right', 'end']
+  BLOCK_TYPES = ['custom', 'navigation', 'container']
+  CONTENT_REGIONS = ['main_top', 'main_bottom']
+  WIDE_REGIONS = ['top', 'bottom']
+  SIDE_REGIONS = ['main_left', 'main_right']
+  REGIONS = CONTENT_REGIONS + WIDE_REGIONS + SIDE_REGIONS
 
   validates :block_type, inclusion: { in: BLOCK_TYPES, message: "%{value} is not a valid block type" }
   validates :location, inclusion: { in: REGIONS, message: "%{value} is not a valid location" }
@@ -17,7 +22,7 @@ class Block < ApplicationRecord
   validate :block_validation
 
   def block_validation
-    if ['3 panels', '4 panels'].include?(self.block_type) && self.location != 'main'
+    if CONTENT_REGIONS.include?(self.block_type) && ['container'].include?(self.location)
       self.errors[:block_type] << " invalid block type and location combo"
     end
   end

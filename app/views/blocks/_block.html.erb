@@ -1,0 +1,10 @@
+<h2 class="block-title">
+  <%= link_to 'edit', edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm pull-right' if can? :update, block  %>
+  <%= block.name %>
+</h2>
+
+<div class="row">
+  <div class="col-sm-12">
+    <%= block.about %>
+  </div>
+</div>

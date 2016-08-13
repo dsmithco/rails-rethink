@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808184924) do
+ActiveRecord::Schema.define(version: 20160812234343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 20160808184924) do
     t.datetime "updated_at", null: false
     t.integer  "position"
     t.boolean  "front_page"
+    t.integer  "block_id"
+    t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end
 
@@ -144,6 +146,7 @@ ActiveRecord::Schema.define(version: 20160808184924) do
 
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
+  add_foreign_key "blocks", "blocks"
   add_foreign_key "blocks", "websites"
   add_foreign_key "page_blocks", "blocks"
   add_foreign_key "page_blocks", "pages"
