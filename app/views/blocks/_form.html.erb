@@ -43,11 +43,15 @@
       function set_options(){
         var location_select = $('#location select');
         location_select.empty();
+        ['sub_block'].indexOf(block_block_type.val())>-1 ? $('#block_id').show() : $('#block_id').hide();
+
         if(['container'].indexOf(block_block_type.val())>-1){
+          $('#block_id').hide();
           main_options.forEach(function(option){
             location_select.append("<option>" + option + "</option>");
           })
         }else{
+          $('#block_id').show();
           default_options.forEach(function(option){
             location_select.append("<option>" + option + "</option>");
           })
@@ -68,11 +72,34 @@
       block_block_type.change(); // init change
 
     </script>
-
-
-    </script>
   </div>
 
+  <div class="form-group" id="block_id">
+    <label>Container Block</label>
+    <%= f.select :block_id, @current_website.blocks.where(block_type: 'container', block_id: ['',nil]).where.not(id: @block.id).collect {|x| [x.name, x.id]}, {:include_blank => "-- No container --"}, :class => 'form-control' %>
+    <script>
+      var block_type_block = $("#block_type");
+      var block_select = $('#block_id select');
+      var location_block = $('#location');
+      var front_page_block = $('#front_page');
+      var image_block = $('#image_block');
+      function toggle_block_type(){
+        if(block_select.val() === ''){
+          block_type_block.show();
+          location_block.show();
+          front_page_block.show();
+          image_block.hide();
+        }else{
+          block_type_block.hide();
+          location_block.hide();
+          front_page_block.hide();
+          image_block.hide();
+          image_block.show();
+        }
+      }
+      block_select.change(toggle_block_type).change();
+    </script>
+  </div>
 
   <div class="form-group" id="location">
     <label>Location</label>
@@ -89,17 +116,95 @@
     <%= f.label :about %>
     <%= f.text_area :about, class: 'form-control' %>
   </div>
-
-  <div class="form-group" id="position">
-    <label>Default Position</label>
-    <%= f.text_field :position, class: 'form-control' %>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="form-group" id="position">
+        <label>Default Position</label>
+        <%= f.text_field :position, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" id="image_block">
+    <h4>Block image
+      <span class="btn btn-primary btn-sm fileinput-button">
+          <span>Upload Image</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="fileupload" type="file" name="image[asset]">
+      </span>
+    </h4>
+    <!-- The container for the uploaded files -->
+    <div id="files" class="files"></div>
+    <!-- The global progress bar -->
+    <div id="progress" class="hide progress">
+        <div class="progress-bar progress-bar-success"></div>
+    </div>
+    <div id="images">
+      <div class="thumbnail">
+        <%= render 'images/image', image: block.image if block.image.present? %>
+      </div>
+    </div>
+    <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+    <script type="text/javascript">
+      /*jslint unparam: true */
+      /*global window, $ */
+      $(function () {
+        'use strict';
+        // Change this to the location of your server-side upload handler:
+        $('#fileupload').fileupload({
+          dataType: 'script',
+          url: '/images',
+          type: 'POST',
+          multipart: true,
+          add: function(e, data){
+            data.formData = {"image[attachable_id]": <%= block.id %>, "image[attachable_type]": 'Block'};
+            <% if block.image.present? %>
+              data.formData.id = <%= block.image.id %>;
+            <% end %>
+            var file, types;
+            types = /(\.|\/)(gif|jpe?g|png)$/i;
+            file = data.files[0];
+            if (types.test(file.type) || types.test(file.name)) {
+              data.context = $('<div class="loading">' + file.name + '</div>');
+              $('#files').append(data.context);
+              return data.submit();
+            } else {
+              return alert(file.name + " is not a gif, jpeg, or png image file");
+            }
+          },
+          progress: function(e, data) {
+            var progress;
+            if(data.context) {
+              progress = parseInt(data.loaded / data.total * 100, 10);
+              $('.progress').removeClass('hide');
+              return $('.progress-bar').css('width', progress + '%');
+              console.log(progress)
+            }
+          },
+          done: function(e, data){
+            if (data.context) {
+              console.log('done')
+              $('.progress').addClass('hide');
+              return data.context.remove();
+            }
+          }
+        });
+      });
+    </script>
   </div>
 
-
-  <div class="form-group" id="position">
-    <label>Container Block</label>
-    <%= f.select :block_id, @current_website.blocks.where(block_type: 'container').collect {|x| [x.name, x.id]}, {:include_blank => "-- No container --"}, :class => 'form-control' %>
+  <div class="" id="block_links">
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.label :link %>
+        <%= f.text_field :link, class: 'form-control' %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.label :link_text %>
+        <%= f.text_field :link_text, class: 'form-control' %>
+      </div>
+    </div>
   </div>
+
 </div>
 <div class="modal-footer">
   <div class="">

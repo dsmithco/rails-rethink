@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :attachments, controller: 'attachments', type: 'Attachment'
   resources :logos, controller: 'logos', type: 'Logo'
   resources :icons, controller: 'attachments', type: 'Icon'
-  resources :images, controller: 'attachments', type: 'Image'
+  resources :images, controller: 'images', type: 'Image'
   resources :hero_images, controller: 'hero_images', type: 'HeroImage'
   resources :users
   resources :websites do
