@@ -25,9 +25,9 @@
       var attachable_id = toSummernote.context.dataset.attachableId
       var attachable_type = toSummernote.context.dataset.attachableType
       data = new FormData;
-      data.append('attachment[asset]', file);
-      data.append('attachment[attachable_id]', attachable_id);
-      data.append('attachment[attachable_type]', attachable_type);
+      data.append('image[asset]', file);
+      data.append('image[attachable_id]', attachable_id);
+      data.append('image[attachable_type]', attachable_type);
       return $.ajax({
         data: data,
         type: 'POST',

@@ -16,7 +16,7 @@
     </div>
 
     <div id="logo" class="logo thumbnail">
-      <%= image_tag @website.logo.asset %>
+      <%= image_tag @website.logo.asset if @website.logo.present? %>
     </div>
     <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
   </div>
