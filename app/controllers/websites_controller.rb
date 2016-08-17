@@ -17,9 +17,32 @@ class WebsitesController < ApplicationController
   end
 
   def stylesheet
+    dir = "#{Rails.root}/tmp/websites"
+    path = "#{dir}/#{@current_website.id}-#{@current_website.updated_at.to_i}-theme.css"
+    unless File.exist?(path)
+      File.delete(*Dir.glob("#{dir}/#{@current_website.id}-*.css"))
+      sass = "#{@current_website.css_override}\n
+              @import 'bootstrap';\n
+              @import '/assets/summernote.css';\n
+              @import '/assets/font-awesome.css';\n
+              @import 'custom_styles';
+              "
 
-    compiler = Sass::Compiler.new("#{@current_website.id}/site.css", {:syntax => :scss, :output_dir => Rails.root.join('tmp')})
-    render text: compiler, content_type: 'text/css'
+      compiler = Sass::Engine.new(sass, {
+        syntax: :scss,
+        load_paths: ["#{Rails.root}/app/assets/stylesheets"],
+        cache: true,
+        read_cache: true,
+        style: :compressed
+      }).render
+
+      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      File.open(path, "w+") do |f|
+        f.write(compiler)
+      end
+    end
+    # compiler = Sass::Compiler.new(temp, {:syntax => :scss, :output_dir => Rails.root.join(dir)})
+    render text: File.read(path), content_type: 'text/css'
   end
 
   def home
