@@ -1,6 +1,5 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
 
   # GET /websites
   # GET /websites.json
@@ -15,6 +14,12 @@ class WebsitesController < ApplicationController
       format.html {redirect_to @website.rethink_href }
       format.json {}
     end
+  end
+
+  def stylesheet
+
+    compiler = Sass::Compiler.new("#{@current_website.id}/site.css", {:syntax => :scss, :output_dir => Rails.root.join('tmp')})
+    render text: compiler, content_type: 'text/css'
   end
 
   def home

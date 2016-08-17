@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     resources :blocks
     resources :pages
     resources :attachments
+    member do
+      get 'stylesheet'
+    end
   end
   resources :accounts
 
