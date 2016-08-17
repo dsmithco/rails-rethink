@@ -52,7 +52,7 @@
           ['insert', ['link', 'picture', 'hr']],
           ['view', ['fullscreen','codeview']]
         ],
-          styleTags: ['p', 'h1', 'h2', 'h3'],
+          styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre'],
           minHeight: '260px',
         callbacks: {
           onPaste: function (e) {
