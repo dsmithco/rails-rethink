@@ -23,8 +23,8 @@ class WebsitesController < ApplicationController
       File.delete(*Dir.glob("#{dir}/#{@current_website.id}-*.css"))
       sass = "#{@current_website.css_override}\n
               @import 'bootstrap';\n
-              @import #{asset-path('summernote.css')};\n
-              @import #{asset-path('font-awesome.css')};\n
+              @import #{asset-path('/asset/summernote.css')};\n
+              @import #{asset-path('/asset/font-awesome.css')};\n
               @import 'custom_styles';
               "
 
