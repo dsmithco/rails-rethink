@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814013025) do
+ActiveRecord::Schema.define(version: 20160817185052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160814013025) do
     t.string   "link"
     t.integer  "position"
     t.string   "link_text"
+    t.string   "text_align"
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
     t.index ["type", "attachable_id", "attachable_type"], name: "index_attachments_on_type_and_attachable_id_and_attachable_type", using: :btree
     t.index ["type"], name: "index_attachments_on_type", using: :btree

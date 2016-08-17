@@ -97,8 +97,11 @@ button.list-group-item {
     z-index: 2; // Place active items above their siblings for proper border styling
     color: $list-group-active-color;
     background-color: $list-group-active-bg;
-    border-color: $list-group-active-border;
-
+    border-bottom-color: $list-group-border;
+    &:last-child {
+      border-bottom: 0px solid $list-group-border;
+      // @include border-bottom-radius($list-group-border-radius);
+    }
     // Force color to inherit for custom content
     .list-group-item-heading,
     .list-group-item-heading > small,

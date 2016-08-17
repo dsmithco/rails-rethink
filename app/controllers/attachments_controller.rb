@@ -84,7 +84,7 @@ class AttachmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def attachment_params
-      params.permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
+      params.permit(:asset, :type, :attachable_id, :text_align, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
     end
 
     def attachment
