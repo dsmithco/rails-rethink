@@ -1,8 +1,8 @@
 <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_website_path(@current_website), class: 'edit_link' if can? :update, @current_website %>
 
-<div class="hero-unit" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
+<div class="hero-unit <%= @current_website.hero_images.first.text_align %>" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
   <div class="hero-unit-cell">
-    <div class="hero-unit-content text-center">
+    <div class="hero-unit-content text-center container-fluid">
       <div>
         <%= content_tag(:h1, @current_website.hero_images.first.name) if @current_website.hero_images.first.name.present?%>
       </div>

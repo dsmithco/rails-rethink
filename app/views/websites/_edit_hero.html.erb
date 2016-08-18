@@ -48,14 +48,19 @@
                           <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle' %>
                         </div>
                         <div class="row">
-                          <div class="col-sm-6">
+                          <div class="col-sm-4">
                             <div class="form-group">
                               <%= f.text_field :link, class: 'form-control', placeholder: 'Link' %>
                             </div>
                           </div>
-                          <div class="col-sm-6">
+                          <div class="col-sm-4">
                             <div class="form-group">
                               <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text' %>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="form-group" id="text_align">
+                              <%= f.select :text_align, Attachment::TEXT_ALIGNMENTS, {:include_blank => "-- Select Alignment --"}, :class => 'form-control' %>
                             </div>
                           </div>
                         </div>
@@ -69,7 +74,7 @@
 
                   </div>
                   <script type="text/javascript">
-                    $("form").keyup(function(){
+                    $("form").on('change keyup',function(){
                       $(this).find('.submit_button').removeClass('hide');
                     });
                   </script>

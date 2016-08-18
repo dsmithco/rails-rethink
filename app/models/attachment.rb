@@ -4,7 +4,7 @@ class Attachment < ApplicationRecord
 
   TEXT_ALIGNMENTS = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right']
 
-  validates :text_align, inclusion: { in: TEXT_ALIGNMENTS << ['',nil], message: "%{value} is not a valid alignment" }
+  validates :text_align, inclusion: { in: TEXT_ALIGNMENTS + ['',nil], message: "%{value} is not a valid alignment" }
 
   # This method associates the attribute ":avatar" with a file attachment
   has_attached_file :asset, styles: {
