@@ -10,13 +10,14 @@ class Block < ApplicationRecord
   has_many :blocks
   belongs_to :block
 
-  BLOCK_TYPES = ['custom', 'navigation', 'container', 'sub_block']
+  SYSTEM_BLOCK_TYPES = ['navigation']
+  BLOCK_TYPES = ['custom', 'container', 'sub_block']
   CONTENT_REGIONS = ['main_top', 'main_bottom']
   WIDE_REGIONS = ['top', 'bottom']
   SIDE_REGIONS = ['main_left', 'main_right']
   REGIONS = CONTENT_REGIONS + WIDE_REGIONS + SIDE_REGIONS
 
-  validates :block_type, inclusion: { in: BLOCK_TYPES, message: "%{value} is not a valid block type" }
+  validates :block_type, inclusion: { in: BLOCK_TYPES + SYSTEM_BLOCK_TYPES, message: "%{value} is not a valid block type" }
   validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
 
   validate :block_validation
