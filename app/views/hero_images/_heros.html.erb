@@ -1,7 +1,5 @@
-<% hero_images.each_slice(3) do |herows| %>
-  <div class="row">
-    <% herows.each do |hero_image| %>
-        <%= render 'hero_images/hero_image', hero_image: hero_image %>
-    <% end %>
-  </div>
-<% end %>
+<div id="hero_images">
+  <% hero_images.each do |hero_image| %>
+      <%= render 'hero_images/hero_image', hero_image: hero_image, id: "#{dom_id(hero_image)}" %>
+  <% end %>
+</div>

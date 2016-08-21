@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817185052) do
+ActiveRecord::Schema.define(version: 20160820164319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,10 +96,12 @@ ActiveRecord::Schema.define(version: 20160817185052) do
     t.text     "about"
     t.integer  "website_id"
     t.integer  "page_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "slug"
     t.integer  "position"
+    t.boolean  "is_published",  default: false
+    t.boolean  "show_sub_menu", default: true
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
     t.index ["slug"], name: "index_pages_on_slug", using: :btree

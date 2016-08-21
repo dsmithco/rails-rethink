@@ -9,7 +9,7 @@ class ImagesController < AttachmentsController
       @image = Image.new(image_params)
       @image.save
     else
-      @image =Image.find(params[:id])
+      @image = Image.find_or_initialize_by(id: params[:id])
       @image.update(image_params)
     end
     respond_to do |format|

@@ -244,3 +244,8 @@ h4.box-title {
 .main_right_blocks, .main_left_blocks {
   margin-top: 6px;
 }
+
+dl > dt > label {
+  margin-top: 7px;
+  display: inline-block;
+}

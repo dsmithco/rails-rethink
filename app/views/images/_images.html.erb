@@ -1,5 +1,5 @@
 <div class="images_list" id="images">
   <% images.each do |image| %>
-    <%= render 'images/image', image: image %>
+    <%= render 'images/image', image: image, id: "#{dom_id(image)}" %>
   <% end %>
 </div>

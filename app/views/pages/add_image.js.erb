@@ -1,1 +1,5 @@
-$('#images').html("<%=j render 'pages/edit_page_images' %>");
+if($("#<%=j dom_id(@image)%>").length){
+  $("#<%=j dom_id(@image)%>").replaceWith("<%=j render 'images/image', image: @image %>");
+}else{
+  $("#images").append("<%=j render 'images/image', image: @image %>");
+}

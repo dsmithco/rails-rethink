@@ -1,1 +1,4 @@
-<%= image_tag image.medium, id: "#{dom_id(image)}"%>
+<span id="<%=dom_id(image)%>" class="thumbnail">
+<%= image_tag image.medium %>
+<%= link_to "<i class='fa fa-trash'></i> delete".html_safe, image_path(image), class: 'btn btn-xs text-danger', remote: true, method: :delete, data: {confirm: 'Delete image?'}%>
+</span>

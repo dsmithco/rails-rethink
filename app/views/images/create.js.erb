@@ -1,4 +1,3 @@
-console.log("#<%=j dom_id(@image)%>");
 if($("#<%=j dom_id(@image)%>").length){
   $("#<%=j dom_id(@image)%>").replaceWith("<%=j render 'images/image', image: @image %>");
 }else{
