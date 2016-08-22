@@ -6,11 +6,9 @@
       <div>
         <%= content_tag(:h1, @current_website.hero_images.first.name) if @current_website.hero_images.first.name.present?%>
       </div>
-      <br/>
       <div>
         <%= content_tag(:h2, @current_website.hero_images.first.about) if @current_website.hero_images.first.about.present?%>
       </div>
-      <br/>
       <p>
         <%= link_to @current_website.hero_images.first.link_text || 'Continue', @current_website.hero_images.first.link, class: "btn btn-primary btn-lg" if @current_website.hero_images.first.link.present? %>
       </p>
