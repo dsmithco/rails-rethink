@@ -30,6 +30,7 @@
       dataType: 'script',
       url: '/images',
       type: 'POST',
+      dropZone: $('#images_zone'),
       multipart: true,
       add: function(e, data) {
         data.formData = { 'image[attachable_id]': <%= @page.id %>, 'image[attachable_type]': 'Page' <%= ", 'id': #{@page.image.id}".html_safe if @page.image.present? %> };

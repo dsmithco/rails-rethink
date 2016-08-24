@@ -47,8 +47,8 @@
             </script>
 
             <dt><%= f.label :about, 'Body' %></dt>
-            <dd class="" id="about"><%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website"} %></dd>
-            <dd class="form-group">
+            <dd class="" id="about"><%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %></dd>
+            <dd class="form-group" id="images_zone">
               <%= render 'pages/edit_page_images' %>
             </dd>
             <dt><%= f.label :position %></dt>
