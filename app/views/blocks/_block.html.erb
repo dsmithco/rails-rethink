@@ -14,14 +14,16 @@
           <div class="col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
             <div class="panel panel-default">
               <%= link_to 'edit', edit_block_path(sub_block), remote: true, class: 'btn btn-primary inverse btn-sm', style: 'position:absolute; right: 20px; top: 10px;' if can? :update, sub_block  %>
-              <%= image_tag sub_block.image.medium if sub_block.image.present? %>
+              <%= link_to (image_tag sub_block.image.medium), sub_block.link if sub_block.image.present? %>
               <div class="panel-body">
-                <%= content_tag('h4', "#{sub_block.name}") %>
+                <%= content_tag('h4', "#{sub_block.name}") if sub_block.name.present?%>
                 <%= sub_block.about %>
               </div>
-              <div class="panel-footer">
-                <%= link_to "#{sub_block.link_text || 'Go'}", sub_block.link, class: 'btn btn-block' if sub_block.link.present? %>
-              </div>
+              <% if sub_block.link.present? %>
+                <div class="panel-footer">
+                  <%= link_to "#{sub_block.link_text || 'Go'}", sub_block.link, class: 'btn btn-block' %>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>
