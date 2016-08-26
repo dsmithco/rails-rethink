@@ -3,13 +3,8 @@
     <% if block.block_type == 'navigation'%>
       <%= render 'blocks/nav_block', block: block, '@page': @page %>
     <% else %>
-      <div class="block-body">
-        <h4>
-          <%= block.name.html_safe %>
-        </h4>
-        <div>
-          <%= block.about.html_safe %>
-        </div>
+      <div class="block-container">
+        <%= render 'blocks/block', block: block %>
       </div>
     <% end %>
   </div>

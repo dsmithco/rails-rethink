@@ -14,8 +14,8 @@
           <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.main_bottom_blocks}".html_safe, id: 'main_blocks', class: 'container') %>
           <br/>
         </div>
-        <%= content_tag('div', (render 'blocks/main_left_right', blocks: @page.main_left_blocks), class: "col-sm-3 main_left_blocks #{@page.main_right_blocks.present? ? 'col-sm-pull-5' : 'col-sm-pull-9' }") if @page.main_left_blocks.present? %>
-        <%= content_tag('div', (render 'blocks/main_left_right', blocks: @page.main_right_blocks), class: 'col-sm-4 main_right_blocks') if @page.main_right_blocks.present? %>
+        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_left_blocks), class: "col-sm-3 main_left_blocks #{@page.main_right_blocks.present? ? 'col-sm-pull-5' : 'col-sm-pull-9' }") if @page.main_left_blocks.present? %>
+        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_right_blocks), class: 'col-sm-4 main_right_blocks') if @page.main_right_blocks.present? %>
       </div>
     </div>
   </div>

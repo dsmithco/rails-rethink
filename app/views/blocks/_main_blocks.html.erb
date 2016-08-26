@@ -1,5 +1,26 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <%= render 'blocks/block', block: block %>
+    <div id="<%= dom_id(block) %>">
+      <h2 class="block-title">
+        <%= block.name %>
+        <%= link_to 'edit', edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
+      </h2>
+      <div class="row">
+        <div class="col-sm-12">
+          <p class="text-center">
+            <%= block.about %>
+          </p>
+          <div class="row">
+            <% block.blocks.try(:each) do |sub_block| %>
+              <div class="col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
+                <div class="block-container">
+                  <%= render 'blocks/block', block: sub_block %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   <% end %>
 </div>

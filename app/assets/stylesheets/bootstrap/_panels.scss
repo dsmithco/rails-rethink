@@ -272,3 +272,30 @@
 .panel-danger {
   @include panel-variant($panel-danger-border, $panel-danger-text, $panel-danger-heading-bg, $panel-danger-border);
 }
+
+.block .block-about{
+  margin: 12px 15px;
+}
+.block .block-image {
+  margin-bottom: 15px;
+}
+.block .block-title{
+  margin: 20px 15px 0 15px;
+}
+.block-container {
+  margin-bottom: 24px;
+  background-color: #fff;
+  border: 0px solid transparent;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  overflow: hidden;
+}
+
+.block-container .block-edit{
+  clear:none;
+  float:right;
+  position: absolute;
+  right: 25px;
+  top: 8px;
+}

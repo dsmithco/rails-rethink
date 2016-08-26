@@ -1,33 +1,7 @@
-<div id="<%= dom_id(block) %>">
-  <h2 class="block-title">
-    <%= block.name %>
-    <%= link_to 'edit', edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
-  </h2>
-
-  <div class="row">
-    <div class="col-sm-12">
-      <p class="text-center">
-        <%= block.about %>
-      </p>
-      <div class="row">
-        <% block.blocks.try(:each) do |sub_block| %>
-          <div class="col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
-            <div class="panel panel-default">
-              <%= link_to 'edit', edit_block_path(sub_block), remote: true, class: 'btn btn-primary inverse btn-sm', style: 'position:absolute; right: 20px; top: 10px;' if can? :update, sub_block  %>
-              <%= link_to (image_tag sub_block.image.medium), sub_block.link if sub_block.image.present? %>
-              <div class="panel-body">
-                <%= content_tag('h4', "#{sub_block.name}") if sub_block.name.present?%>
-                <%= sub_block.about %>
-              </div>
-              <% if sub_block.link.present? %>
-                <div class="panel-footer">
-                  <%= link_to "#{sub_block.link_text || 'Go'}", sub_block.link, class: 'btn btn-block' %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<div class="block" id="<%= dom_id(block) %>">
+  <%= link_to 'edit', edit_block_path(block), remote: true, class: 'block-edit pull-right btn btn-primary inverse btn-sm' if can? :update, block  %>
+  <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
+  <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
+  <%= content_tag('div',block.about, class: 'block-about') if block.about.present? %>
+  <%= link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-block block-link' %>
 </div>
