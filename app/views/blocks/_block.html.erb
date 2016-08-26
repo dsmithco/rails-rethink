@@ -3,5 +3,5 @@
   <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
   <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
   <%= content_tag('div',block.about, class: 'block-about') if block.about.present? %>
-  <%= link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-block block-link' %>
+  <%= content_tag('div', (link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-block'), class: 'block-link') if block.link.present? %>
 </div>

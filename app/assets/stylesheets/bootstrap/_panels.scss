@@ -282,15 +282,6 @@
 .block .block-title{
   margin: 20px 15px 0 15px;
 }
-.block-container {
-  margin-bottom: 24px;
-  background-color: #fff;
-  border: 0px solid transparent;
-  border-radius: 2px;
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.35);
-  overflow: hidden;
-}
 
 .block-container .block-edit{
   clear:none;
@@ -298,4 +289,8 @@
   position: absolute;
   right: 25px;
   top: 8px;
+}
+
+.block-link {
+  margin: 10px 15px;
 }

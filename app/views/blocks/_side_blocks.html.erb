@@ -6,7 +6,7 @@
       <div class="block-container">
         <%= render 'blocks/block', block: block %>
       </div>
+      <%= link_to "<i class='fa fa-pencil'></i> Edit".html_safe, edit_block_path(block), remote: true, class: 'btn btn-xs' if can? :update, block  %>
     <% end %>
   </div>
-  <%= link_to "<i class='fa fa-pencil'></i> edit block".html_safe, edit_block_path(block), remote: true, class: 'btn btn-xs' if can? :update, block  %>
 <% end %>

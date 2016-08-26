@@ -43,7 +43,6 @@ class PagesController < ApplicationController
   # GET /pages/new
   def new
     @page = Page.new
-    @page.website_id = params[:website_id] if params[:website_id].present?
     render layout: "themes/#{@current_website.theme}/layout"
   end
 
@@ -56,6 +55,8 @@ class PagesController < ApplicationController
   # POST /pages.json
   def create
     @page = Page.new(page_params)
+    @page.website_id = @current_website.id if @current_website.id.present?
+
     respond_to do |format|
       if @page.save
         format.html { redirect_to @page, notice: 'Page was successfully created.' }
