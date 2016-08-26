@@ -1,3 +1,8 @@
-<h1 class="page-title"><%= @page.name %></h1>
-
+<dl class="dl-horizontal">
+  <dt></dt>
+  <dd>
+    <h1 class="page-title"><%= @page.name %></h1>
+    <%= render 'pages/edit_page_nav' if can? :update, @page %>
+  </dd>
+</dl>
 <%= render 'form', page: @page %>

@@ -1,0 +1,12 @@
+<% if can? :update, @page %>
+  <ul class="nav nav-tabs">
+    <li class="<%= action_name == 'show' ? 'active':''%>"><%= link_to '<i class="fa fa-eye"></i> View'.html_safe, page_path(@page) %></li>
+    <li class="<%= action_name == 'edit' ? 'active':''%>">
+      <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page) %>
+    </li>
+    <li>
+      <%= link_to '<i class="fa fa-cube"></i> Add block'.html_safe, new_block_path({page_ids:[@page.id], website_id: @current_website.id}), remote: true  %>
+    </li>
+  </ul>
+  <br/>
+<% end %>

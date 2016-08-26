@@ -4,7 +4,7 @@ class Block < ApplicationRecord
 
   default_scope { order('blocks.position ASC') }
 
-  has_many :page_blocks
+  has_many :page_blocks, dependent: :destroy
   has_many :pages, through: :page_blocks
   has_one :image, as: :attachable
   has_many :blocks
