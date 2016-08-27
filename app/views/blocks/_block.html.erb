@@ -1,6 +1,13 @@
 <div class="block" id="<%= dom_id(block) %>">
+  <style media="screen">
+    #<%= dom_id(block) %> .block-edit{
+      position: absolute;
+      top: 10px;
+      right: 25px;
+    }
+  </style>
   <% if can? :update, block %>
-    <div class="btn-group pull-right">
+    <div class="btn-group block-edit">
       <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
       <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger inverse btn-sm' if can? :update, block  %>
     </div>
