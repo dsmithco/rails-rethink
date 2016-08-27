@@ -24,11 +24,11 @@
       <div class="row">
         <div class="col-sm-12">
           <p class="text-center">
-            <%= block.about %>
+            <%= block.about.html_safe if block.about.present? %>
           </p>
           <div class="row">
             <% block.blocks.try(:each) do |sub_block| %>
-              <div class="col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
+              <div class="text-center col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
                 <div class="block-container-<%= block.id %>">
                   <%= render 'blocks/block', block: sub_block %>
                 </div>
