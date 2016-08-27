@@ -42,7 +42,24 @@
                 </div>
                 <div class="form-group" id="about">
                   <%= f.label :about %>
-                  <%= f.text_area :about, class: 'form-control summernote' %>
+                  <%= f.text_area :about, class: 'tinymce' %>
+                  <script type="text/javascript">
+                    document.addEventListener("turbolinks:load", function() {
+                      tinymce.remove();
+                      tinyMCE.init({
+                        selector: '.tinymce',
+                        menubar: false,
+                        autoresize_on_init: true,
+                        autoresize_bottom_margin: 10,
+                        plugins: [
+                          'advlist autolink lists link image charmap print preview anchor',
+                          'searchreplace visualblocks code fullscreen autoresize autolink',
+                          'insertdatetime media table contextmenu paste code'
+                        ],
+                        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+                      });
+                    })
+                  </script>
                 </div>
                 <div class="form-group">
                   <legend>
