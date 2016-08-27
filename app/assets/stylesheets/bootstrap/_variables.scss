@@ -69,7 +69,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 $headings-font-family:    inherit !default;
 $headings-font-weight:    500 !default;
 $headings-line-height:    1.25 !default;
-$headings-color:          inherit !default;
+$headings-color:          darken($brand-primary, 25%) !default;
 
 
 //== Iconography
@@ -857,7 +857,7 @@ $text-muted:                  $gray-light !default;
 //** Abbreviations and acronyms border color
 $abbr-border-color:           $gray-light !default;
 //** Headings small color
-$headings-small-color:        $gray-light !default;
+$headings-small-color:        lighten(desaturate($headings-color, 85%), 24%) !default;
 //** Blockquote small color
 $blockquote-small-color:      $gray-light !default;
 //** Blockquote font size
