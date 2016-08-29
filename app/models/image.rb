@@ -5,7 +5,7 @@ class Image < Attachment
     thumb: '200x200#',
     medium: '1000x400#',
     large: '1600x1600>',
-    long: '1400x300#'
+    long: '1400x400#'
   }
 
   # Validate the attached image is image/jpg, image/png, etc
