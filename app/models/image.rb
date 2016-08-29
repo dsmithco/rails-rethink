@@ -4,7 +4,8 @@ class Image < Attachment
   has_attached_file :asset, styles: {
     thumb: '200x200#',
     medium: '1000x400#',
-    large: '1600x1600>'
+    large: '1600x1600>',
+    long: '1400x300#'
   }
 
   # Validate the attached image is image/jpg, image/png, etc
@@ -20,6 +21,10 @@ class Image < Attachment
 
   def large
     self.try(:asset, :large)
+  end
+
+  def long
+    self.try(:asset, :long)
   end
 
   def as_json(options={})
