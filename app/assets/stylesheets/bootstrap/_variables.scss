@@ -68,7 +68,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 $headings-font-family:    inherit !default;
 $headings-font-weight:    500 !default;
 $headings-line-height:    1.2 !default;
-$headings-color:          desaturate(darken($brand-primary, 30%),70%) !default;
+$headings-color:          desaturate(darken($brand-primary, 20%),50%) !default;
 
 
 //== Iconography
