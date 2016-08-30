@@ -41,29 +41,29 @@ var set_summernote = function(){
   };
 
 
-  $('.summernote').each(function(){
-    $(this).summernote({
-      toolbar: [
-          ['style', ['style']],
-        ['font', ['bold', 'italic', 'underline', 'clear']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['insert', ['link', 'picture', 'hr']],
-        ['view', ['fullscreen','codeview']]
-      ],
-        styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre'],
-        minHeight: '200px',
-      callbacks: {
-        // onPaste: function (e) {
-        //     var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-        //     e.preventDefault();
-        //     document.execCommand('insertText', true, bufferText);
-        // },
-        onImageUpload: function(files) {
-          return sendFile(files[0], $(this));
-        }
-      }
-    });
-  })
+  // $('.summernote').each(function(){
+  //   $(this).summernote({
+  //     toolbar: [
+  //         ['style', ['style']],
+  //       ['font', ['bold', 'italic', 'underline', 'clear']],
+  //       ['para', ['ul', 'ol', 'paragraph']],
+  //       ['insert', ['link', 'picture', 'hr']],
+  //       ['view', ['fullscreen','codeview']]
+  //     ],
+  //       styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre'],
+  //       minHeight: '200px',
+  //     callbacks: {
+  //       onPaste: function (e) {
+  //           var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+  //           e.preventDefault();
+  //           document.execCommand('insertText', true, bufferText);
+  //       },
+  //       onImageUpload: function(files) {
+  //         return sendFile(files[0], $(this));
+  //       }
+  //     }
+  //   });
+  // })
 }
 
 var setup_affix = function(){

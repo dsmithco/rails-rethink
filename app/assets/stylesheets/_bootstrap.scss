@@ -76,6 +76,18 @@ body {
   background-color: #f5f5f5;
 }
 
+.fixed {
+  position: fixed !important;
+  top: 0;
+}
+
+.mce-tinymce.mce-container {
+  background-color: none !important;
+}
+.mce-panel:not(.mce-floatpanel) {
+  border: none !important;
+}
+
 
 /* Custom page CSS
 -------------------------------------------------- */
