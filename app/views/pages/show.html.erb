@@ -1,6 +1,6 @@
 <% cache [@page, @page.website, @page.blocks, current_user] do %>
   <div class="row">
-    <% unless @page.image.present? %>
+    <% unless @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
       <div class="col-sm-<%= @page.main_left_blocks.present? ? '9 col-sm-push-3' : '12 '%>">
         <h2 class="page-title">
           <%= @page.name %>
@@ -23,5 +23,5 @@
   </div>
 <% end %>
 <% content_for :top_block do %>
-  <%= render 'pages/top_image', blocks: @page.image if @page.image.present? %>
+  <%= render 'pages/top_image', blocks: @page.image if @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
 <% end %>
