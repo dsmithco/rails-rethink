@@ -1,6 +1,5 @@
-<% content_for :top_block do %>
   <div class="top_image_container">
-    <div class="top_image" id="<%=dom_id(@page.image)%>">
+    <div class="top_image" id="<%=dom_id(@page.image)%>" style="background-image: url('<%= @page.image.long %>'); ">
     </div>
     <div class="top_image_cell">
       <div class="title_strip">
@@ -16,56 +15,3 @@
       </div>
     </div>
   </div>
-  <style media="screen">
-    <%
-      height = '200px'
-      opacity = '.7'
-    %>
-    h2.page-title {
-      display: none;
-    }
-    .top_image_container {
-      background-color: #000;
-      position: relative;
-      top: -28px;
-      height:<%= height %>;
-      display: table;
-      width: 100%;
-    }
-    .top_image {
-      position: absolute;
-      z-index: 1;
-      height:<%= height %>;
-      width: 100%;
-      left: 0;
-      display: table;
-      right: 0;
-      opacity: <%= opacity %>;
-      background-image: url('<%= @page.image.long %>');
-      background-size: cover;
-      background-position: center;
-      display: table;
-      width: 100%;
-    }
-    .top_image_cell {
-      z-index: 99;
-      background-color: rgba(0,0,0,0.0);
-      position: relative;
-      display: table-cell;
-      width: 100%;
-      vertical-align: bottom;
-    }
-    .title_strip {
-      /*background-color: rgba(255,255,255,0.3);*/
-    }
-    .top_image_cell h1 {
-      color: #fff;
-      opacity: .9;
-      display: inline-block;
-      padding: 0px;
-      letter-spacing: 1px;
-      margin: 6px 0 10px 0;
-      font-weight: 500;
-    }
-  </style>
-<% end %>

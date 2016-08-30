@@ -64,3 +64,13 @@
   padding-left: 0;
   list-style: none;
 }
+
+.media-list > .media {
+  padding: 0 0 2.2rem;
+}
+
+.media-list > .media > .media-left {
+  min-width: 140px;
+  max-width:50%;
+  padding-right: 16px;
+}

@@ -1,10 +1,12 @@
 <% cache [@page, @page.website, @page.blocks, current_user] do %>
   <div class="row">
-    <div class="col-sm-<%= @page.main_left_blocks.present? ? '9 col-sm-push-3' : '12 '%>">
-      <h2 class="page-title">
-        <%= @page.name %>
-      </h2>
-    </div>
+    <% unless @page.image.present? %>
+      <div class="col-sm-<%= @page.main_left_blocks.present? ? '9 col-sm-push-3' : '12 '%>">
+        <h2 class="page-title">
+          <%= @page.name %>
+        </h2>
+      </div>
+    <% end %>
     <div class="col-sm-12">
       <div class="row">
         <div class="main col-sm-<%= (5 + (@page.main_left_blocks.present? ? 0 :3) + ( @page.main_right_blocks.present? ? 0 : 4)).to_s %> <%= @page.main_left_blocks.present? ? 'col-sm-push-3' : ''%>">
@@ -20,5 +22,6 @@
     </div>
   </div>
 <% end %>
-
-<%= render 'pages/top_image', blocks: @page.image if @page.image.present? %>
+<% content_for :top_block do %>
+  <%= render 'pages/top_image', blocks: @page.image if @page.image.present? %>
+<% end %>

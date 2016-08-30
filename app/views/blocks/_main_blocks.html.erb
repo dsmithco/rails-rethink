@@ -1,16 +1,5 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <style media="screen">
-      .block-container-<%= block.id %> {
-        margin-bottom: 24px;
-        background-color: #fff;
-        border: 0px solid transparent;
-        border-radius: 2px;
-        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35);
-        box-shadow: 0 1px 1px rgba(0,0,0,0.35);
-        overflow: hidden;
-      }
-    </style>
     <div id="<%= dom_id(block) %>">
       <h2 class="block-title">
         <%= block.name %>
@@ -29,7 +18,7 @@
           <div class="row">
             <% block.blocks.try(:each) do |sub_block| %>
               <div class="text-center col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
-                <div class="block-container-<%= block.id %>">
+                <div class="block-container">
                   <%= render 'blocks/block', block: sub_block %>
                 </div>
               </div>
