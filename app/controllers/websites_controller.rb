@@ -19,7 +19,7 @@ class WebsitesController < ApplicationController
   def stylesheet
     dir = "#{Rails.root}/tmp/websites"
     path = "#{dir}/#{@current_website.id}-#{@current_website.updated_at.to_i}-theme.css"
-    unless File.exist?(path)
+    unless File.exist?(path) && Rails.env != 'development'
       File.delete(*Dir.glob("#{dir}/#{@current_website.id}-*.css"))
       sass = "#{@current_website.css_override}\n
               @import 'bootstrap';\n
