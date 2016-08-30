@@ -8,7 +8,7 @@ class Page < ApplicationRecord
   default_scope { order('pages.position ASC') }
 
   belongs_to :website
-  belongs_to :page, optional: true
+  belongs_to :page, optional: true, touch: true
   has_many :page_blocks, dependent: :destroy
   has_many :blocks, through: :page_blocks
   has_one :image, as: :attachable, dependent: :destroy
