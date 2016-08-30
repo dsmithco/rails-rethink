@@ -1,0 +1,18 @@
+<% pages.each do |page| %>
+<div class="row page-row">
+  <style media="screen" data-no-turbolink>
+
+
+  </style>
+  <div class="col-sm-3">
+    <%= image_tag page.image.thumb, style: 'margin-top:12px;' if page.image.present? %>
+  </div>
+  <div class="col-sm-9">
+    <h4><%= link_to page.name, page_path(page) %></h4>
+    <p>
+      <%= truncate(strip_tags(page.about), :length => 250) if page.about.present?%>
+    </p>
+  </div>
+</div>
+<%= "<hr/>".html_safe unless page == pages.last %>
+<% end %>

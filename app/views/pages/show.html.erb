@@ -10,6 +10,7 @@
         <div class="main col-sm-<%= (5 + (@page.main_left_blocks.present? ? 0 :3) + ( @page.main_right_blocks.present? ? 0 : 4)).to_s %> <%= @page.main_left_blocks.present? ? 'col-sm-push-3' : ''%>">
           <%= render 'pages/edit_page_nav' if can? :update, @page %>
           <%= @page.about.html_safe %>
+          <%= render 'pages/summaries', pages: @page.pages %>
           <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.main_bottom_blocks}".html_safe, id: 'main_blocks', class: 'container') %>
           <br/>
         </div>

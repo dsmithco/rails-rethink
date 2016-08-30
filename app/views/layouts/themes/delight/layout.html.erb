@@ -16,9 +16,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style media="screen">
-      <%= @current_website.try(:css_override)%>
-    </style>
+
     <%= yield :head %>
 
   </head>
@@ -33,7 +31,6 @@
           </button>
           <% if @current_website.logo.try(:asset).present?  %>
             <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
-              <img ng-src="{{baseCtrl.website.logo.medium}}" ng-show="baseCtrl.website.logo.medium" alt="" />
               <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
             </a>
           <% else %>
