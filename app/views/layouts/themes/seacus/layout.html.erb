@@ -29,19 +29,22 @@
     <%= yield :head %>
 
   </head>
-  <body class="<%= controller_name %> <%= action_name %>">
+  <body class="fixed-nav <%= controller_name %> <%= action_name %>">
     <div id="body">
+    <!-- Fixed navbar -->
 
-    <%= render 'layouts/top_nav', inverse: false, fixed: false %>
+    <%= render 'layouts/top_nav', inverse: true, fixed: true %>
 
-    <%= render partial: 'layouts/messages' %>
+    <%= render 'layouts/messages' %>
 
     <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-      <% cache [@current_website.hero_images, current_user] do %>
+      <% cache [@current_website.hero_images, current_user, @website.blocks.where(front_page: true)] do %>
         <%= render 'layouts/hero_image' %>
+        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main_blocks', class: 'container') %>
       <% end %>
-      <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main_blocks', class: 'container') %>
     <% end %>
+
+    <%= yield :hero %>
 
     <%= yield :top_block %>
 
@@ -54,6 +57,7 @@
   </body>
   <footer class="footer">
     <div class="container">
+      <%= yield :footer %>
       <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
     </div>
   </footer>

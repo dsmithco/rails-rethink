@@ -23,72 +23,7 @@
   </head>
   <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" ng-init="baseCtrl.website = <%= @current_website.to_json %>; baseCtrl.website.logo = <%= @current_website.logo.to_json %>" >
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="pull-right"><i class="glyphicon glyphicon-menu-hamburger"></i> MENU</span>
-          </button>
-          <% if @current_website.logo.try(:asset).present?  %>
-            <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
-              <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
-            </a>
-          <% else %>
-            <a class="logo navbar-brand" href="/"><%= @current_website.name %></a>
-          <% end %>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse navbar-right">
-          <ul class="nav navbar-nav">
-            <% cache [@current_website, @current_website.pages] do %>
-              <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
-                <% if page.pages.present? %>
-                  <li class='dropdown'>
-                    <%= link_to "#{page.name} <span class='caret'></span>".html_safe, page_path(page), class: 'dropdown-toggle', 'data-toggle': '' %>
-                    <ul class="dropdown-menu">
-                      <% page.pages.each do |page2| %>
-                        <li>
-                          <%= link_to page2.name, page_path(page2) %>
-                        </li>
-                      <% end %>
-                    </ul>
-                  </li>
-                <% else %>
-                  <li>
-                    <%= link_to page.name, page_path(page) %>
-                  </li>
-                <% end %>
-              <% end %>
-            <% end %>
-            <% cache [@current_website, current_user] do %>
-              <% if user_signed_in? %>
-                <li>
-                    <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
-                </li>
-                <li>
-                  <span>
-                    <%= link_to "<span class='hidden-sm'>#{current_user.name}</span>".html_safe, user_path(current_user), class: 'btn btn-primary inverse navbar-btn' %>
-                    <%= link_to "<span class='hidden-sm'>Sign out</span>".html_safe, destroy_user_session_path, method: :get, class: 'btn btn-primary btn-inverse navbar-btn' %>
-                  </span>
-                </li>
-              <% end %>
-            <% end %>
-            <!-- <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li> -->
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+    <%= render 'layouts/top_nav', inverse: true, fixed: true %>
 
     <%= render partial: 'layouts/messages' %>
 
