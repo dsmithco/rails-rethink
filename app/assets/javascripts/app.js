@@ -83,7 +83,7 @@ var timyMceSetup = function(selector, stylesheet, file_upload_selector){
       'emoticons template paste textcolor colorpicker textpattern imagetools'
     ],
     imagetools_cors_hosts: ['rethinkwdprod.s3.amazonaws.com', 'rethinkwebdesign.com'],
-    toolbar1: 'insertfile undo redo | styleselect code | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media',
+    toolbar1: 'file undo redo | styleselect code | bold italic removeformat | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent hr | link image media',
     image_advtab: true,
     content_css: [
       stylesheet
