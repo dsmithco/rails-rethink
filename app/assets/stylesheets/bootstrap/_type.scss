@@ -24,7 +24,6 @@ h1, .h1,
 h2, .h2,
 h3, .h3 {
   margin-top: ($line-height-computed/3);
-  padding-top: ($line-height-computed/4);
   margin-bottom: ($line-height-computed/3);
 
   small,
@@ -54,21 +53,31 @@ h2.page-title {
 
 h3 {
   color: lighten($headings-color, 15%);
-  padding-top: ($line-height-computed/3);
   font-family: $font-family-sans-serif;
 }
 h4 {
   font-weight: 800;
-  padding-top: ($line-height-computed/3);
   text-transform: uppercase;
   letter-spacing: 1px;
   font-family: $font-family-sans-serif;
 }
 
+p,
+ul,
+ol {
+  & + h1,
+  & + h2,
+  & + h3,
+  & + h4,
+  {
+    padding-top: .5em;
+    margin-top: ($line-height-computed/3);
+  }
+}
+
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  margin-top: ($line-height-computed/3);
   margin-bottom: ($line-height-computed/3);
 
   small,
@@ -97,6 +106,16 @@ p {
   margin: 0 0 ($line-height-computed/1.6);
   font-size: $font-size-large;
 }
+
+// ul > li,
+// ol > li {
+//   font-size: $font-size-large;
+// }
+//
+// ul > li:not(:last-child),
+// ol > li:not(:last-child) {
+//   margin-bottom: 1em;
+// }
 
 .lead {
   margin-bottom: $line-height-computed;

@@ -338,6 +338,14 @@ dl > dt > label {
   transition: .2s;
 }
 
+.page-main li{
+  font-size: $font-size-large;
+}
+
+.page-main li:not(:last-child) {
+  margin-bottom: $line-height-computed/1.8;
+}
+
 .page-top-image-with-left h1,
 .page-container-with-left .page-title-section h2 {
   padding-left: 25%;
