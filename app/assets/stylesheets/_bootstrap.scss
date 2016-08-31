@@ -346,6 +346,16 @@ dl > dt > label {
   margin-bottom: $line-height-computed/2.4;
 }
 
+.page-main {
+  & p {
+    & + ul,
+    & + ol {
+      margin-top: -4px;
+    }
+  }
+}
+
+
 .page-top-image-with-left h1,
 .page-container-with-left .page-title-section h2 {
   padding-left: 25%;
