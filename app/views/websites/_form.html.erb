@@ -32,64 +32,84 @@
         <% if !params[:tab].present? %>
           <%= form_for(@website, remote: true) do |f| %>
             <fieldset>
-              <legend>
-                Website Info
-              </legend>
-              <div id="home">
-                <div class="form-group" id="name">
+              <dl class="dl-horizontal" id="home">
+                <dt id="name">
                   <%= f.label :name %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :name, class: 'form-control' %>
-                </div>
-                <div class="form-group" id="about">
+                </dd>
+                <dt>
                   <%= f.label :about %>
-                  <%= f.text_area :about, class: 'form-control summernote' %>
-                </div>
-                <div class="form-group">
-                  <legend>
+                </dt>
+                <dd class="form-group" id="about">
+                  <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
+                  <script type="text/javascript">
+                    timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
+                    fixScroll({'fix': '.mce-toolbar-grp','top_marker': '#about','bottom_market': '#about_bottom'});
+                  </script>
+                  <div id="about_bottom">
+                  </div>
+                  <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
+
+                </dd>
+                <dt>
+                  <label>
                     Account
-                  </legend>
+                  </label>
+                </dt>
+                <dd class="form-group">
                   <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :css_override %>
+                </dt>
+                <dd>
                   <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :domain_url %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :domain_url, class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :google_analytics %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :google_analytics, class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :facebook %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :facebook, class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :twitter %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :twitter, class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :tags %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :tags, class: 'form-control' %>
-                </div>
-                <div class="form-group">
+                </dd>
+                <dt>
                   <%= f.label :theme %>
+                </dt>
+                <dd class="form-group">
                   <%= f.text_field :theme, class: 'form-control' %>
-                </div>
-
-                <div class="form-group">
+                </dd>
+                <dt>
+                </dt>
+                <dd class="form-group btn-group">
                   <%= f.submit 'Save Website', class: 'btn btn-success' %>
                   <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-                </div>
-              </div>
+                </dd>
+              </dl>
             </fieldset>
           <% end %>
         <% end %>

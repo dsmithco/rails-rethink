@@ -1,15 +1,13 @@
-  <div class="top_image_container">
-    <div class="top_image" id="<%=dom_id(@page.image)%>" style="background-image: url('<%= @page.image.long %>'); ">
+  <div class="page-top-image-section <%= @page.main_left_blocks.present? ? 'page-top-image-with-left' : 'page-top-image-without-left'%>">
+    <div class="page-top-image" id="<%=dom_id(@page.image)%>" style="background-image: url('<%= @page.image.long %>'); ">
     </div>
-    <div class="top_image_cell">
-      <div class="title_strip">
+    <div class="page-top-image-cell">
+      <div class="page-title-strip">
         <div class="container">
-          <div class="row">
-            <div class="<%= @page.main_left_blocks.present? ? 'col-sm-9 col-sm-push-3' : 'col-sm-12'%>">
-              <h1>
-                <%= @page.name %>
-              </h1>
-            </div>
+          <div class="page-title-section">
+            <h1 class="page-title">
+              <%= @page.name %>
+            </h1>
           </div>
         </div>
       </div>

@@ -1,24 +1,26 @@
 <% cache [@page, @page.website, @page.blocks, current_user] do %>
-  <div class="row">
+  <div class="page-container page-container-<%= @page.main_left_blocks.present? ? 'with-left' : 'without-left' %> page-container-<%= @page.main_right_blocks.present? ? 'with-right' : 'without-right' %>">
     <% unless @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
-      <div class="col-sm-<%= @page.main_left_blocks.present? ? '9 col-sm-push-3' : '12 '%>">
+      <div class="page-title-section">
         <h2 class="page-title">
           <%= @page.name %>
         </h2>
       </div>
     <% end %>
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="main col-sm-<%= (5 + (@page.main_left_blocks.present? ? 0 :3) + ( @page.main_right_blocks.present? ? 0 : 4)).to_s %> <%= @page.main_left_blocks.present? ? 'col-sm-push-3' : ''%>">
-          <%= render 'pages/edit_page_nav' if can? :update, @page %>
-          <%= @page.about.html_safe %>
-          <%= render 'pages/summaries', pages: @page.pages %>
-          <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.main_bottom_blocks}".html_safe, id: 'main_blocks', class: 'container') %>
-          <br/>
-        </div>
-        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_left_blocks), class: "col-sm-3 main_left_blocks #{@page.main_right_blocks.present? ? 'col-sm-pull-5' : 'col-sm-pull-9' }") if @page.main_left_blocks.present? %>
-        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_right_blocks), class: 'col-sm-4 main_right_blocks') if @page.main_right_blocks.present? %>
+    <div class="page-main-section">
+      <div class="page-nav-section">
+        <%= render 'pages/edit_page_nav' if can? :update, @page %>
       </div>
+      <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_left_blocks), class: "page-blocks-left") if @page.main_left_blocks.present? %>
+
+      <div class="page-main">
+        <%= @page.about.html_safe %>
+        <%= render 'pages/summaries', pages: @page.pages %>
+        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.main_bottom_blocks}".html_safe, id: 'main_blocks', class: 'container') %>
+        <br/>
+      </div>
+
+      <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.main_right_blocks), class: 'page-blocks-right') if @page.main_right_blocks.present? %>
     </div>
   </div>
 <% end %>

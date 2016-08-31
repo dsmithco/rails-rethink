@@ -265,10 +265,10 @@ dl > dt > label {
   display: inline-block;
 }
 
-.block-edit{
-  position: absolute;
-  top: 10px;
-  right: 25px;
+.block-container .block-edit{
+  clear:none;
+  position: relative;
+  margin: 0 15px 15px;
 }
 
 .block-container {
@@ -276,12 +276,26 @@ dl > dt > label {
   background-color: #fff;
   border: 0px solid transparent;
   border-radius: 2px;
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.35);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  box-shadow: 0px 1px 3px rgba(0,0,0,.1);
   overflow: hidden;
 }
+.block .block-about{
+  margin: 10px 15px 15px;
+}
+.block .block-image {
+  margin-bottom: 15px;
+}
+.block .block-title{
+  margin: 15px 15px 0 15px;
+}
 
-.top_image_container {
+.block-link {
+  margin: 10px 15px;
+}
+
+// Page Styles
+
+.page-top-image-section {
   background-color: #000;
   position: relative;
   top: -28px;
@@ -289,7 +303,7 @@ dl > dt > label {
   display: table;
   width: 100%;
 }
-.top_image {
+.page-top-image {
   position: absolute;
   z-index: 1;
   height: 200px;
@@ -303,7 +317,7 @@ dl > dt > label {
   display: table;
   width: 100%;
 }
-.top_image_cell {
+.page-top-image-cell {
   z-index: 99;
   background-color: rgba(0,0,0,0.0);
   position: relative;
@@ -311,10 +325,10 @@ dl > dt > label {
   width: 100%;
   vertical-align: bottom;
 }
-.title_strip {
+.page-title-strip {
   /*background-color: rgba(255,255,255,0.3);*/
 }
-.top_image_cell h1 {
+.page-top-image-cell h1 {
   color: #fff;
   opacity: .9;
   display: inline-block;
@@ -322,4 +336,94 @@ dl > dt > label {
   letter-spacing: 1px;
   margin: 6px 0 10px 0;
   font-weight: 500;
+  transition: .2s;
+}
+
+.page-top-image-with-left h1,
+.page-container-with-left .page-title-section h2 {
+  padding-left: 25%;
+  @media (max-width: $screen-sm) {
+    padding-left: 0%
+  }
+}
+
+.page-top-image-without-left{
+
+}
+
+
+.page-container{
+
+}
+.page-title-section{
+
+}
+.page-title{
+
+}
+.page-main-section{
+
+}
+.page-main {
+  display: table;
+}
+.page-container-with-left .page-main{
+ width: 75%;
+ @media (max-width: $screen-sm) {
+   width: 100%;
+ }
+}
+
+.page-container-with-right .page-main{
+  width: 75%;
+  padding-right: 20px;
+  float: left;
+  @media (max-width: $screen-sm) {
+    width: auto;
+    padding-right: 0;
+  }
+
+}
+.page-container-with-right.page-container-with-left .page-main {
+  width: 50%;
+  @media (max-width: $screen-sm) {
+    width: auto;
+    float: none;
+  }
+}
+
+.page-nav-section {
+
+}
+.page-container-with-left .page-nav-section {
+  box-sizing: border-box;
+  padding-left: 25%;
+  transition: .1s;
+  @media (max-width: $screen-sm) {
+    padding-left: 0%
+  }
+}
+
+.page-blocks-left{
+  box-sizing: border-box;
+  float: left;
+  width: 25%;
+  padding: 10px 15px 0 0;
+  transition: .2s;
+  @media (max-width: $screen-sm) {
+    float: none;
+    width: 100%;
+    padding: 0;
+  }
+}
+.page-blocks-right{
+  box-sizing: border-box;
+  display: table;
+  width: 25%;
+  transition: .2s;
+  @media (max-width: $screen-sm) {
+    float: none;
+    width: 100%;
+  }
+
 }

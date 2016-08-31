@@ -272,25 +272,3 @@
 .panel-danger {
   @include panel-variant($panel-danger-border, $panel-danger-text, $panel-danger-heading-bg, $panel-danger-border);
 }
-
-.block .block-about{
-  margin: 12px 15px;
-}
-.block .block-image {
-  margin-bottom: 15px;
-}
-.block .block-title{
-  margin: 20px 15px 0 15px;
-}
-
-.block-container .block-edit{
-  clear:none;
-  float:right;
-  position: absolute;
-  right: 25px;
-  top: 8px;
-}
-
-.block-link {
-  margin: 10px 15px;
-}
