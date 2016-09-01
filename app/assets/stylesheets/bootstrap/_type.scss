@@ -51,12 +51,12 @@ h2.page-title {
 }
 
 h3 {
-  color: lighten($headings-color, 15%);
+  font-weight: 400;
   font-family: $font-family-sans-serif;
 }
 h4 {
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 500;
+  // text-transform: uppercase;
   font-family: $font-family-sans-serif;
 }
 
