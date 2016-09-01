@@ -9,4 +9,7 @@
     ga('send', 'pageview');
 
   </script>
+  <script>
+    ga('send', 'pageview', '<%= request.path %>');
+  </script>
 <% end %>
