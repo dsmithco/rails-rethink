@@ -353,6 +353,11 @@ dl > dt > label {
       margin-top: -4px;
     }
   }
+  & h1,
+  & h2,
+  & h3 {
+    padding-bottom: .2em;
+  }
 }
 
 
