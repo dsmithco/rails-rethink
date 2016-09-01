@@ -24,12 +24,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <%= render 'layouts/google_script' %>
-
     <%= yield :head %>
 
   </head>
   <body class="<%= controller_name %> <%= action_name %>">
+    <%= render 'layouts/google_script' %>
+
     <div id="body">
 
     <%= render 'layouts/top_nav', inverse: false, fixed: false %>
