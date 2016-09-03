@@ -67,6 +67,44 @@ body {
   font-weight: 300;
   color: #555;
 }
+
+#toast-container {
+  opacity: 1;
+}
+
+#toast-container > div.toast{
+  box-shadow: none !important;
+  opacity: .95;
+}
+
+body #toast-container > .toast {
+    background-image: none !important;
+}
+
+#toast-container > .toast:before {
+    position: fixed;
+    font-family: FontAwesome;
+    font-size: 24px;
+    line-height: 18px;
+    float: left;
+    color: #FFF;
+    padding-right: 0.5em;
+    margin: 2px 0.5em auto -1.5em;
+}
+#toast-container > .toast-warning:before {
+    content: "\f06a";
+}
+#toast-container > .toast-error:before {
+    content: "\f071";
+}
+#toast-container > .toast-info:before {
+    content: "\f05a";
+}
+#toast-container > .toast-success:before {
+    content: "\f00c";
+}
+
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -256,7 +294,7 @@ h4.box-title {
   padding-bottom: 3px;
 }
 
-.main_right_blocks, .main_left_blocks {
+.right_blocks, .left_blocks {
   margin-top: 6px;
 }
 
@@ -363,7 +401,7 @@ dl > dt > label {
 
 .page-top-image-with-left h1,
 .page-container-with-left .page-title-section h2 {
-  padding-left: 25%;
+  padding-left: 30%;
   @media (max-width: $screen-sm) {
     padding-left: 0%
   }
@@ -390,15 +428,15 @@ dl > dt > label {
   display: table;
 }
 .page-container-with-left .page-main{
- width: 75%;
+ width: 70%;
  @media (max-width: $screen-sm) {
    width: 100%;
  }
 }
 
 .page-container-with-right .page-main{
-  width: 75%;
-  padding-right: 20px;
+  width: 70%;
+  padding-right: 40px;
   float: left;
   @media (max-width: $screen-sm) {
     width: auto;
@@ -407,7 +445,7 @@ dl > dt > label {
 
 }
 .page-container-with-right.page-container-with-left .page-main {
-  width: 50%;
+  width: 40%;
   @media (max-width: $screen-sm) {
     width: auto;
     float: none;
@@ -419,7 +457,7 @@ dl > dt > label {
 }
 .page-container-with-left .page-nav-section {
   box-sizing: border-box;
-  padding-left: 25%;
+  padding-left: 30%;
   transition: .1s;
   @media (max-width: $screen-sm) {
     padding-left: 0%
@@ -429,8 +467,8 @@ dl > dt > label {
 .page-blocks-left{
   box-sizing: border-box;
   float: left;
-  width: 25%;
-  padding: 10px 20px 0 0;
+  width: 30%;
+  padding: 10px 40px 0 0;
   transition: .2s;
   @media (max-width: $screen-sm) {
     float: none;
@@ -441,7 +479,7 @@ dl > dt > label {
 .page-blocks-right{
   box-sizing: border-box;
   display: table;
-  width: 25%;
+  width: 30%;
   transition: .2s;
   @media (max-width: $screen-sm) {
     float: none;

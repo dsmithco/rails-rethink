@@ -102,7 +102,7 @@
 
 // Footer (for actions)
 .modal-footer {
-  padding: $modal-inner-padding;
+  padding: $modal-title-padding;
   text-align: left; // right align buttons
   border-top: 1px solid $modal-footer-border-color;
   @include clearfix; // clear it in case folks use .pull-* classes on buttons
