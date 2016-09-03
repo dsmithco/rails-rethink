@@ -32,11 +32,11 @@ class BlocksController < ApplicationController
       if @block.save
         format.html { redirect_to @block, notice: 'Block was successfully created.' }
         format.json { render json: @block.to_json, status: :created}
-        format.js {}
+        format.js { render :update }
       else
         format.html { render :new }
         format.json { render json: @block.errors, status: :unprocessable_entity }
-        format.js {}
+        format.js { render :update }
       end
     end
   end
@@ -51,11 +51,11 @@ class BlocksController < ApplicationController
       if @block.update(block_params)
         format.html { redirect_to @block, notice: 'Block was successfully updated.' }
         format.json { render json: @block.to_json, status: :ok }
-        format.js {}
+        format.js { render :update }
       else
         format.html { render :edit }
         format.json { render json: @block.errors, status: :unprocessable_entity }
-        format.js {}
+        format.js { render :update }
       end
     end
   end
@@ -79,6 +79,6 @@ class BlocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_params
-      params.require(:block).permit(:name, :block_id, :about, :website_id, :block_type, :position, :location, :front_page, {:page_ids=>[]}, :link, :link_text)
+      params.require(:block).permit(:name, :block_id, :about, :continue_edit, :website_id, :block_type, :position, :location, :front_page, {:page_ids=>[]}, :link, :link_text)
     end
 end

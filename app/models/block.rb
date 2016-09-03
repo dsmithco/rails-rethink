@@ -12,10 +12,11 @@ class Block < ApplicationRecord
 
   SYSTEM_BLOCK_TYPES = ['navigation']
   BLOCK_TYPES = ['custom', 'container', 'sub_block']
-  CONTENT_REGIONS = ['main_top', 'main_bottom']
-  WIDE_REGIONS = ['top', 'bottom']
-  SIDE_REGIONS = ['main_left', 'main_right']
-  REGIONS = CONTENT_REGIONS + WIDE_REGIONS + SIDE_REGIONS
+  CONTENT_REGIONS = ['top', 'bottom']
+  SIDE_REGIONS = ['left', 'right']
+  REGIONS = CONTENT_REGIONS + SIDE_REGIONS
+
+  attr_accessor :continue_edit
 
   validates :block_type, inclusion: { in: BLOCK_TYPES + SYSTEM_BLOCK_TYPES, message: "%{value} is not a valid block type" }
   validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
@@ -27,6 +28,12 @@ class Block < ApplicationRecord
   def block_validation
     if CONTENT_REGIONS.include?(self.block_type) && ['container'].include?(self.location)
       self.errors[:block_type] << " invalid block type and location combo"
+    end
+    if self.block_type == 'sub_block' && !self.block.present?
+      self.errors[:block] << "Block is required"
+    end
+    if !self.block_id.present? && !self.pages.present?
+      self.errors[:block] << "Block or page required"
     end
   end
 

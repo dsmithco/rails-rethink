@@ -40,6 +40,7 @@ gem 'summernote-rails'
 gem 'tinymce-rails'
 gem "font-awesome-rails"
 gem 'acts_as_list'
+
 # gem 'angularjs-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -48,6 +49,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'dotenv-rails'
+  gem 'rspec-rails', '~> 3.5'
 end
 
 gem 'mina'

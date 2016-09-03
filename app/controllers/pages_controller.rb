@@ -43,6 +43,7 @@ class PagesController < ApplicationController
   # GET /pages/new
   def new
     @page = Page.new
+    @page.website = @current_website if @current_website.present?
     render layout: "themes/#{@current_website.theme}/layout"
   end
 

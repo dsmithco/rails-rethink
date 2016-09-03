@@ -19,20 +19,12 @@ class Page < ApplicationRecord
   after_save :menu_setup
 
 
-  def main_left_blocks
-    self.blocks.where(location: 'main_left')
+  def left_blocks
+    self.blocks.where(location: 'left')
   end
 
-  def main_right_blocks
-    self.blocks.where(location: 'main_right')
-  end
-
-  def main_top_blocks
-    self.blocks.where(location: 'main_top')
-  end
-
-  def main_bottom_blocks
-    self.blocks.where(location: 'main_bottom')
+  def right_blocks
+    self.blocks.where(location: 'right')
   end
 
   def top_blocks
@@ -65,7 +57,7 @@ class Page < ApplicationRecord
       PageBlock.create(page_id: self.id, block_id: website_nav.id)
     else
       logger.info "Creating new nav for page #{self.id}"
-      self.blocks.create!(website_id: self.website_id, block_type: 'navigation', location: 'main_left')
+      self.blocks.create!(website_id: self.website_id, block_type: 'navigation', location: 'left')
     end
   end
 

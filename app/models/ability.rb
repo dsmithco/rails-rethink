@@ -20,24 +20,28 @@ class Ability
     #   user.account_ids.include? account.id || user.email=='dsmithco@gmail.com'
     # end
     #
-    # can [:index, :manage], Website do |website|
-    #   user.account_ids.include? website.account_id || user.email=='dsmithco@gmail.com'
-    # end
+    can [:index, :manage], Website do |website|
+      user.account_ids.include? website.account_id || user.email=='dsmithco@gmail.com'
+    end
     #
     # can [:create], Website do |website|
     #   user.account_ids.present? || user.email=='dsmithco@gmail.com'
     # end
     #
-    # can [:manage], User do |u|
-    #   user.id == u.id || user.email=='dsmithco@gmail.com'
-    # end
+    can [:manage], User do |u|
+      user.id == u.id || user.email=='dsmithco@gmail.com'
+    end
     #
-    # can [:manage], Attachment do |u|
-    #   true
-    # end
+    can [:manage], Attachment do |h|
+      true
+    end
     #
     can [:index, :manage], Page do |page|
-      user.account_ids.include? page.website.account_id
+      if page.website.present?
+        user.account_ids.include? page.website.account_id
+      else
+        user.account_ids.present?
+      end
     end
 
     # if user.email == 'dsmithco@gmail.com'
