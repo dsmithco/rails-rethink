@@ -1,4 +1,4 @@
-  <div class="page-top-image-section <%= @page.main_left_blocks.present? ? 'page-top-image-with-left' : 'page-top-image-without-left'%>">
+  <div class="page-top-image-section <%= @page.left_blocks.present? ? 'page-top-image-with-left' : 'page-top-image-without-left'%>">
     <div class="page-top-image" id="<%=dom_id(@page.image)%>" style="background-image: url('<%= @page.image.long %>'); ">
     </div>
     <div class="page-top-image-cell">

@@ -75,7 +75,7 @@
             <dd class="form-group" id="page">
               <div class="row">
                 <div class="col-sm-8">
-                  <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, :class => 'form-control' %>
+                  <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
                 </div>
                 <div class="col-sm-4" id="show_sub_menu">
                   <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>

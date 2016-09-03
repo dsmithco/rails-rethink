@@ -62,3 +62,4 @@
     </div><!--/.nav-collapse -->
   </div>
 </nav>
+<%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_website_path(@current_website), class: 'edit_link' if can? :update, @current_website %>

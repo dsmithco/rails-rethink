@@ -1,6 +1,6 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <div id="<%= dom_id(block) %>">
+    <div id="<%= dom_id(block) %>" class="<%= block.block_type%> text-center">
       <h2 class="block-title">
         <%= block.name %>
         <% if can? :update, block %>

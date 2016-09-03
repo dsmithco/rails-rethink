@@ -1,0 +1,5 @@
+if(!$('#registration').length){
+  $('body').append("<%=j render 'devise/registrations/modal' %>");
+}
+$('#registration').modal('show');
+$('#registration_content').html("<%=j render 'devise/registrations/form', remote: true %>");

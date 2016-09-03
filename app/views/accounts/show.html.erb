@@ -1,4 +1,11 @@
-
+<h1>Account# <%= @account.id %></h1>
+<h3>Websites</h3>
+<ul>
+  <% @account.websites.each do |website|%>
+    <li><%= website.name%></li>
+  <% end %>
+</ul>
+<h3>Billing</h3>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>
