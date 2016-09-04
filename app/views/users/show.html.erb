@@ -1,54 +1,72 @@
 <h2 class="page-title">
-  <%= link_to "<i class='glyphicon glyphicon-pencil'></i> Edit".html_safe, edit_user_path(@user), class: 'pull-right btn btn-sm btn-primary inverse' %>
   <%= @user.name %>
+  <%= link_to "<i class='glyphicon glyphicon-pencil'></i> Edit".html_safe, edit_user_path(@user), class: 'btn btn-sm btn-primary inverse' %>
+
 </h2>
-<dl class="dl-horizontal">
+
+<dl class="dl-horizontal well">
   <dt>Email</dt>
   <dd><%= @user.email %></dd>
   <dt>Accounts</dt>
   <% @user.accounts.each do |account| %>
     <dd><%= link_to account.id, account_path(account) %></dd>
+    <dt>Websites</dt>
     <% account.websites.each do |website| %>
       <dd><%= link_to website.name, website_path(website) %></dd>
     <% end %>
   <% end %>
 </dl>
+<br/>
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#">Websites</a>
+  </li>
+  <li class="">
+    <a href="#">Profile</a>
+  </li>
+  <li class="">
+    <a href="#">Account</a>
+  </li>
+</ul>
+<br/>
 <% @user.accounts.each do |account| %>
-  <h3>Account: <%= account.id %></h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>
-          Website name
-        </th>
-        <th>
-          Domain URL
-        </th>
-        <th>
-          Pg count
-        </th>
-        <th>
-
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% account.websites.each do |website| %>
+  <div class="panel panel-default">
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td>
-            <%= website.name %>
-          </td>
-          <td>
-            <%= "#{website.rethink_url}, #{website.domain_url}" %>
-          </td>
-          <td>
-            <%= website.pages.count %>
-          </td>
-          <td class="text-right">
-            <%= link_to 'Go to', "#{website.rethink_href}", class: 'btn btn-info btn-sm', target: '_blank' %>
-          </td>
+          <th>
+            Website name
+          </th>
+          <th>
+            Domain URL
+          </th>
+          <th>
+            Pg count
+          </th>
+          <th>
+
+          </th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% account.websites.each do |website| %>
+          <tr>
+            <td>
+              <%= website.name %>
+            </td>
+            <td>
+              <%= "#{website.rethink_url}, #{website.domain_url}" %>
+            </td>
+            <td>
+              <%= website.pages.count %>
+            </td>
+            <td class="text-right">
+              <%= link_to 'Go to', "#{website.rethink_href}", class: 'btn btn-primary btn-sm btn-block', target: '_blank' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
 <% end %>
