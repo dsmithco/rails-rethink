@@ -1,24 +1,42 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+
+  <div class="modal-header modal-primary">
+    <h4 class="modal-title">Login</h4>
+  </div>
+  <div class="modal-body">
+    <dl class="dl-horizontal">
+      <dt>
+        <%= f.label :email %>
+      </dt>
+      <dd class="form-group">
+        <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+      </dd>
+      <dt>
+        <%= f.label :password %>
+      </dt>
+      <dd class="form-group">
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+      </dd>
+      <% if devise_mapping.rememberable? -%>
+        <dt></dt>
+        <dd>
+          <div class="">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        </dd>
+      <% end -%>
+    </dl>
   </div>
 
-  <div class="form-group">
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
-  </div>
-  <% if devise_mapping.rememberable? -%>
-    <div class="form-group">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+  <div class="modal-footer">
+    <div class="text-center form-group">
+      <%= f.submit "Log in", class: 'btn btn-block btn-lg btn-success' %>
     </div>
-  <% end -%>
-  <div class="form-group">
-    <%= f.submit "Log in", class: 'btn btn-primary' %>
+
+    <div class="text-center">
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
 
-  <div class="form-group">
-  </div>
 <% end %>
-<%= render "devise/shared/links" %>

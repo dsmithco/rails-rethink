@@ -166,14 +166,14 @@ img {
     letter-spacing: -1px;
     line-height: 1.15;
     font-weight: 500;
-    padding: 0px 10px;
+    padding: 0px 0px;
     margin: 0px;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
     // background-color: rgba(0,0,0,.7);
 }
 .hero-unit h2 {
     font-size: 35px;
-    padding: 0px 10px;
+    padding: 0px;
     color: #FFFFFF;
     margin: 0 0 28px;
     font-weight: 300;
@@ -194,7 +194,7 @@ img {
 
 .hero-unit-cell {
   display: table-cell;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 .hero-unit.top > .hero-unit-cell {
@@ -213,7 +213,6 @@ img {
 .hero-unit-content {
   max-width: 960px;
   margin: auto;
-  margin-bottom: 10%;
   padding: 0 15px;
 }
 

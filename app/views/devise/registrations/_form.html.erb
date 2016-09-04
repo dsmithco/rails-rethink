@@ -1,39 +1,59 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <div class="modal-header">
-    <h4 class="modal-title">Sign up</h4>
+  <div class="modal-header modal-primary">
+    <h4 class="modal-title">Website Info</h4>
   </div>
   <div class="modal-body">
     <%= devise_error_messages! %>
     <div class="row">
       <div class="col-sm-12">
-        <legend>Website Info</legend>
+        <dl class="dl-horizontal">
+          <dt>
+            <label>Title</label>
+          </dt>
+          <dd class="form-group">
+            <%= f.text_field :website_name, class: 'form-control', placeholder: ''%>
+          </dd>
+          <dt>
+            <label>Domain</label>
+          </dt>
+          <dd>
+            <%= f.text_field :website_domain, class: 'form-control', placeholder: 'example.com'%>
+          </dd>
+        </dl>
+
       </div>
-      <div class="col-sm-12 form-group">
-        <label>Website Title</label>
-        <%= f.text_field :website_name, class: 'form-control'%>
-      </div>
-      <div class="col-sm-12 form-group">
-        <label>Website Domain</label>
-        <%= f.text_field :website_domain, class: 'form-control'%>
-      </div>
+    </div>
+  </div>
+  <div class="modal-header modal-warning">
+    <h4 class="modal-title">Your Info</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
       <div class="col-sm-12">
-        <hr/>
-        <legend>Your Info</legend>
-      </div>
-      <div class="col-sm-12 form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, autofocus: true, class: 'form-control' %>
-      </div>
-      <div class="col-sm-12 form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, class: 'form-control'%>
-      </div>
-      <div class="col-sm-12 form-group">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %>
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+        <dl class="dl-horizontal">
+          <dt>
+            <%= f.label :name %>
+          </dt>
+          <dd class="form-group">
+            <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+          </dd>
+          <dt>
+            <%= f.label :email %>
+          </dt>
+          <dd class="form-group">
+            <%= f.email_field :email, class: 'form-control'%>
+          </dd>
+          <dt>
+            <%= f.label :password %>
+          </dt>
+          <dd>
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+            <%= f.label :password %>
+            <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+            <% end %>
+          </dd>
+        </dl>
       </div>
     </div>
 
@@ -44,10 +64,10 @@
   </div>
   <div class="modal-footer">
     <div class="row">
-      <div class="col-sm-6">
-        <%= f.submit "Sign up", class: 'btn btn-primary' %>
+      <div class="col-sm-12 text-center form-group">
+        <%= f.submit "Sign up", class: 'btn btn-success btn-lg btn-block' %>
       </div>
-      <div class="col-sm-6 text-right">
+      <div class="col-sm-12 text-center">
         <%= render "devise/shared/links" %>
       </div>
     </div>

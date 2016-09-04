@@ -80,7 +80,49 @@
 .modal-header {
   padding: $modal-title-padding;
   border-bottom: 1px solid $modal-header-border-color;
+  background-color: #fafafa;
   @include clearfix;
+  &.modal-primary{
+    background-color: $brand-primary;
+    border-bottom: 1px solid darken($brand-primary, 5%);
+    color: #fff;
+    & > .modal-title {
+      color: #fff;
+    }
+  }
+  &.modal-info{
+    background-color: $brand-info;
+    border-bottom: 1px solid darken($brand-info, 5%);
+    color: #fff;
+    & > .modal-title {
+      color: #fff;
+    }
+  }
+  &.modal-success{
+    background-color: $brand-success;
+    border-bottom: 1px solid darken($brand-success, 5%);
+    color: #fff;
+    & > .modal-title {
+      color: #fff;
+    }
+  }
+  &.modal-warning{
+    background-color: $brand-warning;
+    border-bottom: 1px solid darken($brand-warning, 5%);
+    color: #fff;
+    & > .modal-title {
+      color: #fff;
+    }
+  }
+  &.modal-danger{
+    background-color: $brand-danger;
+    border-bottom: 1px solid darken($brand-danger, 5%);
+    color: #fff;
+    & > .modal-title {
+      color: #fff;
+    }
+  }
+
 }
 // Close icon
 .modal-header .close {
@@ -103,8 +145,9 @@
 // Footer (for actions)
 .modal-footer {
   padding: $modal-title-padding;
+  background-color: #f7f7f7;
   text-align: left; // right align buttons
-  border-top: 1px solid $modal-footer-border-color;
+  border-top: 0px solid $modal-footer-border-color;
   @include clearfix; // clear it in case folks use .pull-* classes on buttons
 
   // Properly space out buttons
@@ -121,6 +164,8 @@
     margin-left: 0;
   }
 }
+
+
 
 // Measure scrollbar width for padding body during modal show/hide
 .modal-scrollbar-measure {
