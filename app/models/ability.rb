@@ -12,6 +12,7 @@ class Ability
     can [:manage], :all do |item|
       user.email=='dsmithco@gmail.com'
     end
+
     can [:read], :all do |item|
       true
     end
@@ -21,15 +22,17 @@ class Ability
     # end
     #
     can [:index, :manage], Website do |website|
-      user.account_ids.include? website.account_id || user.email=='dsmithco@gmail.com'
+      user.account_ids.include? website.account_id
     end
     #
     # can [:create], Website do |website|
     #   user.account_ids.present? || user.email=='dsmithco@gmail.com'
     # end
     #
-    can [:manage], User do |u|
-      user.id == u.id || user.email=='dsmithco@gmail.com'
+    can [:index, :manage], User do |u|
+      # common_account_ids = user.account_ids & u.account_ids
+      # common_account_users = u.account_users.where(account_id: common_account_ids)
+      # user.id == u.id || common_account_ids
     end
     #
     can [:manage], Attachment do |h|
