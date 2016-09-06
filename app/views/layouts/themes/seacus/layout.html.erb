@@ -40,7 +40,7 @@
     <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
       <% cache [@current_website.hero_images, current_user, @website.blocks.where(front_page: true)] do %>
         <%= render 'layouts/hero_image' %>
-        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main_blocks', class: 'container') %>
+        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
       <% end %>
     <% end %>
 

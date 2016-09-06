@@ -1,4 +1,4 @@
-<div class="block" id="<%= dom_id(block) %>">
+<div class="block" id="<%= dom_id(block) %>" style="background-color: <%= block.bg_color %>">
   <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
   <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
   <%= content_tag('div',block.about.html_safe, class: 'block-about') if block.about.present? %>

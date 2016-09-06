@@ -1,5 +1,6 @@
 // require summernote
 //= require tinymce
+//= require spectrum
 //= require jquery-fileupload/basic
 //= require jquery-ui/sortable
 

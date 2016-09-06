@@ -184,7 +184,7 @@ img {
 
 .hero-unit {
   margin-top: -28px;
-  margin-bottom: 2em;
+  margin-bottom: 0em;
   background-size: cover;
   background-position: center;
   height:600px;
@@ -461,6 +461,11 @@ dl > dt > label {
   @media (max-width: $screen-sm) {
     padding-left: 0%
   }
+}
+
+#main-blocks .block-contents{
+  margin: auto;
+  max-width: $screen-md;
 }
 
 .page-blocks-left{

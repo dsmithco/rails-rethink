@@ -6,7 +6,7 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title">
-    Block
+    <%= block.block_type.capitalize if block.block_type.present? %> Block
     <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
       &nbsp;<label class="btn btn-default btn-sm"><%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input' %> Show on the front page</label>
     <% end %>
@@ -156,7 +156,7 @@
 
     <div class="form-group" id="block">
       <label>Container Block</label>
-      <%= f.select :block_id, @current_website.blocks.includes(:pages).where(block_type: 'container', block_id: ['',nil], pages: {id: (params[:page_ids]||[]) + (@block.try(:block).try(:page_ids)||[])}).where.not(id: @block.id).collect {|x| [x.name, x.id]}, {:include_blank => "-- No container --"}, :class => 'form-control' %>
+      <%= f.select :block_id, block.parent_block_options.collect {|x| [x.name.present? ? "#{x.name} (#{x.blocks.count})" : "Block id: #{x.id} (#{x.blocks.count})", x.id]}, {:include_blank => "-- No container --"}, :class => 'form-control' %>
     </div>
   <% end %>
 
@@ -164,6 +164,54 @@
     <label>Location</label>
     <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
     </select>
+  </div>
+
+  <div class="form-group" id="bg_color">
+    <%= f.label :bg_color %>
+    <%= f.text_field :bg_color, class: 'form-control', id: 'spectrum', name: 'block[bg_color]' %>
+    <style media="screen">
+      .sp-palette .sp-thumb-el {
+        width: 32px;
+        height: 26px;
+        margin: 2px 2px;
+        border: solid 0px #d0d0d0;
+      }
+    </style>
+    <script type="text/javascript">
+      $("#spectrum").spectrum({
+        color: "<%= block.bg_color %>",
+        allowEmpty:true,
+        showInput: true,
+        className: "full-spectrum",
+        showInitial: true,
+        showPalette: true,
+        preferredFormat: "hex",
+        localStorageKey: "spectrum.demo",
+        move: function (color) {
+
+        },
+        show: function () {
+
+        },
+        beforeShow: function () {
+
+        },
+        hide: function () {
+
+        },
+        change: function() {
+
+        },
+        palette: [
+            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
+            "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
+            ["rgb(147, 196, 125)","rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
+            "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
+            "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
+            "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)"]
+        ]
+      });
+    </script>
   </div>
 
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>

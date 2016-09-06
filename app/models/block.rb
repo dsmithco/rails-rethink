@@ -22,6 +22,7 @@ class Block < ApplicationRecord
   validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
 
   validate :block_validation
+  validate :sub_block_validation
 
   before_validation :adjust_block_params
 
@@ -29,16 +30,26 @@ class Block < ApplicationRecord
     if CONTENT_REGIONS.include?(self.block_type) && ['container'].include?(self.location)
       self.errors[:block_type] << " invalid block type and location combo"
     end
+  end
+
+  def sub_block_validation
     if self.block_type == 'sub_block' && !self.block.present?
       self.errors[:block] << "Block is required"
-    end
-    if !self.block_id.present? && !self.pages.present?
-      self.errors[:block] << "Block or page required"
     end
   end
 
   def as_json(options={})
     super(options.merge({:methods => [:page_ids]}))
+  end
+
+  def parent_block_options(current_page=nil)
+    container_blocks = self.website.blocks.where(block_type: 'container')
+    if current_page.present?
+      block_options = container_blocks.includes(:pages).where(pages: {id: current_page.id})
+    end
+    if !block_options.present?
+      block_options = container_blocks
+    end
   end
 
   private

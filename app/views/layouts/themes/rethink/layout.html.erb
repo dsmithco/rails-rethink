@@ -58,7 +58,7 @@
         </div>
       </div>
 
-        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main_blocks', class: 'container') %>
+        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
       <% end %>
     <% end %>
 

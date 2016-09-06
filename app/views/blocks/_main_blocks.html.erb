@@ -1,31 +1,64 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <div id="<%= dom_id(block) %>" class="<%= block.block_type%> text-center">
-      <h2 class="block-title">
-        <%= block.name %>
-        <% if can? :update, block %>
-          <div class="btn-group pull-right">
-            <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
-            <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger inverse btn-sm' if can? :update, block  %>
-          </div>
-        <% end %>
-      </h2>
-      <div class="row">
-        <div class="col-sm-12">
-          <p class="text-center">
-            <%= block.about.html_safe if block.about.present? %>
-          </p>
-          <div class="row">
-            <% block.blocks.try(:each) do |sub_block| %>
-              <div class="text-center col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
-                <div class="block-container">
-                  <%= render 'blocks/block', block: sub_block %>
+    <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type%>-type text-center">
+      <div class="block-contents">
+        <h2 class="block-title">
+          <%= block.name %>
+          <% if can? :update, block %>
+            <div class="btn-group pull-right">
+              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
+              <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger inverse btn-sm' if can? :update, block  %>
+            </div>
+          <% end %>
+        </h2>
+        <div class="row">
+          <div class="col-sm-12">
+            <p class="text-center">
+              <%= block.about.html_safe if block.about.present? %>
+            </p>
+            <div class="row">
+              <% block.blocks.try(:each) do |sub_block| %>
+                <div class="text-center col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
+                  <div class="block-container">
+                    <%= render 'blocks/block', block: sub_block %>
+                  </div>
                 </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div id="<%= dom_id(block) %>_bg_color"></div>
+    <div id="<%= dom_id(block) %>_bg_image"></div>
+    <style media="screen">
+        #<%= dom_id(block) %>{
+           padding: 25px 0;
+         }
+        #<%= dom_id(block) %>_bg_image {
+           background-image: url('<%= block.image.large if block.image.present? %>');
+           background-size: cover;
+           opacity: 0.3;
+           left: 0;
+           position: absolute;
+           right: 0;
+           z-index: -1;
+        }
+        #<%= dom_id(block) %>_bg_color {
+           background-color: <%= block.bg_color if block.bg_color.present? %>;
+           opacity: 1;
+           left: 0;
+           position: absolute;
+           right: 0;
+           z-index: -1;
+        }
+    </style>
+    <script type="text/javascript">
+      var block = $('#<%= dom_id(block) %>');
+      $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
+        'height': block.height() + 35,
+        'top': block.offset().top
+      });
+    </script>
   <% end %>
 </div>
