@@ -79,7 +79,7 @@ class WebsitesController < ApplicationController
   def update
     respond_to do |format|
       if @website.update(website_params)
-        format.html { redirect_to @website, notice: 'Website was successfully updated.' }
+        format.html { redirect_to '/', notice: 'Website was successfully updated.' }
         format.json { render :show, status: :ok, location: @website }
       else
         format.html { render :edit }

@@ -1,15 +1,20 @@
-<div class="hero-unit <%= @current_website.hero_images.first.text_align %>" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
-  <div class="hero-unit-cell">
-    <div class="hero-unit-content text-center container-fluid">
-      <div>
-        <%= content_tag(:h1, @current_website.hero_images.first.name) if @current_website.hero_images.first.name.present?%>
+<% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
+  <% cache [@current_website.hero_images, current_user] do %>
+    <div class="hero-unit <%= @current_website.hero_images.first.text_align %>" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
+      <div class="hero-unit-cell">
+        <div class="hero-unit-content text-center container-fluid">
+          <div>
+            <%= content_tag(:h1, @current_website.hero_images.first.name.html_safe) if @current_website.hero_images.first.name.present?%>
+          </div>
+          <div>
+            <%= content_tag(:h2, @current_website.hero_images.first.about.html_safe) if @current_website.hero_images.first.about.present?%>
+          </div>
+          <p>
+            <%= link_to @current_website.hero_images.first.link_text.html_safe || 'Continue', @current_website.hero_images.first.link, class: "btn btn-primary btn-lg" if @current_website.hero_images.first.link.present? %>
+          </p>
+        </div>
       </div>
-      <div>
-        <%= content_tag(:h2, @current_website.hero_images.first.about) if @current_website.hero_images.first.about.present?%>
-      </div>
-      <p>
-        <%= link_to @current_website.hero_images.first.link_text || 'Continue', @current_website.hero_images.first.link, class: "btn btn-primary btn-lg" if @current_website.hero_images.first.link.present? %>
-      </p>
     </div>
-  </div>
-</div>
+  <% end %>
+  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
+<% end %>

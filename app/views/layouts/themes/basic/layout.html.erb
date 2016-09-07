@@ -32,24 +32,19 @@
 
     <div id="body">
 
-    <%= render 'layouts/top_nav', inverse: false, fixed: false %>
+      <%= render 'layouts/top_nav', inverse: false, fixed: false %>
 
-    <%= render partial: 'layouts/messages' %>
+      <%= render partial: 'layouts/messages' %>
 
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-      <% cache [@current_website.hero_images, current_user] do %>
-        <%= render 'layouts/hero_image' %>
-      <% end %>
-      <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
-    <% end %>
+      <%= render 'layouts/hero_image' %>
 
-    <%= yield :top_block %>
+      <%= yield :top_block %>
 
-    <div class="container">
-      <%= yield %>
+      <div class="container">
+        <%= yield %>
+      </div>
+
     </div>
-
-  </div>
 
   </body>
   <footer class="footer">

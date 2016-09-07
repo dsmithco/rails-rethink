@@ -21,20 +21,22 @@
 
   </head>
   <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" ng-init="baseCtrl.website = <%= @current_website.to_json %>; baseCtrl.website.logo = <%= @current_website.logo.to_json %>" >
-    <%= render 'layouts/google_script' %>
 
-    <!-- Fixed navbar -->
-    <%= render 'layouts/top_nav', inverse: true, fixed: true %>
+    <div id="body">
 
-    <%= render partial: 'layouts/messages' %>
+      <%= render 'layouts/top_nav', inverse: false, fixed: false %>
 
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-      <% cache [@current_website.hero_images, current_user] do %>
-        <%= render 'layouts/hero_image' %>
-      <% end %>
-    <% end %>
+      <%= render partial: 'layouts/messages' %>
 
+      <%= render 'layouts/hero_image' %>
 
+      <%= yield :top_block %>
+
+      <div class="container">
+        <%= yield %>
+      </div>
+
+    </div>
 
     <div class="">
       <div class="container">

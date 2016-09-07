@@ -38,29 +38,7 @@
 
     <%= render 'layouts/messages' %>
 
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.hero_images.any? %>
-      <% cache [@current_website.hero_images, current_user, @website.blocks.where(front_page: true)] do %>
-      <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_website_path(@current_website), class: 'edit_link' if can? :update, @current_website %>
-
-      <div class="hero-unit <%= @current_website.hero_images.first.text_align %>" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
-        <div class="hero-unit-cell">
-          <div class="hero-unit-content text-center container-fluid">
-            <div>
-              <%= content_tag(:h1, @current_website.hero_images.first.name) if @current_website.hero_images.first.name.present?%>
-            </div>
-            <div>
-              <%= content_tag(:h2, @current_website.hero_images.first.about) if @current_website.hero_images.first.about.present?%>
-            </div>
-            <!-- <p>
-              <%# link_to 'Create Your Website', new_user_registration_path, remote: true, class: "btn btn-primary btn-lg" %>
-            </p> -->
-          </div>
-        </div>
-      </div>
-
-        <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
-      <% end %>
-    <% end %>
+    <%= render 'layouts/hero_image' %>
 
     <%= yield :hero %>
 
