@@ -24,7 +24,7 @@
   </div>
 <% end %>
 <% content_for :top_block do %>
-  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.top_blocks}".html_safe, id: 'top_blocks', class: 'top_container') %>
+  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.top_blocks}".html_safe, id: 'top_blocks', class: 'top_container') if @page.top_blocks.present?%>
   <%= render 'pages/top_image', blocks: @page.image if @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
 <% end %>
 <% content_for :bottom_block do %>

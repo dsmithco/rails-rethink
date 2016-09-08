@@ -110,7 +110,7 @@ body #toast-container > .toast {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: 70px;
   background-color: #f5f5f5;
 }
 
@@ -316,9 +316,15 @@ dl > dt > label {
   box-shadow: 0px 1px 3px rgba(0,0,0,.1);
   overflow: hidden;
 }
-.block .block-about{
-  margin: 10px 15px 15px;
+
+.block-about {
+    margin: 30px 15px;
 }
+
+.block .block-title + .block-about{
+    margin: 10px 15px 30px;
+}
+
 .block .block-image {
   margin-bottom: 15px;
 }
@@ -373,6 +379,26 @@ dl > dt > label {
   margin: 6px 0 10px 0;
   font-weight: 100;
   transition: .2s;
+}
+
+.dynamic-background.background--light {
+  color: #111;
+}
+
+.dynamic-background.background--dark {
+  color: #fff;
+}
+
+.dynamic-background.background--complex {
+  color: #eee;
+}
+
+.dynamic-background.background--dark.background--complex {
+  color: #ccc;
+}
+
+.dynamic-background.background--light.background--complex {
+  color: #aaa;
 }
 
 .page-main li{
@@ -463,9 +489,14 @@ dl > dt > label {
   }
 }
 
-#main-blocks .block-contents{
+.block-contents{
   margin: auto;
-  max-width: $screen-md;
+  max-width: $screen-md - 60px;
+}
+
+#top_blocks {
+  margin-top: -27px;
+  margin-bottom: 27px;
 }
 
 .page-blocks-left{

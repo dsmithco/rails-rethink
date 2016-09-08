@@ -16,6 +16,7 @@ class BlocksController < ApplicationController
   # GET /blocks/new
   def new
     @block||= Block.new
+    @block.website ||= @current_website
   end
 
   # GET /blocks/1/edit

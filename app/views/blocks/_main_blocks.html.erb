@@ -2,15 +2,15 @@
   <% blocks.each do |block| %>
     <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type%>-type text-center">
       <div class="block-contents">
-        <h2 class="block-title">
+        <h1 class="block-title">
           <%= block.name %>
           <% if can? :update, block %>
             <div class="btn-group pull-right">
-              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary inverse btn-sm' if can? :update, block  %>
-              <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger inverse btn-sm' if can? :update, block  %>
+              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
+              <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
             </div>
           <% end %>
-        </h2>
+        </h1>
         <div class="row">
           <div class="col-sm-12">
             <p class="text-center">
@@ -33,12 +33,12 @@
     <div id="<%= dom_id(block) %>_bg_image"></div>
     <style media="screen">
         #<%= dom_id(block) %>{
-           padding: 25px 0;
+            padding: 25px 20px 35px;
          }
         #<%= dom_id(block) %>_bg_image {
            background-image: url('<%= block.image.large if block.image.present? %>');
            background-size: cover;
-           opacity: 0.3;
+           opacity: 0.2;
            left: 0;
            position: absolute;
            right: 0;
@@ -54,11 +54,21 @@
         }
     </style>
     <script type="text/javascript">
-      var block = $('#<%= dom_id(block) %>');
-      $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
-        'height': block.height() + 35,
-        'top': block.offset().top
-      });
+      $('#<%= dom_id(block) %> h1.block-title').css({
+        'color': getContrastYIQ(rgb2hex($("#<%= dom_id(block) %>_bg_color").css('background-color')))
+      })
+
+      function resizeBackgrounds(){
+        $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
+          'height': $('#<%= dom_id(block) %>').outerHeight(),
+          'top': $('#<%= dom_id(block) %>').offset().top
+        });
+      };
+
+      window.addEventListener('resize', resizeBackgrounds);
+      var src;
+      $('.block-container img').ready(resizeBackgrounds).load(resizeBackgrounds).attr('src', src);
+
     </script>
   <% end %>
 </div>

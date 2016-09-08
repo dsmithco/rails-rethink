@@ -1,7 +1,7 @@
 <% cache [@website, current_user] do %>
-  <section class="section text-center">
-    <%= @website.try(:about).try(:html_safe) %>
-  </section>
+  <% if @website.about.present? %>
+    <section class="section text-center">
+      <%= @website.about.html_safe %>
+    </section>
+  <% end %>
 <% end %>
-<br/>
-<br/>
