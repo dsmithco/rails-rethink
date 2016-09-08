@@ -54,9 +54,13 @@
         }
     </style>
     <script type="text/javascript">
-      $('#<%= dom_id(block) %> h1.block-title').css({
-        'color': getContrastYIQ(rgb2hex($("#<%= dom_id(block) %>_bg_color").css('background-color')))
-      })
+      var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
+      if(bg_color != "rgba(0, 0, 0, 0)"){
+        $('#<%= dom_id(block) %> h1.block-title').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+      }
+
 
       function resizeBackgrounds(){
         $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
