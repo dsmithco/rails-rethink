@@ -135,7 +135,7 @@ function getContrastYIQ(hexcolor){
   var g = parseInt(new_hex.substr(2,2),16);
   var b = parseInt(new_hex.substr(4,2),16);
   var yiq = ((r*299)+(g*587)+(b*114))/1000;
-  return (yiq <= 128) ? '#fff' : '#111';
+  return (yiq <= 128) && (new_hex.length > 0) ? '#fff' : '#111';
 }
 function rgb2hex(rgb) {
   if (  rgb.search("rgb") == -1 ) {
