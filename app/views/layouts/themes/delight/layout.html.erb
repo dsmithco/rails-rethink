@@ -29,7 +29,7 @@
     <div id="body">
     <!-- Fixed navbar -->
 
-    <%= render 'layouts/top_nav', inverse: false, fixed: false %>
+    <%= render 'layouts/top_nav', inverse: true, fixed: false %>
 
     <%= render 'layouts/messages' %>
 
@@ -45,16 +45,15 @@
 
     <%= yield :bottom_block %>
 
+    <footer class="footer">
+      <div class="container">
+        <%= yield :footer %>
+        <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
+      </div>
+    </footer>
   </div>
 
   <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
-
-  <footer class="footer">
-    <div class="container">
-      <%= yield :footer %>
-      <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
-    </div>
-  </footer>
 </html>
