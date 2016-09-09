@@ -607,4 +607,5 @@ body.snapjs-right{
 
 body:not(.snapjs-right) .snap-drawers{
   visibility: hidden;
+  z-index: -1;
 }
