@@ -20,29 +20,33 @@
     <%= yield :head %>
 
   </head>
-  <body class="<%= controller_name %> <%= action_name %>" id="body" ng-controller="BaseController as baseCtrl" ng-init="baseCtrl.website = <%= @current_website.to_json %>; baseCtrl.website.logo = <%= @current_website.logo.to_json %>" >
+  <body class="<%= controller_name %> <%= action_name %>">
+    <%= render 'layouts/google_script' %>
+
 
     <div id="body">
+    <!-- Fixed navbar -->
 
-      <%= render 'layouts/top_nav', inverse: false, fixed: false %>
+    <%= render 'layouts/top_nav', inverse: true, fixed: false %>
 
-      <%= render partial: 'layouts/messages' %>
+    <%= render 'layouts/messages' %>
 
-      <%= render 'layouts/hero_image' %>
+    <%= render 'layouts/hero_image' %>
 
-      <%= yield :top_block %>
+    <%= yield :hero %>
 
-      <div class="container">
-        <%= yield %>
-      </div>
+    <%= yield :top_block %>
 
+    <div class="container">
+      <%= yield %>
     </div>
 
-    <div class="">
-      <div class="container">
-        <%= yield %>
-      </div>
-    </div>
+    <%= yield :bottom_block %>
+
+  </div>
+
+  <%= render 'layouts/mobile_nav_scripts' %>
+
   </body>
   <footer class="footer">
     <div class="container">

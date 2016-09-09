@@ -27,13 +27,14 @@
     <%= yield :head %>
 
   </head>
-  <body class="fixed-nav <%= controller_name %> <%= action_name %>">
+  <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/google_script' %>
+
 
     <div id="body">
     <!-- Fixed navbar -->
 
-    <%= render 'layouts/top_nav', inverse: true, fixed: true %>
+    <%= render 'layouts/top_nav', inverse: true, fixed: false %>
 
     <%= render 'layouts/messages' %>
 
@@ -47,7 +48,11 @@
       <%= yield %>
     </div>
 
+    <%= yield :bottom_block %>
+
   </div>
+
+  <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
   <footer class="footer">

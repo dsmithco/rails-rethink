@@ -27,11 +27,11 @@
     <%= yield :head %>
 
   </head>
+  <%= render 'layouts/mobile_nav' %>
 
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/google_script' %>
 
-    <%= render 'layouts/mobile_nav' %>
 
     <div id="body">
     <!-- Fixed navbar -->
@@ -52,15 +52,12 @@
 
     <%= yield :bottom_block %>
 
-
   </div>
-  <script type="text/javascript">
-    var snapper = new Snap({
-      element: document.getElementById('body')
-    });
-  </script>
+
+  <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
+
   <footer class="footer">
     <div class="container">
       <%= yield :footer %>

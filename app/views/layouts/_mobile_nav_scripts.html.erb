@@ -1,0 +1,21 @@
+<script type="text/javascript">
+  var snapper = new Snap({
+    element: document.getElementById('body')
+  });
+
+  function resizeBodyDiv(){
+    $('#body').css({height:$('.snap-drawer').height() - 30});
+  };
+
+  resizeBodyDiv();
+
+  window.addEventListener('resize', resizeBodyDiv);
+
+  function open_right(){
+    if( snapper.state().state=="right" ){
+        snapper.close();
+    } else {
+        snapper.open('right');
+    }
+  }
+</script>

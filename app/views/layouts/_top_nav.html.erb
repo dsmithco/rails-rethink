@@ -9,15 +9,6 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="pull-right">MENU <i class="fa fa-list"></i></span>
       </button>
-      <script type="text/javascript">
-        function open_right(){
-          if( snapper.state().state=="right" ){
-              snapper.close();
-          } else {
-              snapper.open('right');
-          }
-        }
-      </script>
       <!-- <a href class="btn btn-info" onclick="event.preventDefault();snapper.open('right')">Open right</a> -->
       <% if @current_website.logo.try(:asset).present?  %>
         <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
