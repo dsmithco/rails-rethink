@@ -4,10 +4,8 @@
   });
   document.addEventListener("turbolinks:load", function () {
 
-    $('.snap-drawers').removeClass('hide');
-
     function resizeBodyDiv(){
-      $('#body').css({minHeight:$('.snap-drawer').height() - 30});
+      $('#body').css({minHeight:$('.snap-drawer').height() + 40});
     };
 
     resizeBodyDiv();

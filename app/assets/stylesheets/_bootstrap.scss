@@ -63,7 +63,7 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  // margin-bottom: 60px;
   font-weight: 300;
   color: #555;
 }
@@ -590,6 +590,7 @@ dl > dt > label {
 #body {
   background-color: #fafafa;
   z-index: 10;
+  padding-bottom: 70px;
   position: relative;
   box-shadow: 0px 0px 20px rgba(0,0,0,.2);
 }
@@ -600,4 +601,8 @@ dl > dt > label {
 
 body.snapjs-right{
   overflow: hidden;
+}
+
+body:not(.snapjs-right) .snap-drawers{
+  visibility: hidden;
 }
