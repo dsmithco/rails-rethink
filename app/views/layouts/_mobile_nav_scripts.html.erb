@@ -4,6 +4,8 @@
   });
   document.addEventListener("turbolinks:load", function () {
 
+    $('.snap-drawers').removeClass('hide');
+
     function resizeBodyDiv(){
       $('#body').css({height:$('.snap-drawer').height() - 30});
     };
