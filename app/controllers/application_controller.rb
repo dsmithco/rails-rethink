@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
   def render_website
     if !@current_website.present?
-      redirect_to "http//:#{Rails.application.config.host_domain}"
+      redirect_to_url("http://#{Rails.application.config.host_domain}", permanently = false)
     else
       ApplicationController.layout "themes/#{@current_website.theme}/layout"
     end
