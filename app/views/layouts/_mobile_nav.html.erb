@@ -1,0 +1,51 @@
+<div class="snap-drawers">
+  <!-- <div class="snap-drawer snap-drawer-left">
+  </div> -->
+  <div class="snap-drawer snap-drawer-right">
+    <h1>Site Menu</h1>
+    <!-- Right Drawer Content -->
+    <ul class="nav nav-pills nav-stacked">
+      <% cache [@current_website, @current_website.pages] do %>
+        <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
+          <% if page.pages.present? %>
+            <li class="<%= 'active' if page == @page %>">
+              <%= link_to "#{page.name}".html_safe, page_path(page) %>
+              <ul style="padding-left: 20px;" class="nav nav-pills nav-stacked">
+                <% page.pages.each do |page2| %>
+                  <li class="<%= 'active' if page2 == @page %>">
+                    <%= link_to page2.name, page_path(page2) %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% else %>
+            <li class="<%= 'active' if page == @page %>">
+              <%= link_to page.name, page_path(page) %>
+            </li>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+    <% if user_signed_in? %>
+      <h1>User Menu</h1>
+      <ul class="nav nav-pills nav-stacked">
+        <% cache [@current_website, current_user] do %>
+            <li class="">
+                <%= link_to "<i class='glyphicon glyphicon-plus fa-fw'></i> New Page".html_safe, new_website_page_path(@current_website) %>
+            </li>
+            <li class="">
+              <%= link_to "<i class='glyphicon glyphicon-user fa-fw'></i> Account".html_safe, user_path(current_user) %>
+            </li>
+            <li class="">
+              <%= link_to "<i class='fa fa-pencil fa-fw'></i> Edit #{@current_website.name}".html_safe, edit_website_path(@current_website) %>
+            </li>
+            <li class="">
+              <%= link_to "<i class='fa fa-sign-out fa-fw'></i> <span>Sign out</span>".html_safe, destroy_user_session_path %>
+            </li>
+
+          <% end %>
+      </ul>
+    <% end %>
+
+  </div>
+</div>

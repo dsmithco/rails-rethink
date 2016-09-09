@@ -14,6 +14,9 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require turbolinks
+//= require snap.min
+//= require fastclick
+//= require toastr
 //= require ie10-viewport-bug-workaround
 
 var set_summernote = function(){
@@ -107,9 +110,17 @@ var document_load = function(){
     note_affix_toolbar();
     document_scrolling();
     fade_in_alert();
+    fastclickSetup();
   });
 }();
 
+function fastclickSetup(){
+  if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+  }
+}
 
 var turbolinks_go = function(url, no_scroll){
   var scroll;

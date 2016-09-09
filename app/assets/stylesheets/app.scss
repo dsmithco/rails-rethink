@@ -5,6 +5,8 @@
 *= require jquery.fileupload-ui
 *= require jquery-ui
 *= require summernote
-*= require font-awesome
 *= require spectrum
 */
+
+@import 'font-awesome-sprockets';
+@import 'font-awesome';

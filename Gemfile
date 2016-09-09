@@ -38,7 +38,7 @@ gem 'cancancan', '~> 1.10'
 gem 'postmark-rails', '~> 0.12.0'
 gem 'summernote-rails'
 gem 'tinymce-rails'
-gem "font-awesome-rails"
+gem 'font-awesome-sass', '~> 4.6.2'
 gem 'acts_as_list'
 
 # gem 'angularjs-rails'

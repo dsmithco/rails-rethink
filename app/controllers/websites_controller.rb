@@ -22,8 +22,7 @@ class WebsitesController < ApplicationController
     unless File.exist?(path) && Rails.env != 'development'
       File.delete(*Dir.glob("#{dir}/#{@current_website.id}-*.css"))
       sass = "#{@current_website.css_override}\n
-              @import 'bootstrap';\n
-              @import 'custom_styles';
+              @import 'application';\n
               "
 
       compiler = Sass::Engine.new(sass, {

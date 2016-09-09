@@ -107,6 +107,7 @@ body #toast-container > .toast {
 
 .footer {
   position: absolute;
+  z-index:11;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
@@ -153,7 +154,7 @@ img {
 
 .navbar .logo img {
   max-height: 60%;
-  max-width: 60%;
+  max-width: 65%;
   top: 35px;
   transform: translateY(-50%);
   position: absolute;
@@ -525,4 +526,74 @@ dl > dt > label {
 
 .fixed-nav {
   padding-top: $line-height-computed*3.43;
+}
+
+.snap-drawer.snap-drawer-right,
+.snap-drawer.snap-drawer-left {
+  position: absolute;
+  background-color: darken($brand-primary, 35%);
+  width: 266px;
+  height: 100%;
+  z-index: 0;
+  color: #fafafa;
+  padding: 20px 15px;
+  font-size: .85em;
+}
+
+.snap-drawer h1 {
+  color: lighten($brand-primary, 30%);
+  font-size: 20px;
+  font-weight: 100;
+}
+
+
+
+.snap-drawer.snap-drawer-right {
+  right: 0;
+}
+
+.snap-drawer > ul > li:not(.active) > a:not(:hover) {
+  background-color: rgba(255,255,255,.07);
+}
+
+.snap-drawer > ul > li > ul > li:not(.active) > a:not(:hover) {
+  background-color: rgba(255,255,255,.03);
+}
+
+.snap-drawer > ul > li > a{
+}
+
+.snap-drawer > ul li{
+  margin: 5px 0 0;
+}
+
+.snap-drawer ul li a {
+  padding: 5px 15px;
+  font-weight: 300;
+  border-radius: 1px;
+}
+
+.snap-drawer hr{
+  opacity: .3;
+}
+
+.snap-drawer ul li a:not(:hover) {
+  color: #e8e8e8;
+}
+
+.snap-drawer.snap-drawer-left {
+  left: 0;
+}
+
+#body {
+  background-color: #fafafa;
+  z-index: 10;
+  position: relative;
+  box-shadow: 0px 0px 20px rgba(0,0,0,.2)
+
+}
+
+.snapjs-right #body {
+  min-height: 2000px;
+
 }

@@ -12,13 +12,11 @@
     <% if @current_website.present? %>
       <%= stylesheet_link_tag "/websites/#{@current_website.id}/stylesheet.css", media: 'all', 'data-turbolinks-track': 'reload' %>
     <% else %>
-      <%= stylesheet_link_tag 'applicatin', media: 'all', 'data-turbolinks-track': 'reload'%>
+      <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'%>
     <% end %>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" media="screen" title="no title" charset="utf-8">
     <%= stylesheet_link_tag 'app', media: 'all', 'data-turbolinks-track': 'reload' if current_user.present?%>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'app', 'data-turbolinks-track': 'reload' if current_user.present? %>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- <meta name="turbolinks-cache-control" content="no-preview"> -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,8 +27,12 @@
     <%= yield :head %>
 
   </head>
+
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/google_script' %>
+
+    <%= render 'layouts/mobile_nav' %>
+
     <div id="body">
     <!-- Fixed navbar -->
 
@@ -52,6 +54,11 @@
 
 
   </div>
+  <script type="text/javascript">
+    var snapper = new Snap({
+      element: document.getElementById('body')
+    });
+  </script>
 
   </body>
   <footer class="footer">

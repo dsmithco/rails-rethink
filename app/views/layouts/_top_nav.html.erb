@@ -1,10 +1,24 @@
 <nav class="navbar navbar-<%= inverse ? 'inverse' : 'default' %> navbar-<%= fixed ? 'fixed' : 'static' %>-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="pull-right"><i class="glyphicon glyphicon-menu-hamburger"></i> MENU</span>
+      </button> -->
+      <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" onclick="event.preventDefault();open_right();">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="pull-right">MENU <i class="fa fa-list"></i></span>
       </button>
+      <script type="text/javascript">
+        function open_right(){
+          if( snapper.state().state=="right" ){
+              snapper.close();
+          } else {
+              snapper.open('right');
+          }
+        }
+      </script>
+      <!-- <a href class="btn btn-info" onclick="event.preventDefault();snapper.open('right')">Open right</a> -->
       <% if @current_website.logo.try(:asset).present?  %>
         <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
           <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
@@ -15,49 +29,7 @@
     </div>
     <div id="navbar" class="collapse navbar-collapse navbar-right">
       <ul class="nav navbar-nav">
-        <% cache [@current_website, @current_website.pages] do %>
-          <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
-            <% if page.pages.present? %>
-              <li class='dropdown'>
-                <%= link_to "#{page.name} <span class='caret'></span>".html_safe, page_path(page), class: 'dropdown-toggle', 'data-toggle': '' %>
-                <ul class="dropdown-menu">
-                  <% page.pages.each do |page2| %>
-                    <li>
-                      <%= link_to page2.name, page_path(page2) %>
-                    </li>
-                  <% end %>
-                </ul>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to page.name, page_path(page) %>
-              </li>
-            <% end %>
-          <% end %>
-        <% end %>
-        <% cache [@current_website, current_user] do %>
-          <% if user_signed_in? %>
-            <li>
-                <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
-            </li>
-            <li>
-              <button class="btn btn-primary dropdown-toggle navbar-btn" type="button" data-toggle="dropdown"><%= current_user.name %>
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu">
-                <li>
-                  <%= link_to "<i class='glyphicon glyphicon-user fa-fw'></i> Account".html_safe, user_path(current_user) %>
-                </li>
-                <li>
-                  <%= link_to "<i class='fa fa-pencil fa-fw'></i> Edit #{@current_website.name}".html_safe, edit_website_path(@current_website) %>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "<i class='fa fa-sign-out fa-fw'></i> <span>Sign out</span>".html_safe, destroy_user_session_path %>
-                </li>
-              </ul>
-            </li>
-          <% end %>
-        <% end %>
+        <%= render 'layouts/nav_list_items' %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
