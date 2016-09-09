@@ -5,7 +5,7 @@
     <h1>Site Menu</h1>
     <!-- Right Drawer Content -->
     <ul class="nav nav-pills nav-stacked">
-      <% cache [@current_website, @current_website.pages] do %>
+      <% cache [@page, @current_website, @current_website.pages] do %>
         <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
           <% if page.pages.present? %>
             <li class="<%= 'active' if page == @page %>">
