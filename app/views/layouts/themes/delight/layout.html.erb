@@ -20,6 +20,8 @@
     <%= yield :head %>
 
   </head>
+  <%= render 'layouts/mobile_nav' %>
+
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/google_script' %>
 
@@ -48,11 +50,11 @@
   <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
+
   <footer class="footer">
     <div class="container">
-      <% cache [@current_website, current_user] do %>
-        <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
-      <% end %>
+      <%= yield :footer %>
+      <p class="text-muted text-center"> <%= @current_website.name %> &copy; <%= Time.now.year %></p>
     </div>
   </footer>
 </html>

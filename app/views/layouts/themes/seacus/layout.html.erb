@@ -27,8 +27,11 @@
     <%= yield :head %>
 
   </head>
+  <%= render 'layouts/mobile_nav' %>
+
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render 'layouts/google_script' %>
+
 
     <div id="body">
     <!-- Fixed navbar -->
@@ -54,6 +57,7 @@
   <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
+
   <footer class="footer">
     <div class="container">
       <%= yield :footer %>
