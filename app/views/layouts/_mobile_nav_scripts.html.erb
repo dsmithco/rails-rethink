@@ -2,14 +2,17 @@
   var snapper = new Snap({
     element: document.getElementById('body')
   });
+  document.addEventListener("turbolinks:load", function () {
 
-  function resizeBodyDiv(){
-    $('#body').css({height:$('.snap-drawer').height() - 30});
-  };
+    function resizeBodyDiv(){
+      $('#body').css({height:$('.snap-drawer').height() - 30});
+    };
 
-  resizeBodyDiv();
+    resizeBodyDiv();
 
-  window.addEventListener('resize', resizeBodyDiv);
+    window.addEventListener('resize', resizeBodyDiv);
+
+  });
 
   function open_right(){
     if( snapper.state().state=="right" ){
