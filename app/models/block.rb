@@ -10,6 +10,7 @@ class Block < ApplicationRecord
   has_many :blocks
   belongs_to :block
 
+  TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation']
   BLOCK_TYPES = ['custom', 'container', 'sub_block']
   CONTENT_REGIONS = ['top', 'bottom']
@@ -18,6 +19,7 @@ class Block < ApplicationRecord
 
   attr_accessor :continue_edit
 
+  validates :text_align, inclusion: { in: TEXT_ALIGN_OPTIONS, message: "%{value} is not a valid text_align" }
   validates :block_type, inclusion: { in: BLOCK_TYPES + SYSTEM_BLOCK_TYPES, message: "%{value} is not a valid block type" }
   validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
 

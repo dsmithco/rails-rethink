@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160906035431) do
+ActiveRecord::Schema.define(version: 20160909005448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160906035431) do
     t.string   "link"
     t.string   "link_text"
     t.string   "bg_color"
+    t.string   "text_align"
     t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end

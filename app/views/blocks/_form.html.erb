@@ -226,6 +226,12 @@
       <%= f.text_area :about, class: 'form-control', rows: '6' %>
     </div>
 
+    <div class="form-group" id="text_align">
+      <label>Text Align</label>
+      <%= f.select :text_align, Block::TEXT_ALIGN_OPTIONS, {}, :class => 'form-control' %>
+      </select>
+    </div>
+
   <% end %>
 
   <div class="row">

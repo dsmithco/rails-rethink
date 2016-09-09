@@ -7,15 +7,21 @@
 
 var fixScroll = function(opts){
   var fix, top_marker, bottom_market;
-  fix = opts['fix'];
-  top_marker = opts['top_marker'];
-  bottom_market = opts['bottom_market'];
+  var fix = opts['fix'];
+  var top_marker = opts['top_marker'];
+  var bottom_market = opts['bottom_market'];
+  var body_padding_bottom = parseInt($('body').css('paddingBottom'));
   $(document).on("scroll", function(e) {
     if (($(this).scrollTop() > $(top_marker).offset().top) && ($(this).scrollTop() < $(bottom_market).offset().top - $(fix).outerHeight())) {
       $(fix).addClass("fixed");
       $(top_marker).css(
         {
           paddingTop: $(fix).outerHeight(),
+        }
+      );
+      $('body').css(
+        {
+          paddingBottom: body_padding_bottom + $(fix).outerHeight() + 1
         }
       );
       $(fix).css({
@@ -28,6 +34,11 @@ var fixScroll = function(opts){
         width: $(top_marker).width(),
         boxShadow: 'none'
       });
+      $('body').css(
+        {
+          paddingBottom: body_padding_bottom + 1
+        }
+      );
       $(top_marker).css({paddingTop: 0});
     }
   });
