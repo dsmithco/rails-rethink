@@ -528,9 +528,8 @@ dl > dt > label {
   padding-top: $line-height-computed*3.43;
 }
 
-.snap-drawer.snap-drawer-right,
-.snap-drawer.snap-drawer-left {
-  position: absolute;
+.snap-drawer.snap-drawer-right {
+  position: fixed;
   background-color: darken($brand-primary, 35%);
   width: 266px;
   height: 100%;
@@ -550,6 +549,9 @@ dl > dt > label {
 
 .snap-drawer.snap-drawer-right {
   right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: scroll;
 }
 
 .snap-drawer > ul > li:not(.active) > a:not(:hover) {
@@ -594,5 +596,8 @@ dl > dt > label {
 
 .snapjs-right #body {
   min-height: 2000px;
+}
 
+body.snapjs-right{
+  overflow: hidden;
 }
