@@ -30,7 +30,7 @@
       <div class="tab-content">
         <!-- Home tab content -->
         <% if !params[:tab].present? %>
-          <%= form_for(@website, remote: true) do |f| %>
+          <%= form_for(@website) do |f| %>
             <fieldset>
               <dl class="dl-horizontal" id="home">
                 <dt id="name">
@@ -70,7 +70,7 @@
                 <dt>
                   <%= f.label :domain_url %>
                 </dt>
-                <dd class="form-group">
+                <dd class="form-group" id="domain_url">
                   <%= f.text_field :domain_url, class: 'form-control' %>
                 </dd>
                 <dt>

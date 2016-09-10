@@ -10,6 +10,19 @@ class Website < ApplicationRecord
   validates :domain_url, uniqueness: true, allow_blank: true
   validates :account, presence: true
 
+  def self.theme_options
+    options = []
+    Dir.glob("**/layouts/themes/*").each do |theme|
+      theme_dirs = theme.split('/')
+      theme_opt = theme_dirs[theme_dirs.length - 1]
+      options << theme_opt
+    end
+    return options
+  end
+
+  validates :theme, inclusion: { in: Website.theme_options, message: "%{value} is not a valid theme" }
+
+
   after_save :push_changes
 
   attr_accessor :testing
