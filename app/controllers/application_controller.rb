@@ -3,10 +3,16 @@ class ApplicationController < ActionController::Base
   before_action :set_current_website
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_action :set_csrf_cookie_for_ng
+  before_filter :redirect_to_https
+
 
 	def set_csrf_cookie_for_ng
 	  cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
 	end
+
+  def redirect_to_https
+      redirect_to :protocol => "https://" unless (request.ssl? || request.local?)
+  end
 
   def set_current_website
     @browser_request = request
@@ -21,9 +27,6 @@ class ApplicationController < ActionController::Base
       @current_website = Website.where("domain_url = ? OR domain_url = ? OR domain_url = ?",
                                        "#{@browser_request.host}", "www.#{@browser_request.host}",
                                        "#{@browser_request.host.gsub('www.','')}").first
-      if @current_website.present? && (@current_website.domain_url != @browser_request.host || @browser_request.protocol != Rails.application.config.host_protocal)
-        redirect_to "#{Rails.application.config.host_protocal}#{@current_website.domain_url}#{request.original_fullpath}"
-      end
     end
   end
 
@@ -40,7 +43,7 @@ class ApplicationController < ActionController::Base
 
   def render_website
     if !@current_website.present?
-      redirect_to "#{Rails.application.config.host_protocal}#{Rails.application.config.host_domain}:#{request.port}"
+      redirect_to "#{Rails.application.config.host_domain}:#{request.port}"
     else
       ApplicationController.layout "themes/#{@current_website.theme}/layout"
     end
