@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
                                        "#{@browser_request.host}", "www.#{@browser_request.host}",
                                        "#{@browser_request.host.gsub('www.','')}").first
       if @current_website.present? && (@current_website.domain_url != @browser_request.host || @browser_request.protocol != Rails.application.config.host_protocal)
-        redirect_to "#{Rails.application.config.host_protocal}#{@current_website.domain_url}:#{request.port}#{request.original_fullpath}"
+        redirect_to "#{Rails.application.config.host_protocal}#{@current_website.domain_url}#{request.original_fullpath}"
       end
     end
   end
