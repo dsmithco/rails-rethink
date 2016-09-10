@@ -548,6 +548,18 @@ dl > dt > label {
 }
 
 
+body.snapjs-right{
+  overflow: hidden;
+}
+
+body:not(.snapjs-right) .snap-drawers{
+  visibility: hidden;
+  z-index: -1;
+  overflow-y: hidden; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
+}
+
+
 
 .snap-drawer.snap-drawer-right {
   position: fixed;
@@ -599,13 +611,4 @@ dl > dt > label {
 
 .snapjs-right #body {
   min-height: 2000px;
-}
-
-body.snapjs-right{
-  overflow: hidden;
-}
-
-body:not(.snapjs-right) .snap-drawers{
-  visibility: hidden;
-  z-index: -1;
 }
