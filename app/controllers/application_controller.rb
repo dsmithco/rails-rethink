@@ -46,6 +46,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :alert => exception.message
   end
 
+  force_ssl if: :ssl_configured?
+
+  def ssl_configured?
+    !Rails.env.development?
+  end
+
   protected
 
     def configure_permitted_parameters
