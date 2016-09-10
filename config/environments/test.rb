@@ -35,7 +35,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   config.host_domain = 'rethink.dev'
-  config.host_protocal = 'http'
+  config.host_protocal = 'http://'
   config.action_mailer.default_url_options = { :host => 'localhost' }
 
 

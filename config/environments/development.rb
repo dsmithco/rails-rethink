@@ -54,7 +54,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.host_domain = 'rethink.dev'
-  config.host_protocal = 'http'
+  config.host_protocal = 'http://'
   config.action_mailer.default_url_options = { :host => 'localhost' }
 
 
