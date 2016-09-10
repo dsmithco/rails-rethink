@@ -19,6 +19,8 @@ class ApplicationController < ActionController::Base
       find_rethink_website
     else
       @current_website = Website.where("domain_url = ?", "#{@browser_request.host}").first
+      @current_website = Website.where("domain_url = ?", "www.#{@browser_request.host}").first if !@current_website.present?
+      @current_website = Website.where("domain_url = ?", "#{@browser_request.host.tr('www.','')}").first if !@current_website.present?
     end
   end
 
@@ -35,7 +37,7 @@ class ApplicationController < ActionController::Base
 
   def render_website
     if !@current_website.present?
-      redirect_to "http://#{Rails.application.config.host_domain}"
+      redirect_to "#{Rails.application.config.host_protocal}://#{Rails.application.config.host_domain}"
     else
       ApplicationController.layout "themes/#{@current_website.theme}/layout"
     end
