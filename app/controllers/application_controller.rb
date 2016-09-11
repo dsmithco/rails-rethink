@@ -18,10 +18,15 @@ class ApplicationController < ActionController::Base
     if @browser_request.domain == Rails.application.config.host_domain
       find_rethink_website
     else
-      @current_website = Website.where("domain_url = ? OR domain_url = ? OR domain_url = ?",
-                                       "#{@browser_request.host}", "www.#{@browser_request.host}",
-                                       "#{@browser_request.host.gsub('www.','')}").first
+      @current_website = find_website(@browser_request.host)
     end
+  end
+
+  def find_website(req_host)
+    website = Website.where("domain_url = ? OR domain_url = ? OR domain_url = ?",
+                                     "#{req_host}", "www.#{req_host}",
+                                     "#{req_host.gsub('www.','')}").first
+    return website
   end
 
   def find_rethink_website

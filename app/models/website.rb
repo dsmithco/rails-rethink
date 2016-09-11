@@ -7,7 +7,7 @@ class Website < ApplicationRecord
   has_many :hero_images, -> { order(position: :asc) }, as: :attachable
   has_many :images, as: :attachable
 
-  validates :domain_url, uniqueness: true, allow_blank: true
+  validate :domain_url_uniqueness
   validates :account, presence: true
 
   def self.theme_options
@@ -21,7 +21,6 @@ class Website < ApplicationRecord
   end
 
   validates :theme, inclusion: { in: Website.theme_options, message: "%{value} is not a valid theme" }
-
 
   after_save :push_changes
 
@@ -42,6 +41,20 @@ class Website < ApplicationRecord
 
   def rethink_href
     return "//#{self.rethink_url}"
+  end
+
+  private
+
+  def domain_url_uniqueness
+    if self.domain_url.present?
+      check_websites = Website.where('domain_url = ? OR domain_url = ? OR domain_url = ?',
+                                     "#{self.domain_url}",
+                                     "www.#{self.domain_url}",
+                                     "#{self.domain_url.gsub('www.','')}")
+      if check_websites.present?
+        self.errors[:domain_url] << "#{self.domain_url} is already in use."
+      end
+    end
   end
 
 end
