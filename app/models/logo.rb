@@ -5,6 +5,9 @@ class Logo < Attachment
   has_attached_file :asset, styles: {
     thumb: '100x100>',
     medium: '700x700>'
+  },
+  :convert_options => {
+    :all => "-strip -quality 88 -interlace Plane"
   }
 
   # Validate the attached image is image/jpg, image/png, etc

@@ -6,6 +6,9 @@ class Image < Attachment
     medium: '1000x400#',
     large: '1600x1600>',
     long: '1400x400#'
+  },
+  :convert_options => {
+    :all => "-strip -quality 88 -interlace Plane"
   }
 
   # Validate the attached image is image/jpg, image/png, etc

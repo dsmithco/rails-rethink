@@ -10,6 +10,9 @@ class HeroImage < Attachment
     thumb: '100x100>',
     medium: '300x300>',
     hero: '1400x600#'
+  },
+  :convert_options => {
+    :all => "-strip -quality 88 -interlace Plane"
   }
 
   # Validate the attached image is image/jpg, image/png, etc
