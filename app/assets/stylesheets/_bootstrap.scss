@@ -198,7 +198,8 @@ img {
   vertical-align: middle;
 }
 
-.hero-unit .hero-unit-text {
+.hero-unit.left .hero-unit-text,
+.hero-unit.right .hero-unit-text {
   max-width: 62%;
 }
 
