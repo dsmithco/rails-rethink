@@ -19,6 +19,9 @@ class ApplicationController < ActionController::Base
       find_rethink_website
     else
       @current_website = find_website(@browser_request.host)
+      if @browser_request.host != @current_website.domain_url
+        redirect_to :status => 301, :host => @current_website.domain_url
+      end
     end
   end
 

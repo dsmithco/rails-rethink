@@ -47,11 +47,11 @@ class Website < ApplicationRecord
 
   def domain_url_uniqueness
     if self.domain_url.present?
-      check_websites = Website.where('domain_url = ? OR domain_url = ? OR domain_url = ?',
+      check_website = Website.where('domain_url = ? OR domain_url = ? OR domain_url = ?',
                                      "#{self.domain_url}",
                                      "www.#{self.domain_url}",
-                                     "#{self.domain_url.gsub('www.','')}")
-      if check_websites.present?
+                                     "#{self.domain_url.gsub('www.','')}").first
+      if check_website.present? && check_website != self
         self.errors[:domain_url] << "#{self.domain_url} is already in use."
       end
     end
