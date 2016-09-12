@@ -3,10 +3,10 @@
     <div class="hero-unit <%= @current_website.hero_images.first.text_align %>" style="background-image:url(<%=@current_website.hero_images.first.asset(:hero)%>)">
       <div class="hero-unit-cell">
         <div class="hero-unit-content text-center container-fluid">
-          <div>
+          <div class="hero-unit-text">
             <%= content_tag(:h1, @current_website.hero_images.first.name.html_safe, class: 'dynamic-background') if @current_website.hero_images.first.name.present?%>
           </div>
-          <div>
+          <div class="hero-unit-text">
             <%= content_tag(:h2, @current_website.hero_images.first.about.html_safe, class: 'dynamic-background') if @current_website.hero_images.first.about.present?%>
           </div>
           <p>
