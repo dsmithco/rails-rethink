@@ -1,0 +1,42 @@
+<title><%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %></title>
+
+<%= csrf_meta_tags %>
+
+<meta http-equiv=X-UA-Compatible content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="HandheldFriendly" content="true">
+<meta name="Description" content='<%= "#{@current_website.description}" %>'>
+<meta name="Keywords" content='<%= "#{@current_website.tags}" %>'>
+
+<meta name="Robots" content="index, follow">
+
+<link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+<!-- <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %> -->
+<% if @current_website.present? %>
+  <%= stylesheet_link_tag "/websites/#{@current_website.id}/stylesheet.css", media: 'all', 'data-turbolinks-track': 'reload' %>
+<% else %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'%>
+<% end %>
+<%= stylesheet_link_tag 'app', media: 'all', 'data-turbolinks-track': 'reload' if current_user.present?%>
+<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'app', 'data-turbolinks-track': 'reload' if current_user.present? %>
+
+<!-- <meta name="turbolinks-cache-control" content="no-preview"> -->
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+<meta property="og:title" content="<%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %>">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<%= @browser_request.original_url %>">
+<% if @page.present? && @page.image.present?%>
+  <meta property="og:image" content="<%= @page.image.medium %>">
+<% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>
+  <meta property="og:image" content="<%= @current_website.hero_images.first.medium %>">
+<% end %>
+<meta property=”og:site_name” content="<%= @current_website.try(:name) %>"/>
+<meta property=”og:description” content="<%= @current_website.try(:description”) %>"/>
