@@ -75,13 +75,11 @@
 
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
     <div class="" id="block_type">
-      <% unless @block.id.present? %>
-        <div class="form-group btn-group btn-group-justified">
-          <% Block::BLOCK_TYPES.each do |block_type| %>
-            <a class="btn btn-primary inverse <%= 'active' if block_type == block.block_type %>" id="<%= block_type %>" onClick="setBlockType(this)"><%= block_type.capitalize %></a>
-          <% end %>
-        </div>
-      <% end %>
+      <div class="form-group btn-group btn-group-justified">
+        <% Block::BLOCK_TYPES.each do |block_type| %>
+          <a class="btn btn-primary inverse <%= 'active' if block_type == block.block_type %>" id="<%= block_type %>" onClick="setBlockType(this)"><%= block_type.capitalize %></a>
+        <% end %>
+      </div>
       <div class="hide">
         <label>Block Type</label>
         <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>

@@ -17,6 +17,8 @@ class BlocksController < ApplicationController
   def new
     @block||= Block.new
     @block.website ||= @current_website
+    @block.block_type ||= params[:block_type]
+    @block.block_id ||= params[:block_id]
   end
 
   # GET /blocks/1/edit
