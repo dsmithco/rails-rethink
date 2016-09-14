@@ -21,8 +21,9 @@ class WebsitesController < ApplicationController
     path = "#{dir}/#{@current_website.id}-#{@current_website.updated_at.to_i}-theme.css"
     unless File.exist?(path) && Rails.env != 'development'
       File.delete(*Dir.glob("#{dir}/#{@current_website.id}-*.css"))
-      sass = "#{@current_website.css_override}\n
-              @import 'application';\n
+      sass =  "#{@current_website.style_settings}\n
+               #{@current_website.css_override}\n
+               @import 'application';\n
               "
 
       compiler = Sass::Engine.new(sass, {
@@ -106,6 +107,6 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:account_id, :css_override, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
+      params.require(:website).permit(:account_id, :css_override, {:style=>['brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
     end
 end

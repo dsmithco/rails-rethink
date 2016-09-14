@@ -1,18 +1,18 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
   <div class="modal-header modal-primary">
-    <h4 class="modal-title">Login</h4>
+    <h4 class="modal-title"><i class="fa fa-sign-in"></i> Login</h4>
   </div>
   <div class="modal-body">
     <dl class="dl-horizontal">
       <dt>
-        <%= f.label :email %>
+        <%= f.label :email %> <i class="fa-fw fa fa-envelope-o" style="position: absolute; right: 45px; margin-top: 10px;"></i>
       </dt>
       <dd class="form-group">
         <%= f.email_field :email, autofocus: true, class: 'form-control' %>
       </dd>
       <dt>
-        <%= f.label :password %>
+        <%= f.label :password %> <i class="fa-fw fa fa-lock" style="position: absolute; right: 45px; margin-top: 10px;"></i>
       </dt>
       <dd class="form-group">
         <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>

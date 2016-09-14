@@ -19,6 +19,7 @@ class BlocksController < ApplicationController
     @block.website ||= @current_website
     @block.block_type ||= params[:block_type]
     @block.block_id ||= params[:block_id]
+    @block.front_page ||= params[:front_page]
   end
 
   # GET /blocks/1/edit

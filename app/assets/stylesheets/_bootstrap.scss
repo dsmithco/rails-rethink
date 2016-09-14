@@ -160,6 +160,10 @@ img {
   position: absolute;
 }
 
+body.has-fixed-navbar #body{
+  padding-top: $navbar-height + $navbar-padding-vertical;
+}
+
 
 .hero-unit h1 {
     color: #FFFFFF;
@@ -272,27 +276,39 @@ section {
 .edit_link {
   position: fixed;
   z-index: 99999;
+  width: 200px;
   left: 0;
   top: 100px;
-  padding: 10px 15px;
+  padding: 10px 15px 0 0;
   border-radius: 0px 3px 3px 0px;
   opacity: .85;
   color: #fff;
-  background-color: $brand-primary;
+  // background-color: $brand-primary;
   box-shadow: 0px 100px 0px rgba(0,0,0,0) inset;
   transition: .2s;
 }
 
-.edit_link:hover {
-  color: #fff;
-  padding-left: 20px;
-  text-decoration: none;
-  box-shadow: 0px 100px 0px rgba(0,0,0,0.2) inset;
+.edit_link>.btn-group-vertical>.btn {
+  transition: .2s;
+  min-width: 120px;
+  text-align: left;
 }
 
-.edit_link:active {
-  box-shadow: 0px 100px 0px rgba(0,0,0,0.3) inset;
+.edit_link>.btn-group-vertical>.btn:hover {
+  min-width: 140px;
 }
+
+
+.edit_link>.btn-group-vertical>.btn {
+  margin-bottom: .5em;
+}
+
+.edit_link>.btn-group-vertical>.btn:first-child,
+.edit_link>.btn-group-vertical>.btn:last-child {
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
 
 h4.box-title {
   border-bottom: 1px solid #eee;
@@ -314,6 +330,8 @@ dl > dt > label {
   margin: 0 15px 15px;
 }
 
+
+
 .block-container {
   margin-bottom: 24px;
   background-color: #fff;
@@ -328,7 +346,7 @@ dl > dt > label {
 }
 
 .block .block-title + .block-about{
-    margin: 10px 15px 30px;
+    margin: 10px 15px 20px;
 }
 
 .block .block-image {
@@ -342,6 +360,16 @@ dl > dt > label {
   margin: 10px 15px;
 }
 
+.sub_block .btn-group.block-edit {
+  position: absolute;
+  right: 20px;
+  margin-top: 0px;
+}
+
+.block-edit-btns {
+  position: absolute;
+  right: 10px;
+}
 // Page Styles
 
 .page-top-image-section {
@@ -529,6 +557,37 @@ dl > dt > label {
 
 }
 
+.evo-cp-wrap {
+    width: 100% !important;
+    display: block;
+}
+.evo-colorind, .evo-colorind-ie, .evo-colorind-ff {
+  border: solid 1px #c3c3c3 !important;
+  border-right-width: 0px !important;
+  border-bottom-width: 2px !important;
+  width: 10% !important;
+  height: 40px !important;
+  float: left !important;
+}
+
+input.colorPicker {
+  float: right;
+  display: inline-table;
+  max-width: 90%
+}
+
+.evo-pop.ui-widget.ui-widget-content {
+    position: absolute !important;
+    bottom: auto !important;
+    left: 45px !important;
+    margin-top: 30px !important;
+    border-radius: 0 !important;
+    border-color: #eee !important;
+    padding: 10px !important;
+    box-sizing: content-box !important;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.4) !important;
+}
+
 .fixed-nav {
   padding-top: $line-height-computed*3.43;
 }
@@ -551,9 +610,13 @@ dl > dt > label {
   font-weight: 100;
 }
 
-
 body.snapjs-right{
   overflow: hidden;
+}
+
+body.snapjs-right .fixed-nav {
+  top: 0px;
+  position: fixed !important;
 }
 
 body:not(.snapjs-right) .snap-drawers{
@@ -615,6 +678,22 @@ body:not(.snapjs-right) .snap-drawers{
   box-shadow: 0px 0px 20px rgba(0,0,0,.2);
 }
 
-.snapjs-right #body {
-  min-height: 2000px;
+// .snapjs-right #body {
+//   min-height: 2000px;
+// }
+
+#toast-container .toast-success {
+  background-color: $brand-success !important;
+}
+
+#toast-container .toast-error {
+  background-color: $brand-danger !important;
+}
+
+#toast-container .toast-warning {
+  background-color: $brand-warning !important;
+}
+
+#toast-container .toast-info {
+  background-color: $brand-info !important;
 }

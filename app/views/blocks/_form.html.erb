@@ -161,56 +161,16 @@
   <div class="form-group" id="location">
     <label>Location</label>
     <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
-    </select>
   </div>
 
-  <div class="form-group" id="bg_color">
+  <div class="form-group clearfix" id="bg_color">
     <%= f.label :bg_color %>
-    <%= f.text_field :bg_color, class: 'form-control', id: 'spectrum', name: 'block[bg_color]' %>
-    <style media="screen">
-      .sp-palette .sp-thumb-el {
-        width: 32px;
-        height: 26px;
-        margin: 2px 2px;
-        border: solid 0px #d0d0d0;
-      }
-    </style>
-    <script type="text/javascript">
-      $("#spectrum").spectrum({
-        color: "<%= block.bg_color %>",
-        allowEmpty:true,
-        showInput: true,
-        className: "full-spectrum",
-        showInitial: true,
-        showPalette: true,
-        preferredFormat: "hex",
-        localStorageKey: "spectrum.demo",
-        move: function (color) {
-
-        },
-        show: function () {
-
-        },
-        beforeShow: function () {
-
-        },
-        hide: function () {
-
-        },
-        change: function() {
-
-        },
-        palette: [
-            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
-            "rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
-            ["rgb(147, 196, 125)","rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
-            "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
-            "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
-            "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)"]
-        ]
-      });
-    </script>
+    <%= f.text_field :bg_color, class: 'form-control color', id: 'color', name: 'block[bg_color]' %>
   </div>
+  
+  <script type="text/javascript">
+    $("#color").colorpicker();
+  </script>
 
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
 

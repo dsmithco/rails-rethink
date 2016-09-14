@@ -17,15 +17,25 @@
             <p class="text-center">
               <%= block.about.html_safe if block.about.present? %>
             </p>
-            <div class="row">
-              <% block.blocks.try(:each) do |sub_block| %>
-                <div class="text-center col-sm-<%= ((12 / block.blocks.count).to_f).ceil%>">
-                  <div class="block-container">
-                    <%= render 'blocks/block', block: sub_block %>
-                  </div>
+            <% if block.blocks.present? %>
+              <% block.blocks.each_slice(block.blocks_splice_calc).with_index do |block_group, index| %>
+                <div class="row">
+                  <% block_group.each do |sub_block| %>
+                    <div class="text-center col-md-<%= ((12 / block.blocks.each_slice(block.blocks_splice_calc).first.count).to_f).ceil%>
+                               col-sm-6 <%= 'col-sm-push-3 col-md-push-0' if block_group.count.odd? && sub_block == block_group.last%>">
+                      <div class="group-<%=index%> block-container">
+                        <%= render 'blocks/block', block: sub_block %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <script type="text/javascript">
+                    $(function() {
+                        $('.group-<%=index%>').matchHeight();
+                    });
+                  </script>
                 </div>
               <% end %>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>

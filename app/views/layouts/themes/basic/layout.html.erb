@@ -7,7 +7,7 @@
 
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %>">
+  <body class="<%= controller_name %> <%= action_name %> has-<%= @current_website.style['nav-fixed'].present? ? 'fixed' : 'static' %>-navbar">
     <%= render 'layouts/google_script' %>
 
     <%= render 'layouts/mobile_nav' %>
@@ -15,7 +15,7 @@
     <div id="body">
     <!-- Fixed navbar -->
 
-    <%= render 'layouts/top_nav', inverse: false, fixed: false %>
+    <%= render 'layouts/top_nav' %>
 
     <%= render 'layouts/messages' %>
 

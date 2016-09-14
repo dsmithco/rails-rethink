@@ -9,6 +9,24 @@ class Website < ApplicationRecord
 
   validate :domain_url_uniqueness
   validates :account, presence: true
+  after_initialize :set_default_styles
+
+  def set_default_styles
+    self.style['brand-primary'] = '#009bff' unless self.style['brand-primary'].present?
+    self.style['brand-info'] = '#5bc0de' unless self.style['brand-info'].present?
+    self.style['brand-success'] = '#00cc66' unless self.style['brand-success'].present?
+    self.style['brand-warning'] = '#ff9933' unless self.style['brand-warning'].present?
+    self.style['brand-danger'] = '#ff3300' unless self.style['brand-danger'].present?
+    self.theme = 'basic' unless self.theme.present?
+  end
+
+  def style_settings
+    output = ""
+    self.style.each do |k,v|
+      output = "#{output}$#{k}:#{v};\n" if v.present?
+    end
+    return output
+  end
 
   def self.theme_options
     options = []

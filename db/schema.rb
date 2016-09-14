@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912164246) do
+ActiveRecord::Schema.define(version: 20160914072715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "account_users", force: :cascade do |t|
     t.string   "role"
@@ -141,14 +142,16 @@ ActiveRecord::Schema.define(version: 20160912164246) do
     t.string   "facebook"
     t.string   "twitter"
     t.string   "tags"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "theme"
     t.text     "css_override"
     t.text     "description"
+    t.hstore   "style",            default: {}, null: false
     t.index ["account_id"], name: "index_websites_on_account_id", using: :btree
     t.index ["domain_url"], name: "index_websites_on_domain_url", using: :btree
     t.index ["name"], name: "index_websites_on_name", using: :btree
+    t.index ["style"], name: "websites_style_idx", using: :gin
     t.index ["theme"], name: "index_websites_on_theme", using: :btree
   end
 

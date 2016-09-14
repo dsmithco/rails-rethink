@@ -1,4 +1,4 @@
-<nav class="navbar navbar-<%= inverse ? 'inverse' : 'default' %> navbar-<%= fixed ? 'fixed' : 'static' %>-top">
+<nav id="top_nav" class="navbar navbar-<%= @current_website.style['nav-inverse'].present? ? 'inverse' : 'default' %> navbar-<%= @current_website.style['nav-fixed'].present? ? 'fixed' : 'static' %>-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -7,7 +7,7 @@
       </button> -->
       <button type="button" id="navbar-toggle" class="navbar-toggle collapsed" onclick="event.preventDefault();open_right();">
         <span class="sr-only">Toggle navigation</span>
-        <span class="pull-right">MENU <i class="fa fa-list"></i></span>
+        <span class="pull-right">MENU <i class="fa fa-bars"></i></span>
       </button>
       <!-- <a href class="btn btn-info" onclick="event.preventDefault();snapper.open('right')">Open right</a> -->
       <% if @current_website.logo.try(:asset).present?  %>
@@ -25,4 +25,13 @@
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-<%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_website_path(@current_website), class: 'edit_link' if can? :update, @current_website %>
+<% if (can? :update, @current_website) && action_name == 'home' %>
+  <div class="edit_link">
+    <div class="btn-group-vertical">
+      <%= link_to '<i class="fa-fw fa fa-pencil"></i> Edit site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
+    </div>
+    <div class="btn-group-vertical">
+      <%= link_to '<i class="fa-fw fa fa-plus"></i> Add Block'.html_safe, new_block_path({website_id: @current_website.id, front_page: true}), remote: true, class: 'btn btn-success btn-sm' %>
+    </div>
+  </div>
+<% end %>

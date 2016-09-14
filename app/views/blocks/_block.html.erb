@@ -1,12 +1,12 @@
-<div class="block" id="<%= dom_id(block) %>" style="background-color: <%= block.bg_color %>">
+<div class="block sub_block" id="<%= dom_id(block) %>" style="background-color: <%= block.bg_color %>">
   <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
-  <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
-  <%= content_tag('div',block.about.html_safe, class: 'block-about') if block.about.present? %>
-  <%= content_tag('div', (link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-block'), class: 'block-link') if block.link.present? %>
   <% if can? :update, block %>
     <div class="btn-group block-edit">
-      <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
-      <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
+      <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-sm' if can? :update, block  %>
+      <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-sm' if can? :update, block  %>
     </div>
   <% end %>
+  <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
+  <%= content_tag('div',block.about.html_safe, class: 'block-about') if block.about.present? %>
+  <%= content_tag('div', (link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-info'), class: 'block-link text-center') if block.link.present? %>
 </div>

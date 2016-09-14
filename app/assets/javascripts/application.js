@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require snap.min
 //= require toastr
+//= require jquery.matchHeight-min
 //= require ie10-viewport-bug-workaround
 
 var set_summernote = function(){
