@@ -148,6 +148,7 @@ function getContrastYIQ(hexcolor){
   var yiq = ((r*299)+(g*587)+(b*114))/1000;
   return (yiq >= 128) ? '#111' : '#fff';
 }
+
 function rgb2hex(rgb) {
   if (  rgb.search("rgb") == -1 ) {
     return rgb;
@@ -158,4 +159,19 @@ function rgb2hex(rgb) {
     }
     return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
  }
+}
+
+function onElementHeightChange(elm, callback){
+  var lastHeight = elm.clientHeight, newHeight;
+  (function run(){
+      newHeight = elm.clientHeight;
+      if( lastHeight != newHeight )
+          callback();
+      lastHeight = newHeight;
+
+      if( elm.onElementHeightChangeTimer )
+          clearTimeout(elm.onElementHeightChangeTimer);
+
+      elm.onElementHeightChangeTimer = setTimeout(run, 200);
+  })();
 }
