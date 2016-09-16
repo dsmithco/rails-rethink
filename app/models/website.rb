@@ -17,6 +17,8 @@ class Website < ApplicationRecord
     self.style['brand-success'] = '#00cc66' unless self.style['brand-success'].present?
     self.style['brand-warning'] = '#ff9933' unless self.style['brand-warning'].present?
     self.style['brand-danger'] = '#ff3300' unless self.style['brand-danger'].present?
+    self.style['navbar-height'] = '60px' unless self.style['navbar-height'].present?
+
     self.theme = 'basic' unless self.theme.present?
   end
 
