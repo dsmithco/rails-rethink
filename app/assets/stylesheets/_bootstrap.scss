@@ -150,6 +150,7 @@ code {
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 .navbar .logo img {
@@ -330,46 +331,74 @@ dl > dt > label {
   margin: 0 15px 15px;
 }
 
-
-
-.block-container {
+.block-container .sub_block {
   margin-bottom: 24px;
-  background-color: #fff;
-  border: 0px solid transparent;
-  border-radius: 2px;
-  box-shadow: 0px 1px 3px rgba(0,0,0,.1);
   overflow: hidden;
 }
 
+.block-container .block_bg_color.block {
+    border: 0px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+}
+
 .block-about {
-    margin: 30px 15px;
+    margin: 15px 0px 15px;
 }
 
-.block .block-title + .block-about{
-    margin: 10px 15px 20px;
-}
-
-.block .block-image {
-  margin-bottom: 15px;
-}
 .block .block-title{
-  margin: 25px 15px 15px 15px;
+  margin: 0px 0px 5px;
+  padding-top: 10px;
 }
 
 .block-link {
-  margin: 10px 15px;
+  margin: 0 0px 15px;
   padding-bottom: 10px;
+}
+
+.block .block-image + *,
+.block .block-title + *,
+.block .block-about + * {
+  margin-top: 10px !important;
+}
+
+.block_bg_color .block-title,
+.block_bg_color .block-about,
+.block_bg_color .block-link {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.sub_block {
+  position: relative;
 }
 
 .sub_block .btn-group.block-edit {
   position: absolute;
-  right: 20px;
-  margin-top: 0px;
+  right: 0px;
+  top: 10px;
+}
+
+.sub_block .btn-group.block-edit .btn {
+  transition: .2s;
+}
+
+.sub_block:not(:hover) .btn-group.block-edit .btn {
+  opacity: .1;
 }
 
 .block-edit-btns {
   position: absolute;
   right: 10px;
+  transition: .2s;
+}
+
+.dt-label {
+  padding-top: $padding-base-vertical;
+}
+
+#blocks .block-main:not(:hover) .block-edit-btns {
+  opacity: .2;
 }
 // Page Styles
 
