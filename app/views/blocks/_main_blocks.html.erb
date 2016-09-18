@@ -78,10 +78,12 @@
         }
 
         function resizeBackgrounds(){
-          $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
-            'height': $('#<%= dom_id(block) %>').outerHeight(),
-            'top': $('#<%= dom_id(block) %>').offset().top
-          });
+          if($('#<%= dom_id(block) %>').length>0){
+            $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
+              'height': $('#<%= dom_id(block) %>').outerHeight(),
+              'top': $('#<%= dom_id(block) %>').offset().top
+            });
+          }
         };
 
         onElementHeightChange(document.body, resizeBackgrounds);
