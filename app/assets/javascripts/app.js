@@ -11,7 +11,7 @@ var fixScroll = function(opts){
   var bottom_market = opts['bottom_market'];
   var body_padding_bottom = parseInt($('body').css('paddingBottom'));
   $(document).on("scroll", function(e) {
-    if (($(this).scrollTop() > $(top_marker).offset().top) && ($(this).scrollTop() < $(bottom_market).offset().top - $(fix).outerHeight())) {
+    if ($(top_marker).length && ($(this).scrollTop() > $(top_marker).offset().top) && ($(this).scrollTop() < $(bottom_market).offset().top - $(fix).outerHeight())) {
       $(fix).addClass("fixed");
       $(top_marker).css(
         {

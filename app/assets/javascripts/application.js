@@ -104,12 +104,21 @@ var document_scrolling = function(){
   // });
 }
 
+var tinymce_modal_fix = function(){
+  $(document).on('focusin', function(e) {
+    if ($(e.target).closest(".mce-window").length) {
+        e.stopImmediatePropagation();
+    }
+  });
+}
+
 var document_load = function(){
   document.addEventListener("turbolinks:load", function () {
     set_summernote();
     note_affix_toolbar();
     document_scrolling();
     fade_in_alert();
+    tinymce_modal_fix();
   });
 }();
 
@@ -132,18 +141,20 @@ var turbolinks_go = function(url, no_scroll){
 }
 
 function getContrastYIQ(hexcolor){
-  var new_hex = hexcolor.replace('#','');
-  var r = parseInt(new_hex.substr(0,2),16);
-  var g = parseInt(new_hex.substr(2,2),16);
-  var b = parseInt(new_hex.substr(4,2),16);
-  var yiq = ((r*299)+(g*587)+(b*114))/1000;
-  return (yiq >= 128) ? '#111' : '#fff';
+  if(hexcolor){
+    var new_hex = hexcolor.replace('#','');
+    var r = parseInt(new_hex.substr(0,2),16);
+    var g = parseInt(new_hex.substr(2,2),16);
+    var b = parseInt(new_hex.substr(4,2),16);
+    var yiq = ((r*299)+(g*587)+(b*114))/1000;
+    return (yiq >= 128) ? '#111' : '#fff';  
+  }
 }
 
 function rgb2hex(rgb) {
-  if (  rgb.search("rgb") == -1 ) {
+  if ( rgb && rgb.search("rgb") == -1 ) {
     return rgb;
-  } else {
+  } else if(rgb) {
     rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
     function hex(x) {
         return ("0" + parseInt(x).toString(16)).slice(-2);

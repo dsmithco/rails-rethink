@@ -4,9 +4,6 @@
   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title">
     <%= block.block_type.capitalize if block.block_type.present? %> Block
-    <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-      &nbsp;<label class="btn btn-default btn-sm"><%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input' %> Front page</label>
-    <% end %>
   </h4>
   <script type="text/javascript">
     function check_checkbox(){
@@ -44,33 +41,57 @@
 
   <div class="col-sm-12">
     <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-      <% if !block.id.present? %>
-        <div class="" id="block_type">
-          <div class="row form-group">
+      <dl class="dl-horizontal form-group" id="block_type">
+        <dt class="dt-label">
+          Block type
+        </dt>
+        <dd>
+          <div class="row">
             <% Block::BLOCK_TYPES.each do |block_type| %>
               <div class="col-xs-<%= (12 / Block::BLOCK_TYPES.count).ceil %>">
-                <a class="btn btn-block btn-primary inverse <%= 'active' if block_type == block.block_type %>" id="<%= block_type %>" onClick="setBlockType(this)"><%= block_type.capitalize %></a>
+                <button type="button" <%= block.id.present? ? 'disabled' : '' %> class="btn btn-block btn-primary inverse <%= 'active' if block_type == block.block_type %>"
+                        id="<%= block_type %>" onClick="setBlockType(this)">
+                        <%= block_type.capitalize %></button>
               </div>
             <% end %>
           </div>
-          <div class="hide form-group">
+          <div class="hide">
             <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
           </div>
-        </div>
+        </dd>
+      </dl>
+      <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
+        <dl class="dl-horizontal form-group">
+            <dt class="dt-label">
+              Front page
+            </dt>
+            <dd>
+              <label class="btn btn-default"><%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input' %> Show on front page</label>
+            </dd>
+        </dl>
       <% end %>
-
-      <dl class="dl-horizontal" id="block">
+      <dl class="dl-horizontal form-group" id="block">
         <dt class="dt-label">
           Container Block
         </dt>
-        <dd class="form-group">
+        <dd>
           <%= f.select :block_id, block.parent_block_options.collect {|x| [x.name.present? ? "#{x.name} (#{x.blocks.count})" : "Block id: #{x.id} (#{x.blocks.count})", x.id]}, {:include_blank => "-- Select a Container --"}, :class => 'form-control' %>
         </dd>
+      </dl>
+      <dl class="dl-horizontal form-group" id="location">
         <dt class="dt-label">
           Location
         </dt>
-        <dd id="location" class="form-group">
+        <dd id="location">
           <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
+        </dd>
+      </dl>
+      <dl class="dl-horizontal form-group">
+        <dt class="dt-label">
+          Block position
+        </dt>
+        <dd id="position">
+          <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
         </dd>
       </dl>
     <% end %>
@@ -109,7 +130,7 @@
 
       function setBlockType(div){
         $('#block_type select').val(div.id).change();
-        $('#block_type a.active').removeClass('active');
+        $('#block_type button.active').removeClass('active');
         $(div).addClass('active');
       }
     </script>
@@ -122,7 +143,7 @@
         Image
       </dt>
       <dd class="form-group">
-        <span class="btn btn-primary btn-block fileinput-button">
+        <span class="btn btn-default btn-block fileinput-button">
             <!-- The file input field used as target for the file upload widget -->
             <span><i class="fa fa-photo"></i> Upload image</span>
             <input id="fileupload" type="file" name="image[asset]">
@@ -191,9 +212,6 @@
         <%= f.text_field :bg_color, class: 'form-control color', id: 'color', name: 'block[bg_color]' %>
       </dd>
 
-      <div class="form-group clearfix">
-
-      </div>
     </dl>
   <% end %>
 
@@ -234,15 +252,6 @@
 
   <% end %>
 
-  <dl class="dl-horizontal">
-    <dt class="dt-label">
-      Position
-    </dt>
-    <dd class="form-group" id="position">
-      <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
-    </dd>
-  </dl>
-
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
     <dl class="dl-horizontal">
 
@@ -250,14 +259,14 @@
         Link
       </dt>
       <dd class="form-group">
-        <%= f.text_field :link, class: 'form-control' %>
-      </dd>
-
-      <dt class="dt-label">
-        Link Text
-      </dt>
-      <dd>
-        <%= f.text_field :link_text, class: 'form-control' %>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.text_field :link, class: 'form-control', placeholder: 'http://example.com or /pages/about' %>
+          </div>
+          <div class="col-sm-6">
+            <%= f.text_field :link_text, class: 'form-control', placeholder: 'Learn more' %>
+          </div>
+        </div>
       </dd>
     </dl>
   <% end %>
