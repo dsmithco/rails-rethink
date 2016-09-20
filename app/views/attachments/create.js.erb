@@ -1,5 +1,4 @@
 <% if @resource.new_record? %>
-  alert("Failed to upload painting: <%= j @attachment.errors.full_messages.join(', ').html_safe %>");
 <% else %>
   turbolinks_go(location.toString(), 'no_scroll');
 <% end %>

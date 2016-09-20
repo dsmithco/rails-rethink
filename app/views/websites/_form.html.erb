@@ -153,14 +153,8 @@
         <!-- Site tab content -->
         <% if params[:tab] == 'site' %>
           <div id="site">
-            <%= render 'websites/edit_logo' %>
-
-            <%= form_for(@website, remote: true) do |f| %>
-            <div class="form-group">
-              <%= f.submit 'Save Website', class: 'btn btn-success' %>
-              <%= link_to 'Cancel', @website, class: "btn btn-default" %>
-            </div>
-            <% end %>
+            <%= render 'websites/edit_website_image', model: 'Logo', style: 'medium' %>
+            <%= render 'websites/edit_website_image', model: 'Icon', style: 'small' %>
           </div>
         <% end %>
 

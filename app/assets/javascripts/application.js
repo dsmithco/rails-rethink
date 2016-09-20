@@ -147,7 +147,7 @@ function getContrastYIQ(hexcolor){
     var g = parseInt(new_hex.substr(2,2),16);
     var b = parseInt(new_hex.substr(4,2),16);
     var yiq = ((r*299)+(g*587)+(b*114))/1000;
-    return (yiq >= 128) ? '#111' : '#fff';  
+    return (yiq >= 128) ? '#111' : '#fff';
   }
 }
 
@@ -173,7 +173,6 @@ function onElementHeightChange(elm, callback){
 
       if( elm.onElementHeightChangeTimer )
           clearTimeout(elm.onElementHeightChangeTimer);
-
       elm.onElementHeightChangeTimer = setTimeout(run, 200);
   })();
 }

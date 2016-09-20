@@ -7,7 +7,9 @@
 <meta name="HandheldFriendly" content="true">
 <meta name="Description" content='<%= "#{@current_website.description}" %>'>
 <meta name="Keywords" content='<%= "#{@current_website.tags}" %>'>
-
+<% if @current_website.icon.present? %>
+  <link rel="icon" type="image/png" href="<%= @current_website.icon.medium %>">
+<% end %>
 <meta name="Robots" content="index, follow">
 
 <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">

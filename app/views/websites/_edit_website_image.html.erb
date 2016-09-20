@@ -1,22 +1,22 @@
 <fieldset>
   <legend>
-    Logo
+    <%= model %>
     <span class="btn btn-success btn-sm fileinput-button">
-        <span>Upload Logo Image</span>
+        <span>Upload <%= model %> Image</span>
         <!-- The file input field used as target for the file upload widget -->
-        <input id="fileupload" type="file" name="asset">
+        <input id="fileupload_<%= model.tableize%>" type="file" name="asset">
     </span>
   </legend>
   <div class="form-group">
     <!-- The container for the uploaded files -->
-    <div id="files" class="files"></div>
+    <div id="files_<%= model.tableize%>" class="files"></div>
     <!-- The global progress bar -->
-    <div id="progress" class="hide progress">
+    <div id="progress_<%= model.tableize%>" class="hide progress <%= model.tableize%>">
         <div class="progress-bar progress-bar-success"></div>
     </div>
 
-    <div id="logo" class="logo thumbnail">
-      <%= image_tag @website.logo.asset if @website.logo.present? %>
+    <div id="<%= model.downcase %>" class="<%= model.downcase %>">
+      <%= image_tag @website.try(model.downcase).asset(style) if @website.try(model.downcase).present? %>
     </div>
     <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
   </div>
@@ -27,15 +27,15 @@
     $(function () {
       'use strict';
       // Change this to the location of your server-side upload handler:
-      $('#fileupload').fileupload({
+      $('#fileupload_<%= model.tableize%>').fileupload({
         dataType: 'script',
-        url: '/logos',
+        url: '/<%= model.tableize%>',
         type: 'POST',
         multipart: true,
         add: function(e, data){
           data.formData = {};
-          <% if @website.logo.present? %>
-            data.formData.id = <%= @website.logo.id %>;
+          <% if @website.try(model.downcase).present? %>
+            data.formData.id = <%= @website.try(model.downcase).id %>;
           <% end %>
           data.formData.attachable_id = <%= @website.id %>;
           data.formData.attachable_type = 'Website';
@@ -44,7 +44,7 @@
           file = data.files[0];
           if (types.test(file.type) || types.test(file.name)) {
             data.context = $('<div>' + file.name + '</div>');
-            $('#files').append(data.context);
+            $('#files_<%= model.tableize%>').append(data.context);
             return data.submit();
           } else {
             return alert(file.name + " is not a gif, jpeg, or png image file");
@@ -54,9 +54,9 @@
           var progress;
           if(data.context) {
             progress = parseInt(data.loaded / data.total * 100, 10);
-            $('.progress').removeClass('hide');
-            return $('.progress-bar').css('width', progress + '%');
-            console.log(progress)
+            $('.progress.<%= model.tableize%>').removeClass('hide');
+            return $('.progress.<%= model.tableize%> .progress-bar').css('width', progress + '%');
+            console.log(progress);
           }
         },
         done: function(e, data){

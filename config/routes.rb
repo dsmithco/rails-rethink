@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post "pages/:page_id/:id" => "pages#create"
   resources :attachments, controller: 'attachments', type: 'Attachment'
   resources :logos, controller: 'logos', type: 'Logo'
-  resources :icons, controller: 'attachments', type: 'Icon'
+  resources :icons, controller: 'icons', type: 'Icon'
   resources :images, controller: 'images', type: 'Image'
   resources :hero_images, controller: 'hero_images', type: 'HeroImage'
   resources :users
