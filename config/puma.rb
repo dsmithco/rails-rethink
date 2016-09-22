@@ -21,6 +21,8 @@ state_path 'tmp/pids/rethinkwebdesign-puma.state'
 
 daemonize true if ENV['RAILS_ENV'] == 'production'
 
+stdout_redirect 'log/puma.log', 'log/puma_error.log', true
+
 # Specifies the `environment` that Puma will run in.
 #
 
