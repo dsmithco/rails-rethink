@@ -85,15 +85,11 @@ class Website < ApplicationRecord
       system("cd /etc/nginx/sites-enabled && sed -i 's/SUB_DOMAIN/#{self.account_id}-#{self.id}/g' website_#{self.account_id}-#{self.id}")
       if self.domain_url.present?
         no_www_domain_url = self.domain_url.gsub('www.','')
-        system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_1/#{self.no_www_domain_url}/g' website_#{self.account_id}-#{self.id}")
-        system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_2/www.#{self.no_www_domain_url}/g' website_#{self.account_id}-#{self.id}") if (self.domain_url.include?('www.') && no_www_domain_url.split('.').count == 2)
+        system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_1/#{no_www_domain_url}/g' website_#{self.account_id}-#{self.id}")
+        system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_2/www.#{no_www_domain_url}/g' website_#{self.account_id}-#{self.id}") if (self.domain_url.include?('www.') && no_www_domain_url.split('.').count == 2)
       end
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S /home/deploy/certbot-auto certonly --webroot -w /home/deploy/rethinkwebdesign/current/public -d #{self.account_id}-#{self.id}.rethinkwebdesign.com --email dsmithco@gmail.com --agree-tos --expand")
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S service nginx reload")
-      # get cert
-
-      #
-
     end
   end
 
