@@ -3,7 +3,7 @@ class Image < Attachment
   # This method associates the attribute ":avatar" with a file attachment
   has_attached_file :asset, styles: {
     thumb: '200x200#',
-    medium: '1000x400#',
+    medium: '800x500#',
     large: '1600x1600>',
     long: '1400x400#'
   },

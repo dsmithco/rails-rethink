@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925004447) do
+ActiveRecord::Schema.define(version: 20160925015849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20160925004447) do
   end
 
   create_table "attachments", force: :cascade do |t|
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "asset_file_name"
     t.string   "asset_content_type"
     t.integer  "asset_file_size"
@@ -47,7 +47,9 @@ ActiveRecord::Schema.define(version: 20160925004447) do
     t.integer  "position"
     t.string   "link_text"
     t.string   "text_align"
+    t.hstore   "style",              default: {}, null: false
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
+    t.index ["style"], name: "attachments_style_idx", using: :gin
     t.index ["type", "attachable_id", "attachable_type"], name: "index_attachments_on_type_and_attachable_id_and_attachable_type", using: :btree
     t.index ["type"], name: "index_attachments_on_type", using: :btree
   end
