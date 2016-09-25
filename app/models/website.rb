@@ -19,9 +19,18 @@ class Website < ApplicationRecord
     self.style['brand-warning'] = '#ff9933' unless self.style['brand-warning'].present?
     self.style['brand-danger'] = '#ff3300' unless self.style['brand-danger'].present?
     self.style['navbar-height'] = '60px' unless self.style['navbar-height'].present?
-
+    self.style['headings-font-family'] = FONT_FAMILY_OPTIONS[0] unless self.style['headings-font-family'].present?
+    self.style['font-family-sans-serif'] = FONT_FAMILY_OPTIONS[0] unless self.style['font-family-sans-serif'].present?
     self.theme = 'basic' unless self.theme.present?
   end
+
+  FONT_FAMILY_OPTIONS = [
+    '"Lato", "Helvetica Neue", Helvetica, Arial', # Default font family
+    '"Helvetica Neue", sans-serif, Helvetica, Arial',
+    'Impact, Haettenschweiler, "Arial Black", "sans serif"',
+    '"Courier New", Courier, monospace',
+    '"Palatino Linotype", "Book Antiqua", Palatino, serif'
+  ]
 
   def style_settings
     output = ""
@@ -86,10 +95,10 @@ class Website < ApplicationRecord
       if self.domain_url.present?
         no_www_domain_url = self.domain_url.gsub('www.','')
         system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_1/#{no_www_domain_url}/g' website_#{self.account_id}-#{self.id}")
-        if no_www_domain_url.split('.').count > 3
+        if no_www_domain_url.split('.').count == 2
           system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_2/www.#{no_www_domain_url}/g' website_#{self.account_id}-#{self.id}")
         else
-          system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/SERVER_NAME_2/www.#{no_www_domain_url}/g' website_#{self.account_id}-#{self.id}")
+          system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/server_name SERVER_NAME_2;//g' website_#{self.account_id}-#{self.id}")
         end
       end
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S /home/deploy/certbot-auto certonly --webroot -w /home/deploy/rethinkwebdesign/current/public -d #{self.account_id}-#{self.id}.rethinkwebdesign.com --email dsmithco@gmail.com --agree-tos --expand")

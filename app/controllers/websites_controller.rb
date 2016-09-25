@@ -111,6 +111,6 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:account_id, :css_override, {:style=>['brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
+      params.require(:website).permit(:account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
     end
 end

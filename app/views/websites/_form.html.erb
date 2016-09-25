@@ -129,6 +129,18 @@
                 <dd class="form-group">
                   <label><input type="checkbox" name="website[style][nav-fixed]" <%=@website.style['nav-fixed'].present? ? 'checked' : '' %> value="true"> Fixed Nav</label>
                 </dd>
+                <dt>
+                  Heading Font
+                </dt>
+                <dd class="form-group">
+                  <%= select_tag "website[style][headings-font-family]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['headings-font-family']), :class => 'form-control' %>
+                </dd>
+                <dt>
+                  Body font
+                </dt>
+                <dd class="form-group">
+                  <%= select_tag "website[style][font-family-sans-serif]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['font-family-sans-serif']), :class => 'form-control' %>
+                </dd>
                 <script type="text/javascript">
                   $(".color").colorpicker();
                 </script>
