@@ -47,14 +47,16 @@
                   <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
 
                 </dd>
-                <dt>
-                  <label>
-                    Account
-                  </label>
-                </dt>
-                <dd class="form-group">
-                  <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
-                </dd>
+                <% if !@website.account_id.present? %>
+                  <dt>
+                    <label>
+                      Account
+                    </label>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+                  </dd>
+                <% end %>
                 <dt>
                   <%= f.label :css_override %>
                 </dt>
