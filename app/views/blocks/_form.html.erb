@@ -41,7 +41,7 @@
 
   <div class="col-sm-12">
     <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-      <dl class="dl-horizontal form-group" id="block_type">
+      <dl class="dl-horizontal form-group <%= 'hide' if block.id.present? %>" id="block_type">
         <dt class="dt-label">
           Block type
         </dt>
@@ -61,7 +61,7 @@
         </dd>
       </dl>
       <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-        <dl class="dl-horizontal form-group">
+        <dl class="dl-horizontal form-group hide">
             <dt class="dt-label">
               Front page
             </dt>
@@ -76,6 +76,14 @@
         </dt>
         <dd>
           <%= f.select :block_id, block.parent_block_options.collect {|x| [x.name.present? ? "#{x.name} (#{x.blocks.count})" : "Block id: #{x.id} (#{x.blocks.count})", x.id]}, {:include_blank => "-- Select a Container --"}, :class => 'form-control' %>
+        </dd>
+      </dl>
+      <dl class="dl-horizontal form-group" id="columns">
+        <dt class="dt-label">
+          Max Columns
+        </dt>
+        <dd>
+          <%= f.select :columns, [1,2,3,4], {}, :class => 'form-control' %>
         </dd>
       </dl>
       <dl class="dl-horizontal form-group" id="location">
@@ -95,7 +103,6 @@
         </dd>
       </dl>
     <% end %>
-
     <script type="text/javascript">
       var default_options = <%= Block::REGIONS.to_json.html_safe %>;
       var main_options = <%= Block::CONTENT_REGIONS.to_json.html_safe %>;
@@ -109,7 +116,13 @@
           default_options.forEach(function(option){
             $('#location select').append("<option>" + option + "</option>");
           });
+          if($('#block_type select').val() == 'container'){
+            $('#columns').show();
+          }else{
+            $('#columns').hide();
+          }
         }else{
+          $('#columns').hide();
           $('#block').show();
           $('#location').hide();
         };
@@ -238,7 +251,6 @@
 
         <script type="text/javascript">
           timyMceSetup('#block_about', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_block_upload');
-          fixScroll({'fix': '.mce-toolbar-grp','top_marker': '#about','bottom_market': '#about_bottom'});
         </script>
       </dd>
       <dd class="about_bottom"></dd>

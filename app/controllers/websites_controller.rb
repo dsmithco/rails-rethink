@@ -1,5 +1,5 @@
 class WebsitesController < ApplicationController
-  before_action :set_website, only: [:show, :edit, :update, :destroy]
+  before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes]
 
   # GET /websites
   # GET /websites.json
@@ -41,6 +41,10 @@ class WebsitesController < ApplicationController
     end
     # compiler = Sass::Compiler.new(temp, {:syntax => :scss, :output_dir => Rails.root.join(dir)})
     render text: File.read(path), content_type: 'text/css'
+  end
+
+  def edit_heroes
+
   end
 
   def home

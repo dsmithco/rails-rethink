@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :attachments
     member do
       get 'stylesheet'
+      get 'edit_heroes'
     end
   end
   resources :accounts

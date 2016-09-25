@@ -55,22 +55,26 @@ class Block < ApplicationRecord
   end
 
   def blocks_splice_calc
-    if self.blocks.count % 3 == 0
-      splice_calc = 3
-    elsif self.blocks.count % 4 == 0
-      splice_calc = 4
-    elsif self.blocks.count % 5 == 0 && self.blocks.count % 10 != 0
-      splice_calc = 3
-    elsif self.blocks.count % 5 == 0 && self.blocks.count % 10 == 0
-      splice_calc = 4
-    elsif self.blocks.count % 7 == 0
-      splice_calc = 4
-    elsif self.blocks.count % 2 == 0
-      splice_calc = 2
-    elsif self.blocks.count % 1 == 0
-      splice_calc = 1
+    if self.blocks.count <= self.columns
+      if self.blocks.count % 3 == 0
+        splice_calc = 3
+      elsif self.blocks.count % 4 == 0
+        splice_calc = 4
+      elsif self.blocks.count % 5 == 0 && self.blocks.count % 10 != 0
+        splice_calc = 3
+      elsif self.blocks.count % 5 == 0 && self.blocks.count % 10 == 0
+        splice_calc = 4
+      elsif self.blocks.count % 7 == 0
+        splice_calc = 4
+      elsif self.blocks.count % 2 == 0
+        splice_calc = 2
+      elsif self.blocks.count % 1 == 0
+        splice_calc = 1
+      else
+        splice_calc = 0
+      end
     else
-      splice_calc = 0
+      splice_calc = self.columns
     end
     return splice_calc
   end

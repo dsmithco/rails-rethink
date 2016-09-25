@@ -8,7 +8,7 @@ end
 RSpec.describe Block, type: :model do
   it "returns correct blocks_splice_calc" do
     website = Website.create(account: Account.new, name: 'Test Site', theme: 'basic')
-    block = Block.new(website: website, block_type: 'container', location:'bottom', text_align:'center')
+    block = Block.new(website: website, block_type: 'container', location:'bottom', text_align:'center', columns: 12)
 
     expect(block.blocks_splice_calc).to eq(3)
 
@@ -32,9 +32,11 @@ RSpec.describe Block, type: :model do
 
     expect(block.blocks_splice_calc).to eq(3)
 
+    block.update(columns: 4)
+
     Block.create!(block: block, website: website, block_type: 'sub_block', text_align:'center', location: 'bottom')
 
-    expect(block.blocks_splice_calc).to eq(3)
+    expect(block.blocks_splice_calc).to eq(4)
 
     Block.create!(block: block, website: website, block_type: 'sub_block', text_align:'center', location: 'bottom')
 

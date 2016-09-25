@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset id="edit_heroes_list">
   <legend>
     Hero Images
     <span class="btn btn-success btn-sm fileinput-button">
@@ -16,6 +16,9 @@
     </div>
     <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
   </div>
+  <div class="text-muted panel panel-default panel-body">
+    <i class="fa fa-image"></i> Drag hero image blocks to reorder
+  </div>
   <div class="row" id="hero_images">
     <div class="clearfix" ng-if="$index % 3 == 0">
     </div>
@@ -29,7 +32,7 @@
                   <div class="row">
                     <div class="col-sm-4">
                       <div data-as-sortable-item-handle>
-                        <img src="<%=hero.medium%>" alt="<%=hero.name%>" />
+                        <img src="<%=hero.medium%>" alt="<%=hero.name%>" style="cursor: move" />
                         <label class="label label-success <%= @website.hero_images.first != hero ? 'hide':''%>">Active</label>
                       </div>
                     </div>

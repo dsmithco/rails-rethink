@@ -1,0 +1,8 @@
+<% if @resource.errors.present? %>
+  <% @resource.errors.each do |key,error| %>
+    console.log("<%= error.to_s %>");
+  <% end %>
+<% else %>
+  $('#edit_heroes_list').replaceWith("<%=j render 'websites/edit_heroes', '@website': @current_website %>")
+  // turbolinks_go(location.toString(), 'no_scroll');
+<% end %>

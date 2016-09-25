@@ -15,12 +15,6 @@
       <li class="<%= !params[:tab].present? ? 'active' : '' %>">
         <%= link_to 'Website Info', "#{@browser_request.path}" %>
       </li>
-      <li class="<%= params[:tab] == 'hero' ? 'active' : '' %>">
-        <%= link_to 'Hero Images', "#{@browser_request.path}?tab=hero" %>
-      </li>
-      <li class="<%= params[:tab] == 'site' ? 'active' : '' %>">
-        <%= link_to 'Site Wide', "#{@browser_request.path}?tab=site" %>
-      </li>
       <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
         <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
       </li>
@@ -109,6 +103,11 @@
                 <dd class="form-group">
                   <%= f.text_field :theme, class: 'form-control' %>
                 </dd>
+                <dt>Logos</dt>
+                <dd>
+                  <%= render 'websites/edit_website_image', model: 'Logo', style: 'medium' %>
+                  <%= render 'websites/edit_website_image', model: 'Icon', style: 'small' %>
+                </dd>
                 <dt><label>Primary Color</label></dt>
                 <dd class="form-group"><input type="text" name="website[style][brand-primary]" class="form-control color" value="<%= @website.style['brand-primary'] %>"></dd>
                 <dt><label>Secondary Color</label></dt>
@@ -142,20 +141,6 @@
               </dl>
             </fieldset>
           <% end %>
-        <% end %>
-        <!-- Hero tab content -->
-        <% if params[:tab] == 'hero' %>
-          <div id="hero">
-            <%= render 'websites/edit_hero' %>
-          </div>
-        <% end %>
-
-        <!-- Site tab content -->
-        <% if params[:tab] == 'site' %>
-          <div id="site">
-            <%= render 'websites/edit_website_image', model: 'Logo', style: 'medium' %>
-            <%= render 'websites/edit_website_image', model: 'Icon', style: 'small' %>
-          </div>
         <% end %>
 
         <!-- Blocks tab content -->
@@ -199,7 +184,7 @@
                           <%= block.id %>
                         </td>
                         <td>
-                          <%= block.name %>
+                          <%= block.name.present? ? block.name : '-' %>
                         </td>
                         <td>
                           <%= block.block_type %>
@@ -208,7 +193,7 @@
                           <%= block.position %>
                         </td>
                         <td>
-                          <%= block.location %>
+                          <%= block.location.present? ? block.location : '-' %>
                         </td>
                         <td class="">
                           <%= "<i class='fa fa-star fa-fw'></i>".html_safe if block.front_page.present? %>

@@ -31,6 +31,9 @@
       <%= link_to '<i class="fa-fw fa fa-pencil"></i> Edit site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
     </div>
     <div class="btn-group-vertical">
+      <%= link_to '<i class="fa-fw fa fa-image"></i> Hero images'.html_safe, "/websites/#{@current_website.id}/edit_heroes", remote: true, class: 'btn btn-info btn-sm  text-left' %>
+    </div>
+    <div class="btn-group-vertical">
       <%= link_to '<i class="fa-fw fa fa-plus"></i> Add Block'.html_safe, new_block_path({website_id: @current_website.id, front_page: true}), remote: true, class: 'btn btn-success btn-sm' %>
     </div>
   </div>
