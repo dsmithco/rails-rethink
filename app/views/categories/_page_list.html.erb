@@ -1,0 +1,9 @@
+<div class="well well-sm">
+  Viewing <%= @pages.count %> <%= @category.name %> Pages
+</div>
+<% @pages.each do |page| %>
+  <%= render 'pages/view', page: page %>
+<% end %>
+<div class="text-center">
+  <%= will_paginate @pages, renderer: BootstrapPagination::Rails %>
+</div>

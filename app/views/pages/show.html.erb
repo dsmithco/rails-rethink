@@ -15,6 +15,9 @@
 
       <div class="page-main">
         <%= @page.about.html_safe %>
+        <% if @page.categories.present? %>
+          <%= render 'categories/page_footer', categories: @page.categories %>
+        <% end %>
         <%= render 'pages/summaries', pages: @page.pages %>
         <br/>
       </div>

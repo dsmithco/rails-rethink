@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :categories do
+    member do
+      get 'search'
+    end
+  end
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :blocks
   resources :pages do
@@ -27,6 +32,7 @@ Rails.application.routes.draw do
     member do
       get 'stylesheet'
       get 'edit_heroes'
+      get 'random_hero'
     end
   end
   resources :accounts
@@ -40,5 +46,4 @@ Rails.application.routes.draw do
     match "/podcasts/mp3/morerain.xml" => redirect {|params, req| "http://feeds.feedburner.com/morerain/#{params[:path]}"},  via: [:get]
   end
 
-  get "*id" => "pages#show"
 end

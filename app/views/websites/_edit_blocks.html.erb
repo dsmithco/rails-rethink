@@ -1,0 +1,65 @@
+<!-- Blocks tab content -->
+<div id="blocks">
+  <fieldset>
+    <legend>
+      Blocks <%= link_to 'New Block', new_block_path, remote: true, class: 'btn btn-success btn-sm' %>
+    </legend>
+    <div class="form-group">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              ID
+            </th>
+            <th>
+              Title
+            </th>
+            <th>
+              Type
+            </th>
+            <th>
+              Position
+            </th>
+            <th>
+              Location
+            </th>
+            <th>
+              Front
+            </th>
+            <th>
+
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @website.blocks.each do |block| %>
+            <tr id="block_<%=block.id%>">
+              <td>
+                <%= block.id %>
+              </td>
+              <td>
+                <%= block.name.present? ? block.name : '-' %>
+              </td>
+              <td>
+                <%= block.block_type %>
+              </td>
+              <td>
+                <%= block.position %>
+              </td>
+              <td>
+                <%= block.location.present? ? block.location : '-' %>
+              </td>
+              <td class="">
+                <%= "<i class='fa fa-star fa-fw'></i>".html_safe if block.front_page.present? %>
+              </td>
+              <td class="text-right">
+                <%= link_to 'Edit', edit_block_path(block), remote: true, class: 'btn btn-sm btn-primary' %>
+                <%= link_to 'Remove', block_path(block), remote: true, method: :delete, data: {confirm: "Are you sure you want to delete the block #{block.name}"}, class: 'btn btn-sm btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+</div>

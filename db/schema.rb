@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925015849) do
+ActiveRecord::Schema.define(version: 20160927190832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,19 @@ ActiveRecord::Schema.define(version: 20160925015849) do
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "about"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "website_id"
+    t.string   "slug"
+    t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
+    t.index ["slug"], name: "categories_slug_idx", using: :btree
+    t.index ["website_id"], name: "index_categories_on_website_id", using: :btree
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
     t.integer  "sluggable_id",              null: false
@@ -95,6 +108,15 @@ ActiveRecord::Schema.define(version: 20160925015849) do
     t.integer  "position"
     t.index ["block_id"], name: "index_page_blocks_on_block_id", using: :btree
     t.index ["page_id"], name: "index_page_blocks_on_page_id", using: :btree
+  end
+
+  create_table "page_categories", force: :cascade do |t|
+    t.integer  "page_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_page_categories_on_category_id", using: :btree
+    t.index ["page_id"], name: "index_page_categories_on_page_id", using: :btree
   end
 
   create_table "pages", force: :cascade do |t|
@@ -145,12 +167,13 @@ ActiveRecord::Schema.define(version: 20160925015849) do
     t.string   "facebook"
     t.string   "twitter"
     t.string   "tags"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "theme"
     t.text     "css_override"
     t.text     "description"
-    t.hstore   "style",            default: {}, null: false
+    t.hstore   "style",            default: {},    null: false
+    t.boolean  "random_hero",      default: false
     t.index ["account_id"], name: "index_websites_on_account_id", using: :btree
     t.index ["domain_url"], name: "index_websites_on_domain_url", using: :btree
     t.index ["name"], name: "index_websites_on_name", using: :btree
@@ -162,8 +185,12 @@ ActiveRecord::Schema.define(version: 20160925015849) do
   add_foreign_key "account_users", "users"
   add_foreign_key "blocks", "blocks"
   add_foreign_key "blocks", "websites"
+  add_foreign_key "categories", "categories"
+  add_foreign_key "categories", "websites"
   add_foreign_key "page_blocks", "blocks"
   add_foreign_key "page_blocks", "pages"
+  add_foreign_key "page_categories", "categories"
+  add_foreign_key "page_categories", "pages"
   add_foreign_key "pages", "pages"
   add_foreign_key "pages", "websites"
   add_foreign_key "websites", "accounts"

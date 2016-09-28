@@ -1,12 +1,17 @@
+<a href="/" class="pull-right"><i class="fa fa-times"></i></a>
 <fieldset id="edit_heroes_list">
   <legend>
-    Hero Images
-    <span class="btn btn-success btn-sm fileinput-button">
+    Hero Images     <a id="random_hero" class="btn btn-sm btn-info <%= @current_website.random_hero ? '':'inverse'%>" data-remote="true" href="/websites/<%= @current_website.id %>/random_hero">
+         Randomize order
+        </a>
+  </legend>
+  <div class="well well-dashed well-lg text-center">
+    <span class="btn btn-success btn-lg fileinput-button">
         <span>Upload Hero Image</span>
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload1" type="file" name="hero_image[asset]" multiple>
     </span>
-  </legend>
+  </div>
   <div>
     <!-- The container for the uploaded files -->
     <div id="files" class="files"></div>
@@ -19,6 +24,8 @@
   <div class="text-muted panel panel-default panel-body">
     <i class="fa fa-image"></i> Drag hero image blocks to reorder
   </div>
+
+
   <div class="row" id="hero_images">
     <div class="clearfix" ng-if="$index % 3 == 0">
     </div>

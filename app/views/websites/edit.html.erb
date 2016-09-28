@@ -1,3 +1,27 @@
 <h1>Editing Website</h1>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="<%= !params[:tab].present? ? 'active' : '' %>">
+    <%= link_to 'Website Info', "#{@browser_request.path}" %>
+  </li>
+  <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
+    <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
+  </li>
+  <li class="<%= params[:tab] == 'categories' ? 'active' : '' %>">
+    <%= link_to 'Categories', "#{@browser_request.path}?tab=categories" %>
+  </li>
+</ul>
 
-<%= render 'form', website: @website %>
+<br/>
+
+<% if !params[:tab].present? %>
+  <%= render 'form', website: @website %>
+<% end %>
+
+<% if params[:tab] == 'blocks' %>
+  <%= render 'edit_blocks', website: @website %>
+<% end %>
+
+<% if params[:tab] == 'categories' %>
+  <%= render 'edit_categories', website: @website %>
+<% end %>

@@ -1,5 +1,5 @@
 class WebsitesController < ApplicationController
-  before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes]
+  before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes, :random_hero]
 
   # GET /websites
   # GET /websites.json
@@ -92,6 +92,10 @@ class WebsitesController < ApplicationController
     end
   end
 
+  def random_hero
+    @website.update_columns(random_hero: !@website.random_hero)
+  end
+
   # DELETE /websites/1
   # DELETE /websites/1.json
   def destroy
@@ -111,6 +115,6 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
+      params.require(:website).permit(:random_hero, :account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
     end
 end

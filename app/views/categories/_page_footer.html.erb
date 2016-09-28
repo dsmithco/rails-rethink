@@ -1,0 +1,6 @@
+<div class="form-group" style="background-color: #f1f1f1; padding: 8px 12px;">
+  <!-- <strong>Categories</strong><br/> -->
+  <% categories.each do |category| %>
+    <%= link_to category.name.capitalize, category_path(category) %> <%= "<span style='font-weight:300; opacity:.3'>&nbsp;|&nbsp;</span>".html_safe unless category == categories.last%>
+  <% end %>
+</div>

@@ -1,6 +1,6 @@
 class Page < ApplicationRecord
   logger = Page.logger
-
+  self.per_page = 5
   extend FriendlyId
   friendly_id :name, :scope => :website_id, use: [:slugged, :scoped, :history]
   acts_as_list scope: [:website_id, :page_id]
@@ -13,7 +13,8 @@ class Page < ApplicationRecord
   has_many :blocks, through: :page_blocks
   has_one :image, as: :attachable, dependent: :destroy
   has_many :pages
-
+  has_many :page_categories
+  has_many :categories, through: :page_categories
   validates :website, presence: true
 
   after_save :menu_setup

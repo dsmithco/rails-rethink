@@ -1,0 +1,29 @@
+<div class="category-container category-container-">
+  <div class="category-title-section">
+    <div class="row">
+      <div class="col-sm-3 col-sm-push-9">
+        <form action="<%= request.path %>/search" method="get" data-remote="true" id="category_search">
+          <input id="category_search_term" type="text" name="term" placeholder="Seach <%= @category.name %>" class="form-control" >
+        </form>
+        <script type="text/javascript">
+          $("#category_search_term").keyup($.debounce(400, function(){
+            $("#category_search").submit();
+          }));
+        </script>
+      </div>
+      <div class="col-sm-9 col-sm-pull-3">
+        <h1 class="category-title">
+          <%= @category.name %> <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(@category), remote: true, style: 'margin-top: -15px; padding: 7px 20px;', class: 'btn-circle btn btn-sm btn-primary' %>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="category-main-section">
+    <div class="form-group">
+      <%= @category.about.html_safe %>
+    </div>
+    <div class="category-main" id="page_list">
+      <%= render "categories/page_list" %>
+    </div>
+  </div>
+</div>

@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require debounce.min
 //= require bootstrap.min
 //= require turbolinks
 //= require snap.min

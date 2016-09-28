@@ -1,0 +1,7 @@
+if(!$('#edit_category').length){
+  $('body').append("<%=j render 'categories/edit_category_modal' %>");
+}
+
+$('#edit_category').modal('show');
+
+$('#edit_category_content').html("<%=j render 'categories/form', category: @category||=Category.new, remote: true %>");

@@ -1,0 +1,13 @@
+<div class="panel panel-default panel-body">
+  <div class="page-title-section">
+    <h2 class="page-title">
+      <%= link_to page.name, page %>
+    </h2>
+  </div>
+  <div>
+    <%= page.about.html_safe %>
+    <% if page.categories.present? %>
+      <%= render 'categories/page_footer', categories: page.categories %>
+    <% end %>
+  </div>
+</div>
