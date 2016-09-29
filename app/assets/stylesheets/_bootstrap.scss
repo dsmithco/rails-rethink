@@ -564,6 +564,8 @@ dl > dt > label {
 .block-contents{
   margin: auto;
   max-width: $screen-md - 60px;
+  position: relative;
+  z-index: 10px;
 }
 
 #top_blocks {
@@ -735,4 +737,31 @@ body:not(.snapjs-right) .snap-drawers{
 
 #toast-container .toast-info {
   background-color: $brand-info !important;
+}
+
+.block-main {
+  position: relative;
+  padding: 25px 20px 35px;
+}
+
+.block_bg_image {
+   background-size: cover;
+   opacity: 0.2;
+   left: 0;
+   position: absolute;
+   background-position: center center;
+   top:0;
+   bottom: 0;
+   right: 0;
+   z-index: -1;
+}
+
+.block_bg_color {
+   opacity: 1;
+   left: 0;
+   position: absolute;
+   top:0;
+   bottom: 0;
+   right: 0;
+   z-index: -1;
 }

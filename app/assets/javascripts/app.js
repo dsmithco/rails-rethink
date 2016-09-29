@@ -1,4 +1,4 @@
-// require tinymce
+//= require tinymce
 //= require jquery-fileupload/basic
 //= require jquery-ui/sortable
 //= require evol-colorpicker

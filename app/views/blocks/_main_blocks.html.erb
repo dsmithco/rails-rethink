@@ -1,6 +1,8 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
     <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type%>-type text-center">
+      <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
+      <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
       <div class="block-contents">
         <h1 class="block-title">
           <%= block.name %>
@@ -40,30 +42,6 @@
         </div>
       </div>
     </div>
-    <div id="<%= dom_id(block) %>_bg_color"></div>
-    <div id="<%= dom_id(block) %>_bg_image"></div>
-    <style media="screen">
-        #<%= dom_id(block) %>{
-            padding: 25px 20px 35px;
-         }
-        #<%= dom_id(block) %>_bg_image {
-           background-image: url('<%= block.image.large if block.image.present? %>');
-           background-size: cover;
-           opacity: 0.2;
-           left: 0;
-           position: absolute;
-           right: 0;
-           z-index: -1;
-        }
-        #<%= dom_id(block) %>_bg_color {
-           background-color: <%= block.bg_color if block.bg_color.present? %>;
-           opacity: 1;
-           left: 0;
-           position: absolute;
-           right: 0;
-           z-index: -1;
-        }
-    </style>
     <script type="text/javascript">
       document.addEventListener("turbolinks:load", function () {
 
@@ -76,23 +54,7 @@
             'color': getContrastYIQ(rgb2hex(bg_color))
           })
         }
-
-        function resizeBackgrounds(){
-          console.log('resizeBackgrounds')
-          if($('#<%= dom_id(block) %>').length>0){
-            $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
-              'height': $('#<%= dom_id(block) %>').outerHeight(),
-              'top': $('#<%= dom_id(block) %>').offset().top
-            });
-          }
-        };
-        onElementHeightChange(document.body, resizeBackgrounds);
-
-        window.addEventListener('resize', resizeBackgrounds);
-        var src;
-        $('.block-container img').ready(resizeBackgrounds).load(resizeBackgrounds).attr('src', src);
       });
-
     </script>
   <% end %>
 </div>
