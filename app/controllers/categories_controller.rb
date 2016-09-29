@@ -11,7 +11,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1.json
   def show
     params[:order] ||= 'created_at DESC'
-    @pages = @category.pages.order(params[:order]).page(params[:page])
+    @pages = @category.pages.includes(:categories).order(params[:order]).page(params[:page])
   end
 
   def search
@@ -81,9 +81,9 @@ class CategoriesController < ApplicationController
     def set_category
       if @current_website.present?
         begin
-          @category = @current_website.categories.find_by(slug: params[:id])
+          @category = @current_website.categories.includes(:pages, :categories).find_by(slug: params[:id])
           if !@category.present?
-            @category = @current_website.categories.friendly.find(params[:id])
+            @category = @current_website.categories.includes(:pages, :categories).friendly.find(params[:id])
           end
         rescue
           redirect_to '/', status: 302, notice: 'This is not the page you are looking for...move along.'

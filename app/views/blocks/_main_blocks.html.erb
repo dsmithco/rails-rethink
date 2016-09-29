@@ -78,6 +78,7 @@
         }
 
         function resizeBackgrounds(){
+          console.log('resizeBackgrounds')
           if($('#<%= dom_id(block) %>').length>0){
             $('#<%= dom_id(block) %>_bg_image, #<%= dom_id(block) %>_bg_color').css({
               'height': $('#<%= dom_id(block) %>').outerHeight(),
@@ -85,7 +86,6 @@
             });
           }
         };
-
         onElementHeightChange(document.body, resizeBackgrounds);
 
         window.addEventListener('resize', resizeBackgrounds);

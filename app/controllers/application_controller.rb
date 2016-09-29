@@ -15,10 +15,12 @@ class ApplicationController < ActionController::Base
   end
 
   def get_current_website
+    # if @current_website.present?
+    # end
     if @browser_request.domain == Rails.application.config.host_domain
       find_rethink_website
     else
-      @current_website = find_website(@browser_request.host)
+      @current_website ||= find_website(@browser_request.host)
       if @current_website.present? && @current_website.domain_url.present? && @browser_request.host != @current_website.domain_url
         redirect_to :status => 301, :host => @current_website.domain_url
       end

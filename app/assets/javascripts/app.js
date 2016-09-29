@@ -1,8 +1,9 @@
-//= require tinymce
+// require tinymce
 //= require jquery-fileupload/basic
 //= require jquery-ui/sortable
 //= require evol-colorpicker
 
+'use strict';
 
 var fixScroll = function(opts){
   var fix, top_marker, bottom_market;

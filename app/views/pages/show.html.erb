@@ -1,4 +1,4 @@
-<% cache [@page, @page.website, @page.blocks, current_user] do %>
+<% cache [@page, current_user] do %>
   <div class="page-container page-container-<%= @page.left_blocks.present? ? 'with-left' : 'without-left' %> page-container-<%= @page.right_blocks.present? ? 'with-right' : 'without-right' %>">
     <% unless @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
       <div class="page-title-section">
@@ -11,25 +11,37 @@
       <div class="page-nav-section">
         <%= render 'pages/edit_page_nav' if can? :update, @page %>
       </div>
-      <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.left_blocks), class: "page-blocks-left") if @page.left_blocks.present? %>
-
+      <% cache [@page.left_blocks] do %>
+        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.left_blocks), class: "page-blocks-left") if @page.left_blocks.present? %>
+      <% end %>
       <div class="page-main">
         <%= @page.about.html_safe %>
-        <% if @page.categories.present? %>
-          <%= render 'categories/page_footer', categories: @page.categories %>
+        <% cache [@page.categories] do %>
+          <% if @page.categories.present? %>
+            <%= render 'categories/page_footer', categories: @page.categories %>
+          <% end %>
         <% end %>
-        <%= render 'pages/summaries', pages: @page.pages %>
+        <% cache [@page.pages] do %>
+          <%= render 'pages/summaries', pages: @page.pages %>
+        <% end %>
         <br/>
       </div>
-
-      <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.right_blocks), class: 'page-blocks-right') if @page.right_blocks.present? %>
+      <% cache [@page.right_blocks] do %>
+        <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.right_blocks), class: 'page-blocks-right') if @page.right_blocks.present? %>
+      <% end %>
     </div>
   </div>
 <% end %>
 <% content_for :top_block do %>
-  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.top_blocks}".html_safe, id: 'top_blocks', class: 'top_container') if @page.top_blocks.present?%>
-  <%= render 'pages/top_image', blocks: @page.image if @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
+  <% cache [@page.top_blocks] do %>
+    <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.top_blocks}".html_safe, id: 'top_blocks', class: 'top_container') if @page.top_blocks.present?%>
+  <% end %>
+  <% cache [@page.image] do %>
+    <%= render 'pages/top_image', blocks: @page.image if @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
+  <% end %>
 <% end %>
 <% content_for :bottom_block do %>
-  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.bottom_blocks}".html_safe, id: 'bottom_blocks', class: 'bottom_container') %>
+  <% cache [@page.bottom_blocks] do %>
+    <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.bottom_blocks}".html_safe, id: 'bottom_blocks', class: 'bottom_container') %>
+  <% end %>
 <% end %>

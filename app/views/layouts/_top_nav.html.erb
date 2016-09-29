@@ -10,12 +10,14 @@
         <span class="pull-right">MENU <i class="fa fa-bars"></i></span>
       </button>
       <!-- <a href class="btn btn-info" onclick="event.preventDefault();snapper.open('right')">Open right</a> -->
-      <% if @current_website.logo.try(:asset).present?  %>
-        <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
-          <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
-        </a>
-      <% else %>
-        <a class="logo navbar-brand" href="/"><%= @current_website.name %></a>
+      <% cache [@current_website.pages] do %>
+        <% if @current_website.logo.try(:asset).present?  %>
+          <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
+            <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
+          </a>
+        <% else %>
+          <a class="logo navbar-brand" href="/"><%= @current_website.name %></a>
+        <% end %>
       <% end %>
     </div>
     <div id="navbar" class="collapse navbar-collapse navbar-right">
