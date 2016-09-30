@@ -1,19 +1,19 @@
-<% cache [@current_website, current_user] do %>
-  <% cache [@current_website.pages] do %>
+<% cache [@current_website, current_user, @page, @page.pages] do %>
+  <% cache [@current_website.pages, @page, @page.pages] do %>
     <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
       <% if page.pages.present? %>
-        <li class='dropdown'>
+        <li class='dropdown <%= "active" if page.id == @page.id || page.page_ids.include?(@page.id)%>'>
           <%= link_to "#{page.name} <span class='caret'></span>".html_safe, page_path(page), class: 'dropdown-toggle', 'data-toggle': '' %>
           <ul class="dropdown-menu">
             <% page.pages.each do |page2| %>
-              <li>
+              <li class="<%= "active" if page2.id == @page.id%>">
                 <%= link_to page2.name, page_path(page2) %>
               </li>
             <% end %>
           </ul>
         </li>
       <% else %>
-        <li>
+        <li class="<%= "active" if page.id == @page.id %>">
           <%= link_to page.name, page_path(page) %>
         </li>
       <% end %>
