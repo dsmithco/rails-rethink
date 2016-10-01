@@ -31,8 +31,51 @@
                 <label class=""><%= f.check_box :is_published %> &nbsp; Publish</label>
               </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <span>
-                <label class=""><%= f.check_box :show_in_menu %> &nbsp; Show in menu</label>
+                <label class=""><%= f.check_box :show_in_menu, class:'page_show_in_menu' %> &nbsp; Show in menu</label>
               </span>
+              <script type="text/javascript">
+                show_in_menu_change = function(){
+                  if ($('.page_show_in_menu').prop('checked') === true){
+                    $('.show_in_menu_true').show();
+                  }else{
+                    $('.show_in_menu_true').hide();
+                  }
+                }
+                $('.page_show_in_menu').change(show_in_menu_change);
+              </script>
+            </dd>
+            <% if page.pages.present? %>
+              <dd class="show_in_menu_true form-control">
+                <div class="row">
+                  <div class="col-sm-push-8 col-sm-4">
+                    This page has <%= page.pages.count %> sub pages
+                  </div>
+                </div>
+              </dd>
+            <% end %>
+            <dt class="show_in_menu_true"><%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %></dt>
+            <dd class="show_in_menu_true form-group" id="page">
+              <div class="row">
+                <div class="col-sm-8">
+                  <%= f.select :page_id, @current_website.pages.where.not(id: @page.id, show_in_menu: [false, nil]).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
+                </div>
+                <div class="col-sm-4" id="show_sub_menu">
+                  <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
+                </div>
+              </div>
+              <script type="text/javascript">
+                $('#page select').change(function(){
+                  if($(this).val() || <%= page.pages.present? %>){
+                    $('#show_sub_menu input').prop("disabled",false);
+                  }else{
+                    $('#show_sub_menu input').prop("disabled",true);
+                  }
+                }).change();
+              </script>
+            </dd>
+            <dt class="show_in_menu_true"><%= f.label :position %></dt>
+            <dd class="show_in_menu_true form-group" id="position">
+              <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
             </dd>
             <dt><%= f.label :name %></dt>
             <dd class="form-group" id="name"><%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%></dd>
@@ -40,6 +83,8 @@
               $('#name input').keyup(function(){
                 $('h1.page-title').text($(this).val());
               });
+              show_in_menu_change();
+
             </script>
 
             <dt><%= f.label :about, 'Body' %></dt>
@@ -57,37 +102,6 @@
             <dd class="form-group" id="images_zone">
               <%= render 'pages/edit_page_images' %>
             </dd>
-            <dt><%= f.label :position %></dt>
-            <dd class="form-group" id="position"><%= f.text_field :position, class: 'form-control' %></dd>
-            <% if page.pages.present? %>
-              <dd class="form-control">
-                <div class="row">
-                  <div class="col-sm-push-8 col-sm-4">
-                    This page has <%= page.pages.count %> sub pages
-                  </div>
-                </div>
-              </dd>
-            <% end %>
-            <dt><%= f.label :page_id, "Parent page <span class='text-muted'>(optional)</span>".html_safe %></dt>
-            <dd class="form-group" id="page">
-              <div class="row">
-                <div class="col-sm-8">
-                  <%= f.select :page_id, @current_website.pages.where.not(id: @page.id).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
-                </div>
-                <div class="col-sm-4" id="show_sub_menu">
-                  <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
-                </div>
-              </div>
-            </dd>
-            <script type="text/javascript">
-              $('#page select').change(function(){
-                if($(this).val() || <%= page.pages.present? %>){
-                  $('#show_sub_menu input').prop("disabled",false);
-                }else{
-                  $('#show_sub_menu input').prop("disabled",true);
-                }
-              }).change();
-            </script>
             <dt>
               <span><label>Categories</label></span>
             </dt>
