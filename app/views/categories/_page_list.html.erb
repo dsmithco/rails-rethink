@@ -1,7 +1,4 @@
 <% cache [@category, @pages, current_user] do %>
-  <div class="well well-sm">
-    Viewing <%= @pages.count %> <%= @category.name %> Pages
-  </div>
   <div class="text-left">
     <% @pages.each do |page| %>
       <%= render 'categories/page_view', page: page %>
