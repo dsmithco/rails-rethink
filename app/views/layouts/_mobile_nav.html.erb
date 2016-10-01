@@ -9,18 +9,18 @@
         <% @current_website.pages.where(page_id: [nil,'']).each do |page| %>
           <% if page.pages.present? %>
             <li class="<%= 'active' if page == @page %>">
-              <%= link_to "#{page.name}".html_safe, page_path(page) %>
+              <%= link_to "#{page.name}".html_safe, page_path(page, 'redirect') %>
               <ul style="padding-left: 20px;" class="nav nav-pills nav-stacked">
                 <% page.pages.each do |page2| %>
                   <li class="<%= 'active' if page2 == @page %>">
-                    <%= link_to page2.name, page_path(page2) %>
+                    <%= link_to page2.name, page_path(page2, 'redirect') %>
                   </li>
                 <% end %>
               </ul>
             </li>
           <% else %>
             <li class="<%= 'active' if page == @page %>">
-              <%= link_to page.name, page_path(page) %>
+              <%= link_to page.name, page_path(page, 'redirect') %>
             </li>
           <% end %>
         <% end %>

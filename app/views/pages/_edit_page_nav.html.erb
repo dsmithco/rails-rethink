@@ -1,6 +1,6 @@
 <% if can? :update, @page %>
   <ul class="nav nav-tabs">
-    <li class="<%= action_name == 'show' ? 'active':''%>"><%= link_to '<i class="fa fa-eye"></i> View'.html_safe, page_path(@page) %></li>
+    <li class="<%= action_name == 'show' ? 'active':''%>"><%= link_to '<i class="fa fa-eye"></i> View'.html_safe, page_path(@page, 'redirect') %></li>
     <li class="<%= action_name == 'edit' ? 'active':''%>">
       <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page) %>
     </li>

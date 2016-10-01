@@ -138,7 +138,7 @@
                 </dt>
                 <dd class="form-group btn-group">
                   <%= f.submit 'Save Website', class: 'btn btn-success' %>
-                  <%= link_to 'Cancel', @website, class: "btn btn-default" %>
+                  <%= link_to 'Cancel', params[:redirect_to] || @website, class: "btn btn-default" %>
                 </dd>
               </dl>
             </fieldset>

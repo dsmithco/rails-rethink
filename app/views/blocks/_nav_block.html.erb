@@ -1,10 +1,10 @@
 <div class="list-group navigation hidden-xs">
-    <%= link_to @page.page.name, page_path(@page.page), class: "list-group-item" if @page.page.present? %>
-    <%= link_to @page.name, page_path(@page), class: "list-group-item active" if @page.pages.present? %>
+    <%= link_to @page.page.name, page_path(@page.page, 'redirect'), class: "list-group-item" if @page.page.present? %>
+    <%= link_to @page.name, page_path(@page, 'redirect'), class: "list-group-item active" if @page.pages.present? %>
   <% @page.try(:page).try(:pages).try(:each) do |page|%>
-    <%= link_to page.name, page_path(page), class: "list-group-item #{'active' if @page.id == page.id}" %>
+    <%= link_to page.name, page_path(page, 'redirect'), class: "list-group-item #{'active' if @page.id == page.id}" %>
   <% end %>
   <% @page.try(:pages).try(:each) do |page|%>
-    <%= link_to page.name, page_path(page), class: "list-group-item #{'active' if @page.id == page.id}" %>
+    <%= link_to page.name, page_path(page, 'redirect'), class: "list-group-item #{'active' if @page.id == page.id}" %>
   <% end %>
 </div>
