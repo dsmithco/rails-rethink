@@ -8,10 +8,10 @@
     </h2>
   </div>
   <%= '<hr/>'.html_safe %>
-  <div class="hide">
+  <div class="category-page-about">
     <%= page.about.html_safe %>
     <% if page.categories.present? %>
-      <%= render 'categories/page_footer', categories: page.categories %>
+      <%# render 'categories/page_footer', categories: page.categories %>
     <% end %>
   </div>
 </div>
