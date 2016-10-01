@@ -13,7 +13,7 @@ class Page < ApplicationRecord
   has_many :blocks, through: :page_blocks
   has_one :image, as: :attachable, dependent: :destroy
   has_many :pages
-  has_many :page_categories
+  has_many :page_categories, dependent: :destroy 
   has_many :categories, through: :page_categories
   validates :website, presence: true
 

@@ -17,6 +17,9 @@
 .panel-body {
   padding: $panel-body-padding;
   @include clearfix;
+  &.panel-wide {
+    padding: 13px 25px !important;
+  }
 }
 
 // Optional heading

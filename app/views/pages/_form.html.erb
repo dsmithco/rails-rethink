@@ -26,17 +26,14 @@
             <% end %>
           <dl class="dl-horizontal" >
             <dt></dt>
-            <dd class="form-group" id="is_published"><label class="btn btn-default"><%= f.check_box :is_published %> &nbsp; Publish</label></dd>
-            <script type="text/javascript">
-              $('#is_published input').change(function(){
-                if(this.checked){
-                  $('#is_published label').removeClass('btn-danger');
-                  $('#is_published label').addClass('btn-success');
-                }else{
-                  $('#is_published label').addClass('btn-danger');
-                  $('#is_published label').removeClass('btn-success');                }
-              }).change();
-            </script>
+            <dd class="form-group">
+              <span id="is_published">
+                <label class=""><%= f.check_box :is_published %> &nbsp; Publish</label>
+              </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <span>
+                <label class=""><%= f.check_box :hide_in_menu %> &nbsp; Hide in menu</label>
+              </span>
+            </dd>
             <dt><%= f.label :name %></dt>
             <dd class="form-group" id="name"><%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%></dd>
             <script type="text/javascript">
@@ -63,7 +60,7 @@
             <dt><%= f.label :position %></dt>
             <dd class="form-group" id="position"><%= f.text_field :position, class: 'form-control' %></dd>
             <% if page.pages.present? %>
-              <dd class="">
+              <dd class="form-control">
                 <div class="row">
                   <div class="col-sm-push-8 col-sm-4">
                     This page has <%= page.pages.count %> sub pages
@@ -91,18 +88,24 @@
                 }
               }).change();
             </script>
-            <dt class="dt-label">
-              Categories
+            <dt>
+              <span><label>Categories</label></span>
             </dt>
-            <dd>
+            <dd class="form-group">
               <% @current_website.categories.each do |category| %>
                 <label>
                   <input type="checkbox"
                          name="page[category_ids][]"
                          value="<%= category.id %>"
                          <%= @page.category_ids.include?(category.id) ? 'checked' : '' %> > <%= category.name %>
-                </label>
+                </label> &nbsp;&nbsp;&nbsp;&nbsp;
               <% end %>
+            </dd>
+            <dt>
+              <label>Page redirect</label>
+            </dt>
+            <dd>
+              <%= f.text_field :redirectable_url, class: 'form-control' %>
             </dd>
           </dl>
           <hr/>

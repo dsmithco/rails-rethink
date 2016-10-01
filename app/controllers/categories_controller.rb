@@ -11,13 +11,13 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    params[:order] ||= 'created_at DESC'
-    @pages = @category.pages.includes(:categories).order(params[:order]).page(params[:page])
+    order = params[:order].present? ? params[:order] : 'pages.created_at DESC'
+    @pages = @category.pages.includes(:categories).page(params[:page]).reorder(order)
   end
 
   def search
-    params[:order] ||= 'created_at DESC'
-    @pages = @category.pages.where('lower(name) LIKE :term OR lower(about) LIKE :term', term: "%#{params[:term].downcase}%").order(params[:order]).page(params[:page])
+    order = params[:order].present? ? params[:order] : 'pages.created_at DESC'
+    @pages = @category.pages.where('lower(name) LIKE :term OR lower(about) LIKE :term', term: "%#{params[:term].downcase.strip}%").page(params[:page]).reorder(order)
 
   end
 

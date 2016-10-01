@@ -9,10 +9,11 @@ class Block < ApplicationRecord
   has_one :image, as: :attachable
   has_many :blocks
   belongs_to :block
+  belongs_to :category
 
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation']
-  BLOCK_TYPES = ['custom', 'container', 'sub_block']
+  BLOCK_TYPES = ['category_list', 'container', 'custom', 'sub_block']
   CONTENT_REGIONS = ['top', 'bottom']
   SIDE_REGIONS = ['left', 'right']
   REGIONS = CONTENT_REGIONS + SIDE_REGIONS

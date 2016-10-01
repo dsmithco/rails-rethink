@@ -16,7 +16,11 @@ class PagesController < ApplicationController
   # GET /pages/1
   # GET /pages/1.json
   def show
-    render layout: "themes/#{@current_website.theme}/layout"
+    if @page.redirectable_url.present?
+      redirect_to @page.redirectable_url
+    else
+      render layout: "themes/#{@current_website.theme}/layout"
+    end
   end
 
   def edit_block
@@ -42,13 +46,19 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
+    session[:return_to] = params[:return_to] if params[:return_to].present?
+
     @page = Page.new
     @page.website = @current_website if @current_website.present?
+    @page.category_ids = params[:category_ids] if params[:category_ids].present?
+    @page.is_published = true
     render layout: "themes/#{@current_website.theme}/layout"
   end
 
   # GET /pages/1/edit
   def edit
+    session[:return_to] = params[:return_to] if params[:return_to].present?
+
     render layout: "themes/#{@current_website.theme}/layout"
   end
 
@@ -60,7 +70,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to @page, notice: 'Page was successfully created.' }
+        format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully created.' }
         format.json { render :show, status: :created, location: @page }
       else
         format.html { render :new }
@@ -75,7 +85,7 @@ class PagesController < ApplicationController
     @page.slug = nil
     respond_to do |format|
       if @page.update(page_params)
-        format.html { redirect_to @page, notice: 'Page was successfully updated.' }
+        format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully updated.' }
         format.json { render :show, status: :ok, location: @page }
       else
         format.html { render :edit }
@@ -99,7 +109,7 @@ class PagesController < ApplicationController
   def destroy
     @page.destroy
     respond_to do |format|
-      format.html { redirect_to pages_url, notice: 'Page was successfully destroyed.' }
+      format.html { redirect_to session.delete(:return_to) || '/', notice: 'Page was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -124,7 +134,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:name, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, {:category_ids=>[]})
+      params.require(:page).permit(:name, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :hide_in_menu, {:category_ids=>[]})
     end
 
     def image_params

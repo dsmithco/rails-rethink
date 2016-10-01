@@ -78,6 +78,14 @@
           <%= f.select :block_id, block.parent_block_options.collect {|x| [x.name.present? ? "#{x.name} (#{x.blocks.count})" : "Block id: #{x.id} (#{x.blocks.count})", x.id]}, {:include_blank => "-- Select a Container --"}, :class => 'form-control' %>
         </dd>
       </dl>
+      <dl class="dl-horizontal form-group" id="category">
+        <dt class="dt-label">
+          Category
+        </dt>
+        <dd>
+          <%= f.select :category_id, @current_website.categories.collect {|x| [x.name.present? ? "#{x.name} (#{x.pages.try(:count)})" : "Block id: #{x.id} (#{x.pages.try(:count)})", x.id]}, {:include_blank => "-- Select a Category --"}, :class => 'form-control' %>
+        </dd>
+      </dl>
       <dl class="dl-horizontal form-group" id="columns">
         <dt class="dt-label">
           Max Columns
@@ -109,23 +117,27 @@
       var location_value = '<%= block.location %>';
 
       function set_options(){
-        if($('#block_type select').val() != 'sub_block'){
-          $('#block').hide();
+        $('#block').hide();
+        $('#columns').hide();
+        $('#location').hide();
+        $('#category').hide();
+
+        if(['container','custom','category_list'].indexOf($('#block_type select').val()) > -1){
           $('#location').show();
           $('#location select').empty();
           default_options.forEach(function(option){
             $('#location select').append("<option>" + option + "</option>");
           });
-          if($('#block_type select').val() == 'container'){
-            $('#columns').show();
-          }else{
-            $('#columns').hide();
-          }
-        }else{
-          $('#columns').hide();
+        }
+        if($('#block_type select').val() == 'sub_block'){
           $('#block').show();
-          $('#location').hide();
         };
+        if($('#block_type select').val() == 'container'){
+          $('#columns').show();
+        }
+        if($('#block_type select').val() == 'category_list'){
+          $('#category').show();
+        }
         $('#location select').val(location_value).change();
       }
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927190832) do
+ActiveRecord::Schema.define(version: 20161001145634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 20160927190832) do
     t.integer  "website_id"
     t.string   "block_type"
     t.string   "location"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "position"
     t.boolean  "front_page"
     t.integer  "block_id"
@@ -69,8 +69,10 @@ ActiveRecord::Schema.define(version: 20160927190832) do
     t.string   "link_text"
     t.string   "bg_color"
     t.string   "text_align"
-    t.integer  "columns",    default: 3
+    t.integer  "columns",     default: 3
+    t.integer  "category_id"
     t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
+    t.index ["category_id"], name: "index_blocks_on_category_id", using: :btree
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end
 
@@ -124,14 +126,19 @@ ActiveRecord::Schema.define(version: 20160927190832) do
     t.text     "about"
     t.integer  "website_id"
     t.integer  "page_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "slug"
     t.integer  "position"
-    t.boolean  "is_published",  default: false
-    t.boolean  "show_sub_menu", default: true
+    t.boolean  "is_published",      default: false
+    t.boolean  "show_sub_menu",     default: true
+    t.boolean  "hide_in_menu",      default: false
+    t.integer  "redirectable_id"
+    t.string   "redirectable_type"
+    t.string   "redirectable_url"
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
+    t.index ["redirectable_id", "redirectable_type"], name: "index_pages_on_redir_id_and_redir_type", using: :btree
     t.index ["slug"], name: "index_pages_on_slug", using: :btree
     t.index ["website_id"], name: "index_pages_on_website_id", using: :btree
   end
@@ -184,6 +191,7 @@ ActiveRecord::Schema.define(version: 20160927190832) do
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
   add_foreign_key "blocks", "blocks"
+  add_foreign_key "blocks", "categories"
   add_foreign_key "blocks", "websites"
   add_foreign_key "categories", "categories"
   add_foreign_key "categories", "websites"
