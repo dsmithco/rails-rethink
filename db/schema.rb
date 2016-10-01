@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001145634) do
+ActiveRecord::Schema.define(version: 20161001212406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20161001145634) do
     t.integer  "position"
     t.boolean  "is_published",      default: false
     t.boolean  "show_sub_menu",     default: true
-    t.boolean  "hide_in_menu",      default: false
+    t.boolean  "show_in_menu",      default: false
     t.integer  "redirectable_id"
     t.string   "redirectable_type"
     t.string   "redirectable_url"

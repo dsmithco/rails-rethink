@@ -134,7 +134,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:name, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :hide_in_menu, {:category_ids=>[]})
+      params.require(:page).permit(:name, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :show_in_menu, {:category_ids=>[]})
     end
 
     def image_params
