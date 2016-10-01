@@ -399,6 +399,7 @@ dl > dt > label {
   position: absolute;
   right: 10px;
   transition: .2s;
+  z-index: 11;
 }
 
 .dt-label {
