@@ -3,7 +3,7 @@
     <h2 class="page-title">
       <%= link_to page.name, page %>
       <div class="btn-group pull-right">
-        <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), style: 'margin-top: -15px;', class: 'inverse btn-circle btn btn-sm btn-primary' if can? :edit, page %>
+        <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), style: 'margin-top: -15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, page %>
       </div>
     </h2>
   </div>
