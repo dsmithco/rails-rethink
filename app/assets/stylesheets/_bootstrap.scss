@@ -754,7 +754,7 @@ body:not(.snapjs-right) .snap-drawers{
 }
 
 #body {
-  transition: background-color 0s !important;
+  transition: background-color 0s, transform .3s !important;
 }
 
 #toast-container .toast-success {
