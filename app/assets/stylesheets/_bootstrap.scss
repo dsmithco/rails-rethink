@@ -525,6 +525,14 @@ dl > dt > label {
   }
 }
 
+.category-page-list {
+  background-color: rgba(255,255,255,.06);
+  padding: 15px 25px;
+  margin-bottom: 20px;
+  border-radius: $border-radius-base;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+}
+
 .category-page-list h2.page-title {
   font-size: 2.2em;
   font-weight: normal;
