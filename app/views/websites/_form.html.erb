@@ -27,7 +27,7 @@
                 <dd class="form-group" id="about">
                   <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
                   <script type="text/javascript">
-                    timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
+                    // timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
                     fixScroll({'fix': '.mce-toolbar-grp','top_marker': '#about','bottom_market': '#about_bottom'});
                   </script>
                   <div id="about_bottom">

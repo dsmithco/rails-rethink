@@ -45,7 +45,7 @@
               </script>
             </dd>
             <% if page.pages.present? %>
-              <dd class="show_in_menu_true form-control">
+              <dd class="show_in_menu_true form-group">
                 <div class="row">
                   <div class="col-sm-push-8 col-sm-4">
                     This page has <%= page.pages.count %> sub pages
@@ -73,7 +73,9 @@
                 }).change();
               </script>
             </dd>
-            <dt class="show_in_menu_true"><%= f.label :position %></dt>
+            <dt class="show_in_menu_true">
+              <%= f.label :position %>
+            </dt>
             <dd class="show_in_menu_true form-group" id="position">
               <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
             </dd>
@@ -89,10 +91,10 @@
 
             <dt><%= f.label :about, 'Body' %></dt>
             <dd class="" id="about">
-              <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
+              <%= f.text_area :about, class: 'summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
               <script type="text/javascript">
-                timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
-                fixScroll({'fix': '.mce-toolbar-grp','top_marker': '#about','bottom_market': '#about_bottom'});
+                // timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
+                fixScroll({'fix': '.note-toolbar','top_marker': '#about','bottom_market': '#about_bottom'});
               </script>
               <div id="about_bottom">
               </div>

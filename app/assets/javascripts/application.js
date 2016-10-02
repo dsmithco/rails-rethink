@@ -22,20 +22,6 @@
 
 'use strict';
 
-// var tinymce_modal_fix = function(){
-//   $(document).on('focusin', function(e) {
-//     if ($(e.target).closest(".mce-window").length) {
-//         e.stopImmediatePropagation();
-//     }
-//   });
-// }
-
-var document_load = function(){
-  document.addEventListener("turbolinks:load", function () {
-    // tinymce_modal_fix();
-  });
-}();
-
 var turbolinks_go = function(url, no_scroll){
   var scroll;
   if(no_scroll){

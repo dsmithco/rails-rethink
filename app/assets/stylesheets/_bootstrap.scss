@@ -411,6 +411,24 @@ dl > dt > label {
 }
 // Page Styles
 
+.note-toolbar {
+  z-index: 10;
+}
+
+.note-editor .modal-dialog {
+  z-index: 9999 !important;
+}
+
+.note-editor.note-frame{
+  border: 0px solid #a9a9a9 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+.note-editor.note-frame .note-editable.panel-body{
+  background-color: transparent !important;
+}
+
 .page-top-image-section {
   background-color: #000;
   position: relative;
@@ -729,7 +747,7 @@ body:not(.snapjs-right) .snap-drawers{
 
 #body {
   background-color: #fafafa;
-  z-index: 10;
+  // z-index: 10;
   padding-bottom: 70px;
   position: relative;
   box-shadow: 0px 0px 20px rgba(0,0,0,.2);
