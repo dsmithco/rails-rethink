@@ -745,9 +745,9 @@ body:not(.snapjs-right) .snap-drawers{
   left: 0;
 }
 
-#body {
+.snapjs-right #body {
   background-color: #fafafa;
-  // z-index: 10;
+  z-index: 10;
   padding-bottom: 70px;
   position: relative;
   box-shadow: 0px 0px 20px rgba(0,0,0,.2);
