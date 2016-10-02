@@ -748,15 +748,14 @@ body:not(.snapjs-right) .snap-drawers{
 .snapjs-right #body {
   background-color: #fafafa;
   z-index: 10;
-  transition: 0s;
   padding-bottom: 70px;
   position: relative;
   box-shadow: 0px 0px 20px rgba(0,0,0,.2);
 }
 
-// .snapjs-right #body {
-//   min-height: 2000px;
-// }
+#body {
+  transition: 0s !important;
+}
 
 #toast-container .toast-success {
   background-color: $brand-success !important;
