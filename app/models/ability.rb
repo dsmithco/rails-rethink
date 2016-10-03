@@ -26,13 +26,13 @@ class Ability
       can? :edit, h.attachable
     end
 
-    can [:index, :manage, :create], [Category, Block, Page] do |item|
-      can? :edit, Website.find(item.website_id)
+    can [:manage], [Category, Block, Page] do |item|
+      can? :edit, item.website
     end
 
-    can [:new], [Category, Block, Page] do |item|
-      user.account_ids.present?
-    end
+    # can [:new], [Category, Block, Page] do |item|
+    #   user.account_ids.present?
+    # end
 
     can [:index, :manage], User do |u|
       common_account_ids = user.account_ids & u.account_ids
