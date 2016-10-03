@@ -30,8 +30,8 @@ class Ability
       can? :edit, item.website
     end
 
-    can [:new,:create], [Category, Block] do |item|
-      user.account_ids.present?
+    can [:new,:create], [Category, Block, Page] do |item|
+      can? :edit, item.website
     end
 
     can [:index, :manage], User do |u|
