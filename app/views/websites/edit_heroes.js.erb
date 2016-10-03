@@ -1,6 +1,5 @@
-$('#hero_uploader').fileupload('destroy');
-
 if(!$('#edit_heroes').length){
+  $('#hero_uploader').fileupload('destroy');
   $('body').append("<%=j render 'websites/edit_heroes_modal' %>");
   $('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website, remote: true %>");
 }
