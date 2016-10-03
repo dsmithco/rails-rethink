@@ -15,11 +15,11 @@ class Ability
     end
 
     can [:index, :manage], Website do |website|
-      user.account_users.where(account_id: website.id, role: ['Owner','Admin']).present?
+      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
     can [:index, :edit], Website do |website|
-      user.account_users.where(account_id: website.id).present?
+      user.account_users.where(account_id: website.account_id).present?
     end
 
     can [:manage], [Attachment, Image, HeroImage, Logo, Icon] do |h|
