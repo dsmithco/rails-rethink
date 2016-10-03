@@ -23,7 +23,7 @@ class Ability
     end
 
     can [:manage], [Attachment, Image, HeroImage, Logo, Icon] do |h|
-      can? :edit, h.attachable
+      can? :edit, h.attachable_type.constantize.find(h.attachable_id)
     end
 
     can [:create,:manage], [Category, Block, Page] do |item|
