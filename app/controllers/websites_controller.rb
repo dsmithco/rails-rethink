@@ -1,5 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes, :random_hero]
+  load_and_authorize_resource
 
   # GET /websites
   # GET /websites.json
