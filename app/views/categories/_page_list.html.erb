@@ -2,15 +2,16 @@
   <div class="form-group category-page-count well well-sm">
     Viewing <%= @pages.count %> <%= @category.name %> Pages
   </div>
-  <% cache [@category, @pages, current_user] do %>
-    <div class="text-left">
-      <% @pages.each do |page| %>
-        <%= render 'categories/page_view', page: page %>
-      <% end %>
-    </div>
-  <% end %>
+<% end %>
 
-  <div class="text-center">
-    <%= will_paginate @pages, renderer: BootstrapPagination::Rails if @pages.try(:total_pages).present?%>
+<% cache [@category, @pages, current_user] do %>
+  <div class="text-left">
+    <% @pages.each do |page| %>
+      <%= render 'categories/page_view', page: page %>
+    <% end %>
   </div>
 <% end %>
+
+<div class="text-center">
+  <%= will_paginate @pages, renderer: BootstrapPagination::Rails if @pages.try(:total_pages).present?%>
+</div>
