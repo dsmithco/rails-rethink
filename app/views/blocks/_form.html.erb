@@ -299,6 +299,7 @@
 </div>
 <div class="modal-footer">
   <div class="text-center">
+    <%= f.hidden_field :website_id, value: block.website_id || @current_website.id %>
     <%= f.submit 'Save & Close', class: 'btn btn-success' %>
     <button type="submit" name="block[continue_edit]" value='true' class="btn btn-success">
       Save & Continue

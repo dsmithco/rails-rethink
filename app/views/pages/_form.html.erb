@@ -128,10 +128,10 @@
           <dl class="dl-horizontal">
             <dt></dt>
             <dd class="form-group">
+              <%= f.hidden_field :website_id, value: @page.website_id || @current_website.id %>
+
               <button type="submit" class="btn btn-success">
-
                   Save
-
               </button>
 
               <%= link_to 'Cancel', params[:return_to] || @page || @current_website, class: "btn btn-default" %>

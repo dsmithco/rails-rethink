@@ -31,6 +31,7 @@
       Parent Category
     </dt>
     <dd class="form-group">
+      <%= f.hidden_field :website_id, value: category.website_id || @current_website.id %>
       <%= f.text_field :category_id, class: "form-control" %>
     </dd>
     <dd>
