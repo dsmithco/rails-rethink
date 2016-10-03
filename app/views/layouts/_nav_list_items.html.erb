@@ -20,7 +20,7 @@
 <% end %>
 <% if user_signed_in? %>
   <li>
-      <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) %>
+      <%= link_to "<i class='glyphicon glyphicon-plus'></i>".html_safe, new_website_page_path(@current_website) if can? :edit, @current_website %>
   </li>
   <li>
     <button class="btn btn-primary dropdown-toggle navbar-btn" type="button" data-toggle="dropdown"><%= current_user.name %>
@@ -30,7 +30,7 @@
         <%= link_to "<i class='glyphicon glyphicon-user fa-fw'></i> Account".html_safe, user_path(current_user) %>
       </li>
       <li>
-        <%= link_to "<i class='fa fa-pencil fa-fw'></i> Edit #{@current_website.name}".html_safe, edit_website_path(@current_website) %>
+        <%= link_to "<i class='fa fa-pencil fa-fw'></i> Edit #{@current_website.name}".html_safe, edit_website_path(@current_website) if can? :edit, @current_website %>
       </li>
       <li class="divider"></li>
       <li>
