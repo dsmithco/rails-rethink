@@ -26,7 +26,7 @@ class Ability
       can? :edit, h.attachable
     end
 
-    can [:manage], [Category, Block, Page] do |item|
+    can [:new,:create,:manage], [Category, Block, Page] do |item|
       can? :edit, item.website
     end
 
