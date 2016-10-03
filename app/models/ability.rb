@@ -26,12 +26,12 @@ class Ability
       can? :edit, h.attachable
     end
 
-    can [:index, :manage], [Category, Block, Page] do |item|
+    can [:index, :manage, :create], [Category, Block, Page] do |item|
       can? :edit, item.website
     end
 
-    can [:new,:create], [Category, Block, Page] do |item|
-      can? :edit, item.website
+    can [:new], [Category, Block, Page] do |item|
+      user.account_ids.present?
     end
 
     can [:index, :manage], User do |u|
