@@ -1,51 +1,54 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type %>-type text-<%= block.text_align %>">
-      <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
-      <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
-      <div class="block-contents">
-        <h1 class="block-title">
-          <%= block.name unless block.block_type == 'category_list' %>
-          <% if block.block_type == 'category_list'%>
-            <%= link_to block.name, category_path(block.category) %>
+    <% cache [block, block.blocks] do %>
+      <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type %>-type text-<%= block.text_align %>">
+        <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
+        <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+        <div class="block-contents">
+          <h1 class="block-title">
+            <%= block.name unless block.block_type == 'category_list' %>
+            <% if block.block_type == 'category_list'%>
+              <%= link_to block.name, category_path(block.category) %>
 
-            <div class="btn-group">
-              <%# link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(block.category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, block.category %>
-              <%= link_to "<i class='fa fa-plus'></i> Add #{block.category.name}".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-success' if can? :edit, block.category %>
+              <div class="btn-group">
+                <%# link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(block.category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, block.category %>
+                <%= link_to "<i class='fa fa-plus'></i> Add #{block.category.name}".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-success' if can? :edit, block.category %>
+              </div>
+            <% end %>
+            <% if can? :update, block %>
+              <div class="btn-group pull-right block-edit-btns">
+                <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
+                <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id:block.id, website_id: @current_website.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-success btn-sm' if (can? :update, block) && block.block_type == 'container'  %>
+                <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
+              </div>
+            <% end %>
+          </h1>
+          <div class="row">
+            <div class="col-sm-12">
+              <p class="text-center">
+                <%= block.about.html_safe if block.about.present? %>
+              </p>
+              <%= render 'blocks/sub_blocks', block: block if block.block_type == 'container' %>
+              <%= render 'blocks/category_list', '@category': block.category if block.block_type == 'category_list' %>
             </div>
-          <% end %>
-          <% if can? :update, block %>
-            <div class="btn-group pull-right block-edit-btns">
-              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
-              <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id:block.id, website_id: @current_website.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-success btn-sm' if (can? :update, block) && block.block_type == 'container'  %>
-              <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
-            </div>
-          <% end %>
-        </h1>
-        <div class="row">
-          <div class="col-sm-12">
-            <p class="text-center">
-              <%= block.about.html_safe if block.about.present? %>
-            </p>
-            <%= render 'blocks/sub_blocks', block: block if block.block_type == 'container' %>
-            <%= render 'blocks/category_list', '@category': block.category if block.block_type == 'category_list' %>
           </div>
         </div>
       </div>
-    </div>
-    <script type="text/javascript">
-      document.addEventListener("turbolinks:load", function () {
+      <script type="text/javascript">
+        document.addEventListener("turbolinks:load", function () {
 
-        var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
-        if(bg_color != "rgba(0, 0, 0, 0)"){
-          $('#<%= dom_id(block) %> h1.block-title, #<%= dom_id(block) %> .block-contents').css({
-            'color': getContrastYIQ(rgb2hex(bg_color))
-          })
-          $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
-            'color': getContrastYIQ(rgb2hex(bg_color))
-          })
-        }
-      });
-    </script>
+          var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
+          if(bg_color != "rgba(0, 0, 0, 0)"){
+            $('#<%= dom_id(block) %> h1.block-title, #<%= dom_id(block) %> .block-contents').css({
+              'color': getContrastYIQ(rgb2hex(bg_color))
+            })
+            $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
+              'color': getContrastYIQ(rgb2hex(bg_color))
+            })
+          }
+        });
+      </script>
+    <% end %>
+
   <% end %>
 </div>

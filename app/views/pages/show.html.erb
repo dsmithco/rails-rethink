@@ -41,7 +41,5 @@
   <% end %>
 <% end %>
 <% content_for :bottom_block do %>
-  <% cache [@page.bottom_blocks] do %>
-    <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.bottom_blocks}".html_safe, id: 'bottom_blocks', class: 'bottom_container') %>
-  <% end %>
+  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.bottom_blocks}".html_safe, id: 'bottom_blocks', class: 'bottom_container') %>
 <% end %>
