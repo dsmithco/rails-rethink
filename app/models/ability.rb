@@ -27,7 +27,7 @@ class Ability
     end
 
     can [:index, :manage, :create], [Category, Block, Page] do |item|
-      can? :edit, item.website
+      can? :edit, Website.find(item.website_id)
     end
 
     can [:new], [Category, Block, Page] do |item|
