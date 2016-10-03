@@ -26,9 +26,6 @@
     <div class="form-group">
       <%= @category.about.html_safe %>
     </div>
-    <div class="form-group category-page-count well well-sm">
-      Viewing <%= @pages.count %> <%= @category.name %> Pages
-    </div>
     <div class="category-main" id="page_list">
       <%= render "categories/page_list" %>
     </div>
