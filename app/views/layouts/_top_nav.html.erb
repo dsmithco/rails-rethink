@@ -27,7 +27,7 @@
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-<% if (can? :update, @current_website) && action_name == 'home' %>
+<% if (can? :edit, @current_website) && action_name == 'home' %>
   <div class="edit_link">
     <div class="btn-group-vertical">
       <%= link_to '<i class="fa-fw fa fa-pencil"></i> Edit site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
