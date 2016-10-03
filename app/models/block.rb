@@ -1,5 +1,6 @@
 class Block < ApplicationRecord
-  belongs_to :website, optional: true
+  belongs_to :website #, optional: true
+  delegate :account, to: :website
   acts_as_list scope: [:website_id, :location, :block_id]
 
   default_scope { order('blocks.position ASC') }

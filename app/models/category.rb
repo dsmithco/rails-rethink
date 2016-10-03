@@ -4,6 +4,7 @@ class Category < ApplicationRecord
 
   belongs_to :category
   belongs_to :website
+  delegate :account, to: :website
   has_many :blocks
   has_many :categories
   has_many :page_categories

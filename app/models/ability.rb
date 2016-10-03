@@ -6,9 +6,9 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
 
-    can [:manage], :all do |item|
-      user.email=='dsmithco@gmail.com'
-    end
+    # can [:manage], :all do |item|
+    #   user.email=='dsmithco@gmail.com'
+    # end
 
     can [:read], :all do |item|
       true
@@ -30,7 +30,7 @@ class Ability
       can? :edit, item.website
     end
 
-    can [:new], [Category, Block] do |item|
+    can [:new,:create], [Category, Block] do |item|
       user.account_ids.present?
     end
 
