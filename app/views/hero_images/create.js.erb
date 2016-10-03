@@ -1,2 +1,3 @@
 // turbolinks_go(location.toString(), 'no_scroll');
-$('#edit_heroes_list').replaceWith("<%=j render 'websites/edit_heroes', '@website': @current_website %>");
+$('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website %>");
+$('#hero_image').html("<%=j render 'layouts/hero_image', '@current_website': @current_website %>")

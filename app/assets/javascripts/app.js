@@ -212,6 +212,46 @@ var set_summernote = function(){
 //   });
 // }
 
+var file_upload_load = function(element, attachable_id, attachable_type){
+  /*jslint unparam: true */
+  /*global window, $ */
+  // Change this to the location of your server-side upload handler:
+  $(element).fileupload({
+    dataType: 'script',
+    url: '/hero_images',
+    type: 'POST',
+    multipart: true,
+    formData: {"hero_image[attachable_id]": attachable_id, "hero_image[attachable_type]": attachable_type},
+    add: function(e, data) {
+      var file, types;
+      types = /(\.|\/)(gif|jpe?g|png)$/i;
+      file = data.files[0];
+      if (types.test(file.type) || types.test(file.name)) {
+        data.context = $('<div>' + file.name + '</div>');
+        $('#files').append(data.context);
+        return data.submit();
+      } else {
+        return alert(file.name + " is not a gif, jpeg, or png image file");
+      }
+    },
+    progress: function(e, data) {
+      var progress;
+      if (data.context) {
+        progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.progress').removeClass('hide');
+        return $('.progress-bar').css('width', progress + '%');
+        console.log(progress)
+      }
+    },
+    done: function(e, data){
+      if (data.context) {
+        console.log('done')
+        return data.context.remove();
+      }
+    }
+  });
+}
+
 document.addEventListener("turbolinks:load", function () {
   set_summernote();
 });

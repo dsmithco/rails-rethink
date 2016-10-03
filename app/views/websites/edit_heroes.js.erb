@@ -1,5 +1,8 @@
+$('#hero_uploader').fileupload('destroy');
+
 if(!$('#edit_heroes').length){
   $('body').append("<%=j render 'websites/edit_heroes_modal' %>");
+  $('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website, remote: true %>");
 }
+file_upload_load('#hero_uploader', <%=@current_website.id%>, 'Website');
 $('#edit_heroes').modal({backdrop: 'static', keyboard: false});
-$('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website, remote: true %>");

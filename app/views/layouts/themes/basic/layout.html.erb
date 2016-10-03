@@ -9,17 +9,23 @@
 
   <body class="<%= controller_name %> <%= action_name %> has-<%= @current_website.style['nav-fixed'].present? ? 'fixed' : 'static' %>-navbar">
     <%= render 'layouts/google_script' %>
-
-    <%= render 'layouts/mobile_nav' %>
+    <div id="mobile_nav">
+      <%= render 'layouts/mobile_nav' %>
+    </div>
 
     <div id="body">
     <!-- Fixed navbar -->
-
-    <%= render 'layouts/top_nav' %>
+    <div top_nav="">
+      <%= render 'layouts/top_nav' %>
+    </div>
 
     <%= render 'layouts/messages' %>
 
-    <%= render 'layouts/hero_image' %>
+    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" %>
+      <div id="hero_image">
+        <%= render 'layouts/hero_image' %>
+      </div>
+    <% end %>
 
     <%= yield :hero %>
 
@@ -30,6 +36,11 @@
     </div>
 
     <%= yield :bottom_block %>
+
+    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.blocks.where(front_page: true).any? %>
+      <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
+    <% end %>
+
 
     <footer class="footer">
       <div class="container">
