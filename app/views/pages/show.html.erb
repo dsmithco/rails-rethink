@@ -1,4 +1,4 @@
-<% cache [@page, @page.blocks, @page.pages, current_user] do %>
+<% cache [@page, @page.blocks, @page.image, @page.pages, current_user] do %>
   <div class="page-container page-container-<%= @page.left_blocks.present? ? 'with-left' : 'without-left' %> page-container-<%= @page.right_blocks.present? ? 'with-right' : 'without-right' %>">
     <% unless @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
       <div class="page-title-section">
