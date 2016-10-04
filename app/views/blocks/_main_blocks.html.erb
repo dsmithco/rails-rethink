@@ -1,6 +1,6 @@
 <div id='blocks'>
   <% blocks.each do |block| %>
-    <% cache [current_user, block, block.blocks] do %>
+    <% cache [current_user, block, block.blocks, block.category, block.category.try(:pages)] do %>
       <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type %>-type text-<%= block.text_align %>">
         <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
         <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
