@@ -36,9 +36,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="<%= @browser_request.original_url %>">
 <% if @page.present? && @page.image.present?%>
-  <meta property="og:image" content="<%= @page.image.medium %>">
+  <meta property="og:image" content="<%= @page.image.large %>">
 <% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>
-  <meta property="og:image" content="<%= @current_website.hero_images.first.medium %>">
+  <meta property="og:image" content="<%= @current_website.hero_images.first.hero %>">
 <% end %>
 <meta property=”og:site_name” content="<%= @current_website.try(:name) %>"/>
 <meta property=”og:description” content="<%= @current_website.try(:description”) %>"/>
