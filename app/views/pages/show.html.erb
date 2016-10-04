@@ -11,7 +11,7 @@
       <div class="page-nav-section">
         <%= render 'pages/edit_page_nav' if can? :update, @page %>
       </div>
-      <% cache [@page.left_blocks] do %>
+      <% cache [@page.left_blocks, current_user] do %>
         <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.left_blocks), class: "page-blocks-left") if @page.left_blocks.present? %>
       <% end %>
       <div class="page-main">
@@ -21,22 +21,22 @@
             <%= render 'categories/page_footer', categories: @page.categories %>
           <% end %>
         <% end %>
-        <% cache [@page.pages] do %>
+        <% cache [@page.pages, current_user] do %>
           <%= render 'pages/summaries', pages: @page.pages %>
         <% end %>
         <br/>
       </div>
-      <% cache [@page.right_blocks] do %>
+      <% cache [@page.right_blocks, current_user] do %>
         <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.right_blocks), class: 'page-blocks-right') if @page.right_blocks.present? %>
       <% end %>
     </div>
   </div>
 <% end %>
 <% content_for :top_block do %>
-  <% cache [@page.top_blocks] do %>
+  <% cache [@page.top_blocks, current_user] do %>
     <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.top_blocks}".html_safe, id: 'top_blocks', class: 'top_container') if @page.top_blocks.present?%>
   <% end %>
-  <% cache [@page.image] do %>
+  <% cache [@page.image, current_user] do %>
     <%= render 'pages/top_image', blocks: @page.image if @page.image.present? && !@page.about.include?(@page.image.asset_file_name)%>
   <% end %>
 <% end %>
