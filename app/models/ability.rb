@@ -18,7 +18,7 @@ class Ability
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
-    can [:index, :update], Website do |website|
+    can [:index, :update, :edit], Website do |website|
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
