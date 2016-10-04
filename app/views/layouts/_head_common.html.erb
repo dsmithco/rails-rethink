@@ -32,7 +32,7 @@
 <![endif]-->
 
 
-  <!-- <meta property="og:title" content="<%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %>"> -->
+<meta property="og:title" content="<%= "#{@page.name} -- " if @page.present? %> <%= @current_website.try(:name) %>">
 <meta property='fb:app_id' content="1214395785247638">
 <meta property="og:type" content="website">
 <meta property="og:url" content="<%= request.url.gsub('http://','https://') %>/">
