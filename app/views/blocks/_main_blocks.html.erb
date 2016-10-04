@@ -5,7 +5,14 @@
         <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
         <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
         <div class="block-contents">
-          <h1 class="block-title">
+          <% if can? :update, block %>
+            <div class="btn-group pull-right block-edit-btns">
+              <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
+              <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id:block.id, website_id: @current_website.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-success btn-sm' if (can? :update, block) && block.block_type == 'container'  %>
+              <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
+            </div>
+          <% end %>
+          <h1 class="block-title <%= 'hide' if !block.name.present? %>">
             <%= block.name unless block.block_type == 'category_list' %>
             <% if block.block_type == 'category_list'%>
               <%= link_to block.name, category_path(block.category) %>
@@ -13,13 +20,6 @@
               <div class="btn-group">
                 <%# link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(block.category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, block.category %>
                 <%= link_to "<i class='fa fa-plus'></i> Add #{block.category.name}".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-success' if can? :edit, block.category %>
-              </div>
-            <% end %>
-            <% if can? :update, block %>
-              <div class="btn-group pull-right block-edit-btns">
-                <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm' if can? :update, block  %>
-                <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id:block.id, website_id: @current_website.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-success btn-sm' if (can? :update, block) && block.block_type == 'container'  %>
-                <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm' if can? :update, block  %>
               </div>
             <% end %>
           </h1>
