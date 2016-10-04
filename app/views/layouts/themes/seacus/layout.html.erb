@@ -19,8 +19,12 @@
 
     <%= render 'layouts/messages' %>
 
-    <%= render 'layouts/hero_image' %>
-
+    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" %>
+      <div id="hero_image">
+        <%= render 'layouts/hero_image' %>
+      </div>
+    <% end %>
+    
     <%= yield :hero %>
 
     <%= yield :top_block %>
