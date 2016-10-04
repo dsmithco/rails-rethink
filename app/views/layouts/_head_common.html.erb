@@ -34,7 +34,7 @@
 
 <meta property="og:title" content="<%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %>">
 <meta property="og:type" content="website">
-<meta property="og:url" content="<%= request.url %>">
+<meta property="og:url" content="<%= request.url %>/">
 <% if @page.present? && @page.image.present?%>
   <meta property="og:image" content="<%= @page.image.large %>">
 <% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>
