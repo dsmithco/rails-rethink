@@ -43,3 +43,15 @@
 <% end %>
 <meta property='og:site_name' content="<%= @current_website.try(:name) %>"/>
 <meta property='og:description' content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description”) %>"/>
+
+<!-- Twitter tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="<%= @current_website.twitter %>">
+<meta name="twitter:creator" content="@rethinkwd">
+<meta name="twitter:title" content="<%= "#{@page.name} -- " if @page.present? %> <%= @current_website.try(:name) %>">
+<meta name="twitter:description" content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description”) %>">
+<% if @page.present? && @page.image.present?%>
+  <meta property="twitter:image" content="<%= @page.image.large %>">
+<% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>
+  <meta property="twitter:image" content="<%= @current_website.hero_images.first.hero %>">
+<% end %>
