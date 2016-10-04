@@ -40,5 +40,5 @@
 <% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>
   <meta property="og:image" content="<%= @current_website.hero_images.first.hero %>">
 <% end %>
-<meta property=”og:site_name” content="<%= @current_website.try(:name) %>"/>
-<meta property=”og:description” content="<%= @current_website.try(:description”) %>"/>
+<meta property='og:site_name' content="<%= @current_website.try(:name) %>"/>
+<meta property='og:description' content="<%= @current_website.try(:description”) %>"/>
