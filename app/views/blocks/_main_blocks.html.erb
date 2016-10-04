@@ -29,7 +29,7 @@
                 <div class="text-center form-group">
                   <%= block.about.html_safe %>
                 </div>
-              <% end >
+              <% end %>
               <%= render 'blocks/sub_blocks', block: block if block.block_type == 'container' %>
               <%= render 'blocks/category_list', '@category': block.category if block.block_type == 'category_list' %>
             </div>
