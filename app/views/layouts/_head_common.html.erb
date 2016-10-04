@@ -5,7 +5,7 @@
 <meta http-equiv=X-UA-Compatible content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="HandheldFriendly" content="true">
-<meta name="Description" content='<%= "#{@current_website.description}" %>'>
+<meta name="Description" content='<%= "#{@page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description”)}" %>'>
 <meta name="Keywords" content='<%= "#{@current_website.tags}" %>'>
 <% if @current_website.icon.present? %>
   <link rel="icon" type="image/png" href="<%= @current_website.icon.medium %>">
@@ -42,4 +42,4 @@
   <meta property="og:image" content="<%= @current_website.hero_images.first.hero %>">
 <% end %>
 <meta property='og:site_name' content="<%= @current_website.try(:name) %>"/>
-<meta property='og:description' content="<%= @current_website.try(:description”) %>"/>
+<meta property='og:description' content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description”) %>"/>
