@@ -25,9 +25,11 @@
           </h1>
           <div class="row">
             <div class="col-sm-12">
-              <p class="text-center">
-                <%= block.about.html_safe if block.about.present? %>
-              </p>
+              <% if block.about.present? %>
+                <div class="text-center form-group">
+                  <%= block.about.html_safe %>
+                </div>
+              <% end >
               <%= render 'blocks/sub_blocks', block: block if block.block_type == 'container' %>
               <%= render 'blocks/category_list', '@category': block.category if block.block_type == 'category_list' %>
             </div>
