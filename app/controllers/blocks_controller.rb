@@ -21,7 +21,7 @@ class BlocksController < ApplicationController
     @block.block_id ||= params[:block_id]
     @block.front_page ||= params[:front_page]
     @block.location ||= params[:location]
-    @block.position = Block.where(:website_id => @current_website.id, :block_id => params[:block_id]).last.position + 1
+    @block.position = Block.where(:website_id => @current_website.id, :block_id => params[:block_id]).try(:last).try(:position) + 1
 
   end
 
