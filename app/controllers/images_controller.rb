@@ -12,6 +12,8 @@ class ImagesController < AttachmentsController
       @image = Image.find_or_initialize_by(id: params[:id])
       @image.update(image_params)
     end
+    authorize! :edit, @image.attachable
+
     respond_to do |format|
       if !@image.errors.present?
         format.html { redirect_to @image, notice: 'Image was successfully created.' }

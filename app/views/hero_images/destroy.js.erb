@@ -1,3 +1,3 @@
 // turbolinks_go(location.toString(), 'no_scroll');
-$('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website %>");
+$('#<%= dom_id(@hero_image) %>').remove();
 $('#hero_image').html("<%=j render 'layouts/hero_image', '@current_website': @current_website %>")

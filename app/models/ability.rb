@@ -22,16 +22,16 @@ class Ability
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
-    can [:manage], [Attachment, Image, HeroImage, Logo, Icon] do |h|
-      can? :edit, h.attachable_type.constantize.find(h.attachable_id)
-    end
-
     can [:create,:manage], [Category, Block, Page] do |item|
       can? :edit, Website.find(item.website_id)
     end
 
     can [:new], [Category, Block, Page] do |item|
       user.account_ids.present?
+    end
+
+    can [:manage], [Attachment, Image, HeroImage, Logo] do |h|
+      can? :edit, h.attachable
     end
 
     can [:index, :manage], User do |u|

@@ -32,69 +32,7 @@
     </div>
     <div id="sortable_heros">
       <% @website.hero_images.each do |hero| %>
-        <span class="col-sm-12" data-id="<%=hero.id%>">
-          <div class="hero_image_<%=hero.id%>">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <%= form_for(hero, remote: true, id: "#{dom_id(hero)}") do |f|%>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div data-as-sortable-item-handle>
-                        <img src="<%=hero.medium%>" alt="<%=hero.name%>" style="cursor: move" />
-                        <label class="label label-success <%= @website.hero_images.first != hero ? 'hide':''%>">Active</label>
-                      </div>
-                    </div>
-                    <div class="col-sm-8">
-                      <div class="row">
-                        <div class="col-sm-9">
-                          <div class="form-group">
-                            <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
-                          </div>
-                        </div>
-                        <div class="col-sm-3">
-                          <%= link_to 'Remove', hero_image_path(hero), class: 'btn btn-danger btn-block', method: :delete, remote: true, data: {confirm: "Delete Hero #{hero.name}", disable_with: 'Removing...'}%>
-                        </div>
-                      </div>
-                        <div class="form-group">
-                          <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle' %>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-4">
-                            <div class="form-group">
-                              <%= f.text_field :link, class: 'form-control', placeholder: 'Link' %>
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="form-group">
-                              <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text' %>
-                            </div>
-                          </div>
-                          <div class="col-sm-4">
-                            <div class="form-group" id="text_align">
-                              <%= f.select :text_align, Attachment::TEXT_ALIGNMENTS, {:include_blank => "-- Select Alignment --"}, :class => 'form-control' %>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-sm-6 submit_button hide">
-                            <%= f.submit 'Save', class: 'btn btn-success'%>
-                          </div>
-
-                        </div>
-                    </div>
-
-                  </div>
-                  <script type="text/javascript">
-                    $("form").on('change keyup',function(){
-                      $(this).find('.submit_button').removeClass('hide');
-                    });
-                  </script>
-                <% end %>
-              </div>
-
-            </div>
-          </div>
-        </span>
+        <%= render 'websites/edit_heroes_hero', hero: hero%>
       <% end %>
     </div>
     <script type="text/javascript">

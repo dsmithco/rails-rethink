@@ -28,7 +28,7 @@
                 class="form-control"
                 placeholder="Link"/>
       </div>
-      <%= link_to 'Remove Image'.html_safe, hero_image_path(hero_image), method: :delete, class: 'btn btn-danger btn-block', remote: true, data: {disable_with: "<i class='fa fa-gear fa-spin'></i> Removing...", confirm: "Are you sure?"} if hero_image.asset.present? %>
+      <%= link_to 'Remove Image'.html_safe, hero_image, method: :delete, class: 'btn btn-danger btn-block', remote: true, data: {disable_with: "<i class='fa fa-gear fa-spin'></i> Removing...", confirm: "Are you sure?"} if hero_image.asset.present? %>
     </div>
 
   </div>

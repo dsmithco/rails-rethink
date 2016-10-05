@@ -1,6 +1,6 @@
 class AttachmentsController < ApplicationController
   before_action :set_attachment, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
 
   # GET /attachments
   # GET /attachments.json
@@ -26,6 +26,7 @@ class AttachmentsController < ApplicationController
   # POST /attachments.json
   def create
     @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+    authorize! :edit, @resource.attachable
 
     respond_to do |format|
       if @resource.save

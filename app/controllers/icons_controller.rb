@@ -1,20 +1,14 @@
 class IconsController < AttachmentsController
   before_action :set_attachment, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
 
   # POST /attachments
   # POST /attachments.json
   def create
-    if params[:id].present?
-      @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
-      @resource.update!(attachment_params)
-    else
-      @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
-      @resource.save!
-    end
+    @resource = @icon = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+    authorize! :edit, @resource.attachable
 
     respond_to do |format|
-      if !@resource.errors.present?
+      if @resource.save!
         format.html { redirect_to @resource, notice: 'Attachment was successfully created.' }
         format.json { render :show, status: :created, location: @resource }
         format.js { render :create, status: :created }
@@ -54,7 +48,7 @@ class IconsController < AttachmentsController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attachment
-      @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
+      @resource = @icon = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
     end
 
     def resources_name

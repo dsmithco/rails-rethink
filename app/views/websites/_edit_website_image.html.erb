@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset id="dropzone_fileupload_<%= model.tableize%>">
   <legend>
     <%= model %>
     <span class="btn btn-success btn-sm fileinput-button">
@@ -29,8 +29,9 @@
       // Change this to the location of your server-side upload handler:
       $('#fileupload_<%= model.tableize%>').fileupload({
         dataType: 'script',
-        url: '/<%= model.tableize%>',
-        type: 'POST',
+        dropZone: $('#dropzone_fileupload_<%= model.tableize%>'),
+        url: '/<%= model.tableize %>/<%= @website.try(model.downcase).present? ? @website.try(model.downcase).id : "" %>',
+        type: '<%= @website.try(model.downcase).present? ? "PUT" : "POST" %>',
         multipart: true,
         add: function(e, data){
           data.formData = {};
@@ -39,6 +40,7 @@
           <% end %>
           data.formData.attachable_id = <%= @website.id %>;
           data.formData.attachable_type = 'Website';
+          <%= "data.formData.id = #{@website.try(model.downcase).id;}" if @website.try(model.downcase).present? %>
           var file, types;
           types = /(\.|\/)(gif|jpe?g|png)$/i;
           file = data.files[0];

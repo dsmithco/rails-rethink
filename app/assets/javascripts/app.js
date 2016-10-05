@@ -216,6 +216,8 @@ var file_upload_load = function(element, attachable_id, attachable_type){
   /*jslint unparam: true */
   /*global window, $ */
   // Change this to the location of your server-side upload handler:
+  var random_str = Math.random().toString(36).substring(7);
+
   $(element).fileupload({
     dataType: 'script',
     url: '/hero_images',
@@ -227,7 +229,7 @@ var file_upload_load = function(element, attachable_id, attachable_type){
       types = /(\.|\/)(gif|jpe?g|png)$/i;
       file = data.files[0];
       if (types.test(file.type) || types.test(file.name)) {
-        data.context = $('<div>' + file.name + '</div>');
+        data.context = $('<div class="' + random_str + '">' + file.name + '</div>');
         $('#files').append(data.context);
         return data.submit();
       } else {
@@ -243,11 +245,11 @@ var file_upload_load = function(element, attachable_id, attachable_type){
         console.log(progress)
       }
     },
-    done: function(e, data){
-      if (data.context) {
+    complete: function(e, data){
         console.log('done')
-        return data.context.remove();
-      }
+        $('.progress-bar').css('width', '0%');
+        $('.progress').addClass('hide');
+        return $('.' + random_str).remove();
     }
   });
 }

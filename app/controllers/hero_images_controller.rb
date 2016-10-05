@@ -5,16 +5,17 @@ class HeroImagesController < AttachmentsController
   # POST /attachments
   # POST /attachments.json
   def create
-    @resource = instance_variable_set("@#{resource_name}", attachment_class.new(hero_image_params))
+    @resource = @hero_image = instance_variable_set("@#{resource_name}", attachment_class.new(hero_image_params))
+    authorize! :edit, @resource.attachable
 
     respond_to do |format|
-      if @resource.save
-        format.html { redirect_to @resource, notice: 'Attachment was successfully created.' }
-        format.json { render :show, status: :created, location: @resource }
+      if @hero_image.save
+        format.html { redirect_to @hero_image, notice: 'Attachment was successfully created.' }
+        format.json { render :show, status: :created, location: @hero_image }
         format.js { render :create, status: :created }
       else
         format.html { render :new }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
+        format.json { render json: @hero_image.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,7 +49,7 @@ class HeroImagesController < AttachmentsController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_attachment
-      @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
+      @resource = @hero_image = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
     end
 
     def resources_name
