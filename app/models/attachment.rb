@@ -1,6 +1,6 @@
 class Attachment < ApplicationRecord
 
-  belongs_to :attachable, :polymorphic => true
+  belongs_to :attachable, :polymorphic => true, touch: true
 
   TEXT_ALIGNMENTS = ['top left', 'top center', 'top right', 'middle left', 'middle center', 'middle right', 'bottom left', 'bottom center', 'bottom right']
 
