@@ -26,9 +26,9 @@
 
 <div class="row">
   <!-- ERROR MESSAGES -->
-  <div class="col-sm-12 form-group">
+  <div class="col-sm-12">
     <% if block.errors.any? %>
-      <div id="error_explanation">
+      <div id="error_explanation" class="form-group">
         <h2><%= pluralize(block.errors.count, "error") %> prohibited this block from being saved:</h2>
         <ul>
         <% block.errors.full_messages.each do |message| %>
@@ -40,76 +40,66 @@
   </div>
 
   <div class="col-sm-12">
-    <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-      <dl class="dl-horizontal form-group <%= 'hide' if block.id.present? %>" id="block_type">
-        <dt class="dt-label">
-          Block type
-        </dt>
-        <dd>
-          <div class="row">
-            <% Block::BLOCK_TYPES.each do |block_type| %>
-              <div class="col-xs-<%= (12 / Block::BLOCK_TYPES.count).ceil %>">
-                <button type="button" <%= block.id.present? ? 'disabled' : '' %> class="btn btn-block btn-primary inverse <%= 'active' if block_type == block.block_type %>"
-                        id="<%= block_type %>" onClick="setBlockType(this)">
-                        <%= block_type.capitalize %></button>
-              </div>
-            <% end %>
-          </div>
-          <div class="hide">
-            <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
-          </div>
-        </dd>
-      </dl>
+    <% if !Block::TOP_LEVEL_BLOCKS.include?(block.block_type) %>
+      <div class="form-group <%= 'hide' if block.id.present? || block.block_type.present? %>" id="block_type">
+        <div class="text-center">
+          <% Block::TOP_LEVEL_BLOCKS.each do |block_type| %>
+              <button type="button" <%= block.id.present? ? 'disabled' : '' %> class="btn btn-lg btn-primary inverse <%= 'active' if block_type == block.block_type %>"
+                      id="<%= block_type %>" onClick="setBlockType(this)">
+                      <%= block_type.capitalize %></button>
+          <% end %>
+        </div>
+        <div class="hide">
+          <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
+        </div>
+      </div>
       <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-        <dl class="dl-horizontal form-group hide">
-            <dt class="dt-label">
+        <div class="form-group hide">
+            <div class="dt-label">
               Front page
-            </dt>
-            <dd>
+            </div>
+            <div>
               <label class="btn btn-default"><%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input' %> Show on front page</label>
-            </dd>
-        </dl>
+            </div>
+        </div>
       <% end %>
-      <dl class="dl-horizontal form-group" id="block">
-        <dt class="dt-label">
+      <div class="form-group hide" id="block">
+        <div class="dt-label">
           Container Block
-        </dt>
-        <dd>
+        </div>
+        <div>
           <%= f.select :block_id, block.parent_block_options.collect {|x| [x.name.present? ? "#{x.name} (#{x.blocks.count})" : "Block id: #{x.id} (#{x.blocks.count})", x.id]}, {:include_blank => "-- Select a Container --"}, :class => 'form-control' %>
-        </dd>
-      </dl>
-      <dl class="dl-horizontal form-group" id="category">
-        <dt class="dt-label">
-          Category
-        </dt>
-        <dd>
+        </div>
+      </div>
+      <div class="form-group" id="category">
+        <div>
           <%= f.select :category_id, @current_website.categories.collect {|x| [x.name.present? ? "#{x.name} (#{x.pages.try(:count)})" : "Block id: #{x.id} (#{x.pages.try(:count)})", x.id]}, {:include_blank => "-- Select a Category --"}, :class => 'form-control' %>
-        </dd>
-      </dl>
-      <dl class="dl-horizontal form-group" id="columns">
-        <dt class="dt-label">
+        </div>
+      </div>
+      <div class="form-group" id="columns">
+        <div>
           Max Columns
-        </dt>
-        <dd>
+        </div>
+        <div>
           <%= f.select :columns, [1,2,3,4], {}, :class => 'form-control' %>
-        </dd>
-      </dl>
-      <dl class="dl-horizontal form-group" id="location">
-        <dt class="dt-label">
+        </div>
+      </div>
+      <div class="form-group" id="location">
+        <div class="dt-label">
           Location
-        </dt>
-        <dd id="location">
+        </div>
+        <div id="location">
           <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
-        </dd>
-      </dl>
-      <dl class="dl-horizontal form-group">
-        <dt class="dt-label">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="dt-label">
           Block position
-        </dt>
-        <dd id="position">
+        </div>
+        <div id="position">
           <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
-        </dd>
-      </dl>
+        </div>
+      </div>
     <% end %>
     <script type="text/javascript">
       var default_options = <%= Block::REGIONS.to_json.html_safe %>;
@@ -163,18 +153,15 @@
   <!-- IMAGE UPLOAD -->
 
   <% if @block.id.present? %>
-    <dl class="dl-horizontal" id="image_block">
-      <dt class="dt-label">
-        Image
-      </dt>
-      <dd class="form-group">
-        <span class="btn btn-default btn-block fileinput-button">
+    <div class="form-group" id="image_block">
+      <div class="form-group">
+        <span class="btn btn-primary btn-block fileinput-button">
             <!-- The file input field used as target for the file upload widget -->
             <span><i class="fa fa-photo"></i> Upload image</span>
             <input id="fileupload" type="file" name="image[asset]">
         </span>
-      </dd>
-      <dd class="form-group">
+      </div>
+      <div class="form-group">
         <!-- The container for the uploaded files -->
         <div id="files" class="files"></div>
         <!-- The global progress bar -->
@@ -186,7 +173,7 @@
         <div id="images">
           <%= render 'images/image', image: block.image if block.image.present? %>
         </div>
-      </dd>
+      </div>
 
       <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
       <script type="text/javascript">
@@ -230,14 +217,14 @@
         });
       </script>
 
-      <dt class="dt-label">
+      <div>
         BG Color
-      </dt>
-      <dd id="bg_color" class="form-group">
+      </div>
+      <div id="bg_color" class="form-group">
         <%= f.text_field :bg_color, class: 'form-control color', id: 'color', name: 'block[bg_color]' %>
-      </dd>
-
-    </dl>
+      </div>
+      <br/>
+    </div>
   <% end %>
 
   <script type="text/javascript">
@@ -245,44 +232,38 @@
   </script>
 
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-    <dl class="dl-horizontal">
+    <div class="">
 
-      <dt class="dt-label">
-        Name
-      </dt>
-      <dd class="form-group" id="name">
-        <%= f.text_field :name, class: 'form-control' %>
-      </dd>
+      <div class="form-group" id="name">
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+      </div>
 
-      <dt class="dt-label">
-        About
-      </dt>
-      <dd class="form-group" id="about">
-        <%= f.text_area :about, class: 'form-control', rows: '6' %>
+      <div class="form-group" id="about">
+        <%= f.text_area :about, class: 'form-control', rows: '6', placeholder: 'Description' %>
         <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
 
         <script type="text/javascript">
           // timyMceSetup('#block_about', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_block_upload');
         </script>
-      </dd>
-      <dd class="about_bottom"></dd>
-      <dt class="dt-label">
+      </div>
+      <div class="about_bottom"></div>
+      <div class="dt-label">
         Text Align
-      </dt>
-      <dd class="form-group" id="text_align">
+      </div>
+      <div class="form-group" id="text_align">
         <%= f.select :text_align, Block::TEXT_ALIGN_OPTIONS, {}, :class => 'form-control' %>
-      </dd>
-    </dl>
+      </div>
+    </div>
 
   <% end %>
 
   <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-    <dl class="dl-horizontal">
+    <div class="">
 
-      <dt class="dt-label">
+      <div class="dt-label">
         Link
-      </dt>
-      <dd class="form-group">
+      </div>
+      <div class="form-group">
         <div class="row">
           <div class="col-sm-6">
             <%= f.text_field :link, class: 'form-control', placeholder: 'http://example.com or /pages/about' %>
@@ -291,8 +272,8 @@
             <%= f.text_field :link_text, class: 'form-control', placeholder: 'Learn more' %>
           </div>
         </div>
-      </dd>
-    </dl>
+      </div>
+    </div>
   <% end %>
   </div>
 </div>

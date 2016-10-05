@@ -14,7 +14,9 @@ class Block < ApplicationRecord
 
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation']
-  BLOCK_TYPES = ['category_list', 'container', 'custom', 'sub_block']
+  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom']
+  LOWER_LEVEL_BLOCKS = ['sub_block']
+  BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
   CONTENT_REGIONS = ['top', 'bottom']
   SIDE_REGIONS = ['left', 'right']
   REGIONS = CONTENT_REGIONS + SIDE_REGIONS
@@ -22,7 +24,7 @@ class Block < ApplicationRecord
   attr_accessor :continue_edit
 
   validates :text_align, inclusion: { in: TEXT_ALIGN_OPTIONS, message: "%{value} is not a valid text_align", allow_blank: true }
-  validates :block_type, inclusion: { in: BLOCK_TYPES + SYSTEM_BLOCK_TYPES, message: "%{value} is not a valid block type" }
+  validates :block_type, inclusion: { in: BLOCK_TYPES, message: "%{value} is not a valid block type" }
   validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
 
   validate :block_validation

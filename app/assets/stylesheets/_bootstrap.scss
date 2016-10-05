@@ -801,3 +801,6 @@ body:not(.snapjs-right) .snap-drawers{
    right: 0;
    z-index: 0;
 }
+iframe {
+  max-width: 100% !important;
+}
