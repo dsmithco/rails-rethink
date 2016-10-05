@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy, :search]
-  load_and_authorize_resource except: [:search]
+  load_and_authorize_resource except: [:search, :create]
 
   # GET /categories
   # GET /categories.json
@@ -35,6 +35,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     @category.website_id = @current_website.id
+    authorize! :manage, @category.website
 
     respond_to do |format|
       if @category.save
