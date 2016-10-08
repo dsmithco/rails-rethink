@@ -55,7 +55,9 @@ group :development, :test do
   gem 'rest-client'
   gem 'capybara'
 end
-
+group :test do
+  gem 'rails-controller-testing'
+end
 gem 'mina'
 
 group :development do

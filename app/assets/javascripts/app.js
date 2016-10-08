@@ -216,12 +216,19 @@ var file_upload_load = function(element, attachable_id, attachable_type){
   /*jslint unparam: true */
   /*global window, $ */
   // Change this to the location of your server-side upload handler:
+
   var random_str = Math.random().toString(36).substring(7);
+  console.log('file_upload_load');
+  console.log(random_str);
+
+  var element_dropzone = $(element + '_dropzone');
 
   $(element).fileupload({
     dataType: 'script',
     url: '/hero_images',
     type: 'POST',
+    dropZone: element_dropzone,
+    forcePlaceholderSize: true,
     multipart: true,
     formData: {"hero_image[attachable_id]": attachable_id, "hero_image[attachable_type]": attachable_type},
     add: function(e, data) {
@@ -251,6 +258,34 @@ var file_upload_load = function(element, attachable_id, attachable_type){
         $('.progress').addClass('hide');
         return $('.' + random_str).remove();
     }
+  });
+
+  $(document).bind('dragover', function (e) {
+    var dropZone = element_dropzone,
+      timeout = window.dropZoneTimeout;
+    if (!timeout) {
+      dropZone.addClass('in');
+    } else {
+      clearTimeout(timeout);
+    }
+    var found = false,
+      node = e.target;
+    do {
+      if (node === dropZone[0]) {
+          found = true;
+          break;
+      }
+      node = node.parentNode;
+    } while (node != null);
+    if (found) {
+      dropZone.addClass('hover');
+    } else {
+      dropZone.removeClass('hover');
+    }
+    window.dropZoneTimeout = setTimeout(function () {
+      window.dropZoneTimeout = null;
+      dropZone.removeClass('in hover');
+    }, 100);
   });
 }
 

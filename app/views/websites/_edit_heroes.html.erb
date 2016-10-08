@@ -6,7 +6,7 @@
       Randomize order
     </a>
   </legend>
-  <div class="well well-dashed well-lg text-center">
+  <div class="well well-dashed well-lg text-center dropzone" id="hero_uploader_dropzone">
     <span class="btn btn-success btn-lg fileinput-button">
         <span>Upload Hero Image</span>
         <!-- The file input field used as target for the file upload widget -->
@@ -65,5 +65,7 @@
       .ui-state-highlight {height: 200px;border-radius: 4px;border: 1px dashed #ccc;line-height: 1.2em;width: 100%;display: block;clear: both;margin-bottom: 20px;}
     </style>
   </div>
-
+  <script type="text/javascript">
+    file_upload_load('#hero_uploader', <%=@current_website.id%>, 'Website');
+  </script>
 </fieldset>
