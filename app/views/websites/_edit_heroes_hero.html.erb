@@ -14,47 +14,45 @@
               <div class="row">
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+                    <%= f.text_field :name, class: 'form-control', placeholder: 'Title', onblur: "savehero_#{dom_id(hero)}()"%>
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <%= link_to 'Remove', hero, class: 'btn btn-danger btn-block', method: :delete, remote: true, data: {confirm: "Delete Hero #{hero.name}", disable_with: 'Removing...'}%>
                 </div>
               </div>
-                <div class="form-group">
-                  <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle' %>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <%= f.text_field :link, class: 'form-control', placeholder: 'Link' %>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text' %>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group" id="text_align">
-                      <%= f.select :text_align, Attachment::TEXT_ALIGNMENTS, {:include_blank => "-- Select Alignment --"}, :class => 'form-control' %>
-                    </div>
+              <div class="form-group">
+                <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle', onblur: "savehero_#{dom_id(hero)}()" %>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <%= f.text_field :link, class: 'form-control', placeholder: 'Link', onblur: "savehero_#{dom_id(hero)}()" %>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-sm-6 submit_button hide">
-                    <%= f.submit 'Save', class: 'btn btn-success'%>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text', onblur: "savehero_#{dom_id(hero)}()" %>
                   </div>
-
                 </div>
+                <div class="col-sm-4">
+                  <div class="form-group" id="text_align">
+                    <%= f.select :text_align, Attachment::TEXT_ALIGNMENTS, {:include_blank => "-- Select Alignment --"}, onchange: "savehero_#{dom_id(hero)}()", :class => 'form-control' %>
+                  </div>
+                </div>
+              </div>
             </div>
-
+            <script type="text/javascript">
+              function savehero_<%= dom_id(hero) %>(){
+                $(".<%=dom_id(hero)%>_button").click();
+              }
+            </script>
+            <div class="row">
+              <div class="col-sm-6 submit_button hide">
+                <%= f.submit 'Save', class: "btn btn-success #{dom_id(hero)}_button"%>
+              </div>
+            </div>
           </div>
-          <script type="text/javascript">
-            $("form").on('change keyup',function(){
-              $(this).find('.submit_button').removeClass('hide');
-            });
-          </script>
         <% end %>
       </div>
 
