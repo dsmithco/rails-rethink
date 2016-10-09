@@ -1,7 +1,7 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes, :random_hero]
 
-  load_and_authorize_resource :except => [:stylesheet, :home, :random_hero]
+  load_and_authorize_resource :except => [:stylesheet, :home, :random_hero, :sitemap, :robots]
 
   # GET /websites
   # GET /websites.json
@@ -52,6 +52,13 @@ class WebsitesController < ApplicationController
   def home
     @website = @resource = @current_website || Website.where("domain_url = ?", "#{request.host}").first
     render :show, {layout: "themes/#{@current_website.theme}/layout"}
+  end
+
+  def sitemap
+  end
+
+  def robots
+    render :robots
   end
 
   # GET /websites/new

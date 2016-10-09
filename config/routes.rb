@@ -37,6 +37,8 @@ Rails.application.routes.draw do
   end
   resources :accounts
 
+  get 'sitemap' => 'websites#sitemap', :format => "xml"
+  get 'robots' => 'websites#robots', :format => 'txt'
   root "websites#home"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 

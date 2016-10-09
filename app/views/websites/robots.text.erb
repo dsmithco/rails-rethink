@@ -1,0 +1,12 @@
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+#
+# To ban all spiders from the entire site uncomment the next two lines:
+# User-agent: *
+# Disallow: /
+<% cache [@current_website, @current_website.pages] do %>
+  User-agent: *
+  Disallow: /users/
+  Disallow: /websites/
+  Disallow: /accounts/
+  Sitemap: <%= request.protocol %><%= @current_website.domain_url %>/sitemap.xml
+<% end %>
