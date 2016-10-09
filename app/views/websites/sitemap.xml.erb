@@ -2,16 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
   xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <% @current_website.pages.where(page_id:[nil,'']).each do |page| %>
+
+  <url>
+    <loc>
+      <%= "https://#{@current_website.domain_url}/" %>
+    </loc>
+    <lastmod>
+      <%= @current_website.updated_at.to_time.iso8601 %>
+    </lastmod>
+    <priority>
+      1.0
+    </priority>
+    <changefreq>
+      daily
+    </changefreq>
+    <% if @current_website.hero_images.present? %>
+      <image:image>
+         <image:loc><%= @current_website.hero_images.first.asset %></image:loc>
+         <image:caption><%= @current_website.hero_images.first.asset_file_name %></image:caption>
+      </image:image>
+    <% end %>
+  </url>
+
+  <% @current_website.pages.each do |page| %>
     <url>
       <loc>
-        <%= page_url(page) %>
+        <%= page_url(page).gsub('http://', 'https://') %>
       </loc>
       <lastmod>
-        <%= page.updated_at %>
+        <%= page.updated_at.to_time.iso8601 %>
       </lastmod>
       <priority>
-        1.0
+        <%= page.page_id.present? ? '0.8' : '0.9' %>
       </priority>
       <changefreq>
         weekly
