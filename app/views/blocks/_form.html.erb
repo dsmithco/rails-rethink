@@ -92,15 +92,15 @@
           <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
         </div>
       </div>
-      <div class="form-group">
-        <div class="dt-label">
-          Block position
-        </div>
-        <div id="position">
-          <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
-        </div>
-      </div>
     <% end %>
+    <div class="form-group">
+      <div class="dt-label">
+        Block position
+      </div>
+      <div id="position">
+        <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
+      </div>
+    </div>
     <script type="text/javascript">
       var default_options = <%= Block::REGIONS.to_json.html_safe %>;
       var main_options = <%= Block::CONTENT_REGIONS.to_json.html_safe %>;
