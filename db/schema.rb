@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001212406) do
+ActiveRecord::Schema.define(version: 20161008220140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20161001212406) do
     t.datetime "updated_at",  null: false
     t.integer  "website_id"
     t.string   "slug"
+    t.string   "subtitle"
+    t.text     "description"
     t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
     t.index ["slug"], name: "categories_slug_idx", using: :btree
     t.index ["website_id"], name: "index_categories_on_website_id", using: :btree
@@ -136,6 +138,8 @@ ActiveRecord::Schema.define(version: 20161001212406) do
     t.integer  "redirectable_id"
     t.string   "redirectable_type"
     t.string   "redirectable_url"
+    t.string   "subtitle"
+    t.text     "description"
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
     t.index ["redirectable_id", "redirectable_type"], name: "index_pages_on_redir_id_and_redir_type", using: :btree
@@ -181,6 +185,7 @@ ActiveRecord::Schema.define(version: 20161001212406) do
     t.text     "description"
     t.hstore   "style",            default: {},    null: false
     t.boolean  "random_hero",      default: false
+    t.string   "subtitle"
     t.index ["account_id"], name: "index_websites_on_account_id", using: :btree
     t.index ["domain_url"], name: "index_websites_on_domain_url", using: :btree
     t.index ["name"], name: "index_websites_on_name", using: :btree

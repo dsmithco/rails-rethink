@@ -1,5 +1,6 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes, :random_hero]
+
   load_and_authorize_resource :except => [:stylesheet, :home, :random_hero]
 
   # GET /websites
@@ -49,8 +50,7 @@ class WebsitesController < ApplicationController
   end
 
   def home
-    @website = @current_website || Website.where("domain_url = ?", "#{request.host}").first
-
+    @website = @resource = @current_website || Website.where("domain_url = ?", "#{request.host}").first
     render :show, {layout: "themes/#{@current_website.theme}/layout"}
   end
 
@@ -111,11 +111,11 @@ class WebsitesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_website
       params[:id] ||= Website.where("domain_url like ?", "%#{request.host}%").first.id
-      @website = Website.find(params[:id])
+      @website = @resource = Website.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:random_hero, :account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
+      params.require(:website).permit(:random_hero, :subtitle, :account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
     end
 end

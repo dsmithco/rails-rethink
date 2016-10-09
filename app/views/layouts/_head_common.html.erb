@@ -1,11 +1,11 @@
-<title><%= "#{@page.name} - " if @page.present? %> <%= @current_website.try(:name) %></title>
+<title><%= "#{@site_title}" %></title>
 
 <%= csrf_meta_tags %>
 
 <meta http-equiv=X-UA-Compatible content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="HandheldFriendly" content="true">
-<meta name="Description" content='<%= "#{@page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description)}" %>'>
+<meta name="Description" content='<%= "#{@site_description}" %>'>
 <meta name="Keywords" content='<%= "#{@current_website.tags}" %>'>
 <% if @current_website.icon.present? %>
   <link rel="icon" type="image/png" href="<%= @current_website.icon.medium %>">
@@ -33,7 +33,7 @@
 <![endif]-->
 
 
-<meta property="og:title" content="<%= "#{@page.name} -- " if @page.present? %> <%= @current_website.try(:name) %>">
+<meta property="og:title" content='<%= "#{@site_title}" %>'>
 <meta property='fb:app_id' content="1214395785247638">
 <meta property="og:type" content="website">
 <meta property="og:url" content="<%= request.url.gsub('http://','https://') %>/">
@@ -43,15 +43,15 @@
   <meta property="og:image" content="<%= @current_website.hero_images.first.hero %>">
 <% end %>
 <meta property='og:site_name' content="<%= @current_website.try(:name) %>"/>
-<meta property='og:description' content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description) %>"/>
+<meta property='og:description' content="<%= @site_description %>"/>
 
 <!-- Twitter tags -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="<%= @current_website.twitter %>">
 <meta name="twitter:creator" content="@rethinkwd">
-<meta name="twitter:title" content="<%= "#{@page.name} -- " if @page.present? %> <%= @current_website.try(:name) %>">
-<meta name="twitter:description" content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description) %>">
-<meta name="twitter:text:description" content="<%= @page.present? ? truncate(strip_tags(@page.about), length: 250) : @current_website.try(:description) %>">
+<meta name="twitter:title" content='<%= "#{@site_title}" %>'>
+<meta name="twitter:description" content="<%=@site_description %>">
+<meta name="twitter:text:description" content="<%= @site_description %>">
 <% if @page.present? && @page.image.present?%>
   <meta property="twitter:image" content="<%= @page.image.large %>">
 <% elsif !@page.present? && @current_website.present? && @current_website.hero_images.present? %>

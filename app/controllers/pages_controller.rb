@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy, :delete_image, :add_image, :add_block, :remove_block]
+  include PageMeta
+
   load_and_authorize_resource
 
   # GET /pages
@@ -134,7 +136,7 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:name, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :show_in_menu, {:category_ids=>[]})
+      params.require(:page).permit(:name, :subtitle, :description, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :show_in_menu, {:category_ids=>[]})
     end
 
     def image_params

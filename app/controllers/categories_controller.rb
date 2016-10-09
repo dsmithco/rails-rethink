@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy, :search]
   load_and_authorize_resource except: [:search, :create]
+  include PageMeta
 
   # GET /categories
   # GET /categories.json
@@ -18,7 +19,6 @@ class CategoriesController < ApplicationController
   def search
     order = params[:order].present? ? params[:order] : 'pages.created_at DESC'
     @pages = @category.pages.where('lower(name) LIKE :term OR lower(about) LIKE :term', term: "%#{params[:term].downcase.strip}%").page(params[:page]).reorder(order)
-
   end
 
   # GET /categories/new
@@ -98,6 +98,6 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :about, :category_id, {:page_ids=>[]}, :continue_edit)
+      params.require(:category).permit(:name, :about, :subtitle, :description, :category_id, {:page_ids=>[]}, :continue_edit)
     end
 end

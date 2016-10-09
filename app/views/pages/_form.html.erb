@@ -88,7 +88,18 @@
               show_in_menu_change();
 
             </script>
-
+            <dt id="subtitle">
+              <%= f.label :subtitle %>
+            </dt>
+            <dd class="form-group">
+              <%= f.text_field :subtitle, class: 'form-control' %>
+            </dd>
+            <dt id="description">
+              <%= f.label :description %>
+            </dt>
+            <dd class="form-group">
+              <%= f.text_area :description, class: 'form-control', placeholder: 'Short summary' %>
+            </dd>
             <dt><%= f.label :about, 'Body' %></dt>
             <dd class="" id="about">
               <%= f.text_area :about, class: 'summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>

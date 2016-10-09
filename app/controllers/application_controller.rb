@@ -27,6 +27,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_site_meta
+    @site_title = "#{@current_website.name}" if @current_website.name.present?
+    @site_title = "#{@site_title} - #{@current_website.subtitle}" if @current_website.subtitle.present?
+    @site_description = "#{@current_website.description}" if @current_website.description.present?
+  end
+
   def find_website(req_host)
     website = Website.where("domain_url = ? OR domain_url = ? OR domain_url = ?",
                                      "#{req_host}", "www.#{req_host}",
@@ -46,6 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_website
+    set_site_meta
     if !@current_website.present?
       redirect_to "#{Rails.application.config.host_domain}:#{request.port}"
     else
