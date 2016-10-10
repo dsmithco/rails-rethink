@@ -10,7 +10,7 @@ class Ability
     #   user.email=='dsmithco@gmail.com'
     # end
 
-    can [:read], :all do |item|
+    can [:read], [Page, Website, Category] do |item|
       true
     end
 
@@ -37,7 +37,7 @@ class Ability
     can [:index, :manage], User do |u|
       common_account_ids = user.account_ids & u.account_ids
       common_account_users = u.account_users.where(role: ['Owner','Admin'], account_id: common_account_ids)
-      user.id == u.id || common_account_users
+      user.id == u.id || common_account_users.any?
     end
 
     # See the wiki for details:

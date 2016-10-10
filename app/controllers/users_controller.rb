@@ -72,4 +72,11 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :role, :assign_account_id)
     end
+
+    def authorize_check
+      # common_account_ids = current_user.account_ids & @user.account_ids
+      # common_account_users = @user.account_users.where(role: ['Owner','Admin'], account_id: common_account_ids)
+      # can_access = (current_user.id == @user.id || common_account_users.any?)
+      # authorize! can_access
+    end
 end
