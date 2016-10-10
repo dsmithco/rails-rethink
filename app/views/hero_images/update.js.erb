@@ -3,7 +3,9 @@
     console.log("<%= error.to_s %>");
   <% end %>
 <% else %>
-$('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website %>")
-$('#hero_image').html("<%=j render 'layouts/hero_image', '@current_website': @current_website %>")
-  // turbolinks_go(location.toString(), 'no_scroll');
+  <% unless params[:no_render]%>
+    $('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website %>")
+    // turbolinks_go(location.toString(), 'no_scroll');
+  <% end %>
+  $('#hero_image').html("<%=j render 'layouts/hero_image', '@current_website': @current_website %>")
 <% end %>

@@ -10,7 +10,7 @@
     <span class="btn btn-success btn-lg fileinput-button">
         <span>Upload Hero Image</span>
         <!-- The file input field used as target for the file upload widget -->
-        <input id="hero_uploader" type="file" name="hero_image[asset]" multiple>
+        <input id="hero_uploader" type="file" name="asset" multiple>
     </span>
   </div>
   <div>
@@ -47,7 +47,7 @@
         id = ui.item.context.dataset.id;
         url = "/hero_images/" + id + ".js";
         position = $(ui.item).index() + 1;
-        item = {'hero_image':{'position': position}};
+        item = {'position': position};
         $.ajax({
             url: url,
             type: 'PUT',
@@ -66,6 +66,6 @@
     </style>
   </div>
   <script type="text/javascript">
-    file_upload_load('#hero_uploader', <%=@current_website.id%>, 'Website');
+    file_upload_load('#hero_uploader', <%=@current_website.id%>, 'Website', 'hero_images', false);
   </script>
 </fieldset>

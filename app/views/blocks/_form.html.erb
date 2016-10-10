@@ -154,11 +154,11 @@
 
   <% if @block.id.present? %>
     <div class="form-group" id="image_block">
-      <div class="form-group">
-        <span class="btn btn-primary btn-block fileinput-button">
+      <div class="well text-center dropzone" id="fileupload_<%= dom_id(block) %>_dropzone">
+        <span class="btn btn-primary fileinput-button">
             <!-- The file input field used as target for the file upload widget -->
             <span><i class="fa fa-photo"></i> Upload image</span>
-            <input id="fileupload" type="file" name="image[asset]">
+            <input id="fileupload_<%= dom_id(block) %>" type="file" name="asset">
         </span>
       </div>
       <div class="form-group">
@@ -175,48 +175,11 @@
         </div>
       </div>
 
-      <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
-      <script type="text/javascript">
-        $('#fileupload').fileupload({
-          dataType: 'script',
-          url: '/images',
-          type: 'POST',
-          multipart: true,
-          add: function(e, data){
-            data.formData = {"image[attachable_id]": <%= block.id %>, "image[attachable_type]": 'Block'};
-            <% if block.image.present? %>
-              data.formData.id = <%= block.image.id %>;
-            <% end %>
-            var file, types;
-            types = /(\.|\/)(gif|jpe?g|png)$/i;
-            file = data.files[0];
-            if (types.test(file.type) || types.test(file.name)) {
-              data.context = $('<div class="loading">' + file.name + '</div>');
-              $('#files').append(data.context);
-              return data.submit();
-            } else {
-              return alert(file.name + " is not a gif, jpeg, or png image file");
-            }
-          },
-          progress: function(e, data) {
-            var progress;
-            if(data.context) {
-              progress = parseInt(data.loaded / data.total * 100, 10);
-              $('.progress').removeClass('hide');
-              return $('.progress-bar').css('width', progress + '%');
-              console.log(progress)
-            }
-          },
-          done: function(e, data){
-            if (data.context) {
-              console.log('done')
-              $('.progress').addClass('hide');
-              return data.context.remove();
-            }
-          }
-        });
-      </script>
 
+      <div id="edit_image_script">
+        <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+        <%= render 'blocks/edit_image_script', block: block%>
+      </div>
       <div>
         BG Color
       </div>

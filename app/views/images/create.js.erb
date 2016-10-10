@@ -3,3 +3,7 @@ if($("#<%=j dom_id(@image)%>").length){
 }else{
   $("#images").append("<%=j render 'images/image', image: @image %>");
 }
+
+if($('#edit_image_script').length){
+  $("#edit_image_script").html("<%=j render 'blocks/edit_image_script', block: @image.attachable %>");
+}

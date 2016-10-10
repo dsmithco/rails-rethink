@@ -53,9 +53,9 @@ var set_summernote = function(){
     var attachable_id = toSummernote.context.dataset.attachableId
     var attachable_type = toSummernote.context.dataset.attachableType
     data = new FormData;
-    data.append('image[asset]', file);
-    data.append('image[attachable_id]', attachable_id);
-    data.append('image[attachable_type]', attachable_type);
+    data.append('asset', file);
+    data.append('attachable_id', attachable_id);
+    data.append('attachable_type', attachable_type);
     var image_random = Math.random().toString(36).substring(7);
     return $.ajax({
       data: data,
@@ -212,7 +212,7 @@ var set_summernote = function(){
 //   });
 // }
 
-var file_upload_load = function(element, attachable_id, attachable_type){
+var file_upload_load = function(element, attachable_id, attachable_type, path, id){
   /*jslint unparam: true */
   /*global window, $ */
   // Change this to the location of your server-side upload handler:
@@ -225,12 +225,12 @@ var file_upload_load = function(element, attachable_id, attachable_type){
 
   $(element).fileupload({
     dataType: 'script',
-    url: '/hero_images',
-    type: 'POST',
+    url: id ? path + '/' + id : path,
+    type: id ? 'PUT' : 'POST',
     dropZone: element_dropzone,
     forcePlaceholderSize: true,
     multipart: true,
-    formData: {"hero_image[attachable_id]": attachable_id, "hero_image[attachable_type]": attachable_type},
+    formData: {"attachable_id": attachable_id, "attachable_type": attachable_type},
     add: function(e, data) {
       var file, types;
       types = /(\.|\/)(gif|jpe?g|png)$/i;

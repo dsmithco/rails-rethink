@@ -59,6 +59,6 @@ class ImagesController < AttachmentsController
     end
 
     def image_params
-      params.require(:image).permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
+      params.permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
     end
 end

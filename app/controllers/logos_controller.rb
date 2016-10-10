@@ -12,7 +12,7 @@ class LogosController < AttachmentsController
       @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
       @resource.save
     end
-    
+
     authorize! :edit, @resource.attachable
 
     respond_to do |format|

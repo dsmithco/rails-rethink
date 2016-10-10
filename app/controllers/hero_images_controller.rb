@@ -61,7 +61,7 @@ class HeroImagesController < AttachmentsController
     end
 
     def hero_image_params
-      params.require(:hero_image).permit(:asset, :text_align, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
+      params.permit(:asset, :text_align, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
     end
 
     def attachment

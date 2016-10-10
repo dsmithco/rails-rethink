@@ -14,7 +14,7 @@
               <div class="row">
                 <div class="col-sm-9">
                   <div class="form-group">
-                    <%= f.text_field :name, class: 'form-control', placeholder: 'Title', onblur: "savehero_#{dom_id(hero)}()"%>
+                    <%= text_field_tag 'name', hero.name, class: 'form-control', placeholder: 'Title', onblur: "savehero_#{dom_id(hero)}()"%>
                   </div>
                 </div>
                 <div class="col-sm-3">
@@ -22,26 +22,27 @@
                 </div>
               </div>
               <div class="form-group">
-                <%= f.text_field :about, class: 'form-control', placeholder: 'Subtitle', onblur: "savehero_#{dom_id(hero)}()" %>
+                <%= text_field_tag 'about', hero.about, class: 'form-control', placeholder: 'Subtitle', onblur: "savehero_#{dom_id(hero)}()" %>
               </div>
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <%= f.text_field :link, class: 'form-control', placeholder: 'Link', onblur: "savehero_#{dom_id(hero)}()" %>
+                    <%= text_field_tag 'link', hero.link, class: 'form-control', placeholder: 'Link', onblur: "savehero_#{dom_id(hero)}()" %>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <%= f.text_field :link_text, class: 'form-control', placeholder: 'Link text', onblur: "savehero_#{dom_id(hero)}()" %>
+                    <%= text_field_tag 'link_text', hero.link_text, class: 'form-control', placeholder: 'Link text', onblur: "savehero_#{dom_id(hero)}()" %>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="form-group" id="text_align">
-                    <%= f.select :text_align, Attachment::TEXT_ALIGNMENTS, {:include_blank => "-- Select Alignment --"}, onchange: "savehero_#{dom_id(hero)}()", :class => 'form-control' %>
+                    <%= select_tag 'text_align', options_for_select(Attachment::TEXT_ALIGNMENTS, hero.text_align||'middle center'), onchange: "savehero_#{dom_id(hero)}()", :class => 'form-control' %>
                   </div>
                 </div>
               </div>
             </div>
+            <input type="hidden" name="no_render" value="1">
             <script type="text/javascript">
               function savehero_<%= dom_id(hero) %>(){
                 $(".<%=dom_id(hero)%>_button").click();

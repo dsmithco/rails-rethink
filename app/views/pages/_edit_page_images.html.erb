@@ -5,13 +5,13 @@
     <% end %>
   </div>
 </div>
-
-<span class="btn btn-success fileinput-button">
-    <i class="glyphicon glyphicon-plus"></i>
-    <span>Select image file...</span>
-    <input id="fileupload" type="file" name="image[asset]">
-</span>
-
+<% if @page.id.present? %>
+  <span class="btn btn-success fileinput-button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Select image file...</span>
+      <input id="fileupload" type="file" name="asset">
+  </span>
+<% end %>
 <br/>
 
 <div id="files" class="files"></div>
@@ -33,7 +33,7 @@
       dropZone: $('#images_zone'),
       multipart: true,
       add: function(e, data) {
-        data.formData = { 'image[attachable_id]': <%= @page.id %>, 'image[attachable_type]': 'Page' <%= ", 'id': #{@page.image.id}".html_safe if @page.image.present? %> };
+        data.formData = { 'attachable_id': <%= @page.id %>, 'attachable_type': 'Page' <%= ", 'id': #{@page.image.id}".html_safe if @page.image.present? %> };
         var file, types;
         types = /(\.|\/)(gif|jpe?g|png)$/i;
         file = data.files[0];
