@@ -189,8 +189,9 @@ body.has-fixed-navbar #body{
 }
 
 .hero-unit {
-  margin-top: -28px;
-  margin-bottom: 0em;
+  top: -28px !important;
+  margin-bottom: -28px;
+  position: relative;
   background-size: cover;
   background-position: center;
   height:600px;
