@@ -165,7 +165,6 @@ body.has-fixed-navbar #body{
   padding-top: $navbar-height + $navbar-padding-vertical;
 }
 
-
 .hero-unit h1 {
     color: #FFFFFF;
     font-size: 60px;
@@ -189,7 +188,7 @@ body.has-fixed-navbar #body{
 }
 
 .hero-unit {
-  top: -28px !important;
+  top: -28px;
   margin-bottom: -28px;
   position: relative;
   background-size: cover;
@@ -197,6 +196,11 @@ body.has-fixed-navbar #body{
   height:600px;
   display: table;
   width: 100%;
+}
+
+body.has-fixed-navbar .hero-unit {
+  top: 0;
+  margin-bottom: 0;
 }
 
 .hero-unit-cell {
