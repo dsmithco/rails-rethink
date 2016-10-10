@@ -20,7 +20,7 @@
 //= require jquery.matchHeight-min
 //= require ie10-viewport-bug-workaround
 
-'use strict';
+// 'use strict';
 
 var turbolinks_go = function(url, no_scroll){
   var scroll;
