@@ -1,18 +1,9 @@
 <%= form_for(block, remote: (remote||false)) do |f| %>
 <!-- MODAL HEADER -->
 <div class="modal-header">
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <h4 class="modal-title">
     <%= block.block_type.capitalize if block.block_type.present? %> Block
   </h4>
-  <script type="text/javascript">
-    function check_checkbox(){
-      var parent = $(this).parent();
-      var active_class = "btn-primary";
-      this.checked ? parent.addClass(active_class) : parent.removeClass(active_class);
-    }
-    $('#front_page_input').change(check_checkbox).change();
-  </script>
 </div>
 
 <!-- MODAL HIDDEN FIELDS -->
@@ -20,6 +11,7 @@
   <input type="hidden" value="<%= params[:page_ids][0].to_i %>" name="block[page_ids][]">
   <input type="hidden" value="<%= @current_website.id %>" name="block[website_id]">
 <% end %>
+<%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input', class: 'hide' %>
 
 <!-- MODAL BODY -->
 <div class="modal-body">
@@ -53,16 +45,6 @@
           <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
         </div>
       </div>
-      <% if !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) %>
-        <div class="form-group hide">
-            <div class="dt-label">
-              Front page
-            </div>
-            <div>
-              <label class="btn btn-default"><%= f.check_box :front_page, autocomplete: "off", id: 'front_page_input' %> Show on front page</label>
-            </div>
-        </div>
-      <% end %>
       <div class="form-group hide" id="block">
         <div class="dt-label">
           Container Block
@@ -84,15 +66,15 @@
           <%= f.select :columns, [1,2,3,4], {}, :class => 'form-control' %>
         </div>
       </div>
-      <div class="form-group" id="location">
-        <div class="dt-label">
-          Location
-        </div>
-        <div id="location">
-          <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
-        </div>
-      </div>
     <% end %>
+    <div class="form-group" id="location">
+      <div class="dt-label">
+        Location
+      </div>
+      <div id="location">
+        <%= f.select :location, Block::REGIONS, {:include_blank => "-- Select a location --"}, :class => 'form-control' %>
+      </div>
+    </div>
     <div class="form-group">
       <div class="dt-label">
         Block position
@@ -115,7 +97,7 @@
         if(['container','custom','category_list'].indexOf($('#block_type select').val()) > -1){
           $('#location').show();
           $('#location select').empty();
-          default_options.forEach(function(option){
+          main_options.forEach(function(option){
             $('#location select').append("<option>" + option + "</option>");
           });
         }
