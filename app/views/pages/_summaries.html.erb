@@ -3,7 +3,7 @@
     <% pages.each do |page| %>
       <div class="row media media-<%= page.id %>">
         <% if page.image.present? %>
-          <div class="col-sm-4">
+          <div class="col-sm-4 form-group">
             <%= link_to (image_tag page.image.medium, class: 'media-object'), page_path(page, 'redirect') %>
           </div>
         <% end %>
