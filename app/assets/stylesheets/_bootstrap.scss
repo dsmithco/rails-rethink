@@ -68,6 +68,18 @@ body {
   color: #555;
 }
 
+a {
+   outline: 0 !important;
+}
+
+a:hover, a:active, a:focus {
+  /* styling for any way a link is about to be used */
+}
+
+object, embed {
+  outline: 0;
+}
+
 #toast-container {
   opacity: 1;
 }
@@ -347,26 +359,47 @@ dl > dt > label {
     box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
 }
 
-
-.block-about {
-  margin: 15px;
-}
-
-.block .block-title{
-  margin: 0px 0px 5px;
-  padding-top: 10px;
-}
-
 .block-link {
-  margin: 0 0px 15px;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
 }
 
-.block .block-image + *,
-.block .block-title + *,
-.block .block-about + * {
-  margin-top: 15px !important;
+.block-image,
+.block-title,
+.block-about,
+.block-link {
+  display: block;
 }
+
+.block .block-title {
+  margin: 0px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.block .block-about {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.block .block-title + .block-about {
+  padding-top: 0px;
+}
+
+.block .block-link {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.block .block-title + .block-link,
+.block .block-about + .block-link {
+  padding-top: 0px;
+}
+
+.block-image img {
+  width: 100%;
+  height: auto;
+}
+
 
 .block_with_bg_color .block-title,
 .block_with_bg_color .block-about,
@@ -475,6 +508,11 @@ dl > dt > label {
   margin: 6px 0 10px 0;
   font-weight: 100;
   transition: .2s;
+}
+
+.page-edit-links {
+  top: -7px;
+  position: relative;
 }
 
 

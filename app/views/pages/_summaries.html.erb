@@ -1,17 +1,17 @@
 <% if pages.present? %>
-  <ul class="media-list">
+  <div class="media-list">
     <% pages.each do |page| %>
-      <li class="media media-<%= page.id %>">
+      <div class="row media media-<%= page.id %>">
         <% if page.image.present? %>
-          <div class="media-left">
+          <div class="col-sm-4">
             <%= link_to (image_tag page.image.medium, class: 'media-object'), page_path(page, 'redirect') %>
           </div>
         <% end %>
-        <div class="media-body">
+        <div class="col-sm-8">
           <h4 class="media-heading"><%= link_to page.name, page_path(page, 'redirect') %></h4>
-          <%= truncate(strip_tags(page.about), :length => 250) if page.about.present?%>
+          <%= truncate(strip_tags(page.description || page.about), :length => 250) if page.about.present?%>
         </div>
-      </li>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% end %>
