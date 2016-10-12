@@ -288,7 +288,9 @@ body.has-fixed-navbar .hero-unit {
   }
 }
 
-section {
+section.section {
+    padding: 40px 0;
+    display: inline-block;
 }
 
 .edit_link {
