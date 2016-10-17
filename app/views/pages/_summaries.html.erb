@@ -9,7 +9,7 @@
         <% end %>
         <div class="col-sm-<%= page.image.present? ? '8' : '12'%>">
           <h4 class="media-heading"><%= link_to page.name, page_path(page, 'redirect') %></h4>
-          <%= truncate(strip_tags((page.description.present? page.description : page.about)), :length => 250) if page.about.present?%>
+          <%= truncate(strip_tags((page.description.present? ? page.description : page.about)), :length => 250) if page.about.present?%>
         </div>
       </div>
     <% end %>
