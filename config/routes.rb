@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :answers
+  resources :form_responses
+  resources :questions
+  resources :forms
   resources :categories do
     member do
       get 'search'
@@ -36,6 +41,10 @@ Rails.application.routes.draw do
     end
   end
   resources :accounts
+
+  post 'partials/add'
+  post 'partials/reload'
+  post 'partials/remove'
 
   get 'sitemap' => 'websites#sitemap', :format => "xml"
   get 'robots' => 'websites#robots', :format => 'txt'

@@ -1,5 +1,6 @@
 class Block < ApplicationRecord
   belongs_to :website #, optional: true
+  belongs_to :form
   delegate :account, to: :website
   acts_as_list scope: [:website_id, :location, :block_id]
 
@@ -12,9 +13,12 @@ class Block < ApplicationRecord
   belongs_to :block
   belongs_to :category
 
+  # has_one :formable, as: :formable
+  # has_one :form, through: :formable
+
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation']
-  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom']
+  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form']
   LOWER_LEVEL_BLOCKS = ['sub_block']
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
   CONTENT_REGIONS = ['top', 'bottom']

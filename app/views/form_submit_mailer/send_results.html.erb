@@ -1,0 +1,10 @@
+<h1><%= @form_response.form.name %> form submission </h1>
+
+<% @form_response.answers.includes(:question).order('questions.position asc').each do |answer| %>
+  <strong>
+    <%= answer.question.name %>:
+  </strong>
+  <p>
+    <%= answer.answer_text %>
+  </p>
+<% end %>

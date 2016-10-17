@@ -30,7 +30,7 @@
 <% if (can? :edit, @current_website) && action_name == 'home' %>
   <div class="edit_link">
     <div class="btn-group-vertical">
-      <%= link_to '<i class="fa-fw fa fa-pencil"></i> Edit site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
+      <%= link_to '<i class="fa-fw fa fa-pencil"></i> Manage site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
     </div>
     <div class="btn-group-vertical">
       <%= link_to '<i class="fa-fw fa fa-image"></i> Hero images'.html_safe, "/websites/#{@current_website.id}/edit_heroes", remote: true, class: 'btn btn-info btn-sm  text-left' %>

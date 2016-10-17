@@ -1,0 +1,67 @@
+<%= form_for(question) do |f| %>
+  <% if question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :about %>
+    <%= f.text_area :about %>
+  </div>
+
+  <div class="field">
+    <%= f.label :help %>
+    <%= f.text_area :help %>
+  </div>
+
+  <div class="field">
+    <%= f.label :question_type %>
+    <%= f.text_field :question_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :is_required %>
+    <%= f.check_box :is_required %>
+  </div>
+
+  <div class="field">
+    <%= f.label :conditional_id %>
+    <%= f.number_field :conditional_id %>
+  </div>
+
+  <div class="field">
+    <%= f.label :conditional_value %>
+    <%= f.text_area :conditional_value %>
+  </div>
+
+  <div class="field">
+    <%= f.label :conditional_condition %>
+    <%= f.text_field :conditional_condition %>
+  </div>
+
+  <div class="field">
+    <%= f.label :position %>
+    <%= f.number_field :position %>
+  </div>
+
+  <div class="field">
+    <%= f.label :deleted_at %>
+    <%= f.datetime_select :deleted_at %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Answer text:</strong>
+  <%= @answer.answer_text %>
+</p>
+
+<p>
+  <strong>Form response:</strong>
+  <%= @answer.form_response %>
+</p>
+
+<p>
+  <strong>Question:</strong>
+  <%= @answer.question %>
+</p>
+
+<p>
+  <strong>Question json:</strong>
+  <%= @answer.question_json %>
+</p>
+
+<%= link_to 'Edit', edit_answer_path(@answer) %> |
+<%= link_to 'Back', answers_path %>

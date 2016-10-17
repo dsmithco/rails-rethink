@@ -1,0 +1,31 @@
+<div class="form-group">
+  <h4>Questions</h4>
+  <div id="questions">
+    <% @form.questions.each_with_index do |question, index| %>
+      <%= render 'forms/form_questions_question', question: question, index: index %>
+    <% end %>
+  </div>
+  <%= link_to '+ Add question',
+              "/partials/add?partial=forms/form_questions_question&list=questions&model=question",
+              class: "btn btn-primary btn-sm",
+              remote: true,
+              method: 'POST' %>
+  <hr/>
+</div>
+<script type="text/javascript">
+  $( "#questions" ).sortable({
+    placeholder: "ui-state-highlight",
+    tolerence: 'intersect'
+  });
+  $( "#questions" ).on( "sortupdate", function( event, ui ) {
+    console.log(ui);
+    // console.log(event);
+    $.each(ui.item.context.parentElement.children, function( index, value ) {
+      var position;
+      position = $(ui.item.context.parentElement.children[index]).index();
+      $(ui.item.context.parentElement.children[index]).find('.position input').val(index + 1);
+    });
+
+
+  });
+</script>

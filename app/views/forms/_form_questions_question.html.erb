@@ -1,0 +1,78 @@
+<div class="well" id="<%= dom_id(question) %>" data-id="<%= question.id %>" >
+  <div class="row">
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :name,
+      container_class: 'col-xs-8 form-group',
+      input_name: 'form[questions_attributes][][name]',
+      input_type: 'text_field',
+      input_label: 'none',
+      input_placeholder: 'Question text'
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :question_type,
+      container_class: 'col-xs-2 form-group',
+      input_name: 'form[questions_attributes][][question_type]',
+      input_type: 'single_select',
+      input_label: 'none',
+      input_options: Question::QUESTION_TYPES
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :is_required,
+      container_class: 'col-xs-2 form-group',
+      input_name: "form[questions_attributes][][is_required]",
+      input_type: 'single_select',
+      input_label: 'none',
+      input_options: [{id:'false', name:'not required'}, {id:'true', name: 'required'}]
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :help,
+      container_class: 'col-sm-11 form-group',
+      input_name: 'form[questions_attributes][][help]',
+      input_type: 'text_field',
+      input_label: 'none',
+      input_placeholder: 'Help text'
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :id,
+      input_name: 'form[questions_attributes][][id]',
+      input_type: 'hidden'
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :_destroy,
+      container_class: 'destroy',
+      input_name: 'form[questions_attributes][][_destroy]',
+      input_type: 'hidden'
+    %>
+
+    <%= render 'forms/input',
+      object: question,
+      field_name: :position,
+      container_class: 'col-sm-10 position',
+      input_name: 'form[questions_attributes][][position]',
+      input_type: 'hidden'
+    %>
+    <div class="col-sm-1">
+      <a class="btn btn-danger btn-block destroy"><i class="fa fa-trash"></i></a>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.destroy').click(function(){
+    $(this).closest('.well').find('.destroy input').val('1')
+    $(this).closest('.well').hide();
+  });
+</script>

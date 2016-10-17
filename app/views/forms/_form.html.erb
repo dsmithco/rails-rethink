@@ -1,0 +1,79 @@
+<%= form_for(form) do |f| %>
+  <% if form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(form.errors.count, "error") %> prohibited this form from being saved:</h2>
+
+      <ul>
+      <% form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <!--
+    object
+    form_object
+    field_name
+    input_type
+    input_class
+    container_class
+    input_options
+    input_required
+    input_errors
+    input_label
+    input_placeholder
+   -->
+  <%= render 'forms/input',
+    object: form,
+    field_name: :name,
+    input_type: 'text_field',
+    input_label: 'none',
+    input_placeholder: 'Form name'
+  %>
+
+  <%= render 'forms/input',
+    object: form,
+    field_name: :about,
+    input_type: 'text_area',
+    input_label: 'none',
+    input_placeholder: 'Form about'
+  %>
+
+  <div class="form-group">
+    <%= f.text_area :description, class: 'form-control', placeholder: 'Form summary description' %>
+  </div>
+
+  <%= render 'forms/input',
+    object: form,
+    field_name: :email_recipients,
+    input_type: 'text_area',
+    input_label: 'Email results to',
+    input_placeholder: 'Comma separated list of email recipients'
+  %>
+
+  <%= render 'forms/input',
+    object: form,
+    field_name: :open_at,
+    input_type: 'datetime'
+  %>
+
+  <%= render 'forms/input',
+    object: form,
+    field_name: :close_at,
+    input_type: 'datetime'
+  %>
+
+  <%= render 'forms/input',
+    object: form,
+    field_name: :is_published,
+    input_type: 'true_false',
+    input_placeholder: 'Published'
+  %>
+
+  <%= render 'forms/form_questions' %>
+
+  <div class="actions">
+    <%= f.submit 'Save form', class:'btn btn-success' %>
+    <%= link_to 'Cancel', request.env["HTTP_REFERER"] || '/forms', class:'btn', data: {confirm: 'Are you sure you want to Cancel?'}%>
+  </div>
+<% end %>

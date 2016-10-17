@@ -1,0 +1,2 @@
+$("#<%= request.parameters['list'] %>")
+  .append('<%=j render request.parameters['partial'], "#{request.parameters['model']}": eval(request.parameters['model'].capitalize).new %>');

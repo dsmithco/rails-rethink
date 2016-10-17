@@ -1,16 +1,24 @@
-<h1>Editing Website</h1>
-<!-- Nav tabs -->
-<ul class="nav nav-tabs">
-  <li class="<%= !params[:tab].present? ? 'active' : '' %>">
-    <%= link_to 'Website Info', "#{@browser_request.path}" %>
-  </li>
-  <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
-    <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
-  </li>
-  <li class="<%= params[:tab] == 'categories' ? 'active' : '' %>">
-    <%= link_to 'Categories', "#{@browser_request.path}?tab=categories" %>
-  </li>
-</ul>
+<dl class="">
+  <dt></dt>
+  <dd>
+    <h1><%= @website.name %></h1>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+      <li class="<%= !params[:tab].present? ? 'active' : '' %>">
+        <%= link_to 'Website Info', "#{@browser_request.path}" %>
+      </li>
+      <li class="<%= params[:tab] == 'blocks' ? 'active' : '' %>">
+        <%= link_to 'Blocks', "#{@browser_request.path}?tab=blocks" %>
+      </li>
+      <li class="<%= params[:tab] == 'categories' ? 'active' : '' %>">
+        <%= link_to 'Categories', "#{@browser_request.path}?tab=categories" %>
+      </li>
+      <li class="<%= params[:tab] == 'forms' ? 'active' : '' %>">
+        <%= link_to 'Forms', "#{@browser_request.path}?tab=forms" %>
+      </li>
+    </ul>
+  </dd>
+</dl>
 
 <br/>
 
@@ -24,4 +32,8 @@
 
 <% if params[:tab] == 'categories' %>
   <%= render 'edit_categories', website: @website %>
+<% end %>
+
+<% if params[:tab] == 'forms' %>
+  <%= render 'edit_forms', website: @website %>
 <% end %>

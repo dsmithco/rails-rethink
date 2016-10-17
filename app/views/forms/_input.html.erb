@@ -1,0 +1,103 @@
+<!--
+  object
+  field_name
+  input_type
+  input_class
+  container_class
+  input_options
+  input_required
+  input_errors
+  input_label
+  input_placeholder
+ -->
+
+
+<div class="<%= input_type == 'hidden' ? 'hide' : '' %> <%= container_class ||= 'form-group'%>" id="<%=dom_id(object)%>_<%= field_name.to_s %>" >
+
+  <!-- Checkbox -->
+  <% if input_type == 'hidden' %>
+    <input
+      name='<%= input_name ||= "#{object.class.name.downcase}[#{field_name}]" %>'
+      value='<%= object[field_name].present? ? object[field_name] : (input_default ||= '') %>'
+    />
+  <% end %>
+
+  <!-- label -->
+  <% input_label ||= field_name %>
+  <% if input_label != 'none' %>
+    <label>
+      <!-- Checkbox -->
+      <% if input_type == 'true_false' %>
+        <%= hidden_field_tag input_name ||= "#{object.class.name.downcase}[#{field_name}]", 'false' %>
+        <%= check_box_tag input_name ||= "#{object.class.name.downcase}[#{field_name}]", '1', object[field_name].present? %>
+      <% end %>
+      <%= input_label.to_s.humanize  %>
+    </label>
+  <% end %>
+
+  <!-- Text field -->
+  <% if input_type == 'text_field' %>
+    <%= text_field_tag field_name, object[field_name],
+          name: input_name ||= "#{object.class.name.downcase}[#{field_name}]",
+          class: "#{input_class ||= 'form-control' unless input_class == 'none'}",
+          placeholder: "#{input_placeholder ||= ''}",
+          required: input_required||=false
+    %>
+  <% end %>
+
+  <!-- Text field -->
+  <% if input_type == 'email' %>
+    <%= email_field_tag field_name, object[field_name],
+          name: input_name ||= "#{object.class.name.downcase}[#{field_name}]",
+          class: "#{input_class ||= 'form-control' unless input_class == 'none'}",
+          placeholder: "#{input_placeholder ||= ''}",
+          required: input_required||=false
+    %>
+  <% end %>
+
+  <!-- Textarea -->
+  <% if input_type == 'text_area' %>
+    <%= text_area_tag field_name, object[field_name],
+          name: input_name ||= "#{object.class.name.downcase}[#{field_name}]",
+          class: "#{input_class ||= 'form-control' unless input_class == 'none'}",
+          placeholder: "#{input_placeholder ||= ''}",
+          required: input_required||=false
+    %>
+  <% end %>
+
+  <!-- Single Select -->
+  <% if input_type == 'single_select'%>
+    <select
+      name='<%= input_name ||= "#{object.class.name.downcase}[#{field_name}]" %>'
+      class='<%= "#{input_class ||= 'form-control' unless input_class == 'none'}" %>'
+      id='<%= "#{object.class.name.downcase}_#{field_name}" %>'
+      >
+      <% input_options.each do |option| %>
+        <% if option.is_a? Hash %>
+            <option value='<%= option[:id] %>' <%= option[:id] === object[field_name].to_s ? 'selected' : '' %> >
+              <%= option[:name].humanize %>
+            </option>
+        <% else %>
+          <option value='<%= option %>' <%= option == object[field_name].to_s ? 'selected' : '' %> >
+            <%= option.humanize %>
+          </option>
+        <% end %>
+      <% end %>
+
+    </select>
+  <% end %>
+
+  <!-- DateTime picker -->
+  <% if input_type == 'datetime' %>
+    <br/>
+    <%= datetime_select "#{object.class.name.downcase}", "#{field_name}", { :default => object[field_name], ampm: true, include_blank: true, default_blank: true, start_year: (object[field_name].try(:year) || Time.now.year) }%>
+  <% end %>
+
+  <!-- Help text -->
+  <% if (input_help ||= nil).present? %>
+    <div class="help-block small">
+      &nbsp;<%= input_help %>
+    </div>
+  <% end %>
+
+</div>

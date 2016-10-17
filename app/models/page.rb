@@ -13,8 +13,12 @@ class Page < ApplicationRecord
   has_many :blocks, through: :page_blocks
   has_one :image, as: :attachable, dependent: :destroy
   has_many :pages
-  has_many :page_categories, dependent: :destroy 
+  has_many :page_categories, dependent: :destroy
   has_many :categories, through: :page_categories
+
+  has_one :formable, as: :formable
+  has_one :form, through: :formable
+
   validates :website, presence: true
 
   after_save :menu_setup

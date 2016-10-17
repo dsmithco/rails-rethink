@@ -41,8 +41,9 @@
                       <%= block_type.capitalize %></button>
           <% end %>
         </div>
-        <div class="hide">
-          <%= f.select :block_type, Block::BLOCK_TYPES, {:include_blank => "-- Select a type --"}, :class => 'form-control' %>
+        <div class="form-group hide">
+          <label>Block Type</label>
+          <%= f.select :block_type, Block::BLOCK_TYPES.collect {|x| [x.humanize, x]}, {:include_blank => "-- Block Type --"}, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group hide" id="block">
@@ -55,7 +56,17 @@
       </div>
       <div class="form-group" id="category">
         <div>
+          <label>Category</label>
           <%= f.select :category_id, @current_website.categories.collect {|x| [x.name.present? ? "#{x.name} (#{x.pages.try(:count)})" : "Block id: #{x.id} (#{x.pages.try(:count)})", x.id]}, {:include_blank => "-- Select a Category --"}, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group" id="form_list">
+        <div>
+          <label>Form</label>
+          <%= f.select :form_id, @current_website.forms.collect {|x| [x.name, x.id]}, {:include_blank => "-- Select a Form --"}, :class => 'form-control' %>
+          <div class="text-right">
+            <%= link_to 'Manage forms', forms_path %>
+          </div>
         </div>
       </div>
       <div class="form-group" id="columns">
@@ -93,13 +104,21 @@
         $('#columns').hide();
         $('#location').hide();
         $('#category').hide();
+        $('#form_list').hide();
 
-        if(['container','custom','category_list'].indexOf($('#block_type select').val()) > -1){
+        if(['container','custom','category_list', 'form'].indexOf($('#block_type select').val()) > -1){
           $('#location').show();
           $('#location select').empty();
-          main_options.forEach(function(option){
-            $('#location select').append("<option>" + option + "</option>");
-          });
+          if(<%= @page.present? %>){
+            default_options.forEach(function(option){
+              $('#location select').append("<option>" + option + "</option>");
+            });
+          }else{
+            main_options.forEach(function(option){
+              $('#location select').append("<option>" + option + "</option>");
+            });
+          }
+
         }
         if($('#block_type select').val() == 'sub_block'){
           $('#block').show();
@@ -109,6 +128,9 @@
         }
         if($('#block_type select').val() == 'category_list'){
           $('#category').show();
+        }
+        if($('#block_type select').val() == 'form'){
+          $('#form_list').show();
         }
         $('#location select').val(location_value).change();
       }
@@ -124,7 +146,6 @@
       $('#block_type select').change(set_options);
       $('#block_type select').change(hide_navigation_fields);
       $('#block_type select').change();
-
       function setBlockType(div){
         $('#block_type select').val(div.id).change();
         $('#block_type button.active').removeClass('active');

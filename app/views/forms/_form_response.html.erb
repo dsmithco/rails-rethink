@@ -1,0 +1,48 @@
+<div id="<%=dom_id(@form_response.form)%>">
+  <%= form_for(@form_response, remote: true) do |f| %>
+
+    <div id="questions" class="form-group">
+      <% @form_response.form.questions.each do |question| %>
+
+        <%
+          answer = @form_response.answers.find_or_initialize_by(question_id: question.id)
+          answer.question_json = question.to_json
+        %>
+
+        <%= render 'forms/input',
+          object: answer,
+          field_name: :question_id,
+          input_default: question.id,
+          input_name: 'form_response[answers_attributes][][question_id]',
+          input_type: 'hidden'
+        %>
+
+        <%= render 'forms/input',
+          object: answer,
+          field_name: :id,
+          input_default: answer.id,
+          input_name: 'form_response[answers_attributes][][id]',
+          input_type: 'hidden'
+        %>
+
+        <%= render 'forms/input',
+          object: answer,
+          field_name: :answer_text,
+          container_class: 'form-group',
+          input_name: "form_response[answers_attributes][][answer_text]",
+          input_type: question.question_type,
+          input_label: question.name,
+          input_help: question.about,
+          input_placeholder: question.help,
+          input_required: question.is_required == true
+        %>
+
+      <% end %>
+    </div>
+
+    <div class="actions">
+      <div class="hide"><%= f.text_field :form_id %></div>
+      <%= f.submit "Submit", class: "btn-block btn btn-success btn-lg" %>
+    </div>
+  <% end %>
+</div>

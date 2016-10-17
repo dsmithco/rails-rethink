@@ -569,6 +569,7 @@ h1.block-title {
 .page-top-image-with-left h1,
 .page-container-with-left .page-title-section h2 {
   padding-left: 30%;
+  display: block;
   @media (max-width: $screen-sm) {
     padding-left: 0%
   }
@@ -883,3 +884,8 @@ iframe {
     transition: all 0.3s ease-out;
     opacity: 1;
 }
+
+#sortable_heros {list-style-type: none; margin: 0; padding: 0;}
+#sortable_heros li {margin: 0 5px 5px 5px;padding: 5px;font-size: 1.2em;height: 1.5em;}
+html>body #sortable_heros li {height: 1.5em;line-height: 1.2em;}
+.ui-state-highlight {height: 200px; border-radius: 4px;border: 1px dashed #ccc;line-height: 1.2em;width: 100%;display: block;clear: both;margin-bottom: 20px;}

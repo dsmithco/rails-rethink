@@ -1,0 +1,20 @@
+<h1>
+  <%= @form.name %>
+  <% if can? :update, @form %>
+    <div class="btn-group form-edit-links pull-right">
+      <%= link_to '&nbsp; &nbsp; <i class="fa fa-file-text-o"></i> View'.html_safe, form_path(@form), class: 'btn btn-primary btn-circle' %>
+      <%= link_to '<i class="fa fa-table"></i> Results'.html_safe, form_path(@form, {results:1}), class: 'btn btn-primary btn-circle' %>
+      <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit &nbsp; &nbsp;'.html_safe, edit_form_path(@form), class: 'btn btn-primary btn-circle' %>
+    </div>
+    <br/>
+  <% end %>
+</h1>
+
+<p>
+  <%= @form.about %>
+</p>
+
+
+<%= render 'forms/form_response', form_response: @form_response=@form.form_responses.build if !params[:results].present?%>
+
+<%= render 'forms/form_results', '@form': @form if params[:results].present?%>

@@ -1,10 +1,11 @@
 <h2 class="page-title">
   <%= @user.name %>
-  <%= link_to "<i class='glyphicon glyphicon-pencil'></i> Edit".html_safe, edit_user_path(@user), class: 'btn btn-sm btn-primary inverse' %>
+  <small><%= @user.email %></small>
+  <%= link_to "<i class='glyphicon glyphicon-pencil'></i> Edit".html_safe, edit_user_path(@user), class: 'btn pull-right btn-primary' %>
 
 </h2>
 
-<dl class="dl-horizontal well">
+<dl class="hide dl-horizontal well">
   <dt>Email</dt>
   <dd><%= @user.email %></dd>
   <dt>Accounts</dt>
@@ -16,7 +17,6 @@
     <% end %>
   <% end %>
 </dl>
-<br/>
 <ul class="nav nav-tabs">
   <li class="active">
     <a href="#">Websites</a>

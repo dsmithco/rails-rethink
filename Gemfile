@@ -8,6 +8,7 @@ gem 'pg', '~> 0.18'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 gem 'mina-puma', :require => false
+gem 'delayed_job_active_record'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

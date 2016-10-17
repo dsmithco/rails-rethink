@@ -8,6 +8,8 @@ class Website < ApplicationRecord
   has_many :hero_images, -> { order(position: :asc) }, as: :attachable
   has_many :images, as: :attachable
 
+  has_many :forms
+
   validate :domain_url_uniqueness
   validates :account, presence: true
   after_initialize :set_default_styles

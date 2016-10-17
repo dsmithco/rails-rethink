@@ -1,0 +1,34 @@
+<% if (can? :edit, @form ) %>
+<div class="panel panel-default">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <% @form.questions.each do |question| %>
+            <th>
+              <%= question.name %>
+            </th>
+          <% end %>
+            <th>
+
+            </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @form.form_responses.each do |response| %>
+          <tr>
+            <% response.answers.includes(:question).order('questions.position asc').each do |answer| %>
+              <td>
+                <%= answer.answer_text %>
+              </td>
+            <% end %>
+            <td>
+              <%= link_to 'View', response, class: 'btn btn-sm btn-circle btn-primary inverse'%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% end %>

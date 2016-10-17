@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008220140) do
+ActiveRecord::Schema.define(version: 20161016213527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,26 @@ ActiveRecord::Schema.define(version: 20161008220140) do
   create_table "accounts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "answer_question_options", force: :cascade do |t|
+    t.integer  "answer_id"
+    t.integer  "question_option_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["answer_id"], name: "index_answer_question_options_on_answer_id", using: :btree
+    t.index ["question_option_id"], name: "index_answer_question_options_on_question_option_id", using: :btree
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.text     "answer_text"
+    t.integer  "form_response_id"
+    t.integer  "question_id"
+    t.text     "question_json"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["form_response_id"], name: "index_answers_on_form_response_id", using: :btree
+    t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
   end
 
   create_table "attachments", force: :cascade do |t|
@@ -71,8 +91,10 @@ ActiveRecord::Schema.define(version: 20161008220140) do
     t.string   "text_align"
     t.integer  "columns",     default: 3
     t.integer  "category_id"
+    t.integer  "form_id"
     t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
     t.index ["category_id"], name: "index_blocks_on_category_id", using: :btree
+    t.index ["form_id"], name: "index_blocks_on_form_id", using: :btree
     t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
   end
 
@@ -89,6 +111,52 @@ ActiveRecord::Schema.define(version: 20161008220140) do
     t.index ["category_id"], name: "index_categories_on_category_id", using: :btree
     t.index ["slug"], name: "categories_slug_idx", using: :btree
     t.index ["website_id"], name: "index_categories_on_website_id", using: :btree
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  end
+
+  create_table "form_responses", force: :cascade do |t|
+    t.integer  "form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_form_responses_on_form_id", using: :btree
+  end
+
+  create_table "formables", force: :cascade do |t|
+    t.integer  "form_id"
+    t.string   "formable_type"
+    t.integer  "formable_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["form_id"], name: "index_formables_on_form_id", using: :btree
+    t.index ["formable_type", "formable_id"], name: "index_formables_on_formable_type_and_formable_id", using: :btree
+  end
+
+  create_table "forms", force: :cascade do |t|
+    t.string   "name"
+    t.text     "about"
+    t.text     "description"
+    t.datetime "open_at"
+    t.datetime "close_at"
+    t.boolean  "is_published"
+    t.integer  "website_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.text     "email_recipients"
+    t.index ["website_id"], name: "index_forms_on_website_id", using: :btree
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -147,6 +215,34 @@ ActiveRecord::Schema.define(version: 20161008220140) do
     t.index ["website_id"], name: "index_pages_on_website_id", using: :btree
   end
 
+  create_table "question_options", force: :cascade do |t|
+    t.integer  "question_id"
+    t.string   "name"
+    t.text     "about"
+    t.datetime "deleted_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "position"
+    t.index ["question_id"], name: "index_question_options_on_question_id", using: :btree
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "name"
+    t.text     "about"
+    t.text     "help"
+    t.string   "question_type"
+    t.boolean  "is_required"
+    t.integer  "conditional_id"
+    t.text     "conditional_value"
+    t.string   "conditional_condition"
+    t.integer  "position"
+    t.datetime "deleted_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "form_id"
+    t.index ["form_id"], name: "index_questions_on_form_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -195,16 +291,26 @@ ActiveRecord::Schema.define(version: 20161008220140) do
 
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
+  add_foreign_key "answer_question_options", "answers"
+  add_foreign_key "answer_question_options", "question_options"
+  add_foreign_key "answers", "form_responses"
+  add_foreign_key "answers", "questions"
   add_foreign_key "blocks", "blocks"
   add_foreign_key "blocks", "categories"
+  add_foreign_key "blocks", "forms"
   add_foreign_key "blocks", "websites"
   add_foreign_key "categories", "categories"
   add_foreign_key "categories", "websites"
+  add_foreign_key "form_responses", "forms"
+  add_foreign_key "formables", "forms"
+  add_foreign_key "forms", "websites"
   add_foreign_key "page_blocks", "blocks"
   add_foreign_key "page_blocks", "pages"
   add_foreign_key "page_categories", "categories"
   add_foreign_key "page_categories", "pages"
   add_foreign_key "pages", "pages"
   add_foreign_key "pages", "websites"
+  add_foreign_key "question_options", "questions"
+  add_foreign_key "questions", "forms"
   add_foreign_key "websites", "accounts"
 end

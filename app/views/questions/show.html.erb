@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @question.name %>
+</p>
+
+<p>
+  <strong>About:</strong>
+  <%= @question.about %>
+</p>
+
+<p>
+  <strong>Help:</strong>
+  <%= @question.help %>
+</p>
+
+<p>
+  <strong>Question type:</strong>
+  <%= @question.question_type %>
+</p>
+
+<p>
+  <strong>Is required:</strong>
+  <%= @question.is_required %>
+</p>
+
+<p>
+  <strong>Conditional:</strong>
+  <%= @question.conditional_id %>
+</p>
+
+<p>
+  <strong>Conditional value:</strong>
+  <%= @question.conditional_value %>
+</p>
+
+<p>
+  <strong>Conditional condition:</strong>
+  <%= @question.conditional_condition %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @question.position %>
+</p>
+
+<p>
+  <strong>Deleted at:</strong>
+  <%= @question.deleted_at %>
+</p>
+
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Back', questions_path %>

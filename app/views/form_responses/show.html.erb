@@ -1,0 +1,17 @@
+  <dl class="dl-horizontal">
+    <dt>
+    </dt>
+    <dd>
+      <h1><%= @form_response.form.name %></h1>
+    </dd>
+  </dl>
+  <% @form_response.answers.includes(:question).order('questions.position asc').each do |answer| %>
+    <dl class="dl-horizontal">
+      <dt>
+        <%= answer.question.name %>:
+      </dt>
+      <dd>
+        <%= answer.answer_text %>
+      </dd>
+    </dl>
+  <% end %>

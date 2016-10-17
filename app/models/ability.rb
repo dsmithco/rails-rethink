@@ -22,12 +22,20 @@ class Ability
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
-    can [:create,:manage], [Category, Block, Page] do |item|
-      can? :edit, Website.find(item.website_id)
+    can [:create,:manage], [Category, Block, Page, Form, Answer, AnswerQuestionOption] do |item|
+      (item.website_id.present?) && (can? :edit, Website.find(item.website_id))
     end
 
-    can [:new], [Category, Block, Page] do |item|
+    can [:create,:manage], [FormResponse] do |item|
+      (item.form_id.present?) && (can? :edit, item.form)
+    end
+
+    can [:new], [Category, Block, Page, Form] do |item|
       user.account_ids.present?
+    end
+
+    can [:new, :create], [FormResponse, Answer, AnswerQuestionOption] do |item|
+      true # TODO: add specifications for closed or unpublished forms
     end
 
     can [:manage], [Attachment, Image, HeroImage, Logo] do |h|

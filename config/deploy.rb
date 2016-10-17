@@ -3,9 +3,13 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/puma'
+require 'mina/delayed_job'
 
 require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
+
+set :delayed_job, lambda { "bin/delayed_job --pool=*:2" }
+set :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/pids" }
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -94,6 +98,8 @@ task :deploy => :environment do
       # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb stop"
       queue "ps -ef | grep puma | grep -v grep | awk '{print $2}' | xargs kill -9"
       queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb start"
+      invoke :'delayed_job:stop'
+      invoke :'delayed_job:start'
     end
   end
 end
