@@ -2,8 +2,12 @@
   <% blocks.each do |block| %>
     <% cache [current_user, block, block.blocks, block.form, block.category, block.category.try(:pages)] do %>
       <div id="<%= dom_id(block) %>" class="block-main <%= block.block_type %>-type text-<%= block.text_align %>">
-        <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color if block.bg_color.present? %>;"></div>
-        <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+        <% if block.bg_color.present? %>
+          <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
+        <% end %>
+        <% if block.image.present? %>
+          <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+        <% end %>
         <div class="block-contents">
           <% if can? :update, block %>
             <div class="btn-group pull-right block-edit-btns">
