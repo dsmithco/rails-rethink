@@ -840,6 +840,7 @@ body:not(.snapjs-right) .snap-drawers{
    bottom: 0;
    right: 0;
    z-index: 0;
+   box-shadow: 0px 1px 0px rgba(0,0,0,.08)inset;
 }
 
 .block_bg_color {
@@ -850,6 +851,7 @@ body:not(.snapjs-right) .snap-drawers{
    bottom: 0;
    right: 0;
    z-index: 0;
+   box-shadow: 0px 1px 0px rgba(0,0,0,.08)inset;
 }
 iframe {
   max-width: 100% !important;
