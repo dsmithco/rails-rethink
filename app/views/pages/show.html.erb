@@ -21,7 +21,6 @@
         <% cache [@page.pages, current_user] do %>
           <%= render 'pages/summaries', pages: @page.pages %>
         <% end %>
-        <br/>
       </div>
       <% cache [@page.right_blocks, current_user] do %>
         <%= content_tag('div', (render 'blocks/side_blocks', blocks: @page.right_blocks), class: 'page-blocks-right') if @page.right_blocks.present? %>
