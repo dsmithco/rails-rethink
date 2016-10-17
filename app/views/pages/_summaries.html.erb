@@ -7,7 +7,7 @@
             <%= link_to (image_tag page.image.medium, class: 'media-object'), page_path(page, 'redirect') %>
           </div>
         <% end %>
-        <div class="col-sm-8">
+        <div class="col-sm-<%= page.image.present? '8' : '12'%>">
           <h4 class="media-heading"><%= link_to page.name, page_path(page, 'redirect') %></h4>
           <%= truncate(strip_tags(page.description || page.about), :length => 250) if page.about.present?%>
         </div>
