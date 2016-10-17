@@ -12,4 +12,6 @@ class FormResponse < ApplicationRecord
     FormSubmitMailer.send_results(self).deliver_now if self.form.email_recipients.present?
   end
 
+  handle_asynchronously :send_form_response_results
+
 end
