@@ -18,7 +18,7 @@
             <%= render 'categories/page_footer', categories: @page.categories %>
           <% end %>
         <% end %>
-        <% cache [@page.pages, current_user] do %>
+        <% cache [@page, @page.pages, current_user] do %>
           <%= render 'pages/summaries', pages: @page.pages %>
         <% end %>
       </div>
