@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_website
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_action :set_csrf_cookie_for_ng
+  before_action :set_provider_header
 
 	def set_csrf_cookie_for_ng
 	  cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
@@ -79,6 +80,10 @@ class ApplicationController < ActionController::Base
 
     def verified_request?
       super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
+    end
+
+    def set_provider_header
+      response.headers['host_provider'] = 'Rethink Web Design'
     end
 
 end

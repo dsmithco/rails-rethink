@@ -51,6 +51,8 @@ Rails.application.routes.draw do
   root "websites#home"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
+  get "*keyword" => "websites#home"
+
   # this is to handle an old url for morerain.com
   constraints(:host => /morerain.com/) do
     match "/podcasts/mp3/morerain" => redirect {|params, req| "http://feeds.feedburner.com/morerain/#{params[:path]}"},  via: [:get]

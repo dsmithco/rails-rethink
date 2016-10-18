@@ -9,4 +9,5 @@
       <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm btn-circle' if can? :update, block  %>
     </div>
   <% end %>
+  <div class="clearfix"></div>
 </div>

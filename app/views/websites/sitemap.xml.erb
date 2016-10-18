@@ -46,4 +46,26 @@
       <% end %>
     </url>
   <% end %>
+  <% @current_website.tags.split(',').each do |tag| %>
+    <url>
+      <loc>
+        <%= "https://#{@current_website.domain_url}/#{tag.titleize.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')}" %>
+      </loc>
+      <lastmod>
+        <%= @current_website.updated_at.to_time.iso8601 %>
+      </lastmod>
+      <priority>
+        0.7
+      </priority>
+      <changefreq>
+        weekly
+      </changefreq>
+      <% if @current_website.hero_images.present? %>
+        <image:image>
+           <image:loc><%= @current_website.hero_images.first.asset %></image:loc>
+           <image:caption><%= @current_website.hero_images.first.asset_file_name %></image:caption>
+        </image:image>
+      <% end %>
+    </url>
+  <% end %>
 </urlset>
