@@ -1,6 +1,7 @@
+require 'rest-client'
+
 desc "Submit sitemaps to search engines"
 task :submit_sitemaps => :environment do
-  require 'rest-client'
   Website.where.not(domain_url:[nil,'']).each do |website|
     begin
       url_res =  RestClient.get("https://#{website.domain_url}", headers={})
