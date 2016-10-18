@@ -109,7 +109,7 @@
         if(['container','custom','category_list', 'form'].indexOf($('#block_type select').val()) > -1){
           $('#location').show();
           $('#location select').empty();
-          if(<%= @page.present? %>){
+          if(<%= params[:page_ids].present? %>){
             default_options.forEach(function(option){
               $('#location select').append("<option>" + option + "</option>");
             });

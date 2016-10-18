@@ -371,7 +371,7 @@ dl > dt > label {
 .block .block-title {
   display: block;
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .block .block-about {
@@ -380,7 +380,11 @@ dl > dt > label {
 }
 
 .block .block-title + .block-about {
-  margin-top: 0px;
+  margin-top: -10px;
+}
+
+.block .block-image + .block-about {
+  margin-top: 20px;
 }
 
 .block .block-link {
@@ -388,10 +392,6 @@ dl > dt > label {
   margin-bottom: 25px;
 }
 
-.block .block-title + .clearfix,
-.block .block-about + .clearfix {
-  margin-top: 23px;
-}
 .block-image img {
   width: 100%;
   height: auto;
