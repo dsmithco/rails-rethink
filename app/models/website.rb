@@ -81,8 +81,9 @@ class Website < ApplicationRecord
       begin
         url_res =  RestClient.get("https://#{self.domain_url}", headers={})
         if url_res.headers[:host_provider] == "Rethink Web Design"
-          response = RestClient.get("http://www.google.com/webmasters/sitemaps/ping?sitemap=https://#{self.domain_url}/sitemap.xml", headers={})
-          if response.code == 200
+          google_response = RestClient.get("http://www.google.com/webmasters/sitemaps/ping?sitemap=https://#{self.domain_url}/sitemap.xml", headers={})
+          bing_response = RestClient.get("http://www.bing.com/webmaster/ping.aspx?siteMap=https://#{self.domain_url}/sitemap.xml", headers={})
+          if google_response.code == 200 && bing_response.code == 200
             Rails.logger.info "Successfully sent sitemap for #{self.domain_url}"
             ActionMailer::Base.mail(:from => "info@rethinkwebdesign.com",
                                     :to => "info@rethinkwebdesign.com",
