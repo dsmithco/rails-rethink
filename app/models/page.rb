@@ -22,7 +22,7 @@ class Page < ApplicationRecord
   validates :website, presence: true
 
   after_save :menu_setup
-
+  after_save :submit_sitemaps
 
   def left_blocks
     self.blocks.where(location: 'left')
@@ -79,5 +79,11 @@ class Page < ApplicationRecord
       end
     end
   end
+
+  def submit_sitemaps
+    self.website.submit_sitemaps
+  end
+
+  handle_asynchronously :submit_sitemaps
 
 end

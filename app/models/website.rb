@@ -14,6 +14,7 @@ class Website < ApplicationRecord
   validates :account, presence: true
   after_initialize :set_default_styles
   after_create :setup_nginx_prod
+  after_save :submit_sitemaps
 
   def set_default_styles
     self.style['brand-primary'] = '#009bff' unless self.style['brand-primary'].present?
@@ -75,6 +76,26 @@ class Website < ApplicationRecord
   def rethink_href
     return "//#{self.rethink_url}"
   end
+
+  def submit_sitemaps
+      begin
+        url_res =  RestClient.get("https://#{self.domain_url}", headers={})
+        if url_res.headers[:host_provider] == "Rethink Web Design"
+          response = RestClient.get("http://www.google.com/webmasters/sitemaps/ping?sitemap=https://#{self.domain_url}/sitemap.xml", headers={})
+          if response.code == 200
+            Rails.logger.info "Successfully sent sitemap for #{self.domain_url}"
+            ActionMailer::Base.mail(:from => "info@rethinkwebdesign.com",
+                                    :to => "info@rethinkwebdesign.com",
+                                    :subject => "Sitemaps Sent",
+                                    :body => "Sitemaps for #{self.domain_url} sent.").deliver
+          end
+        end
+      rescue
+        Rails.logger.info "Unable to send sitemap for #{self.domain_url}"
+      end
+  end
+
+  handle_asynchronously :submit_sitemaps
 
   private
 
