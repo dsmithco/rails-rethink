@@ -374,7 +374,7 @@ dl > dt > label {
 
 .block .block-title {
   margin: 0px;
-  padding-top: 15px;
+  padding-top: 20px;
   padding-bottom: 15px;
 }
 
@@ -389,7 +389,7 @@ dl > dt > label {
 
 .block .block-link {
   padding-top: 15px;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
 }
 
 .block .block-title + .block-link,
@@ -400,6 +400,10 @@ dl > dt > label {
 .block-image img {
   width: 100%;
   height: auto;
+}
+
+.block [class*="block-"]:last-child {
+  padding-bottom: 20px;
 }
 
 
