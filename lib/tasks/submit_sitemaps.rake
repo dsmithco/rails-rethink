@@ -21,6 +21,6 @@ task :submit_sitemaps => :environment do
   ActionMailer::Base.mail(:from => "info@rethinkwebdesign.com",
                           :to => "info@rethinkwebdesign.com",
                           :subject => "Sitemaps Sent",
-                          :body => "Sitemaps for #{sent_sitmaps.join(', ')} send").deliver
+                          :body => "Sitemaps for #{sent_sitmaps.join(', ')} sent.").deliver
 
 end
