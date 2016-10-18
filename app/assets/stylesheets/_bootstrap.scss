@@ -371,28 +371,27 @@ dl > dt > label {
 .block .block-title {
   margin: 0px;
   margin-top: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .block .block-about {
-  margin-top: 15px;
+  margin-top: 5px;
   margin-bottom: 18px;
 }
 
 .block .block-title + .block-about {
-  padding-top: 0px;
+  margin-top: 0px;
 }
 
 .block .block-link {
-  margin-top: 18px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
 
-.block .block-title + .block-link,
-.block .block-about + .block-link {
-  padding-top: 0px;
+.block .block-title + .clearfix,
+.block .block-about + .clearfix {
+  margin-top: 23px;
 }
-
 .block-image img {
   width: 100%;
   height: auto;
