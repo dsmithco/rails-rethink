@@ -22,8 +22,28 @@ class Ability
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
-    can [:create,:manage], [Category, Block, Page, Form, Answer, AnswerQuestionOption] do |item|
-      (item.website_id.present?) && (can? :edit, Website.find(item.website_id))
+    can [:create], [Category, Page, Form, Answer, AnswerQuestionOption] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id))
+    end
+
+    can [:create], [Block] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.try(:block_type))
+    end
+
+    can [:edit, :update], [Category, Block, Page, Form, Answer, AnswerQuestionOption] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id))
+    end
+
+    can [:destroy], [Category, Form, Answer, AnswerQuestionOption] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id))
+    end
+
+    can [:destroy, :delete], [Block] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.block_type)
+    end
+
+    can [:destroy], [Page] do |item|
+      (can? :edit, item) && !item.is_homepage.present?
     end
 
     can [:create,:manage], [FormResponse] do |item|

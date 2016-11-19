@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'can_edit' if can? :edit, @current_website %>">
   <head>
     <%= render 'layouts/head_common' %>
 

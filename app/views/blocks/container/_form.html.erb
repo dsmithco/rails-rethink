@@ -1,0 +1,34 @@
+<!-- <div class="form-group">
+  <div>
+    Block position
+  </div>
+  <div id="position">
+    <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
+  </div>
+</div> -->
+
+<div class="form-group" id="name">
+  <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+</div>
+
+<div class="form-group" id="about">
+  <%= f.text_area :about, class: 'form-control', rows: '6', placeholder: 'Description' %>
+  <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
+</div>
+
+<div class="form-group" id="text_align">
+  <div class="dt-label">
+    Text Align
+  </div>
+  <div>
+    <%= f.select :text_align, Block::TEXT_ALIGN_OPTIONS, {}, :class => 'form-control' %>
+  </div>
+</div>
+
+<div id="bg_color" class="form-group">
+  <%= f.text_field :bg_color, class: 'form-control color', id: 'color', name: 'block[bg_color]' %>
+  <script type="text/javascript">
+    $("#color").colorpicker();
+  </script>
+  <br/>
+</div>

@@ -15,26 +15,30 @@ class BlocksController < ApplicationController
 
   # GET /blocks/new
   def new
+    @block = Block.find(params[:id]) if params[:id].present?
     @block||= Block.new
-    @block.website ||= @current_website
     @block.block_type ||= params[:block_type]
     @block.block_id ||= params[:block_id]
     @block.front_page ||= params[:front_page]
-    @block.location ||= params[:location]
-    parent_block = Block.where(:website_id => @current_website.id, :block_id => params[:block_id]).try(:last)
+    parent_block = Block.where(:page_id => params[:page_id], :block_id => params[:block_id]).try(:last)
     @block.position = parent_block.try(:position) + 1 if parent_block.present?
+    @block.save(validate: false)
+    @block.page_id = params[:page_id].to_i if params[:page_id].present?
+    @block.save(validate: false)
 
   end
 
   # GET /blocks/1/edit
   def edit
+    @block.block_type ||= params[:block_type]
+    @block.save(validate: false)
   end
 
   # POST /blocks
   # POST /blocks.json
   def create
     @block = Block.new(block_params)
-    @block.website_id ||= @current_website.id if @current_website.present?
+    @block.page_id ||= params[:page_id] if params[:page_id].present?
 
     respond_to do |format|
       if @block.save
@@ -52,9 +56,6 @@ class BlocksController < ApplicationController
   # PATCH/PUT /blocks/1
   # PATCH/PUT /blocks/1.json
   def update
-    params[:page_ids] = params[:page_ids] - [params[:remove_page_id]] if params[:remove_page_id].present?
-    params[:page_ids] = params[:page_ids] + [params[:add_page_id]] if params[:add_page_id].present?
-
     respond_to do |format|
       if @block.update(block_params)
         format.html { redirect_to @block, notice: 'Block was successfully updated.' }
@@ -87,6 +88,9 @@ class BlocksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_params
-      params.require(:block).permit(:name, :columns, :block_id, :form_id, :category_id, :bg_color, :text_align, :about, :continue_edit, :website_id, :block_type, :position, :location, :front_page, {:page_ids=>[]}, :link, :link_text)
+      params.require(:block).permit(:name, :columns, :block_id, :form_id, :category_id,
+                                    :bg_color, :text_align, :about, :continue_edit,
+                                    :block_type, :position, :front_page, :page_id, :link,
+                                    :link_text, :display_page_name)
     end
 end

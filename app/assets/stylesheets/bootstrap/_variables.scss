@@ -68,7 +68,7 @@ $line-height-computed:    floor(($font-size-base * $line-height-base)) !default;
 $headings-font-family:    'Lato', "Helvetica Neue", Helvetica, Arial !default;
 $headings-font-weight:    400 !default;
 $headings-line-height:    1.2 !default;
-$headings-color:          darken($brand-primary, 20%) !default;
+$headings-color:          desaturate(darken($brand-primary, 25%),60%) !default;
 
 
 //== Iconography
@@ -100,8 +100,8 @@ $padding-large-horizontal:  18px !default;
 $padding-small-vertical:    4px !default;
 $padding-small-horizontal:  10px !default;
 
-$padding-xs-vertical:       1px !default;
-$padding-xs-horizontal:     5px !default;
+$padding-xs-vertical:       2px !default;
+$padding-xs-horizontal:     9px !default;
 
 $line-height-large:         1.3333333 !default; // extra decimals for Win 8.1 Chrome
 $line-height-small:         1.5 !default;
@@ -197,7 +197,7 @@ $input-border:                   #ddd !default;
 // TODO: Rename `$input-border-radius` to `$input-border-radius-base` in v4
 //** Default `.form-control` border radius
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
-$input-border-radius:            1px !default;
+$input-border-radius:            2px !default;
 //** Large `.form-control` border radius
 $input-border-radius-large:      $border-radius-large !default;
 //** Small `.form-control` border radius
@@ -303,7 +303,7 @@ $screen-tablet:              $screen-sm-min !default;
 
 // Medium screen / desktop
 //** Deprecated `$screen-md` as of v3.0.1
-$screen-md:                  992px !default;
+$screen-md:                  892px !default;
 $screen-md-min:              $screen-md !default;
 //** Deprecated `$screen-desktop` as of v3.0.1
 $screen-desktop:             $screen-md-min !default;
@@ -331,7 +331,7 @@ $grid-columns:              12 !default;
 $grid-gutter-width:         30px !default;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-$grid-float-breakpoint:     ($screen-md-min - 100) !default;
+$grid-float-breakpoint:     ($screen-md-min) !default;
 //** Point at which the navbar begins collapsing.
 $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
 

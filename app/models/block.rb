@@ -1,14 +1,15 @@
 class Block < ApplicationRecord
-  belongs_to :website #, optional: true
   belongs_to :form
   delegate :account, to: :website
-  acts_as_list scope: [:website_id, :location, :block_id]
+  acts_as_list scope: [:page_id]
 
   default_scope { order('blocks.position ASC') }
 
-  has_many :page_blocks, dependent: :destroy
-  has_many :pages, through: :page_blocks
+  belongs_to :page
+  delegate :website, to: :page, allow_nil: true
+
   has_one :image, as: :attachable
+  has_many :hero_images, -> { order(position: :asc) }, as: :attachable
   has_many :blocks
   belongs_to :block
   belongs_to :category
@@ -17,30 +18,26 @@ class Block < ApplicationRecord
   # has_one :form, through: :formable
 
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
-  SYSTEM_BLOCK_TYPES = ['navigation']
-  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form']
+  SYSTEM_BLOCK_TYPES = ['navigation','page_content']
+  TOP_LOCATION_BLOCKS = ['hero_images']
+  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form'] + TOP_LOCATION_BLOCKS
   LOWER_LEVEL_BLOCKS = ['sub_block']
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
-  CONTENT_REGIONS = ['top', 'bottom']
-  SIDE_REGIONS = ['left', 'right']
-  REGIONS = CONTENT_REGIONS + SIDE_REGIONS
 
-  attr_accessor :continue_edit
+  attr_accessor :continue_edit, :display_page_name
 
   validates :text_align, inclusion: { in: TEXT_ALIGN_OPTIONS, message: "%{value} is not a valid text_align", allow_blank: true }
   validates :block_type, inclusion: { in: BLOCK_TYPES, message: "%{value} is not a valid block type" }
-  validates :location, inclusion: { in: REGIONS + [''], message: "%{value} is not a valid location" }
 
-  validate :block_validation
   validate :sub_block_validation
 
   before_validation :adjust_block_params
 
-  def block_validation
-    if CONTENT_REGIONS.include?(self.block_type) && ['container'].include?(self.location)
-      self.errors[:block_type] << " invalid block type and location combo"
-    end
-  end
+  after_initialize :default_values
+
+  before_destroy :check_content_block
+
+  after_update :update_page_content
 
   def sub_block_validation
     if self.block_type == 'sub_block' && !self.block.present?
@@ -49,17 +46,18 @@ class Block < ApplicationRecord
   end
 
   def as_json(options={})
-    super(options.merge({:methods => [:page_ids]}))
+    super(options.merge({:methods => :page_id}))
   end
 
   def parent_block_options(current_page=nil)
     container_blocks = self.website.blocks.where(block_type: 'container')
     if current_page.present?
-      block_options = container_blocks.includes(:pages).where(pages: {id: current_page.id})
+      block_options = container_blocks.includes(:page).where(pages: {id: current_page.id})
     end
     if !block_options.present?
       block_options = container_blocks
     end
+    return container_blocks
   end
 
   def blocks_splice_calc
@@ -87,6 +85,15 @@ class Block < ApplicationRecord
     return splice_calc
   end
 
+  def display_page_name
+    self.page.display_name
+  end
+
+  def display_page_name=(bool)
+    self.page.update_columns(display_name: bool)
+    self[:updated_at] = Time.zone.now
+  end
+
   def blocks_push_calc(splice)
     return 0 if self.blocks.count == splice
     return 4 if self.blocks.count == 1 && splice == 3
@@ -95,15 +102,36 @@ class Block < ApplicationRecord
     return 3 if self.blocks.count == 2 && splice == 4
   end
 
+  def is_empty
+    self.bg_color.blank? &&
+    self.image.blank? &&
+    self.about.blank? &&
+    self.name.blank? &&
+    self.hero_images.blank?
+  end
+
   private
 
   def adjust_block_params
     if self.block_id.present?
       self.block_type = 'sub_block'
-      self.location = ''
-      self.page_ids = []
       self.front_page = false
     end
   end
 
+  def default_values
+    self.position ||= 1 if TOP_LOCATION_BLOCKS.include?(self.block_type)
+  end
+
+  def check_content_block
+    if SYSTEM_BLOCK_TYPES.include? self.block_type
+      self.errors[:block_type] << " cannot delete #{self.block_type}"
+    end
+  end
+
+  def update_page_content
+    if self.about_changed? || self.name_changed?
+      self.page.update_columns(name: self.name, about: self.about, updated_at: Time.zone.now)
+    end
+  end
 end

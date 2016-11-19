@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'can_edit' if can? :edit, @current_website %>">
   <head>
     <%= render 'layouts/head_common' %>
 
@@ -14,39 +14,24 @@
     </div>
 
     <div id="body">
-    <!-- Fixed navbar -->
-    <div top_nav="">
-      <%= render 'layouts/top_nav' %>
-    </div>
-
-    <%= render 'layouts/messages' %>
-
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" %>
-      <div id="hero_image">
-        <%= render 'layouts/hero_image' %>
+      <!-- Fixed navbar -->
+      <div top_nav="">
+        <%= render 'layouts/top_nav' %>
       </div>
-    <% end %>
 
-    <%= yield :hero %>
+      <%= render 'layouts/messages' %>
 
-    <%= yield :top_block %>
+      <div class="content container">
+        <%= yield %>
+      </div>
 
-    <div class="container">
-      <%= yield %>
+      <%= yield :page_blocks %>
+
+      <%= render 'layouts/footer' %>
+
     </div>
 
-    <%= yield :bottom_block %>
-
-    <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.blocks.where(front_page: true).any? %>
-      <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>
-    <% end %>
-
-
-    <%= render 'layouts/footer' %>
-
-  </div>
-
-  <%= render 'layouts/mobile_nav_scripts' %>
+    <%= render 'layouts/mobile_nav_scripts' %>
 
   </body>
 </html>

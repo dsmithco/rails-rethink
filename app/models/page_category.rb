@@ -1,4 +1,4 @@
 class PageCategory < ApplicationRecord
-  belongs_to :page
-  belongs_to :category
+  belongs_to :page, touch: true
+  belongs_to :category, touch: true
 end

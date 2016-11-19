@@ -1,10 +1,12 @@
 class LogosController < AttachmentsController
   before_action :set_attachment, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
 
   # POST /attachments
   # POST /attachments.json
   def create
+    authorize! :edit, @resource.attachable
+    
     if params[:id].present?
       @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
       @resource.update(attachment_params)
@@ -12,8 +14,6 @@ class LogosController < AttachmentsController
       @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
       @resource.save
     end
-
-    authorize! :edit, @resource.attachable
 
     respond_to do |format|
       if !@resource.errors.present?

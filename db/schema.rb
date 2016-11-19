@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161016213527) do
+ActiveRecord::Schema.define(version: 20161119105820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,9 +77,7 @@ ActiveRecord::Schema.define(version: 20161016213527) do
   create_table "blocks", force: :cascade do |t|
     t.string   "name"
     t.text     "about"
-    t.integer  "website_id"
     t.string   "block_type"
-    t.string   "location"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "position"
@@ -92,10 +90,11 @@ ActiveRecord::Schema.define(version: 20161016213527) do
     t.integer  "columns",     default: 3
     t.integer  "category_id"
     t.integer  "form_id"
+    t.integer  "page_id"
     t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
     t.index ["category_id"], name: "index_blocks_on_category_id", using: :btree
     t.index ["form_id"], name: "index_blocks_on_form_id", using: :btree
-    t.index ["website_id"], name: "index_blocks_on_website_id", using: :btree
+    t.index ["page_id"], name: "index_blocks_on_page_id", using: :btree
   end
 
   create_table "categories", force: :cascade do |t|
@@ -171,17 +170,6 @@ ActiveRecord::Schema.define(version: 20161016213527) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
   end
 
-  create_table "page_blocks", force: :cascade do |t|
-    t.integer  "page_id"
-    t.integer  "block_id"
-    t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "position"
-    t.index ["block_id"], name: "index_page_blocks_on_block_id", using: :btree
-    t.index ["page_id"], name: "index_page_blocks_on_page_id", using: :btree
-  end
-
   create_table "page_categories", force: :cascade do |t|
     t.integer  "page_id"
     t.integer  "category_id"
@@ -208,10 +196,14 @@ ActiveRecord::Schema.define(version: 20161016213527) do
     t.string   "redirectable_url"
     t.string   "subtitle"
     t.text     "description"
+    t.boolean  "is_homepage"
+    t.boolean  "display_name",      default: true
+    t.index ["is_homepage"], name: "index_pages_on_is_homepage", using: :btree
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
     t.index ["redirectable_id", "redirectable_type"], name: "index_pages_on_redir_id_and_redir_type", using: :btree
     t.index ["slug"], name: "index_pages_on_slug", using: :btree
+    t.index ["website_id", "is_homepage"], name: "index_pages_on_website_id_hp", using: :btree
     t.index ["website_id"], name: "index_pages_on_website_id", using: :btree
   end
 
@@ -298,14 +290,12 @@ ActiveRecord::Schema.define(version: 20161016213527) do
   add_foreign_key "blocks", "blocks"
   add_foreign_key "blocks", "categories"
   add_foreign_key "blocks", "forms"
-  add_foreign_key "blocks", "websites"
+  add_foreign_key "blocks", "pages"
   add_foreign_key "categories", "categories"
   add_foreign_key "categories", "websites"
   add_foreign_key "form_responses", "forms"
   add_foreign_key "formables", "forms"
   add_foreign_key "forms", "websites"
-  add_foreign_key "page_blocks", "blocks"
-  add_foreign_key "page_blocks", "pages"
   add_foreign_key "page_categories", "categories"
   add_foreign_key "page_categories", "pages"
   add_foreign_key "pages", "pages"

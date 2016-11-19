@@ -1,2 +1,2 @@
-<h1>Partials#reload</h1>
-<p>Find me in app/views/partials/reload.html.erb</p>
+$("#<%= request.parameters['container'] %>")
+  .html('<%=j render request.parameters['partial'], "#{request.parameters['model']}": request.parameters['id'].present? ? eval(request.parameters['model'].capitalize).find(request.parameters['id']) : eval(request.parameters['model'].capitalize).new(request.parameters['resource']) %>');

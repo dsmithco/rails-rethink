@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   def registration_validation
     unless self.assign_account_id.present?
-      self.errors[:website_domain] << 'is required' unless self.website_domain.present?
+      # self.errors[:website_domain] << 'is required' unless self.website_domain.present?
       self.errors[:website_name] << 'is required' unless self.website_name.present?
     end
   end
@@ -32,8 +32,8 @@ class User < ApplicationRecord
       self.accounts << assign_account
     elsif !self.account_ids.present?
       account_user = AccountUser.create(account: Account.new, user_id: self.id, role: 'Owner')
-      if website_domain.present?
-        website = account_user.account.websites.create(name: website_name, domain_url: website_domain, theme: 'basic')
+      if website_name.present?
+        website = account_user.account.websites.create(name: website_name, theme: 'basic')
       end
     end
   end

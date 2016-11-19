@@ -10,6 +10,7 @@ gem 'puma', '~> 3.0'
 gem 'mina-puma', :require => false
 gem 'delayed_job_active_record'
 gem 'rest-client'
+gem 'react-rails'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

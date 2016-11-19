@@ -1,0 +1,8 @@
+<div id="page_list">
+  <%= render "categories/page_list", '@pages': @category.pages.reorder('created_at DESC').limit(10) %>
+  <div class="text-center row">
+    <div class="col-md-4 col-md-push-4">
+      <%= link_to "More #{@category.name}", category_path(@category), class: "btn-block btn btn-primary btn-lg" %>
+    </div>
+  </div>
+</div>

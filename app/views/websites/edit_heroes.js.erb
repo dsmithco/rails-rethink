@@ -1,5 +1,5 @@
 if(!$('#edit_heroes').length){
-  $('body').append("<%=j render 'websites/edit_heroes_modal' %>");
+  $('body').append("<%=j render 'blocks/hero_images/edit_heroes_modal' %>");
 }
-$('#edit_heroes_content').html("<%=j render 'websites/edit_heroes', '@website': @current_website, remote: true %>");
+$('#edit_heroes_content').html("<%=j render 'blocks/hero_images/edit_heroes', '@website': @current_website, remote: true %>");
 $('#edit_heroes').modal();

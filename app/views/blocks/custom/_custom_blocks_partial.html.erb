@@ -1,0 +1,60 @@
+<div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
+  <% if block.bg_color.present? %>
+    <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
+  <% end %>
+  <% if block.image.present? %>
+    <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+  <% end %>
+  <div class="block-contents text-<%= block.text_align %>">
+    <% if can? :update, block %>
+      <%= render 'blocks/edit_block_btns', block: block %>
+    <% end %>
+    <h1 class="block-title <%= 'hide' if !block.name.present? %>">
+      <%= block.name unless block.block_type == 'category_list' %>
+      <% if block.block_type == 'category_list'%>
+        <%= link_to block.name, category_path(block.category) %>
+      <% end %>
+    </h1>
+    <% if block.about.present? %>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="text-<%= block.text_align %> form-group">
+              <%= block.about.html_safe %>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <% if block.block_type == 'hero_images' %>
+    <% cache [block.hero_images, current_user] do %>
+      <% if block.hero_images.present? %>
+        <div class="hero-unit <%= block.hero_images.first.text_align %>" data-src="<%=block.hero_images.first.asset(:hero)%>" style="background-image:url(<%=block.hero_images.first.asset(:hero)%>)">
+          <div class="hero-unit-cell">
+            <div class="hero-unit-content text-center container-fluid">
+              <div class="hero-unit-text">
+                <%= content_tag(:h1, block.hero_images.first.name.html_safe, class: 'dynamic-background') if block.hero_images.first.name.present?%>
+              </div>
+              <div class="hero-unit-text">
+                <%= content_tag(:h2, block.hero_images.first.about.html_safe, class: 'dynamic-background') if block.hero_images.first.about.present?%>
+              </div>
+              <p>
+                <%= link_to block.hero_images.first.link_text.html_safe || 'Continue', block.hero_images.first.link, class: "btn btn-primary btn-lg" if block.hero_images.first.link.present? %>
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+  <script type="text/javascript">
+      var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
+      if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
+        $('#<%= dom_id(block) %> h1.block-title, #<%= dom_id(block) %> .block-contents').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+        $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+      }
+  </script>
+</div>

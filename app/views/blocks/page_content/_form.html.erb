@@ -1,0 +1,112 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">
+    <%= block.block_type.capitalize if block.block_type.present? %> Block
+  </h4>
+</div>
+<%= form_for(block, remote: true) do |f| %>
+  <div class="modal-body">
+
+    <!-- <div class="form-group">
+      <div>
+        Block position
+      </div>
+      <div id="position">
+        <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
+      </div>
+    </div> -->
+
+    <div id="bg_color" class="form-group">
+      <%= f.text_field :bg_color, class: 'form-control color', id: 'color', name: 'block[bg_color]' %>
+      <script type="text/javascript">
+        $("#color").colorpicker();
+      </script>
+      <br/>
+      <br/>
+    </div>
+
+    <% if @block.id.present? %>
+      <div class="form-group" id="image_block">
+        <div class="well text-center dropzone" id="fileupload_<%= dom_id(block) %>_dropzone">
+          <span class="btn btn-primary fileinput-button">
+              <!-- The file input field used as target for the file upload widget -->
+              <span><i class="fa fa-photo"></i> Upload image</span>
+              <input id="fileupload_<%= dom_id(block) %>" type="file" name="asset">
+          </span>
+        </div>
+        <div class="form-group">
+          <!-- The container for the uploaded files -->
+          <div id="files" class="files"></div>
+          <!-- The global progress bar -->
+
+          <div id="progress" class="hide progress">
+              <div class="progress-bar progress-bar-success"></div>
+          </div>
+
+          <div id="images">
+            <%= render 'images/image', image: block.image if block.image.present? %>
+          </div>
+        </div>
+
+        <div id="edit_image_script">
+          <%# link_to 'Remove Logo', logo_path(@website.logo), method: :delete, class: 'btn btn-danger', remote: true if @website.logo.asset.present? %>
+          <%= render 'blocks/edit_image_script', block: block%>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-group row" id="name">
+      <div class="col-sm-8 form-group">
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="col-sm-4 form-group">
+        <label class="btn btn-default btn-block"><%= f.check_box :display_page_name %> &nbsp; Display name</label>
+      </div>
+    </div>
+
+    <div class="form-group" id="about">
+      <%= f.text_area :about, class: 'form-control', rows: '6', placeholder: 'Description' %>
+      <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
+    </div>
+
+    <div class="form-group" id="text_align">
+      <script type="text/javascript">
+        function setAlign(align){
+          $("#block_text_align").val(align);
+          $("#text_align .active").removeClass('active');
+          $("#text_align .text-align-"+align).addClass('active');
+        }
+      </script>
+      <div class="dt-label">
+        Text Align
+      </div>
+      <div class="btn-group btn-group-justified">
+        <a href="javascript:;" onclick="setAlign('left')" class="btn btn-primary text-align-left"><i class="fa fa-align-left"></i> Left</a>
+        <a href="javascript:;" onclick="setAlign('center')" class="btn btn-primary text-align-center"><i class="fa fa-align-center"></i> Center</a>
+        <a href="javascript:;" onclick="setAlign('right')" class="btn btn-primary text-align-right"><i class="fa fa-align-right"></i> Right</a>
+      </div>
+      <script type="text/javascript">
+        $("#text_align .text-align-<%= block.text_align %>").addClass('active');
+      </script>
+      <div class="hide">
+        <%= f.select :text_align, Block::TEXT_ALIGN_OPTIONS, {}, :class => 'form-control' %>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-xs-6 text-left">
+        <%= f.submit 'Save & Close', class: 'btn btn-success' %>
+        <button type="submit" name="block[continue_edit]" value='true' class="btn btn-primary">
+          Save & Continue
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+      <div class="col-xs-6 text-right">
+        <%= link_to 'Delete', block, method: :delete, class: "btn btn-danger pull-right", :data => {:confirm => 'Delete this block?'}, remote: true if block.id.present? && (can? :destroy, block) %>
+      </div>
+    </div>
+  </div>
+<% end %>

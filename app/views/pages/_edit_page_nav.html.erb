@@ -1,7 +1,5 @@
 <% if can? :update, @page %>
-  <div class="btn-group page-edit-links pull-right">
-    <%= link_to '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_page_path(@page), class: 'btn btn-primary btn-circle' %>
-    <%= link_to '<i class="fa fa-cube"></i> Add block'.html_safe, new_block_path({page_ids:[@page.id], website_id: @current_website.id}), remote: true, class: 'btn btn-success btn-circle'  %>
+  <div class="btn-group form-group page_edit_links">
+    <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_page_path(@page), remote: true, class: 'btn-sm btn-circle btn btn-primary' %>
   </div>
-  <br/>
 <% end %>

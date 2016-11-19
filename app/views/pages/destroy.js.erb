@@ -1,0 +1,6 @@
+toastr["success"]("Page deleted")
+
+$('.modal').on('hidden.bs.modal', function () {
+  turbolinks_go(location.toString(), 'no_scroll');
+});
+$('.modal').modal('hide');

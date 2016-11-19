@@ -10,8 +10,8 @@
         <span class="pull-right">MENU <i class="fa fa-bars"></i></span>
       </button>
       <!-- <a href class="btn btn-info" onclick="event.preventDefault();snapper.open('right')">Open right</a> -->
-      <% cache [@current_website.pages] do %>
-        <% if @current_website.logo.try(:asset).present?  %>
+      <% cache [@current_website, @current_website.pages] do %>
+        <% if @current_website.logo.present?  %>
           <a class="logo navbar-brand <%= "#{@current_website.logo.class.name.tableize}_#{@current_website.logo.id}" %>" href="/">
             <%= image_tag @current_website.logo.medium, ng_hide: 'baseCtrl.website.logo.medium' %>
           </a>
@@ -21,22 +21,50 @@
       <% end %>
     </div>
     <div id="navbar" class="collapse navbar-collapse navbar-right">
+      <% if current_user.present? %>
+        <ul class="nav navbar-nav visible-md visible-lg visible-xl" style="margin-right: 20px;" >
+          <% if @page.present? %>
+            <li>
+              <span>
+                <%= link_to '<i class="ion-edit"></i> Edit Page'.html_safe, edit_page_path(@page), class: 'btn-circle btn btn-primary navbar-btn', remote: true %>
+              </span>
+            </li>
+          <% end %>
+          <li class="dropdown">
+            <span>
+              <a href="#" class="dropdown-toggle btn-circle btn btn-success navbar-btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-plus"></i> New <span class="caret"></span></a>
+            </span>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to '<i class="fa-fw fa ion-cube text-muted"></i> New Block'.html_safe, new_block_path({page_id: @page.id}), class: 'text-success', remote: true if @page.present? %>
+              </li>
+              <li>
+                <%= link_to "<i class='fa-fw fa ion-document-text text-muted'></i> New Page".html_safe, new_website_page_path(@current_website), remote: true, class: 'text-success' if can? :edit, @current_website %>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <span>
+              <a href="#" class="dropdown-toggle btn-circle btn btn-default navbar-btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage <span class="caret"></span></a>
+            </span>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to "<i class='fa-fw fa ion-person text-muted'></i> Account".html_safe, user_path(current_user) %>
+              </li>
+              <li>
+                <%= link_to "<i class='fa-fw fa ion-edit text-muted'></i> Website".html_safe, edit_website_path(@current_website) if can? :edit, @current_website %>
+              </li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to "<i class='fa-fw fa ion-log-out text-muted'></i> <span>Sign out</span>".html_safe, destroy_user_session_path %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <% end %>
       <ul class="nav navbar-nav">
         <%= render 'layouts/nav_list_items' %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-<% if (can? :edit, @current_website) && action_name == 'home' %>
-  <div class="edit_link">
-    <div class="btn-group-vertical">
-      <%= link_to '<i class="fa-fw fa fa-pencil"></i> Manage site'.html_safe, edit_website_path(@current_website), class: 'btn btn-primary btn-sm  text-left' %>
-    </div>
-    <div class="btn-group-vertical">
-      <%= link_to '<i class="fa-fw fa fa-image"></i> Hero images'.html_safe, "/websites/#{@current_website.id}/edit_heroes", remote: true, class: 'btn btn-info btn-sm  text-left' %>
-    </div>
-    <div class="btn-group-vertical">
-      <%= link_to '<i class="fa-fw fa fa-plus"></i> Add Block'.html_safe, new_block_path({website_id: @current_website.id, front_page: true}), remote: true, class: 'btn btn-success btn-sm' %>
-    </div>
-  </div>
-<% end %>

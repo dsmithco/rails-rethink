@@ -3,3 +3,6 @@ if(!$('#edit_block').length){
 }
 $('#edit_block').modal('show');
 $('#edit_block_content').html("<%=j render 'blocks/form', block: @block, remote: true %>");
+$('.modal').on('hidden.bs.modal', function () {
+  turbolinks_go(location.toString(), 'no_scroll');
+});

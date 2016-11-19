@@ -3,12 +3,18 @@
     <h2 class="page-title">
       <%= link_to page.name, page %>
       <div class="btn-group pull-right">
-        <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), class: 'btn-circle btn btn-sm btn-primary' if can? :edit, page %>
+        <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), remote: true, class: 'btn-circle btn btn-sm btn-primary' if can? :edit, page %>
       </div>
     </h2>
   </div>
   <div class="category-page-about">
-    <%= page.about.html_safe %>
+    <% if page.image.present? %>
+      <div class="pull-left ">
+          <%= link_to "#{image_tag page.image.medium, style: 'margin: 7px 15px 15px 0; width: 250px;'}".html_safe, page %>
+      </div>
+    <% end %>
+    <%= truncate(strip_tags(page.description.present? ? page.description : page.about), :length => 400) %>
+    <div class="clearfix"></div>
     <% if page.categories.present? %>
       <%= render 'categories/page_footer', categories: page.categories %>
     <% end %>

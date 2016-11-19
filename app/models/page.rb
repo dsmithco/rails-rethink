@@ -9,9 +9,9 @@ class Page < ApplicationRecord
 
   belongs_to :website
   belongs_to :page, optional: true, touch: true
-  has_many :page_blocks, dependent: :destroy
-  has_many :blocks, through: :page_blocks
+  has_many :blocks, dependent: :destroy
   has_one :image, as: :attachable, dependent: :destroy
+  has_many :attachments, as: :attachable, dependent: :destroy
   has_many :pages
   has_many :page_categories, dependent: :destroy
   has_many :categories, through: :page_categories
@@ -21,63 +21,12 @@ class Page < ApplicationRecord
 
   validates :website, presence: true
 
-  after_save :menu_setup
+  before_save :set_homepage
   after_save :submit_sitemaps
+  after_save :update_content_block
 
-  def left_blocks
-    self.blocks.where(location: 'left')
-  end
-
-  def right_blocks
-    self.blocks.where(location: 'right')
-  end
-
-  def top_blocks
-    self.blocks.where(location: 'top')
-  end
-
-  def bottom_blocks
-    self.blocks.where(location: 'bottom')
-  end
-
-  def menu_setup
-    logger.info "Checking nav for page #{self.id}"
-    page_sub_nav = self.blocks.where(block_type: 'navigation')
-    if self.needs_sub_menu && !page_sub_nav.present?
-      self.add_sub_menu
-    end
-    if !self.needs_sub_menu
-      self.remove_sub_menu
-    end
-  end
-
-  def needs_sub_menu
-    self.show_sub_menu && (self.page.present? || self.pages.present?)
-  end
-
-  def add_sub_menu
-    website_nav = self.website.blocks.where(block_type: 'navigation').first
-    if website_nav.present?
-      logger.info "Nav found for page #{self.id}"
-      PageBlock.create(page_id: self.id, block_id: website_nav.id)
-    else
-      logger.info "Creating new nav for page #{self.id}"
-      self.blocks.create!(website_id: self.website_id, block_type: 'navigation', location: 'left')
-    end
-  end
-
-  def remove_sub_menu
-    sub_menu = self.blocks.where(block_type: 'navigation')
-    if sub_menu.present?
-      sub_menu.each do |menu|
-        if menu.pages.count > 1
-          menu.page_blocks.where(page_id: self.id).delete_all
-        else
-          menu.page_blocks.where(page_id: self.id).delete_all
-          menu.destroy
-        end
-      end
-    end
+  def cache_on
+    [self, self.pages, self.page, self.categories, self.blocks, self.website, self.attachments]
   end
 
   def submit_sitemaps
@@ -85,5 +34,24 @@ class Page < ApplicationRecord
   end
 
   handle_asynchronously :submit_sitemaps
+
+  private
+
+  def set_homepage
+    if self.is_homepage == true && self.is_homepage_changed?
+      self.website.pages.where(is_homepage: true).update_all(is_homepage: false)
+    end
+  end
+
+  def update_content_block
+    content_block = self.blocks.where(block_type: 'page_content').first
+    if content_block.present?
+      if self.about_changed? || self.name_changed?
+        content_block.update_columns(about: self.about, name: self.name, updated_at: Time.zone.now)
+      end
+    else
+      self.blocks.create(block_type: 'page_content', about: self.about, position: 2)
+    end
+  end
 
 end

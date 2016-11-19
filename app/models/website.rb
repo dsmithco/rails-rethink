@@ -16,6 +16,10 @@ class Website < ApplicationRecord
   after_create :setup_nginx_prod
   after_save :submit_sitemaps
 
+  def homepage
+    self.pages.where(is_homepage: true).first
+  end
+
   def set_default_styles
     self.style['brand-primary'] = '#009bff' unless self.style['brand-primary'].present?
     self.style['brand-info'] = '#5bc0de' unless self.style['brand-info'].present?

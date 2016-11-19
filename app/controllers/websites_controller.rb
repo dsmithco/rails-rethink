@@ -51,15 +51,16 @@ class WebsitesController < ApplicationController
 
   def home
     @website = @resource = @current_website || Website.where("domain_url = ?", "#{request.host}").first
+    @page = @website.homepage if @website.homepage.present?
     if params[:keyword].present?
       if @current_website.tags.present? && @current_website.tags.titleize.downcase.include?(params[:keyword].titleize.downcase)
         @site_title = "#{params[:keyword].titleize} - #{@current_website.name}"
-        render :show, {layout: "themes/#{@current_website.theme}/layout"}
+        render :show, {layout: "themes/basic/layout"}
       else
         redirect_to '/', {status: 404, alert: "Page not found"}
       end
     else
-      render :show, {layout: "themes/#{@current_website.theme}/layout"}
+      render 'pages/show', {layout: "themes/basic/layout"}
     end
   end
 

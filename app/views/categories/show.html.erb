@@ -1,31 +1,33 @@
 <div class="category-container category-container-">
   <div class="category-title-section">
     <div class="row">
-      <div class="col-sm-3 col-sm-push-9">
-        <form action="<%= request.path %>/search" method="get" data-remote="true" id="category_search">
-          <input id="category_search_term" type="text" name="term" placeholder="Seach <%= @category.name %>" class="form-control" >
-        </form>
-        <script type="text/javascript">
-          $("#category_search_term").keyup($.debounce(300, function(){
-            $("#category_search").submit();
-          }));
-        </script>
-      </div>
-      <div class="col-sm-9 col-sm-pull-3">
+      <div class="col-sm-12">
+        <div class="edit_page_links btn-group pull-right">
+          <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(@category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, @category %>
+          <%= link_to '<i class="fa fa-plus"></i> Add page'.html_safe, new_page_path(website_id: @current_website.id, category_ids:[@category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', remote: true, class: 'btn-circle btn btn-sm btn-success' if can? :edit, @category %>
+        </div>
         <h1 class="category-title">
           <%= @category.name %> &nbsp;
-          <div class="btn-group">
-            <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(@category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, @category %>
-            <%= link_to '<i class="fa fa-plus"></i> Add page'.html_safe, new_page_path(category_ids:[@category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-success' if can? :edit, @category %>
-          </div>
         </h1>
       </div>
     </div>
   </div>
   <div class="category-main-section">
-    <div class="form-group">
-      <%= @category.about.html_safe %>
-    </div>
+    <% if @category.about.present? %>
+      <div class="form-group">
+        <br/>
+        <%= @category.about.html_safe %>
+        <br/>
+      </div>
+    <% end %>
+    <form action="<%= request.path %>/search" method="get" data-remote="true" id="category_search" class="">
+      <input id="category_search_term" type="text" name="term" placeholder="Seach <%= @category.name %>" class="input-lg form-control" >
+    </form>
+    <script type="text/javascript">
+      $("#category_search_term").keyup($.debounce(300, function(){
+        $("#category_search").submit();
+      }));
+    </script>
     <div class="category-main" id="page_list">
       <%= render "categories/page_list" %>
     </div>

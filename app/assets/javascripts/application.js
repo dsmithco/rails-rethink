@@ -19,6 +19,10 @@
 //= require toastr
 //= require jquery.matchHeight-min
 //= require ie10-viewport-bug-workaround
+//= require react
+//= require react_ujs
+//= require components
+//= require background-check.min
 
 // 'use strict';
 

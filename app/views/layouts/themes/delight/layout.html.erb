@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'can_edit' if can? :edit, @current_website %>">
   <head>
     <%= render 'layouts/head_common' %>
 
@@ -22,8 +22,6 @@
     <%= render 'layouts/hero_image' %>
 
     <%= yield :hero %>
-
-    <%= yield :top_block %>
 
     <div class="container">
       <%= yield %>

@@ -1,6 +1,6 @@
-<div class="form-group" style="padding: 8px 0px 0;">
+<div class="form-group category-page-footer" style="padding: 8px 0px 0;">
   <!-- <strong>Categories</strong><br/> -->
   <% categories.each do |category| %>
-    <%= link_to category.name.capitalize, category_path(category), class: 'btn inverse btn-xs btn-info btn-circle', style: 'padding: 1px 12px;' %> <%= "<span style='font-weight:300; opacity:.3'>&nbsp;</span>".html_safe unless category == categories.last%>
+    <%= link_to category.name.capitalize, category_path(category), class: 'btn btn-xs btn-primary inverse btn-circle', style: 'padding: 1px 12px;' %> <%= "<span style='font-weight:300; opacity:.3'>&nbsp;</span>".html_safe unless category == categories.last%>
   <% end %>
 </div>

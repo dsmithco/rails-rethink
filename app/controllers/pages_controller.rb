@@ -12,7 +12,7 @@ class PagesController < ApplicationController
     else
       @pages = Page.all
     end
-    render layout: "themes/#{@current_website.theme}/layout"
+    render layout: "themes/basic/layout"
   end
 
   # GET /pages/1
@@ -21,29 +21,8 @@ class PagesController < ApplicationController
     if @page.redirectable_url.present?
       redirect_to @page.redirectable_url
     else
-      render layout: "themes/#{@current_website.theme}/layout"
+      render layout: "themes/basic/layout"
     end
-  end
-
-  def edit_block
-    @block = Block.find(params[:block_id])
-  end
-
-  def save_block
-    @block = Block.find(params[:block_id])
-    @block.save(block_params)
-  end
-
-  def add_block
-    new_block_ids = @page.block_ids + [ params[:block_id].to_i ]
-    @page.update(block_ids: new_block_ids)
-    render :update
-  end
-
-  def remove_block
-    new_block_ids = @page.block_ids - [ params[:block_id].to_i ]
-    @page.update(block_ids: new_block_ids)
-    render :update
   end
 
   # GET /pages/new
@@ -51,17 +30,17 @@ class PagesController < ApplicationController
     session[:return_to] = params[:return_to] if params[:return_to].present?
 
     @page = Page.new
-    @page.website = @current_website if @current_website.present?
-    @page.category_ids = params[:category_ids] if params[:category_ids].present?
+    @page.website_id = @current_website.id if @current_website.present?
+    @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
     @page.is_published = true
-    render layout: "themes/#{@current_website.theme}/layout"
+    render layout: "themes/basic/layout"
   end
 
   # GET /pages/1/edit
   def edit
     session[:return_to] = params[:return_to] if params[:return_to].present?
 
-    render layout: "themes/#{@current_website.theme}/layout"
+    render layout: "themes/basic/layout"
   end
 
   # POST /pages
@@ -74,9 +53,11 @@ class PagesController < ApplicationController
       if @page.save
         format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully created.' }
         format.json { render :show, status: :created, location: @page }
+        format.js { render :update }
       else
         format.html { render :new }
         format.json { render json: @page.errors, status: :unprocessable_entity }
+        format.js { render :update }
       end
     end
   end
@@ -85,13 +66,17 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1.json
   def update
     @page.slug = nil
+    @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
+
     respond_to do |format|
       if @page.update(page_params)
         format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully updated.' }
         format.json { render :show, status: :ok, location: @page }
+        format.js { render :update }
       else
         format.html { render :edit }
         format.json { render json: @page.errors, status: :unprocessable_entity }
+        format.js { render :update }
       end
     end
   end
@@ -121,12 +106,12 @@ class PagesController < ApplicationController
     def set_page
       if @current_website.present?
         begin
-          @page = @current_website.pages.includes(:pages, :page_blocks, :blocks, :categories, :page_categories).find_by(slug: params[:id])
+          @page = @current_website.pages.find_by(slug: params[:id])
           if !@page.present?
-            @page = @current_website.pages.includes(:pages, :page_blocks, :blocks, :categories, :page_categories).friendly.find(params[:id])
+            @page = @current_website.pages.friendly.find(params[:id])
           end
         rescue
-          redirect_to '/', status: 302, notice: 'This is not the page you are looking for...move along.'
+          redirect_to '/', status: 404, notice: 'This is not the page you are looking for...move along.'
         end
       else
         redirect_to '/'
@@ -136,14 +121,11 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      params.require(:page).permit(:name, :subtitle, :description, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :show_in_menu, {:category_ids=>[]})
+      params.require(:page).permit(:name, :display_name, :subtitle, :description, :is_homepage, :about, :website_id, :position, :page_id, :is_published, :show_sub_menu, :redirectable_id, :redirectable_type, :redirectable_url, :show_in_menu, {:category_ids=>[]})
     end
 
     def image_params
       params.permit(:asset, :type, :attachable_id, :attachable_type, :attachable, :name, :about, :link, :position, :link_text)
     end
 
-    def block_params
-      params.permit(:name, :about, :website_id, :block_type, :position, :location, {:page_ids=>[]})
-    end
 end

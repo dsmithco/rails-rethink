@@ -1,0 +1,39 @@
+<div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
+  <% if block.bg_color.present? %>
+    <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
+  <% end %>
+  <% if block.image.present? %>
+    <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+  <% end %>
+  <div class="block-contents text-<%= block.text_align %>">
+    <% if can? :update, block %>
+      <%= render 'blocks/edit_block_btns', block: block %>
+    <% end %>
+    <% if block.display_page_name.present? %>
+      <h1 class="block-title">
+        <%= block.name %>
+      </h1>
+    <% end %>
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="text-<%= block.text_align %> form-group">
+            <%= block.about.html_safe %>
+          </div>
+          <% if @page.categories.present? %>
+            <%= render 'categories/page_footer', categories: @page.categories %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+      var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
+      if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
+        $('#<%= dom_id(block) %> h1.block-title, #<%= dom_id(block) %> .block-contents').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+        $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+      }
+  </script>
+</div>

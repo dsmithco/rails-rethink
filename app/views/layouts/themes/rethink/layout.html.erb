@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'can_edit' if can? :edit, @current_website %>">
   <head>
     <%= render 'layouts/head_common' %>
 
@@ -29,13 +29,11 @@
 
     <%= yield :hero %>
 
-    <%= yield :top_block %>
-
     <div class="container">
       <%= yield %>
     </div>
 
-    <%= yield :bottom_block %>
+    <%= yield :page_blocks %>
 
     <% if "#{params[:controller]}_#{params[:action]}" == "websites_home" && @current_website.blocks.where(front_page: true).any? %>
       <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @website.blocks.where(front_page: true)}".html_safe, id: 'main-blocks') %>

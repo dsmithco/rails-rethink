@@ -1,0 +1,5 @@
+if(!$('#edit_page').length){
+  $('body').append("<%=j render 'pages/edit_page_modal' %>");
+}
+$('#edit_page').modal('show');
+$('#edit_page_content').html("<%=j render 'pages/form', page: @page, remote: true %>");

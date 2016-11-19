@@ -11,12 +11,9 @@ $('.has-error').removeClass('has-error');
 
 <% else %>
 
-  toastr["success"]("Block saved")
+  // toastr["success"]("Block saved")
 
   <% unless @block.continue_edit.present? %>
-    $('.modal').on('hidden.bs.modal', function () {
-      turbolinks_go(location.toString(), 'no_scroll');
-    });
     $('.modal').modal('hide');
   <% else %>
     $('#edit_block_content').html("<%=j render 'blocks/form', block: @block, remote: true %>");

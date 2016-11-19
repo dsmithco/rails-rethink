@@ -1,0 +1,84 @@
+<div class="modal-header">
+  <a href="#" data-dismiss="modal" class="pull-right"><i class="fa fa-times"></i></a>
+  <h4 class="modal-title">
+    Hero Images
+  </h4>
+</div>
+<div class="modal-body">
+  <fieldset id="edit_heroes_list">
+    <%= form_for(block, remote: true) do |f| %>
+      <!-- <div class="form-group">
+        <div>
+          Block position
+        </div>
+        <div id="position">
+          <%= f.select :position, (1..20).to_a, {},class: 'form-control', onchange: "form_#{dom_id(block)}()" %>
+        </div>
+      </div> -->
+      <button type="submit" name="button" id="<%= dom_id(block) %>_button" class="hide">Save</button>
+      <script type="text/javascript">
+        function form_<%= dom_id(block) %>(){
+          $("#<%=j dom_id(block) %>_button").click();
+        };
+      </script>
+    <% end %>
+    <div class="well well-dashed well-lg text-center dropzone" id="hero_uploader_dropzone">
+      <span class="btn btn-success btn-lg fileinput-button">
+          <span>Upload Hero Image</span>
+          <!-- The file input field used as target for the file upload widget -->
+          <input id="hero_uploader" type="file" name="asset" multiple>
+      </span>
+    </div>
+    <div>
+      <!-- The container for the uploaded files -->
+      <div id="files" class="files"></div>
+      <!-- The global progress bar -->
+      <div id="progress" class="hide progress form-group">
+          <div class="progress-bar progress-bar-success"></div>
+      </div>
+    </div>
+    <div class="text-muted panel panel-default panel-body">
+      <i class="fa fa-image"></i> Drag hero image blocks to reorder
+    </div>
+
+
+    <div class="row" id="hero_images">
+      <div class="clearfix" ng-if="$index % 3 == 0">
+      </div>
+      <div id="sortable_heros">
+        <% block.hero_images.each do |hero| %>
+          <%= render 'blocks/hero_images/edit_heroes_hero', hero: hero%>
+        <% end %>
+      </div>
+      <script type="text/javascript">
+        $( "#sortable_heros" ).sortable();
+        $( "#sortable_heros" ).sortable({
+          placeholder: "ui-state-highlight",
+          tolerence: 'intersect'
+        });
+        $( "#sortable_heros" ).on( "sortupdate", function( event, ui ) {
+          // console.log(event);
+          var id,url,position,item;
+          id = ui.item.context.dataset.id;
+          url = "/hero_images/" + id + ".js";
+          position = $(ui.item).index() + 1;
+          item = {'position': position};
+          $.ajax({
+              url: url,
+              type: 'PUT',
+              data: item,
+              success: function(result) {
+                  // Do something with the result
+              }
+          });
+        });
+      </script>
+    </div>
+    <script type="text/javascript">
+      file_upload_load('#hero_uploader', <%= block.id %>, 'Block', '/hero_images', false);
+    </script>
+  </fieldset>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
