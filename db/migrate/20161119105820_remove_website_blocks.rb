@@ -6,7 +6,7 @@ class RemoveWebsiteBlocks < ActiveRecord::Migration[5.0]
     Page.all.each do |page|
       page.updated_at = Time.zone.now
       page.save!
-      if page.image.present?
+      if page.image.present? && page.blocks.where(block_type: 'custom', name: page.name, position: 1, bg_color: '#0c0c0c').blank?
         top_block = page.blocks.new(page_id: page.id, block_type: 'custom', position: 1, name: page.name, bg_color: '#0c0c0c')
         top_block.save!
         Image.create(asset: page.image.asset, attachable_id: top_block.id, attachable_type: 'Block')
