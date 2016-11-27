@@ -52,12 +52,13 @@ ActiveRecord::Schema.define(version: 20161119105820) do
   end
 
   create_table "attachments", force: :cascade do |t|
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.string   "asset_file_name"
     t.string   "asset_content_type"
     t.integer  "asset_file_size"
     t.datetime "asset_updated_at"
+    t.integer  "{:polymorphic=>true, :index=>true}_id"
     t.string   "type"
     t.integer  "attachable_id"
     t.string   "attachable_type"
@@ -67,11 +68,12 @@ ActiveRecord::Schema.define(version: 20161119105820) do
     t.integer  "position"
     t.string   "link_text"
     t.string   "text_align"
-    t.hstore   "style",              default: {}, null: false
+    t.hstore   "style",                                 default: {}, null: false
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
     t.index ["style"], name: "attachments_style_idx", using: :gin
     t.index ["type", "attachable_id", "attachable_type"], name: "index_attachments_on_type_and_attachable_id_and_attachable_type", using: :btree
     t.index ["type"], name: "index_attachments_on_type", using: :btree
+    t.index ["{:polymorphic=>true, :index=>true}_id"], name: "index_attachments_on_{:polymorphic=>true, :index=>true}_id", using: :btree
   end
 
   create_table "blocks", force: :cascade do |t|

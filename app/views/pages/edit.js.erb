@@ -1,5 +1,32 @@
-if(!$('#edit_page').length){
-  $('body').append("<%=j render 'pages/edit_page_modal' %>");
-}
+$('#edit_page').remove();
+$('body').append("<%=j render 'pages/edit_page_modal' %>");
 $('#edit_page').modal('show');
 $('#edit_page_content').html("<%=j render 'pages/form', page: @page, remote: true %>");
+$('.modal').on('hidden.bs.modal', function () {
+  $('#edit_page').remove();
+});
+
+$('#page_about').froalaEditor({
+  spellcheck: false,
+  paragraphFormatSelection: true,
+  imageUploadParam: 'asset',
+  imageUploadURL: '/images.json',
+  imageUploadParams: {attachable_id: '<%= @page.id %>', attachable_type: 'Page'},
+  imageUploadMethod: 'POST',
+  // imageMaxSize: 5 * 1024 * 1024,
+  imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+  toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html']
+});
+
+$('#page_about').on('froalaEditor.image.removed', function (e, editor, $img) {
+  // Do something here.
+  var id = $img.context.dataset.id;
+  $.delete
+  $.ajax({
+    url: '/images/' + id + '.json',
+    type: 'DELETE',
+    success: function(result) {
+        // Do something with the result
+    }
+  });
+});

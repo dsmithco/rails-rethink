@@ -20,12 +20,19 @@ class BlocksController < ApplicationController
     @block.block_type ||= params[:block_type]
     @block.block_id ||= params[:block_id]
     @block.front_page ||= params[:front_page]
-    parent_block = Block.where(:page_id => params[:page_id], :block_id => params[:block_id]).try(:last)
-    @block.position = parent_block.try(:position) + 1 if parent_block.present?
+    @block.position ||= params[:position]
     @block.save(validate: false)
     @block.page_id = params[:page_id].to_i if params[:page_id].present?
     @block.save(validate: false)
+  end
 
+  def sort
+    params[:block].each_with_index do |id, index|
+      Block.where(id: id).update_all(position: index + 1, block_id: params[:block_id])
+      if params[:block_id].present?
+        Block.find(params[:block_id]).touch
+      end
+    end
   end
 
   # GET /blocks/1/edit

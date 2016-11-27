@@ -26,7 +26,7 @@
           <% if @page.present? %>
             <li>
               <span>
-                <%= link_to '<i class="ion-edit"></i> Edit Page'.html_safe, edit_page_path(@page), class: 'btn-circle btn btn-primary navbar-btn', remote: true %>
+                <%= link_to '<i class="ion-edit"></i> Edit Page'.html_safe, edit_page_path(@page.id), class: 'btn-circle btn btn-primary navbar-btn', remote: true %>
               </span>
             </li>
           <% end %>

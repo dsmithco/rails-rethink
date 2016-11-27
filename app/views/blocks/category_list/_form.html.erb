@@ -1,0 +1,81 @@
+<!-- MODAL HEADER -->
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <h4 class="modal-title">
+    <%= block.block_type.capitalize if block.block_type.present? %> Block
+  </h4>
+</div>
+
+<%= form_for(block, remote: true) do |f| %>
+
+  <!-- MODAL HIDDEN FIELDS -->
+  <% if action_name == 'new' && params[:page_id].present? %>
+    <input type="hidden" value="<%= params[:page_id].to_i %>" name="block[page_id]">
+    <input type="hidden" value="<%= @current_website.id %>" name="block[website_id]">
+  <% end %>
+
+  <!-- MODAL BODY -->
+  <div class="modal-body">
+
+    <div class="row">
+      <!-- ERROR MESSAGES -->
+      <div class="col-sm-12">
+        <% if block.errors.any? %>
+          <div id="error_explanation" class="form-group">
+            <h2><%= pluralize(block.errors.count, "error") %> prohibited this block from being saved:</h2>
+            <ul>
+            <% block.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="col-sm-12">
+
+        <div class="form-group" id="form_list">
+          <div>
+            <label>Category</label>
+            <%= f.select :category_id, @current_website.categories.collect {|x| [x.name, x.id]}, {:include_blank => "-- Select a Category --"}, :class => 'form-control' %>
+            <div class="text-right">
+              <%= link_to 'Manage categories', categories_path %>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="name">
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+        </div>
+
+        <div class="form-group" id="about">
+          <%= f.text_area :about, class: 'form-control', rows: '6', placeholder: 'Description' %>
+          <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
+        </div>
+
+        <%= render 'blocks/input/text_align', block: block, f: f %>
+
+        <%= render 'blocks/input/bg_color', block: block, f: f %>
+
+        <%= render 'blocks/input/bg_image', block: block %>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row">
+      <div class="col-xs-6 text-left">
+        <%= f.submit 'Save & Close', class: 'btn btn-success' %>
+        <button type="submit" name="block[continue_edit]" value='true' class="btn btn-primary">
+          Save & Continue
+        </button>
+      </div>
+      <div class="col-xs-6 text-right">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+<% end %>

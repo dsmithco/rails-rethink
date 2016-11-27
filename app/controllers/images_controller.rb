@@ -1,6 +1,9 @@
 class ImagesController < AttachmentsController
+  skip_before_filter :verify_authenticity_token
+
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource
+
 
   # POST /attachments
   # POST /attachments.json

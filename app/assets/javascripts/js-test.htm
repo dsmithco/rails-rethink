@@ -1,0 +1,98 @@
+
+<!-- saved from url=(0029)http://localhost:3002/js-test -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <script src="./js-test_files/jquery-2.1.1.min.js"></script>
+  <link rel="stylesheet" href="./js-test_files/bootstrap.min.css">
+  <style>
+    i { cursor: pointer }
+    i:hover { color: #000 }
+    .item--disabled { background-color: #fafafa; color: #ccc }
+   </style>
+</head>
+
+<body>
+  <main class="container">
+    <h2> Plans </h2>
+
+    <section class="plan-list">
+      <article class="plan panel panel-default" id="plan_1">
+        <div class="panel-heading"> Plan Two </div>
+
+        <ul class="item-list list-group">
+          <li class="item list-group-item item" id="item_1">
+            Item one
+            <i class="pull-right glyphicon glyphicon-trash" data-item-action="remove" data-target="item_1"></i>
+            <i class="pull-right glyphicon glyphicon-eye-close" data-item-action="disable" data-target="item_1"></i>
+          </li>
+
+          <li class="item list-group-item" id="item_2">
+            Item two
+            <i class="pull-right glyphicon glyphicon-trash" data-item-action="remove" data-target="item_2"></i>
+            <i class="pull-right glyphicon glyphicon-eye-close" data-item-action="disable" data-target="item_2"></i>
+          </li>
+        </ul>
+      </article>
+
+      <article class="plan panel panel-default" id="plan_2">
+        <div class="panel-heading"> Plan Two </div>
+
+        <ul class="item-list list-group">
+          <li class="item list-group-item" id="item_3">
+            Item three
+            <i class="pull-right glyphicon glyphicon-trash" data-item-action="remove" data-target="item_3"></i>
+            <i class="pull-right glyphicon glyphicon-eye-close" data-item-action="disable" data-target="item_3"></i>
+          </li>
+
+          <li class="item list-group-item" id="item_4">
+            Item four
+            <i class="pull-right glyphicon glyphicon-trash" data-item-action="remove" data-target="item_4"></i>
+            <i class="pull-right glyphicon glyphicon-eye-close" data-item-action="disable" data-target="item_4"></i>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="well">
+      <h4> Tasks </h4>
+      <ol>
+        <li> When an <code>'eye-close'</code> icon is clicked, add the class <code>'item--disabled'</code> to that item. </li>
+        <li> When a <code>'trash'</code> icon is clicked, delete that item from the DOM and <code>console.log</code> its <code>'id'</code>. </li>
+      </ol>
+
+      <hr>
+
+      <h4> Instructions </h4>
+
+      <p> Use jQuery to complete the tasks below. The best answers will have the following characteristics: </p>
+
+      <ul>
+        <li> Easy to read and modify. </li>
+        <li> Isn't coupled to DOM structure. </li>
+        <li> Considers dynamically added content. i.e., it works after new <code>projects</code> and <code>items</code> are added. </li>
+      </ul>
+
+      <p> Do not change the markup but feel free to add <code>classes</code>, <code>ids</code>, or <code>data-</code>attributes as needed. </p>
+    </section>
+  </main>
+
+  <script>
+
+    /* Disable Item */
+    $(document).on("click", "[data-item-action='disable']", function() {
+      var target = $('#' + $(this).data('target'));
+      target.addClass('item--disabled');
+    });
+
+    /* Remove Item */
+    $(document).on("click", "[data-item-action='remove']", function() {
+      var target = $('#' + $(this).data('target'));
+      target.fadeOut(100, function() {
+        this.remove();
+        console.log(target.attr('id'));
+      });
+    });
+
+  </script>
+
+
+</body></html>

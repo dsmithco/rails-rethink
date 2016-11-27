@@ -17,7 +17,7 @@
     <div class="row">
       <div class="col-sm-12">
           <div class="text-<%= block.text_align %> form-group">
-            <%= block.about.html_safe %>
+            <%= block.about.html_safe if block.about.present? %>
           </div>
           <% if @page.categories.present? %>
             <%= render 'categories/page_footer', categories: @page.categories %>

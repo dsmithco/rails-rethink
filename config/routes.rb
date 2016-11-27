@@ -10,8 +10,15 @@ Rails.application.routes.draw do
     end
   end
   devise_for :users, :controllers => {:registrations => "registrations"}
-  resources :blocks
+  resources :blocks do
+    collection do
+      post :sort
+    end
+  end
   resources :pages do
+    collection do
+      post :sort
+    end
     member do
       delete "delete_image/:image_id" => "pages#delete_image"
       post "add_image" => "pages#add_image"

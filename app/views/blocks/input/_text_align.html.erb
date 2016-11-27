@@ -1,0 +1,23 @@
+<div class="form-group" id="text_align">
+  <script type="text/javascript">
+    function setAlign(align){
+      $("#block_text_align").val(align);
+      $("#text_align .active").removeClass('active');
+      $("#text_align .text-align-"+align).addClass('active');
+    }
+  </script>
+  <div class="dt-label">
+    Block Alignment
+  </div>
+  <div class="btn-group btn-group-justified">
+    <a href="javascript:;" onclick="setAlign('left')" class="btn btn-primary text-align-left"><i class="fa fa-align-left"></i> Left</a>
+    <a href="javascript:;" onclick="setAlign('center')" class="btn btn-primary text-align-center"><i class="fa fa-align-center"></i> Center</a>
+    <a href="javascript:;" onclick="setAlign('right')" class="btn btn-primary text-align-right"><i class="fa fa-align-right"></i> Right</a>
+  </div>
+  <script type="text/javascript">
+    $("#text_align .text-align-<%= block.text_align %>").addClass('active');
+  </script>
+  <div class="hide">
+    <%= f.select :text_align, Block::TEXT_ALIGN_OPTIONS, {}, :class => 'form-control' %>
+  </div>
+</div>

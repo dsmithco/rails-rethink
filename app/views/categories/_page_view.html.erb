@@ -1,22 +1,32 @@
-<div class="category-page-list">
-  <div class="page-title-section" id="<%= dom_id(page) %>">
-    <h2 class="page-title">
-      <%= link_to page.name, page %>
-      <div class="btn-group pull-right">
-        <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), remote: true, class: 'btn-circle btn btn-sm btn-primary' if can? :edit, page %>
-      </div>
-    </h2>
-  </div>
-  <div class="category-page-about">
-    <% if page.image.present? %>
-      <div class="pull-left ">
-          <%= link_to "#{image_tag page.image.medium, style: 'margin: 7px 15px 15px 0; width: 250px;'}".html_safe, page %>
+<div class="category-page-list" id="<%= dom_id(page) %>">
+  <div class="row">
+
+    <% if page.page_image.present? %>
+      <div class="col-sm-4">
+        <%= link_to "#{image_tag page.page_image.medium, class: 'category-list-image'}".html_safe, page %>
       </div>
     <% end %>
-    <%= truncate(strip_tags(page.description.present? ? page.description : page.about), :length => 400) %>
-    <div class="clearfix"></div>
-    <% if page.categories.present? %>
-      <%= render 'categories/page_footer', categories: page.categories %>
-    <% end %>
+
+    <div class="col-sm-<%= page.page_image.present? ? '8' : '12' %>" >
+
+      <div class="page-title-section">
+        <h2 class="page-title">
+          <%= link_to page.name, page %>
+          <div class="btn-group pull-right">
+            <%= link_to '<i class="ion-edit"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), remote: true, class: 'btn btn-sm btn-default' if can? :edit, page %>
+          </div>
+        </h2>
+        <small class="text-muted"><%= page.updated_at.strftime('%A, %B %d, %Y') %></small>
+      </div>
+
+      <div class="category-page-about">
+        <%= truncate(strip_tags(page.description.present? ? page.description : page.about), :length => 250) %>
+        <% if page.categories.present? %>
+          <%= render 'categories/page_footer', categories: page.categories %>
+        <% end %>
+      </div>
+
+    </div>
+
   </div>
 </div>

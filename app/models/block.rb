@@ -1,12 +1,14 @@
 class Block < ApplicationRecord
   belongs_to :form
   delegate :account, to: :website
-  acts_as_list scope: [:page_id]
+  acts_as_list scope: [:page_id, :block_id]
 
   default_scope { order('blocks.position ASC') }
 
-  belongs_to :page
-  delegate :website, to: :page, allow_nil: true
+  belongs_to :page, touch: true
+
+  has_many :page_blocks
+  has_many :pages, through: :page_blocks
 
   has_one :image, as: :attachable
   has_many :hero_images, -> { order(position: :asc) }, as: :attachable
@@ -31,6 +33,8 @@ class Block < ApplicationRecord
 
   validate :sub_block_validation
 
+  validate :page_content_validation
+
   before_validation :adjust_block_params
 
   after_initialize :default_values
@@ -42,6 +46,14 @@ class Block < ApplicationRecord
   def sub_block_validation
     if self.block_type == 'sub_block' && !self.block.present?
       self.errors[:block] << "Block is required"
+    end
+  end
+
+  def website
+    if self.page.present?
+      return self.page.website
+    elsif self.block.present?
+      return self.block.website
     end
   end
 
@@ -105,8 +117,10 @@ class Block < ApplicationRecord
   def is_empty
     self.bg_color.blank? &&
     self.image.blank? &&
+    self.form.blank? &&
+    self.category.blank? &&
     self.about.blank? &&
-    self.name.blank? &&
+    (self.name.blank? || (self.block_type == 'page_content' && self.display_page_name.blank?)) &&
     self.hero_images.blank?
   end
 
@@ -120,7 +134,7 @@ class Block < ApplicationRecord
   end
 
   def default_values
-    self.position ||= 1 if TOP_LOCATION_BLOCKS.include?(self.block_type)
+    # self.position ||= 1 if TOP_LOCATION_BLOCKS.include?(self.block_type)
   end
 
   def check_content_block
@@ -130,8 +144,16 @@ class Block < ApplicationRecord
   end
 
   def update_page_content
-    if self.about_changed? || self.name_changed?
+    if self.block_type == 'page_content' && (self.about_changed? || self.name_changed? || self.page.display_name_changed?)
       self.page.update_columns(name: self.name, about: self.about, updated_at: Time.zone.now)
+    end
+  end
+
+  def page_content_validation
+    if self.block_type == 'page_content'
+      if self.name.blank?
+        self.errors[:name] << " cannot be blank"
+      end
     end
   end
 end

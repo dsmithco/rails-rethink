@@ -1,152 +1,142 @@
-<% if !params[:tab].present? %>
-  <div id="page">
-    <%= form_for(page, remote: true) do |f| %>
-      <input type="hidden" value="<%= @current_website.id %>" name="page[website_id]">
-
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Edit Page</h4>
-      </div>
-      <div class="modal-body">
-        <% if page.errors.any? %>
-          <div id="error_explanation">
-            <h2>
-              <%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:
-            </h2>
-            <ul>
-              <% page.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <dl class="dl-horizontal">
-          <dt></dt>
-          <dd class="form-group">
-            <span id="is_published">
-              <label><%= f.check_box :is_published %> &nbsp; Publish</label>
-            </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-              <label><%= f.check_box :show_in_menu, class:'page_show_in_menu' %> &nbsp; Show in menu</label>
-            </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span>
-              <label><%= f.check_box :is_homepage, class:'page_show_in_menu', disabled: @page.is_homepage %> &nbsp; Set as homepage</label>
-            </span>
-            <script type="text/javascript">
-              show_in_menu_change = function(){
-                if ($('.page_show_in_menu').prop('checked') === true){
-                  $('.show_in_menu_true').show();
-                }else{
-                  $('.show_in_menu_true').hide();
-                }
-              }
-              $('.page_show_in_menu').change(show_in_menu_change);
-            </script>
-          </dd>
-          <% if page.pages.present? %>
-            <dd class="show_in_menu_true form-group">
-              <div class="row">
-                <div class="col-sm-push-8 col-sm-4">
-                  This page has <%= page.pages.count %> sub pages
-                </div>
-              </div>
-            </dd>
-          <% end %>
-          <dt class="show_in_menu_true"><%= f.label :page_id, "Parent <span class='text-muted'>(optional)</span>".html_safe %></dt>
-          <dd class="show_in_menu_true" id="page">
-            <div class="row">
-              <div class="col-sm-8 form-group">
-                <%= f.select :page_id, @current_website.pages.where.not(id: @page.id, show_in_menu: [false, nil]).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
-              </div>
-              <div class="col-sm-4 form-group" id="show_sub_menu">
-                <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
-              </div>
-            </div>
-            <script type="text/javascript">
-              $('#page select').change(function(){
-                if($(this).val() || "<%= page.pages.present? %>"=="true"){
-                  $('#show_sub_menu input').prop("disabled",false);
-                }else{
-                  $('#show_sub_menu input').prop("disabled",true);
-                }
-              }).change();
-            </script>
-          </dd>
-          <dt class="show_in_menu_true">
-            <%= f.label :position %>
-          </dt>
-          <dd class="show_in_menu_true form-group" id="position">
-            <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
-          </dd>
-          <dt>
-            <%= f.label :name %>
-          </dt>
-          <dd id="name">
-            <div class="row">
-              <div class="col-sm-8 form-group">
-                <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
-              </div>
-              <div class="col-sm-4 form-group">
-                <label class="btn btn-default btn-block"><%= f.check_box :display_name %> &nbsp; Display name</label>
-              </div>
-            </div>
-          </dd>
-          <dt id="subtitle">
-            <%= f.label :subtitle %>
-          </dt>
-          <dd class="form-group">
-            <%= f.text_field :subtitle, class: 'form-control' %>
-          </dd>
-          <dt id="description">
-            <%= f.label :description %>
-          </dt>
-          <dd class="form-group">
-            <%= f.text_area :description, class: 'form-control', placeholder: 'Short summary' %>
-          </dd>
-          <dt><%= f.label :about, 'Body <span class="text-muted">(optional)</span>'.html_safe %></dt>
-          <dd class="" id="about">
-            <%= f.text_area :about, class: 'summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
-            <script type="text/javascript">
-              // timyMceSetup('.summernote', '/websites/<%=@current_website.id%>/stylesheet.css', '#tiny_upload');
-              set_summernote();
-              fixScroll({'fix': '.note-toolbar','top_marker': '#about','bottom_market': '#about_bottom'});
-            </script>
-            <div id="about_bottom">
-            </div>
-            <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
-            <br/>
-          </dd>
-          <dd class="form-group" id="images_zone">
-            <%= render 'pages/edit_page_images' %>
-          </dd>
-          <dt>
-            <span><label>Categories</label></span>
-          </dt>
-          <dd class="form-group">
-            <% @current_website.categories.each do |category| %>
-              <label>
-                <input type="checkbox"
-                       name="page[category_ids][]"
-                       value="<%= category.id %>"
-                       <%= @page.category_ids.include?(category.id) ? 'checked' : '' %> > <%= category.name %>
-              </label> &nbsp;&nbsp;&nbsp;&nbsp;
+<div id="page">
+  <%= form_for(page, remote: true, :url => { :action => (page.id.present? ? :update : :create), :id => page.id }) do |f| %>
+    <input type="hidden" value="<%= @current_website.id %>" name="page[website_id]">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title">Edit Page</h4>
+    </div>
+    <div class="modal-body">
+      <% if page.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(page.errors.count, "error") %> prohibited this page from being saved:
+          </h2>
+          <ul>
+            <% page.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
             <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <dl class="dl-horizontal">
+        <dt></dt>
+        <dd class="form-group">
+          <span id="is_published">
+            <label><%= f.check_box :is_published %> &nbsp; Publish</label>
+          </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>
+            <label><%= f.check_box :show_in_menu, class:'page_show_in_menu' %> &nbsp; Show in menu</label>
+          </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>
+            <label><%= f.check_box :is_homepage, class:'page_show_in_menu', disabled: @page.is_homepage %> &nbsp; Set as homepage</label>
+          </span>
+          <script type="text/javascript">
+            show_in_menu_change = function(){
+              if ($('.page_show_in_menu').prop('checked') === true){
+                $('.show_in_menu_true').show();
+              }else{
+                $('.show_in_menu_true').hide();
+              }
+            }
+            $('.page_show_in_menu').change(show_in_menu_change);
+          </script>
+        </dd>
+        <% if page.pages.present? %>
+          <dd class="show_in_menu_true form-group">
+            <div class="row">
+              <div class="col-sm-push-8 col-sm-4">
+                This page has <%= page.pages.count %> sub pages
+              </div>
+            </div>
           </dd>
-          <dt>
-            <label>Page redirect</label>
-          </dt>
-          <dd>
-            <%= f.text_field :redirectable_url, class: 'form-control' %>
-          </dd>
-        </dl>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success">
-          Save
-        </button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= link_to 'Delete', @page, method: :delete, class: "btn btn-danger pull-right", :data => {:confirm => 'Are you sure you want to delete this page?'}, remote: true if @page.id.present? && (can? :destroy, @page) %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+        <% end %>
+        <dt class="show_in_menu_true"><%= f.label :page_id, "Parent <span class='text-muted'>(optional)</span>".html_safe %></dt>
+        <dd class="show_in_menu_true" id="page">
+          <div class="row">
+            <div class="col-sm-8 form-group">
+              <%= f.select :page_id, @current_website.pages.where.not(id: @page.id, show_in_menu: [false, nil]).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
+            </div>
+            <div class="col-sm-4 form-group" id="show_sub_menu">
+              <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
+            </div>
+          </div>
+          <script type="text/javascript">
+            $('#page select').change(function(){
+              if($(this).val() || "<%= page.pages.present? %>"=="true"){
+                $('#show_sub_menu input').prop("disabled",false);
+              }else{
+                $('#show_sub_menu input').prop("disabled",true);
+              }
+            }).change();
+          </script>
+        </dd>
+        <dt class="show_in_menu_true">
+          <%= f.label :position %>
+        </dt>
+        <dd class="show_in_menu_true form-group" id="position">
+          <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
+        </dd>
+        <dt>
+          <%= f.label :name %>
+        </dt>
+        <dd id="name">
+          <div class="row">
+            <div class="col-sm-8 form-group">
+              <%= f.text_field :name, class: 'form-control', ng_model: 'page.name'%>
+            </div>
+            <div class="col-sm-4 form-group">
+              <label class="btn btn-default btn-block"><%= f.check_box :display_name %> &nbsp; Display name</label>
+            </div>
+          </div>
+        </dd>
+        <dt id="subtitle">
+          <%= f.label :subtitle %>
+        </dt>
+        <dd class="form-group">
+          <%= f.text_field :subtitle, class: 'form-control' %>
+        </dd>
+        <dt id="description">
+          <%= f.label :description %>
+        </dt>
+        <dd class="form-group">
+          <%= f.text_area :description, class: 'form-control', placeholder: 'Short summary' %>
+        </dd>
+        <dt><%= f.label :about, 'Body <span class="text-muted">(optional)</span>'.html_safe %></dt>
+        <dd class="" id="about">
+          <%= f.text_area :about, class: 'summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'true'} %>
+          <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
+          <br/>
+        </dd>
+        <dd class="form-group" id="images_zone">
+          <%# render 'pages/edit_page_images' %>
+        </dd>
+        <dt>
+          <span><label>Categories</label></span>
+        </dt>
+        <dd class="form-group">
+          <% @current_website.categories.each do |category| %>
+            <label>
+              <input type="checkbox"
+                     name="page[category_ids][]"
+                     value="<%= category.id %>"
+                     <%= @page.category_ids.include?(category.id) ? 'checked' : '' %> > <%= category.name %>
+            </label> &nbsp;&nbsp;&nbsp;&nbsp;
+          <% end %>
+        </dd>
+        <dt>
+          <label>Page redirect</label>
+        </dt>
+        <dd>
+          <%= f.text_field :redirectable_url, class: 'form-control' %>
+        </dd>
+      </dl>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success">
+        Save
+      </button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <%= link_to 'Delete', @page, method: :delete, class: "btn btn-danger pull-right", :data => {:confirm => 'Are you sure you want to delete this page?'}, remote: true if @page.id.present? && (can? :destroy, @page) %>
+    </div>
+  <% end %>
+</div>

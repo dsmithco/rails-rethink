@@ -1,8 +1,41 @@
-if(!$('#edit_block').length){
-  $('body').append("<%=j render 'blocks/edit_block_modal' %>");
-}
+$('#edit_block').remove();
+$('body').append("<%=j render 'blocks/edit_block_modal' %>");
 $('#edit_block').modal('show');
-$('#edit_block_content').html("<%=j render 'blocks/form', block: @block, remote: true %>");
+$('#edit_block_content').html("<%=j render 'blocks/edit_form', block: @block, remote: true %>");
 $('.modal').on('hidden.bs.modal', function () {
   turbolinks_go(location.toString(), 'no_scroll');
+  $('#edit_block').remove();
 });
+
+<% if @block.page.present? %>
+  $('#block_about').froalaEditor({
+    spellcheck: true,
+    paragraphFormatSelection: true,
+    imageUploadParam: 'asset',
+    imageUploadURL: '/images.json',
+    imageUploadParams: {attachable_id: '<%= @block.page.id %>', attachable_type: 'Page'},
+    imageUploadMethod: 'POST',
+    // imageMaxSize: 5 * 1024 * 1024,
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html']
+  });
+
+  $('#block_about').on('froalaEditor.image.removed', function (e, editor, $img) {
+    // Do something here.
+    var id = $img.context.dataset.id;
+    $.delete
+    $.ajax({
+      url: '/images/' + id + '.json',
+      type: 'DELETE',
+      success: function(result) {
+          // Do something with the result
+      }
+    });
+  });
+<% else %>
+  $('#block_about').froalaEditor({
+    spellcheck: true,
+    paragraphFormatSelection: true,
+    toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertVideo', '|', 'clearFormatting', 'html']
+  });
+<% end %>

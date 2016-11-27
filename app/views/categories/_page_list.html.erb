@@ -1,5 +1,5 @@
-<% unless action_name == 'home' %>
-  <div class="category-page-count text-muted text-right form-group">
+<% unless controller_name == 'pages' %>
+  <div class="category-page-count text-muted text-right form-group small">
     Viewing <%= @pages.count %> <%= @category.name %> Pages
   </div>
 <% end %>

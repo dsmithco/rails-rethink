@@ -10,10 +10,7 @@
       <%= render 'blocks/edit_block_btns', block: block %>
     <% end %>
     <h1 class="block-title <%= 'hide' if !block.name.present? %>">
-      <%= block.name unless block.block_type == 'category_list' %>
-      <% if block.block_type == 'category_list'%>
-        <%= link_to block.name, category_path(block.category) %>
-      <% end %>
+      <%= block.name %>
     </h1>
     <% if block.about.present? %>
       <div class="row">

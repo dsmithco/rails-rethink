@@ -1,7 +1,7 @@
 <div class="btn-group pull-right block-edit-btns">
-  <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-primary btn-sm btn-circle' if can? :update, block  %>
-  <a href="javascript:;" class="btn btn-sm btn-info block-handle btn-circle"><i class="fa fa-arrows"></i></a>
-  <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-success btn-circle' if can? :edit, block.category %>
-  <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, website_id: block.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-success btn-sm btn-circle' if (can? :destoy, block) && block.block_type == 'container'  %>
-  <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-danger btn-sm btn-circle' if (can? :delete, block) && !block.blocks.present?  %>
+  <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
+  <a href="javascript:;" class="btn btn-sm btn-default block-handle"><i class="fa fa-arrows"></i></a>
+  <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-default' if can? :edit, block.category %>
+  <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-default btn-sm' if (can? :edit, block) && block.block_type == 'container'  %>
+  <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if (can? :delete, block) && !block.blocks.present?  %>
 </div>

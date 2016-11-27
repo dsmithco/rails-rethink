@@ -10,6 +10,8 @@ class Page < ApplicationRecord
   belongs_to :website
   belongs_to :page, optional: true, touch: true
   has_many :blocks, dependent: :destroy
+  has_many :block_images, through: :blocks, source: :image
+  has_many :block_hero_images, through: :blocks, source: :hero_images
   has_one :image, as: :attachable, dependent: :destroy
   has_many :attachments, as: :attachable, dependent: :destroy
   has_many :pages
@@ -33,6 +35,12 @@ class Page < ApplicationRecord
     self.website.submit_sitemaps
   end
 
+  def page_image
+    return self.image if self.image.present?
+    return self.block_hero_images.first if self.block_hero_images.present?
+    return self.block_images.first if self.block_images.present?
+  end
+
   handle_asynchronously :submit_sitemaps
 
   private
@@ -50,7 +58,7 @@ class Page < ApplicationRecord
         content_block.update_columns(about: self.about, name: self.name, updated_at: Time.zone.now)
       end
     else
-      self.blocks.create(block_type: 'page_content', about: self.about, position: 2)
+      self.blocks.create(block_type: 'page_content', name: self.name, about: self.about, position: 1)
     end
   end
 

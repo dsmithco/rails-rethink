@@ -18,7 +18,7 @@ class CategoriesController < ApplicationController
 
   def search
     order = params[:order].present? ? params[:order] : 'pages.created_at DESC'
-    @pages = @category.pages.where('lower(name) LIKE :term OR lower(about) LIKE :term', term: "%#{params[:term].downcase.strip}%").page(params[:page]).reorder(order)
+    @pages = @category.pages.where('lower(description) LIKE :term OR lower(name) LIKE :term OR lower(about) LIKE :term', term: "%#{params[:term].downcase.strip}%").page(params[:page]).reorder(order)
   end
 
   # GET /categories/new

@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="edit_page_links btn-group pull-right">
-          <%= link_to '<i class="fa fa-pencil"></i> Edit'.html_safe, edit_category_path(@category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn-circle btn btn-sm btn-primary' if can? :edit, @category %>
-          <%= link_to '<i class="fa fa-plus"></i> Add page'.html_safe, new_page_path(website_id: @current_website.id, category_ids:[@category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', remote: true, class: 'btn-circle btn btn-sm btn-success' if can? :edit, @category %>
+          <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_category_path(@category), remote: true, style: 'margin-top: -15px; padding: 7px 15px;', class: 'btn btn-sm btn-default' if can? :edit, @category %>
+          <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_page_path(website_id: @current_website.id, category_ids:[@category.id], return_to: request.path), style: 'margin-top: -15px; padding: 7px 15px;', remote: true, class: 'btn btn-sm btn-default' if can? :edit, @category %>
         </div>
         <h1 class="category-title">
           <%= @category.name %> &nbsp;

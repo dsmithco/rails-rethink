@@ -1,28 +1,15 @@
 <% content_for :page_blocks do %>
-  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.blocks}".html_safe, data: {location: 'bottom'}, id: 'page_blocks', class: 'bottom_container main-sortable-connect') %>
+  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.blocks}".html_safe, data: {update_url: sort_blocks_path(page_id: @page.id, format: 'js')}, id: 'page_blocks', class: 'bottom_container main-sortable-connect') %>
   <script type="text/javascript">
     $( ".main-sortable-connect" ).sortable();
     $( ".main-sortable-connect" ).sortable({
       handle: '.block-handle',
+      tolerance: 'pointer',
       connectWith: ".main-sortable-connect",
-      placeholder: "ui-state-highlight"
-    });
-    $( ".main-sortable-connect" ).on( "sortupdate", function( event, ui ) {
-      console.log(event);
-      console.log(ui);
-      var id,url,position,item;
-      id = ui.item.context.dataset.id;
-      url = "/blocks/" + id + ".js";
-      position = $(ui.item).index() + 1;
-      item = {block:{'position': position, 'id': id}};
-      $.ajax({
-          url: url,
-          type: 'PUT',
-          data: item,
-          success: function(result) {
-              // Do something with the result
-          }
-      });
+      placeholder: "ui-state-highlight",
+      update: function( event, ui ) {
+        return $.post($(this).data('update-url'), $(this).sortable('serialize'));
+      }
     });
   </script>
 

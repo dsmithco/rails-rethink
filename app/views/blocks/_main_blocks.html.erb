@@ -1,13 +1,29 @@
 <% blocks.each do |block| %>
-  <% cache [current_user, block, block.blocks, block.form, block.form.try(:questions), block.category, block.category.try(:pages)] do %>
-    <div id="<%= dom_id(block) %>" data-id="<%=block.id%>">
-      <% unless block.is_empty %>
+  <% cache [current_user, block, block.position, block.blocks, block.form, block.form.try(:questions), block.category, block.category.try(:pages)] do %>
+    <% unless block.is_empty %>
+      <div id="<%= dom_id(block) %>" data-id="<%=block.id%>" class="block-wrapper">
+        <% if block == blocks.select{|b|!b.is_empty}.first %>
+          <div class="new-block new-block-above text-center">
+            <%= link_to 'New Block <i class="ion-plus"></i>'.html_safe,
+                  new_block_path({page_id: @page.id, position: 1}),
+                  class: 'btn btn-default btn-sm',
+                  remote: true if @page.present? %>
+          </div>
+        <% end %>
         <% if lookup_context.find_all("blocks/#{block.block_type}/_#{block.block_type}_blocks_partial.html.erb").any? %>
           <%= render "blocks/#{block.block_type}/#{block.block_type}_blocks_partial", block: block %>
         <% else %>
           <%= render 'blocks/main_blocks_partial', block: block %>
         <% end %>
-      <% end %>
-    </div>
+        <% if can? :edit, block.page %>
+          <div class="new-block new-block-below text-center">
+            <%= link_to 'New Block <i class="ion-plus"></i>'.html_safe,
+                  new_block_path({page_id: @page.id, position: block.position + 1}),
+                  class: 'btn btn-default btn-sm',
+                  remote: true if @page.present? %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

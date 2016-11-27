@@ -7,7 +7,6 @@ class FormsController < ApplicationController
   def index
     @forms = @current_website.forms
     authorize! :edit, @current_website
-
   end
 
   # GET /forms/1

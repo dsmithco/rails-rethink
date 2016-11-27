@@ -1,19 +1,38 @@
 <% if block.blocks.present? %>
-  <% block.blocks.each_slice(block.blocks_splice_calc).with_index do |block_group, index| %>
-    <div class="row">
-      <% block_group.each do |sub_block| %>
-        <div class="text-center col-md-<%= ((12 / block.blocks.each_slice(block.blocks_splice_calc).first.count).to_f).ceil%>
-                   col-sm-6 <%= 'col-sm-push-3 col-md-push-0' if block_group.count.odd? && sub_block == block_group.last%>">
-          <div class="group-<%=index%> block-container">
-            <%= render 'blocks/block', block: sub_block %>
-          </div>
+  <div class="row block-sortable-connect" data-block-id="<%= block.id %>" data-update-url="/blocks/sort.js?block_id=<%= block.id %>" id="<%= dom_id(block) %>">
+    <% block.blocks.each do |sub_block| %>
+      <div data-id="<%= sub_block.id %>" style="position: relative;" class="text-center col-md-<%= 12 / block.columns %>
+                 col-sm-6 <%= 'col-sm-push-3 col-md-push-0' if block.blocks.count.odd? && sub_block == block.blocks.last%>" id="<%= dom_id(sub_block) %>">
+        <div class="block-group-<%=block.id%> block-container">
+          <%= render 'blocks/block', block: sub_block %>
         </div>
-      <% end %>
-      <script type="text/javascript">
-        // $(function() {
-        //     $('.group-<%=index%> .sub_block').matchHeight();
-        // });
-      </script>
-    </div>
-  <% end %>
+      </div>
+    <% end %>
+    <!-- <script type="text/javascript">
+      $(function() {
+          $('.block-group-<%=block.id%>  .sub_block').matchHeight();
+      });
+    </script> -->
+  </div>
+  <style media="screen">
+    .ui-sortable-helper {
+      padding: 0 !important;
+      border-radius: 0px;
+      min-height: 0px;
+      margin: 0px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $( ".block-sortable-connect" ).sortable();
+    $( ".block-sortable-connect" ).sortable({
+      handle: '.sub_block-handle',
+      tolerance: 'pointer',
+      connectWith: ".block-sortable-connect",
+      update: function( event, ui ) {
+        return $.post($(this).data('update-url'), $(this).sortable('serialize'));
+      }
+    });
+
+  </script>
 <% end %>

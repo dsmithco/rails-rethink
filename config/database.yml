@@ -78,8 +78,8 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
-production:
-  <<: *default
-  database: rails-rethink_production
-  username: rails-rethink
-  password: <%= ENV['RETHINK_DATABASE_PASSWORD'] %>
+# production:
+#   <<: *default
+#   database: rails-rethink_production
+#   username: rails-rethink
+#   password: <%= ENV['RETHINK_DATABASE_PASSWORD'] %>

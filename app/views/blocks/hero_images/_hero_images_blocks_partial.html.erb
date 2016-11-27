@@ -7,20 +7,65 @@
 </div>
 <% cache [block.hero_images, current_user] do %>
   <% if block.hero_images.present? %>
-    <div class="hero-unit <%= block.hero_images.first.text_align %>" data-src="<%=block.hero_images.first.asset(:hero)%>" style="background-image:url(<%=block.hero_images.first.asset(:hero)%>)">
-      <div class="hero-unit-cell">
-        <div class="hero-unit-content text-center container-fluid">
-          <div class="hero-unit-text">
-            <%= content_tag(:h1, block.hero_images.first.name.html_safe, class: 'dynamic-background') if block.hero_images.first.name.present?%>
+    <% if block.hero_images.count == 1 %>
+      <div class="hero-unit <%= block.hero_images.first.text_align %>" data-src="<%=block.hero_images.first.asset(:hero)%>" style="background-image:url(<%=block.hero_images.first.asset(:hero)%>)">
+        <div class="hero-unit-cell">
+          <div class="hero-unit-content text-center container-fluid">
+            <div class="hero-unit-text">
+              <%= content_tag(:h1, block.hero_images.first.name.html_safe, class: 'dynamic-background') if block.hero_images.first.name.present?%>
+            </div>
+            <div class="hero-unit-text">
+              <%= content_tag(:h2, block.hero_images.first.about.html_safe, class: 'dynamic-background') if block.hero_images.first.about.present?%>
+            </div>
+            <p>
+              <%= link_to block.hero_images.first.link_text.html_safe || 'Continue', block.hero_images.first.link, class: "btn btn-primary btn-lg" if block.hero_images.first.link.present? %>
+            </p>
           </div>
-          <div class="hero-unit-text">
-            <%= content_tag(:h2, block.hero_images.first.about.html_safe, class: 'dynamic-background') if block.hero_images.first.about.present?%>
-          </div>
-          <p>
-            <%= link_to block.hero_images.first.link_text.html_safe || 'Continue', block.hero_images.first.link, class: "btn btn-primary btn-lg" if block.hero_images.first.link.present? %>
-          </p>
         </div>
       </div>
-    </div>
+    <% else %>
+
+      <div id="carousel-rethink-generic" class="carousel slide carousel-fade" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <% block.hero_images.each_with_index do |hero_image, index| %>
+            <li data-target="#carousel-rethink-generic" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
+          <% end %>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+          <% block.hero_images.each do |hero_image| %>
+            <div class="item <%= 'active' if block.hero_images.first == hero_image %>">
+              <div class="hero-unit <%= hero_image.text_align %>" data-src="<%=hero_image.asset(:hero)%>" style="background-image:url(<%=hero_image.asset(:hero)%>)">
+                <div class="hero-unit-cell">
+                  <div class="hero-unit-content text-center container-fluid">
+                    <div class="hero-unit-text">
+                      <%= content_tag(:h1, hero_image.name.html_safe, class: 'dynamic-background') if hero_image.name.present?%>
+                    </div>
+                    <div class="hero-unit-text">
+                      <%= content_tag(:h2, hero_image.about.html_safe, class: 'dynamic-background') if hero_image.about.present?%>
+                    </div>
+                    <p>
+                      <%= link_to hero_image.link_text.html_safe || 'Continue', hero_image.link, class: "btn btn-primary btn-lg" if hero_image.link.present? %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-rethink-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-rethink-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    <% end %>
   <% end %>
 <% end %>

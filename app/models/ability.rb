@@ -14,6 +14,10 @@ class Ability
       true
     end
 
+    can [:read, :index], [Form] do |item|
+      (item.website.present?) && (can? :edit, Website.find(item.website.id))
+    end
+
     can [:index, :manage], Website do |website|
       user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
@@ -26,7 +30,7 @@ class Ability
       (item.website.present?) && (can? :edit, Website.find(item.website.id))
     end
 
-    can [:create], [Block] do |item|
+    can [:create, :sort], [Block] do |item|
       (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.try(:block_type))
     end
 

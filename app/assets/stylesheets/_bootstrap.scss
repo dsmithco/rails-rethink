@@ -193,7 +193,7 @@ body.has-fixed-navbar #body{
     font-weight: 500;
     padding: 0px 0px;
     margin: 0px;
-    max-width: 80%;
+    max-width: 90%;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     // background-color: rgba(0,0,0,.7);
 }
@@ -236,7 +236,7 @@ body.has-fixed-navbar .hero-unit {
 
 .hero-unit.left .hero-unit-text,
 .hero-unit.right .hero-unit-text {
-  max-width: 62%;
+  max-width: 100%;
 }
 
 .hero-unit.top > .hero-unit-cell {
@@ -402,7 +402,7 @@ dl > dt > label {
 
 .block .block-link {
   margin-top: 20px;
-  margin-bottom: 25px;
+  padding-bottom: 25px;
 }
 
 .block-image img {
@@ -467,7 +467,7 @@ a.block-handle:hover{
   padding-top: $padding-base-vertical;
 }
 
-.block-main:not(:hover) .block-edit-btns {
+.block-wrapper:not(:hover) .block-edit-btns {
   opacity: .2;
 }
 // Page Styles
@@ -601,11 +601,28 @@ a.block-handle:hover{
 }
 
 .category-page-list {
-  padding: 12px 25px 15px;
-  background-color: rgba(255,255,255,.12);
+  padding: 10px 20px 10px;
   margin-bottom: 20px;
-  border-radius: 2px;
-  box-shadow: 0px 1px 3px rgba(0,0,0,.2)
+  border-radius: 1px;
+  background-color: rgba(255,255,255,.7);
+  // border-bottom: 1px solid #eee;
+  color: inherit !important;
+  box-shadow: 0px 1px 2px rgba(0,0,0,.2);
+}
+
+.category-page-about {
+  color: #333 !important;
+
+}
+
+// .category-page-list:last-child {
+//   border-bottom: 0px solid #eee;
+// }
+
+.category-list-image {
+  margin: 15px 15px 15px 0;
+  border-radius: 1px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,.2);
 }
 
 .category-page-footer {
@@ -864,9 +881,30 @@ body:not(.snapjs-right) .snap-drawers{
   padding: 0;
 }
 
+.block-wrapper .new-block {
+  opacity: .1;
+  position: absolute;
+  z-index: 99;
+  right: 0;
+  left: 0;
+  transition: .3s;
+}
+
+.block-wrapper:hover .new-block {
+  opacity: .6;
+}
+
+.block-wrapper:hover .new-block:hover {
+  opacity: 1;
+}
+
+.new-block-below {
+  margin-top: -15px;
+}
+
 .block_bg_image {
    background-size: cover;
-   opacity: .6;
+   opacity: .35;
    left: 0;
    position: absolute;
    background-position: center center;
@@ -955,4 +993,8 @@ html>body #sortable_heros li {height: 1.5em;line-height: 1.2em;}
   border-radius: 5px;
   opacity: .9;
   overflow: hidden;
+}
+
+.fr-box > div > a:last-child {
+   display: none !important;
 }

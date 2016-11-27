@@ -53,11 +53,11 @@ class PagesController < ApplicationController
       if @page.save
         format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully created.' }
         format.json { render :show, status: :created, location: @page }
-        format.js { render :update }
+        format.js { }
       else
         format.html { render :new }
         format.json { render json: @page.errors, status: :unprocessable_entity }
-        format.js { render :update }
+        format.js { }
       end
     end
   end
