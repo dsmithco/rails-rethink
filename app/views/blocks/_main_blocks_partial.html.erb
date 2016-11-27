@@ -18,24 +18,26 @@
     <div class="row">
       <div class="col-sm-12">
         <% if block.about.present? %>
-          <div class="text-<%= block.text_align %> form-group">
+          <div class="text-<%= block.text_align %> form-group block-color">
             <%= block.about.html_safe %>
           </div>
         <% end %>
         <%= render 'blocks/sub_block/sub_blocks', block: block if block.block_type == 'container' %>
-        <%= render 'blocks/category_list/category_list', '@category': block.category if block.block_type == 'category_list' %>
-        <%= render 'blocks/block_form', block: block if block.block_type == 'form' %>
+        <div class="block-color">
+          <%= render 'blocks/category_list/category_list', '@category': block.category if block.block_type == 'category_list' %>
+          <%= render 'blocks/block_form', block: block if block.block_type == 'form' %>          
+        </div>
       </div>
     </div>
   </div>
   <script type="text/javascript">
       var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
       if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
-        $('#<%= dom_id(block) %> h1.block-title, #<%= dom_id(block) %> .block-contents').css({
-          'color': getContrastYIQ(rgb2hex(bg_color))
+        $('#<%= dom_id(block) %> h1, #<%= dom_id(block) %> h2, #<%= dom_id(block) %> h3, #<%= dom_id(block) %> .block-color').attr({
+          'style': 'color:' + getContrastYIQ(rgb2hex(bg_color)) + ' !important;'
         })
-        $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
-          'color': getContrastYIQ(rgb2hex(bg_color))
+        $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').attr({
+          'style': 'color:' + getContrastYIQ(rgb2hex(bg_color)) + ' !important;'
         })
       }
   </script>
