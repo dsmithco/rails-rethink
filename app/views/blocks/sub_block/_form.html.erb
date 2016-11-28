@@ -19,6 +19,8 @@
       <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
     </div>
 
+    <%= render 'blocks/input/link_inputs', block: block, f: f %>
+
     <%= render 'blocks/input/bg_color', block: block, f: f %>
 
     <%= render 'blocks/input/bg_image', block: block %>
