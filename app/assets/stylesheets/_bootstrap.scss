@@ -468,7 +468,7 @@ a.block-handle:hover{
 }
 
 .block-wrapper:not(:hover) .block-edit-btns {
-  opacity: .2;
+  opacity: .0;
 }
 // Page Styles
 
@@ -882,7 +882,7 @@ body:not(.snapjs-right) .snap-drawers{
 }
 
 .block-wrapper .new-block {
-  opacity: .1;
+  opacity: 0;
   position: absolute;
   z-index: 99;
   right: 0;

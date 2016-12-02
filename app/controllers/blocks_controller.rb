@@ -98,6 +98,6 @@ class BlocksController < ApplicationController
       params.require(:block).permit(:name, :columns, :block_id, :form_id, :category_id,
                                     :bg_color, :text_align, :about, :continue_edit,
                                     :block_type, :position, :front_page, :page_id, :link,
-                                    :link_text, :display_page_name)
+                                    :link_text, :display_page_name, {:style=>['height','min-height']})
     end
 end

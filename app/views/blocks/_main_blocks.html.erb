@@ -21,9 +21,13 @@
                   new_block_path({page_id: @page.id, position: block.position + 1}),
                   class: 'btn btn-default btn-sm',
                   remote: true if @page.present? %>
+                  <% if ['hero_images','custom'].include? block.block_type%>
+                    <span class="resize_s btn btn-sm btn-default" style="cursor:row-resize;"><i class="fa fa-arrows-v"></i></span>
+                  <% end %>
           </div>
         <% end %>
       </div>
+
     <% end %>
   <% end %>
 <% end %>

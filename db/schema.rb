@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119105820) do
+ActiveRecord::Schema.define(version: 20161202161807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 20161119105820) do
     t.string   "name"
     t.text     "about"
     t.string   "block_type"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "position"
     t.boolean  "front_page"
     t.integer  "block_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20161119105820) do
     t.integer  "category_id"
     t.integer  "form_id"
     t.integer  "page_id"
+    t.hstore   "style",       default: {}, null: false
     t.index ["block_id"], name: "index_blocks_on_block_id", using: :btree
     t.index ["category_id"], name: "index_blocks_on_category_id", using: :btree
     t.index ["form_id"], name: "index_blocks_on_form_id", using: :btree

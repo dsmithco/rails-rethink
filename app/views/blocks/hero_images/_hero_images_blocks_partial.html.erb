@@ -5,10 +5,10 @@
     <% end %>
   </div>
 </div>
-<% cache [block.hero_images, current_user] do %>
+<% cache [block, block.hero_images, current_user] do %>
   <% if block.hero_images.present? %>
     <% if block.hero_images.count == 1 %>
-      <div class="hero-unit <%= block.hero_images.first.text_align %>" data-src="<%=block.hero_images.first.asset(:hero)%>" style="background-image:url(<%=block.hero_images.first.asset(:hero)%>)">
+      <div class="hero-unit <%= block.hero_images.first.text_align %> resizable-block" data-id="<%= block.id %>" data-src="<%=block.hero_images.first.asset(:hero)%>" style="background-image:url(<%=block.hero_images.first.asset(:hero)%>); height: <%= block.style['height'] %>">
         <div class="hero-unit-cell">
           <div class="hero-unit-content text-center container-fluid">
             <div class="hero-unit-text">
@@ -24,7 +24,6 @@
         </div>
       </div>
     <% else %>
-
       <div id="carousel-rethink-generic" class="carousel slide carousel-fade" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -37,7 +36,7 @@
         <div class="carousel-inner" role="listbox">
           <% block.hero_images.each do |hero_image| %>
             <div class="item <%= 'active' if block.hero_images.first == hero_image %>">
-              <div class="hero-unit <%= hero_image.text_align %>" data-src="<%=hero_image.asset(:hero)%>" style="background-image:url(<%=hero_image.asset(:hero)%>)">
+              <div class="hero-unit <%= hero_image.text_align %> resizable-block" data-id="<%= block.id %>" data-src="<%=hero_image.asset(:hero)%> resizable-block" style="background-image:url(<%=hero_image.asset(:hero)%>); height: <%= block.style['height'] %>">
                 <div class="hero-unit-cell">
                   <div class="hero-unit-content text-center container-fluid">
                     <div class="hero-unit-text">
@@ -69,3 +68,27 @@
     <% end %>
   <% end %>
 <% end %>
+<script type="text/javascript">
+
+interact('#<%= dom_id(block) %>')
+  .resizable({
+    preserveAspectRatio: false,
+    edges: { left: false, right: false, bottom: '.resize_s', top: false }
+  })
+  .on('resizemove', function (event) {
+    var targets = event.target.querySelectorAll('.resizable-block');
+    var containerHeight;
+    targets.forEach(function(target) {
+      var y = (parseFloat(target.getAttribute('data-y')) || 0);
+      target.style.height = event.rect.height + 'px';
+      target.setAttribute('data-y', y);
+      containerHeight = target.style.height;
+    });
+  })
+  .on('resizeend', function (event) {
+    $.ajax({
+      method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
+      data: {'block': { 'style': {'height': event.target.offsetHeight+'px'}}}
+    }).done(function( msg ) {});
+  });
+</script>

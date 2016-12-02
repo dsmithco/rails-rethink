@@ -26,7 +26,7 @@
 //= require plugins/table.min.js
 //= require plugins/url.min.js
 //= require plugins/video.min.js
-
+//= require interact.min
 //= require jquery-fileupload/basic
 //= require jquery-ui/sortable
 //= require evol-colorpicker
