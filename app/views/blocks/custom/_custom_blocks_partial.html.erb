@@ -24,30 +24,30 @@
       <% end %>
     </div>
   </div>
-  <script type="text/javascript">
+  <% if can? :update, block %>
+    <script type="text/javascript">
+    interact('#<%= dom_id(block) %>')
+      .resizable({
+        preserveAspectRatio: false,
+        edges: { left: false, right: false, bottom: '.resize_s', top: false }
+      })
+      .on('resizemove', function (event) {
 
-  interact('#<%= dom_id(block) %>')
-    .resizable({
-      preserveAspectRatio: false,
-      edges: { left: false, right: false, bottom: '.resize_s', top: false }
-    })
-    .on('resizemove', function (event) {
+        var target = event.target.querySelector('.resizable-block'),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
 
-      var target = event.target.querySelector('.resizable-block'),
-          y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-      // update the element's style
-      target.style.minHeight = event.rect.height - 82 + 'px';
-      target.setAttribute('data-y', y);
-      // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
-    }).on('resizeend', function (event) {
-        $.ajax({
-          method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
-          data: {'block': { 'style': {'min-height': event.target.offsetHeight - 62 +'px'}}}
-        }).done(function( msg ) {});
-      });
-  </script>
-
+        // update the element's style
+        target.style.minHeight = event.rect.height - 82 + 'px';
+        target.setAttribute('data-y', y);
+        // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
+      }).on('resizeend', function (event) {
+          $.ajax({
+            method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
+            data: {'block': { 'style': {'min-height': event.target.offsetHeight - 62 +'px'}}}
+          }).done(function( msg ) {});
+        });
+    </script>
+  <% end %>
   <script type="text/javascript">
       var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
       if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){

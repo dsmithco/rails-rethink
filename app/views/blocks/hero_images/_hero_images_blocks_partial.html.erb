@@ -68,27 +68,29 @@
     <% end %>
   <% end %>
 <% end %>
-<script type="text/javascript">
+<% if can? :update, block %>
+  <script type="text/javascript">
 
-interact('#<%= dom_id(block) %>')
-  .resizable({
-    preserveAspectRatio: false,
-    edges: { left: false, right: false, bottom: '.resize_s', top: false }
-  })
-  .on('resizemove', function (event) {
-    var targets = event.target.querySelectorAll('.resizable-block');
-    var containerHeight;
-    targets.forEach(function(target) {
-      var y = (parseFloat(target.getAttribute('data-y')) || 0);
-      target.style.height = event.rect.height + 'px';
-      target.setAttribute('data-y', y);
-      containerHeight = target.style.height;
+  interact('#<%= dom_id(block) %>')
+    .resizable({
+      preserveAspectRatio: false,
+      edges: { left: false, right: false, bottom: '.resize_s', top: false }
+    })
+    .on('resizemove', function (event) {
+      var targets = event.target.querySelectorAll('.resizable-block');
+      var containerHeight;
+      targets.forEach(function(target) {
+        var y = (parseFloat(target.getAttribute('data-y')) || 0);
+        target.style.height = event.rect.height + 'px';
+        target.setAttribute('data-y', y);
+        containerHeight = target.style.height;
+      });
+    })
+    .on('resizeend', function (event) {
+      $.ajax({
+        method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
+        data: {'block': { 'style': {'height': event.target.offsetHeight+'px'}}}
+      }).done(function( msg ) {});
     });
-  })
-  .on('resizeend', function (event) {
-    $.ajax({
-      method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
-      data: {'block': { 'style': {'height': event.target.offsetHeight+'px'}}}
-    }).done(function( msg ) {});
-  });
-</script>
+  </script>
+<% end %>
