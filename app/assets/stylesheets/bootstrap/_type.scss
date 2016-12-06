@@ -54,12 +54,14 @@ h2.page-title {
 
 h3 {
   font-weight: 700;
-  font-family: $font-family-sans-serif;
+  font-family: $headings-font-family;
 }
 h4 {
   font-weight: 700;
+  font-size: 1.2em;
+
   // text-transform: uppercase;
-  font-family: $font-family-sans-serif;
+  font-family: $headings-font-family;
 }
 
 p,
