@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161202161807) do
+ActiveRecord::Schema.define(version: 20161205022232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 20161202161807) do
     t.text     "description"
     t.boolean  "is_homepage"
     t.boolean  "display_name",      default: true
+    t.hstore   "style",             default: {},    null: false
     t.index ["is_homepage"], name: "index_pages_on_is_homepage", using: :btree
     t.index ["name"], name: "index_pages_on_name", using: :btree
     t.index ["page_id"], name: "index_pages_on_page_id", using: :btree
@@ -277,6 +278,7 @@ ActiveRecord::Schema.define(version: 20161202161807) do
     t.hstore   "style",            default: {},    null: false
     t.boolean  "random_hero",      default: false
     t.string   "subtitle"
+    t.hstore   "settings",         default: {},    null: false
     t.index ["account_id"], name: "index_websites_on_account_id", using: :btree
     t.index ["domain_url"], name: "index_websites_on_domain_url", using: :btree
     t.index ["name"], name: "index_websites_on_name", using: :btree

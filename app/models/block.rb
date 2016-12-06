@@ -21,8 +21,7 @@ class Block < ApplicationRecord
 
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation','page_content']
-  TOP_LOCATION_BLOCKS = ['hero_images']
-  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form'] + TOP_LOCATION_BLOCKS
+  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form', 'hero_images']
   LOWER_LEVEL_BLOCKS = ['sub_block']
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
 
@@ -117,6 +116,7 @@ class Block < ApplicationRecord
   def is_empty
     self.bg_color.blank? &&
     self.image.blank? &&
+    self.blocks.blank? &&
     self.form.blank? &&
     self.category.blank? &&
     self.about.blank? &&
@@ -134,7 +134,9 @@ class Block < ApplicationRecord
   end
 
   def default_values
-    # self.position ||= 1 if TOP_LOCATION_BLOCKS.include?(self.block_type)
+    if self.page_id.blank? && self.block.present?
+      self.page_id = self.block.page_id
+    end
   end
 
   def check_content_block

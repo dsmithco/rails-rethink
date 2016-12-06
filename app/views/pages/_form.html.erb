@@ -29,6 +29,10 @@
           </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span>
             <label><%= f.check_box :is_homepage, class:'page_show_in_menu', disabled: @page.is_homepage %> &nbsp; Set as homepage</label>
+          </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <span>
+            <input name="page[style][navbar-btn]" type="hidden" value="">
+            <label><input type="checkbox" id="page_style_navbar_btn" name="page[style][navbar-btn]" <%=@page.style['navbar-btn'].present? ? 'checked' : '' %> value="true"> Navbar Button</label>
           </span>
           <script type="text/javascript">
             show_in_menu_change = function(){
@@ -50,6 +54,22 @@
             </div>
           </dd>
         <% end %>
+        <div id="navbar-btn-class" class="form-group">
+          <dt>Nav Btn Class</dt>
+          <dd>
+            <%= f.text_field 'style[navbar-btn-class]', value: page['style']['navbar-btn-class'], class: 'form-control' %>
+          </dd>
+          <script type="text/javascript">
+            show_navbar_btn_class = function(){
+              if ($('#page_style_navbar_btn').prop('checked') === true){
+                $('#navbar-btn-class').show();
+              }else{
+                $('#navbar-btn-class').hide();
+              }
+            }
+            $('#page_style_navbar_btn').change(show_navbar_btn_class).change();
+          </script>
+        </div>
         <dt class="show_in_menu_true"><%= f.label :page_id, "Parent <span class='text-muted'>(optional)</span>".html_safe %></dt>
         <dd class="show_in_menu_true" id="page">
           <div class="row">
@@ -76,6 +96,8 @@
         <dd class="show_in_menu_true form-group" id="position">
           <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
         </dd>
+        <dt>
+        </dt>
         <dt>
           <%= f.label :name %>
         </dt>

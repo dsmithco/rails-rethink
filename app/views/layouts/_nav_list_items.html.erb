@@ -13,8 +13,14 @@
       </li>
     <% else %>
       <li class="<%= "active" if page.id == @page.try(:id) %>">
-        <%= link_to page.name, page_path(page, 'redirect') %>
+        <% if page.style['navbar-btn'].present? %>
+          <span><%= link_to page.name, page_path(page, 'redirect'), class: "#{page.style['navbar-btn-class'].present? ? page.style['navbar-btn-class'] : 'btn btn-success'} navbar-btn" %></span>
+        <% else %>
+          <%= link_to page.name, page_path(page, 'redirect') %>
+        <% end %>
       </li>
     <% end %>
   <% end %>
+  <li>
+  </li>
 <% end %>

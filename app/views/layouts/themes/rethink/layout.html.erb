@@ -13,7 +13,7 @@
       <%= render 'layouts/mobile_nav' %>
     </div>
 
-    <div id="body">
+    <div id="body" style="max-width: <%= @website.style['max-width'] %>">
     <!-- Fixed navbar -->
     <div top_nav="">
       <%= render 'layouts/top_nav' %>

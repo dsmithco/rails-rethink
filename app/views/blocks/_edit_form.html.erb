@@ -23,10 +23,15 @@
 
       <% if !block.block_type.present? %>
         <div class="row">
-          <div class="col-sm-12 text-center">
-            <% Block::TOP_LEVEL_BLOCKS.each do |block_type|%>
-              <%= link_to block_type.titleize, edit_block_path(block, {block_type: block_type, page_id: params[:page_id]}), class: 'btn btn-primary', remote: true %>
-            <% end %>
+          <div class="col-sm-12">
+            <div class="list-group panel panel-default" style="box-shadow: 0px 1px 3px rgba(0,0,0,.3)">
+              <% Block::TOP_LEVEL_BLOCKS.each do |block_type|%>
+                  <%= link_to "
+                      <strong class='text-primary'>#{t :name, scope: [:block_types, block_type.to_sym] }</strong><br/>
+                      #{t :about, scope: [:block_types, block_type.to_sym] }
+                  ".html_safe, edit_block_path(block, {block_type: block_type, page_id: params[:page_id]}), class: 'list-group-item', remote: true %>
+              <% end %>
+            </div>
           </div>
         </div>
       <% end %>

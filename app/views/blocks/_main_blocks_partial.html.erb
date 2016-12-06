@@ -10,7 +10,7 @@
       <%= render 'blocks/edit_block_btns', block: block %>
     <% end %>
     <h1 class="block-title <%= 'hide' if !block.name.present? %>">
-      <%= block.name unless block.block_type == 'category_list' %>
+      <%= block.name.try(:html_safe) unless block.block_type == 'category_list' %>
       <% if block.block_type == 'category_list'%>
         <%= link_to block.name, category_path(block.category) %>
       <% end %>
@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-sm-12">
         <% if block.about.present? %>
-          <div class="text-<%= block.text_align %> form-group block-color">
+          <div class="text-<%= block.text_align %> block-color">
             <%= block.about.html_safe %>
           </div>
         <% end %>

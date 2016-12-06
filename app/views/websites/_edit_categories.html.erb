@@ -2,58 +2,69 @@
 <div id="categories">
   <fieldset>
     <legend>
-      Categories <%= link_to 'New Category', new_category_path, remote: true, class: 'btn btn-success btn-sm' %>
+      Categories <%= link_to 'New Category', new_category_path, remote: true, class: 'pull-right btn btn-success' %>
     </legend>
     <div class="form-group">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Name
-            </th>
-            <th>
-              Parent
-            </th>
-            <th>
-              Children
-            </th>
-            <th>
-              Pages
-            </th>
-            <th>
+      <div class="panel panel-default">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  ID
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Parent
+                </th>
+                <th>
+                  Children
+                </th>
+                <th>
+                  Pages
+                </th>
+                <th>
 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @website.categories.each do |category| %>
-            <tr id="category_<%=category.id%>">
-              <td>
-                <%= category.id %>
-              </td>
-              <td>
-                <%= link_to category.name.present? ? category.name : '-', category_path(category) %>
-              </td>
-              <td>
-                <%= category.category.try(:name) %>
-              </td>
-              <td>
-                <%= category.categories.pluck(&:name) %>
-              </td>
-              <td>
-                <%= category.pages.count %>
-              </td>
-              <td class="text-right">
-                <%= link_to 'Edit', edit_category_path(category), remote: true, class: 'btn btn-sm btn-primary' %>
-                <%= link_to 'Remove', category_path(category), remote: true, method: :delete, data: {confirm: "Delete the category '#{category.name}'?"}, class: 'btn btn-sm btn-danger' %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @website.categories.each do |category| %>
+                <tr id="category_<%=category.id%>">
+                  <td>
+                    <%= category.id %>
+                  </td>
+                  <td>
+                    <%= link_to category.name.present? ? category.name : '-', category_path(category) %>
+                  </td>
+                  <td>
+                    <%= category.category.try(:name) %>
+                  </td>
+                  <td>
+                    <%= category.categories.pluck(:name).join(', ') %>
+                  </td>
+                  <td>
+                    <%= category.pages.count %>
+                  </td>
+                  <td class="text-right">
+                    <%= link_to 'Edit', edit_category_path(category), remote: true, class: 'btn btn-sm btn-primary' %>
+                    <%= link_to 'Remove', category_path(category), remote: true, method: :delete, data: {confirm: "Delete the category '#{category.name}'?"}, class: 'btn btn-sm btn-danger' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% unless @website.categories.present? %>
+                <tr>
+                  <td colspan="4">
+                    No records
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </fieldset>
 </div>

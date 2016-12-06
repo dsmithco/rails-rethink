@@ -5,13 +5,14 @@ class LogosController < AttachmentsController
   # POST /attachments
   # POST /attachments.json
   def create
-    authorize! :edit, @resource.attachable
-    
+
     if params[:id].present?
       @resource = instance_variable_set("@#{resource_name}", attachment_class.find(params[:id]))
+      authorize! :edit, @resource.attachable
       @resource.update(attachment_params)
     else
       @resource = instance_variable_set("@#{resource_name}", attachment_class.new(attachment_params))
+      authorize! :edit, @resource.attachable
       @resource.save
     end
 

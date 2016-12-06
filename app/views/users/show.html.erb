@@ -31,42 +31,46 @@
 <br/>
 <% @user.accounts.each do |account| %>
   <div class="panel panel-default">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>
-            Website name
-          </th>
-          <th>
-            Domain URL
-          </th>
-          <th>
-            Pg count
-          </th>
-          <th>
-
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <% account.websites.each do |website| %>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
           <tr>
-            <td>
-              <%= website.name %>
-            </td>
-            <td>
-              <%= "#{website.rethink_url}, #{website.domain_url}" %>
-            </td>
-            <td>
-              <%= website.pages.count %>
-            </td>
-            <td class="text-right">
-              <%= link_to 'Go to', "#{website.rethink_href}", class: 'btn btn-primary btn-sm btn-block', target: '_blank' %>
-            </td>
+            <th>
+              Website name
+            </th>
+            <th>
+              Domain URL
+            </th>
+            <th>
+              Pg count
+            </th>
+            <th>
+
+            </th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% account.websites.each do |website| %>
+            <tr>
+              <td>
+                <%= website.name %>
+              </td>
+              <td>
+                <%= "#{website.rethink_url}, #{website.domain_url}" %>
+              </td>
+              <td>
+                <%= website.pages.count %>
+              </td>
+              <td class="text-right">
+                <%= link_to 'Go to', "#{website.rethink_href}", class: 'btn btn-primary btn-sm btn-block', target: '_blank' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
+  
+  <%= link_to 'New Website', new_website_path %>
 
 <% end %>

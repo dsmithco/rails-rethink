@@ -7,13 +7,14 @@
 
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %> has-<%= @current_website.style['nav-fixed'].present? ? 'fixed' : 'static' %>-navbar">
+  <body class="<%= controller_name %> <%= action_name %> has-<%= @current_website.style['nav-fixed'].present? ? 'fixed' : 'static' %>-navbar"
+        style="background-color:<%= @current_website.style['website-background-color'] %>">
     <%= render 'layouts/google_script' %>
     <div id="mobile_nav">
       <%= render 'layouts/mobile_nav' %>
     </div>
 
-    <div id="body">
+    <div id="body" style="max-width: <%= @current_website.style['max-width'] %>; margin: auto;">
       <!-- Fixed navbar -->
       <div top_nav="">
         <%= render 'layouts/top_nav' %>

@@ -19,11 +19,11 @@ class Ability
     end
 
     can [:index, :manage], Website do |website|
-      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
+      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin','Editor']).present?
     end
 
     can [:index, :update, :edit], Website do |website|
-      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
+      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin','Editor']).present?
     end
 
     can [:create], [Category, Page, Form, Answer, AnswerQuestionOption] do |item|
@@ -31,7 +31,7 @@ class Ability
     end
 
     can [:create, :sort], [Block] do |item|
-      (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.try(:block_type))
+      (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.block_type)
     end
 
     can [:edit, :update], [Category, Block, Page, Form, Answer, AnswerQuestionOption] do |item|
@@ -42,8 +42,11 @@ class Ability
       (item.website.present?) && (can? :edit, Website.find(item.website.id))
     end
 
-    can [:destroy, :delete], [Block] do |item|
-      (item.website.present?) && (can? :edit, Website.find(item.website.id)) && !Block::SYSTEM_BLOCK_TYPES.include?(item.block_type)
+    can [:destroy, :delete], [Block] do |block|
+      (block.website.present?) &&
+      (can? :edit, Website.find(block.website.id)) &&
+      !Block::SYSTEM_BLOCK_TYPES.include?(block.block_type) &&
+      block.blocks.blank?
     end
 
     can [:destroy], [Page] do |item|
@@ -56,6 +59,14 @@ class Ability
 
     can [:new], [Category, Block, Page, Form] do |item|
       user.account_ids.present?
+    end
+
+    can [:new], [Website] do |website|
+      user.account_ids.present?
+    end
+
+    can [:create], [Website] do |website|
+      user.account_users.where(account_id: website.account_id, role: ['Owner','Admin']).present?
     end
 
     can [:new, :create], [FormResponse, Answer, AnswerQuestionOption] do |item|

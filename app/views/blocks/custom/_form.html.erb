@@ -8,21 +8,33 @@
 
   <div class="modal-body">
 
-    <div class="form-group" id="name">
-      <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#details">Block Details</a></li>
+      <li><a data-toggle="tab" href="#style">Style format</a></li>
+    </ul>
+    <br/>
+    <div class="tab-content">
+      <div id="details" class="tab-pane fade in active">
+
+        <div class="form-group" id="name">
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Title' %>
+        </div>
+
+        <div class="form-group" id="about">
+          <%= f.text_area :about, class: 'summernote form-control', rows: '6', placeholder: 'Content', data: {attachable_id: block.page_id, attachable_type: "Page", drop:'true'}  %>
+          <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
+        </div>
+
+      </div>
+
+      <div id="style" class="tab-pane fade">
+        <%= render 'blocks/input/text_align', block: block, f: f %>
+        <%= render 'blocks/input/bg_color', block: block, f: f %>
+        <%= render 'blocks/input/bg_image', block: block %>
+      </div>
+
     </div>
 
-    <div class="form-group" id="about">
-      <%= f.text_area :about, class: 'summernote form-control', rows: '6', placeholder: 'Content', data: {attachable_id: block.page_id, attachable_type: "Page", drop:'true'}  %>
-      <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_block_upload" class="hidden" onchange="">
-    </div>
-
-
-    <%= render 'blocks/input/text_align', block: block, f: f %>
-
-    <%= render 'blocks/input/bg_color', block: block, f: f %>
-
-    <%= render 'blocks/input/bg_image', block: block %>
 
   </div>
 

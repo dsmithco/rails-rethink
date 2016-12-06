@@ -1,154 +1,164 @@
-<div class="row" id="website_form" >
-  <div class="col-sm-12">
-    <% if website.errors.any? %>
-      <div class="alert alert-danger">
-        <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
-        <ul>
-          <% website.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-      <div class="tab-content">
-        <!-- Home tab content -->
-          <%= form_for(@website) do |f| %>
-            <fieldset>
-              <dl class="dl-horizontal" id="home">
-                <dt id="name">
-                  <%= f.label :name %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :name, class: 'form-control' %>
-                </dd>
-                <dt id="subtitle">
-                  <%= f.label :subtitle %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :subtitle, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :about %>
-                </dt>
-                <dd class="form-group" id="about">
-                  <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
-                  <div id="about_bottom">
-                  </div>
-                  <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
-
-                </dd>
-                <% if !@website.account_id.present? %>
-                  <dt>
-                    <label>
-                      Account
-                    </label>
+<div class="panel panel-default panel-body">
+  <div class="row" id="website_form" >
+    <div class="col-sm-12">
+      <% if website.errors.any? %>
+        <div class="alert alert-danger">
+          <strong><%= pluralize(website.errors.count, "error") %> prohibited this website from being saved:</strong>
+          <ul>
+            <% website.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+        <div class="tab-content">
+          <!-- Home tab content -->
+            <%= form_for(@website) do |f| %>
+              <fieldset>
+                <dl class="dl-horizontal" id="home">
+                  <dt id="name">
+                    <%= f.label :name %>
                   </dt>
                   <dd class="form-group">
-                    <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+                    <%= f.text_field :name, class: 'form-control' %>
                   </dd>
-                <% end %>
-                <dt>
-                  <%= f.label :css_override %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :domain_url %>
-                </dt>
-                <dd class="form-group" id="domain_url">
-                  <%= f.text_field :domain_url, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :google_analytics %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :google_analytics, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :description %>
-                </dt>
-                <dd class="form-group" id="description">
-                  <%= f.text_area :description, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :facebook %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :facebook, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :twitter %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :twitter, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :tags %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :tags, class: 'form-control' %>
-                </dd>
-                <dt>
-                  <%= f.label :theme %>
-                </dt>
-                <dd class="form-group">
-                  <%= f.text_field :theme, class: 'form-control' %>
-                </dd>
-                <dt>Logos</dt>
-                <dd>
-                  <%= render 'websites/edit_website_image', model: 'Logo', style: 'medium' %>
-                </dd>
-                <dt>Icon</dt>
-                <dd>
-                  <%= render 'websites/edit_website_image', model: 'Icon', style: 'small' %>
-                </dd>
-                <dt><label>Primary Color</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][brand-primary]" class="form-control color" value="<%= @website.style['brand-primary'] %>"></dd>
-                <dt><label>Secondary Color</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][brand-info]" class="form-control color" value="<%= @website.style['brand-info'] %>"></dd>
-                <dt><label>Success Color</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][brand-success]" class="form-control color" value="<%= @website.style['brand-success'] %>"></dd>
+                  <dt id="subtitle">
+                    <%= f.label :subtitle %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :subtitle, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :about %>
+                  </dt>
+                  <dd class="form-group" id="about">
+                    <%= f.text_area :about, class: 'form-control summernote', data: {attachable_id: @current_website.id, attachable_type: "Website", drop:'false'} %>
+                    <div id="about_bottom">
+                    </div>
+                    <input name="image[asset]" data-attachable-id="<%=@current_website.id%>" data-attachable-type="Website" type="file" id="tiny_upload" class="hidden" onchange="">
 
-                <dt><label>Warning Color</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][brand-warning]" class="form-control color" value="<%= @website.style['brand-warning'] %>"></dd>
-                <dt><label>Danger Color</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][brand-danger]" class="form-control color" value="<%= @website.style['brand-danger'] %>"></dd>
-                <dt><label>Border Radius</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][border-radius-base]" class="form-control" value="<%= @website.style['border-radius-base'] %>"></dd>
-                <dt><label>Navbar Height</label></dt>
-                <dd class="form-group"><input type="text" name="website[style][navbar-height]" class="form-control" value="<%= @website.style['navbar-height'] %>"></dd>
-                <dd class="form-group">
-                  <label><input type="checkbox" name="website[style][nav-inverse]" <%=@website.style['nav-inverse'].present? ? 'checked' : '' %> value="true"> Inverse Nav</label>
-                </dd>
-                <dd class="form-group">
-                  <label><input type="checkbox" name="website[style][nav-fixed]" <%=@website.style['nav-fixed'].present? ? 'checked' : '' %> value="true"> Fixed Nav</label>
-                </dd>
-                <dt>
-                  Heading Font
-                </dt>
-                <dd class="form-group">
-                  <%= select_tag "website[style][headings-font-family]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['headings-font-family']), :class => 'form-control' %>
-                </dd>
-                <dt>
-                  Body font
-                </dt>
-                <dd class="form-group">
-                  <%= select_tag "website[style][font-family-sans-serif]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['font-family-sans-serif']), :class => 'form-control' %>
-                </dd>
-                <script type="text/javascript">
-                  $(".color").colorpicker();
-                </script>
-                <dt>
-                </dt>
-                <dd class="form-group btn-group">
-                  <%= f.submit 'Save Website', class: 'btn btn-success' %>
-                  <%= link_to 'Cancel', params[:redirect_to] || @website, class: "btn btn-default" %>
-                </dd>
-              </dl>
-            </fieldset>
-          <% end %>
-      </div>
+                  </dd>
+                  <% if !@website.account_id.present? %>
+                    <dt>
+                      <label>
+                        Account
+                      </label>
+                    </dt>
+                    <dd class="form-group">
+                      <%= f.select :account_id, current_user.accounts.collect {|x| [x.id, x.id]}, {}, :multiple => false, :class => 'form-control' %>
+                    </dd>
+                  <% end %>
+                  <dt>
+                    <%= f.label :css_override %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_area :css_override, rows: '6', class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :domain_url %>
+                  </dt>
+                  <dd class="form-group" id="domain_url">
+                    <%= f.text_field :domain_url, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :google_analytics %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :google_analytics, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :description %>
+                  </dt>
+                  <dd class="form-group" id="description">
+                    <%= f.text_area :description, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :facebook %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :facebook, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :twitter %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :twitter, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :tags %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :tags, class: 'form-control' %>
+                  </dd>
+                  <dt>
+                    <%= f.label :theme %>
+                  </dt>
+                  <dd class="form-group">
+                    <%= f.text_field :theme, class: 'form-control' %>
+                  </dd>
+                  <dt>Logos</dt>
+                  <dd>
+                    <%= render 'websites/edit_website_image', model: 'Logo', style: 'medium' %>
+                  </dd>
+                  <dt>Icon</dt>
+                  <dd>
+                    <%= render 'websites/edit_website_image', model: 'Icon', style: 'small' %>
+                  </dd>
+                  <dt><label>Primary Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][brand-primary]" class="form-control color" value="<%= @website.style['brand-primary'] %>"></dd>
+                  <dt><label>Secondary Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][brand-info]" class="form-control color" value="<%= @website.style['brand-info'] %>"></dd>
+                  <dt><label>Success Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][brand-success]" class="form-control color" value="<%= @website.style['brand-success'] %>"></dd>
+
+                  <dt><label>Warning Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][brand-warning]" class="form-control color" value="<%= @website.style['brand-warning'] %>"></dd>
+                  <dt><label>Danger Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][brand-danger]" class="form-control color" value="<%= @website.style['brand-danger'] %>"></dd>
+
+                  <dt><label>Web BG Color</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][website-background-color]" class="form-control color" value="<%= @website.style['website-background-color'] %>"></dd>
+
+                  <dt><label>Border Radius</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][border-radius-base]" class="form-control" value="<%= @website.style['border-radius-base'] %>"></dd>
+                  <dt><label>Navbar Height</label></dt>
+                  <dd class="form-group"><input type="text" name="website[style][navbar-height]" class="form-control" value="<%= @website.style['navbar-height'] %>"></dd>
+                  <dt><label>Website Max Width</label></dt>
+
+                  <dd class="form-group"><input type="text" name="website[style][max-width]" class="form-control" value="<%= @website.style['max-width'] %>"></dd>
+
+                  <dd class="form-group">
+                    <label><input type="checkbox" name="website[style][nav-inverse]" <%=@website.style['nav-inverse'].present? ? 'checked' : '' %> value="true"> Inverse Nav</label>
+                  </dd>
+                  <dd class="form-group">
+                    <label><input type="checkbox" name="website[style][nav-fixed]" <%=@website.style['nav-fixed'].present? ? 'checked' : '' %> value="true"> Fixed Nav</label>
+                  </dd>
+                  <dt>
+                    Heading Font
+                  </dt>
+                  <dd class="form-group">
+                    <%= select_tag "website[style][headings-font-family]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['headings-font-family']), :class => 'form-control' %>
+                  </dd>
+                  <dt>
+                    Body font
+                  </dt>
+                  <dd class="form-group">
+                    <%= select_tag "website[style][font-family-sans-serif]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['font-family-sans-serif']), :class => 'form-control' %>
+                  </dd>
+                  <script type="text/javascript">
+                    $(".color").colorpicker();
+                  </script>
+                  <dt>
+                  </dt>
+                  <dd class="form-group btn-group">
+                    <%= f.submit 'Save Website', class: 'btn btn-success' %>
+                    <%= link_to 'Cancel', params[:redirect_to] || @website, class: "btn btn-default" %>
+                  </dd>
+                </dl>
+              </fieldset>
+            <% end %>
+        </div>
+    </div>
+
   </div>
-
 </div>

@@ -1,7 +1,7 @@
 class Website < ApplicationRecord
   belongs_to :account
   has_many :pages
-  has_many :blocks
+  has_many :blocks, through: :pages
   has_many :categories
   has_one :logo, as: :attachable
   has_one :icon, as: :attachable
@@ -14,6 +14,7 @@ class Website < ApplicationRecord
   validates :account, presence: true
   after_initialize :set_default_styles
   after_create :setup_nginx_prod
+  after_create :add_home_page
   after_save :submit_sitemaps
 
   def homepage
@@ -132,6 +133,12 @@ class Website < ApplicationRecord
       end
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S /home/deploy/certbot-auto certonly --webroot -w /home/deploy/rethinkwebdesign/current/public -d #{self.account_id}-#{self.id}.rethinkwebdesign.com --email dsmithco@gmail.com --agree-tos --expand")
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S service nginx reload")
+    end
+  end
+
+  def add_home_page
+    if self.pages.blank?
+      self.pages.create(name: "#{self.name}", is_homepage: true)
     end
   end
 

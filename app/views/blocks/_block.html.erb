@@ -2,7 +2,8 @@
   <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
   <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
   <%= content_tag('div',block.about.html_safe, class: 'block-about') if block.about.present? %>
-  <%= content_tag('div', (link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-primary'), class: 'block-link text-center') if block.link.present? %>
+  <%= content_tag('div', (link_to "#{block.link_text || 'Go'}", block.link, class: 'btn btn-primary'), class: 'block-link') if block.link.present? %>
+  <div class="clearfix"></div>
   <% if can? :update, block %>
     <div class="btn-group block-edit">
       <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>

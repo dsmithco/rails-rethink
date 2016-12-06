@@ -3,3 +3,16 @@ if(!$('#edit_block').length){
 }
 $('#edit_block').modal('show');
 $('#edit_block_content').html("<%=j render 'blocks/edit_form', block: @block||=Block.new, remote: true %>");
+
+$('#block_about').froalaEditor({
+  spellcheck: true,
+  paragraphFormatSelection: true,
+  imageUploadParam: 'asset',
+  imageUploadURL: '/images.json',
+  heightMin: 240,
+  imageUploadParams: {attachable_id: '<%= @block.page_id %>', attachable_type: 'Page'},
+  imageUploadMethod: 'POST',
+  // imageMaxSize: 5 * 1024 * 1024,
+  imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+  toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html']
+});

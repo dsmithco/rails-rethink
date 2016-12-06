@@ -1,16 +1,18 @@
 <% content_for :page_blocks do %>
-  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.blocks}".html_safe, data: {update_url: sort_blocks_path(page_id: @page.id, format: 'js')}, id: 'page_blocks', class: 'bottom_container main-sortable-connect') %>
-  <script type="text/javascript">
-    $( ".main-sortable-connect" ).sortable();
-    $( ".main-sortable-connect" ).sortable({
-      handle: '.block-handle',
-      tolerance: 'pointer',
-      connectWith: ".main-sortable-connect",
-      placeholder: "ui-state-highlight",
-      update: function( event, ui ) {
-        return $.post($(this).data('update-url'), $(this).sortable('serialize'));
-      }
-    });
-  </script>
+  <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.blocks}".html_safe, data: {update_url: sort_blocks_path(page_id: @page.id, format: 'js')}, id: 'page_blocks', class: 'bottom_container main-sortable-connect') if @page.present? && @page.blocks.present? %>
+  <% if can? :edit, @page%>
+    <script type="text/javascript">
+      $( ".main-sortable-connect" ).sortable();
+      $( ".main-sortable-connect" ).sortable({
+        handle: '.block-handle',
+        tolerance: 'pointer',
+        connectWith: ".main-sortable-connect",
+        placeholder: "ui-state-highlight",
+        update: function( event, ui ) {
+          return $.post($(this).data('update-url'), $(this).sortable('serialize'));
+        }
+      });
+    </script>
+  <% end %>
 
 <% end %>

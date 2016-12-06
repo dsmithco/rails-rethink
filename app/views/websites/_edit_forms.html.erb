@@ -2,47 +2,58 @@
 <div id="forms">
   <fieldset>
     <legend>
-      Forms <%= link_to 'New Form', new_form_path(return_to: request.fullpath), class: 'btn btn-success btn-sm' %>
+      Forms <%= link_to 'New Form', new_form_path(return_to: request.fullpath), class: 'pull-right btn btn-success' %>
     </legend>
     <div class="form-group">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              ID
-            </th>
-            <th>
-              Name
-            </th>
-            <th>
-              Submits
-            </th>
-            <th>
+      <div class="panel panel-default">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                  ID
+                </th>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Submits
+                </th>
+                <th>
 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @website.forms.each do |form| %>
-            <tr id="form_<%=form.id%>">
-              <td>
-                <%= form.id %>
-              </td>
-              <td>
-                <%= link_to form.name.present? ? form.name : '-', form_path(form) %>
-              </td>
-              <td>
-                <%= form.form_responses.try(:count) %>
-              </td>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @website.forms.each do |form| %>
+                <tr id="form_<%=form.id%>">
+                  <td>
+                    <%= form.id %>
+                  </td>
+                  <td>
+                    <%= link_to form.name.present? ? form.name : '-', form_path(form) %>
+                  </td>
+                  <td>
+                    <%= form.form_responses.try(:count) %>
+                  </td>
 
-              <td class="text-right">
-                <%= link_to 'Edit', edit_form_path(form, return_to: request.fullpath), class: 'btn btn-sm btn-primary' %>
-                <%= link_to 'Remove', form_path(form), remote: true, method: :delete, data: {confirm: "Delete the form '#{form.name}'?"}, class: 'btn btn-sm btn-danger' %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+                  <td class="text-right">
+                    <%= link_to 'Edit', edit_form_path(form, return_to: request.fullpath), class: 'btn btn-sm btn-primary' %>
+                    <%= link_to 'Remove', form_path(form), remote: true, method: :delete, data: {confirm: "Delete the form '#{form.name}'?"}, class: 'btn btn-sm btn-danger' %>
+                  </td>
+                </tr>
+              <% end %>
+              <% unless @website.forms.present? %>
+                <tr>
+                  <td colspan="4">
+                    No records
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </fieldset>
 </div>

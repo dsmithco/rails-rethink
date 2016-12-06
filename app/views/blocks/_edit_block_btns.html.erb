@@ -2,6 +2,6 @@
   <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
   <a href="javascript:;" class="btn btn-sm btn-default block-handle"><i class="fa fa-arrows"></i></a>
   <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-default' if can? :edit, block.category %>
-  <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-default btn-sm' if (can? :edit, block) && block.block_type == 'container'  %>
+  <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-default btn-sm' if (can? :edit, block) && block.block_type == 'container' || block.block_type == 'page_content'  %>
   <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if (can? :delete, block) && !block.blocks.present?  %>
 </div>

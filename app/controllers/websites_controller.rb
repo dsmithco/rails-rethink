@@ -1,7 +1,7 @@
 class WebsitesController < ApplicationController
   before_action :set_website, only: [:show, :edit, :update, :destroy, :edit_heroes, :random_hero]
 
-  load_and_authorize_resource :except => [:stylesheet, :home, :random_hero, :sitemap, :robots, :keyword]
+  load_and_authorize_resource :except => [:stylesheet, :home, :random_hero, :sitemap, :robots, :keyword, :new]
 
   # GET /websites
   # GET /websites.json
@@ -74,6 +74,7 @@ class WebsitesController < ApplicationController
   # GET /websites/new
   def new
     @website = Website.new
+    authorize! :new, @website
   end
 
   # GET /websites/1/edit
@@ -133,6 +134,36 @@ class WebsitesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def website_params
-      params.require(:website).permit(:random_hero, :subtitle, :account_id, :css_override, {:style=>['font-family-sans-serif', 'headings-font-family', 'brand-primary', 'brand-info', 'brand-success', 'brand-danger', 'brand-warning', 'border-radius-base', 'nav-inverse', 'nav-fixed', 'navbar-height']}, :name, :about, :domain_url, :google_analytics, :description, :facebook, :twitter, :tags, :theme, {logo_attributes: [:asset, :type, :attachable_id, :attachable_type]})
+      params.require(:website).permit(:random_hero,
+      :subtitle,
+      :account_id,
+      :css_override,
+      {:style=>[
+        'font-family-sans-serif',
+        'headings-font-family',
+        'brand-primary',
+        'brand-info',
+        'brand-success',
+        'brand-danger',
+        'brand-warning',
+        'border-radius-base',
+        'nav-inverse',
+        'nav-fixed',
+        'navbar-height',
+        'max-width',
+        'website-background-color'
+        ]},
+      :name,
+      :about,
+      :domain_url,
+      :google_analytics,
+      :description,
+      :facebook,
+      :twitter,
+      :tags,
+      :theme, {logo_attributes: [:asset,
+        :type,
+        :attachable_id,
+        :attachable_type]})
     end
 end

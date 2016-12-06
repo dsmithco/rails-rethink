@@ -13,20 +13,21 @@ $('#page_about').froalaEditor({
   imageUploadURL: '/images.json',
   imageUploadParams: {attachable_id: '<%= @page.id %>', attachable_type: 'Page'},
   imageUploadMethod: 'POST',
+  heightMin: 240,
   // imageMaxSize: 5 * 1024 * 1024,
   imageAllowedTypes: ['jpeg', 'jpg', 'png'],
   toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html']
 });
 
-$('#page_about').on('froalaEditor.image.removed', function (e, editor, $img) {
-  // Do something here.
-  var id = $img.context.dataset.id;
-  $.delete
-  $.ajax({
-    url: '/images/' + id + '.json',
-    type: 'DELETE',
-    success: function(result) {
-        // Do something with the result
-    }
-  });
-});
+// $('#page_about').on('froalaEditor.image.removed', function (e, editor, $img) {
+//   // Do something here.
+//   var id = $img.context.dataset.id;
+//   $.delete
+//   $.ajax({
+//     url: '/images/' + id + '.json',
+//     type: 'DELETE',
+//     success: function(result) {
+//         // Do something with the result
+//     }
+//   });
+// });

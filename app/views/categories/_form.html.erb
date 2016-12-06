@@ -44,7 +44,9 @@
     </dt>
     <dd class="form-group">
       <%= f.hidden_field :website_id, value: category.website_id || @current_website.id %>
-      <%= f.text_field :category_id, class: "form-control" %>
+      <%= f.select :category_id, @current_website.categories.where.not(id: category.categories.pluck(:id) << category.id).collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Category --"}, :multiple => false, :class => 'form-control' %>
+
+      <%# f.text_field :category_id, class: "form-control" %>
     </dd>
     <dd>
       <%= f.submit 'Save Category', class: 'btn btn-success' %>
