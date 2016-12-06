@@ -5,9 +5,12 @@
       $( ".main-sortable-connect" ).sortable();
       $( ".main-sortable-connect" ).sortable({
         handle: '.block-handle',
-        tolerance: 'pointer',
         connectWith: ".main-sortable-connect",
+        tolerance: 'pointer',
+        forcePlaceholderSize: true,
+        forceHelperSize: true,
         placeholder: "ui-state-highlight",
+        forceHelperSize: true,
         update: function( event, ui ) {
           return $.post($(this).data('update-url'), $(this).sortable('serialize'));
         }
