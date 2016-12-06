@@ -28,9 +28,11 @@ class PagesController < ApplicationController
   # GET /pages/new
   def new
     session[:return_to] = params[:return_to] if params[:return_to].present?
-
     @page = Page.new
+    @page.show_in_menu = true
     @page.website_id = @current_website.id if @current_website.present?
+    @page.page_id = params[:page_id] if params[:page_id].present?
+    @page.position = params[:position] if params[:position].present?
     @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
     @page.is_published = true
     render layout: "themes/basic/layout"

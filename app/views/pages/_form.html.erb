@@ -136,6 +136,9 @@
           <span><label>Categories</label></span>
         </dt>
         <dd class="form-group">
+          <% if @current_website.categories.blank? %>
+            <label>No Categories</label>
+          <% end %>
           <% @current_website.categories.each do |category| %>
             <label>
               <input type="checkbox"
