@@ -410,7 +410,7 @@ dl > dt > label {
 }
 
 .block-group.can_edit:hover > .block-container,
-.block-wrapper.can_edit:hover > .block-container{
+.block-wrapper.can_edit:hover{
   outline: 1px dashed $brand-primary;
 }
 
@@ -455,6 +455,10 @@ dl > dt > label {
 .block_no_bg_color > .block-link {
   margin-right: 0px;
   margin-left: 0px;
+}
+
+.sub_block.block_no_bg_color {
+  margin-top: 0px;
 }
 
 

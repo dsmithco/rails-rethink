@@ -148,14 +148,14 @@ class Block < ApplicationRecord
   end
 
   def is_empty
-    self.bg_color.blank? &&
-    self.image.blank? &&
-    self.blocks.blank? &&
-    self.form.blank? &&
-    self.category.blank? &&
-    self.about.blank? &&
-    (self.name.blank? || (self.block_type == 'page_content' && self.display_page_name.blank?)) &&
-    self.hero_images.blank?
+    # self.bg_color.blank? &&
+    # self.image.blank? &&
+    # self.blocks.blank? &&
+    # self.form.blank? &&
+    # self.category.blank? &&
+    # self.about.blank? &&
+    # (self.name.blank? || (self.block_type == 'page_content' && self.display_page_name.blank?)) &&
+    # self.hero_images.blank?
   end
 
   private
