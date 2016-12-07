@@ -4,7 +4,7 @@
     <%= link_to '<i class="fa fa-pencil"></i> Edit Form'.html_safe, edit_form_path(block.form, return_to: "#{request.fullpath}##{dom_id(block)}"), class: 'form_edit btn btn-sm btn-primary' %>
   </div>
   <% end %>
-  <div class="col-sm-12">
+  <div class="col-sm-12 text-left">
     <%= render 'forms/form_response', "@form_response": block.form.form_responses.build if block.form.present?%>
   </div>
 </div>

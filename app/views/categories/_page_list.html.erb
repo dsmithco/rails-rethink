@@ -1,4 +1,4 @@
-<% unless controller_name == 'pages' %>
+<% if controller_name == 'categories' %>
   <div class="category-page-count text-muted text-right form-group small">
     Viewing <%= @pages.count %> <%= @category.name %> Pages
   </div>

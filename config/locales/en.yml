@@ -37,3 +37,6 @@ en:
     form:
       name: 'Form'
       about: 'Website form block'
+    nav_block:
+      name: 'Secondary Menu'
+      about: "A menu for this page's sub pages showing all"

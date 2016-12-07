@@ -27,10 +27,19 @@
       <% end %>
     </div>
   <% end %>
-  <% if block.form.present? || block.category.present?%>
+  <% if block.form.present?%>
     <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
-      <%= render 'blocks/category_list/category_list', '@category': block.category if block.category.present? %>
-      <%= render 'blocks/block_form', block: block if block.form.present? %>
+      <%= render 'blocks/block_form', block: block %>
+    </div>
+  <% end %>
+  <% if block.category.present?%>
+    <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
+      <%= render 'blocks/category_list/category_list', '@category': block.category %>
+    </div>
+  <% end %>
+  <% if block.block_type == 'nav_block' %>
+    <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
+      <%= render 'blocks/nav_block/nav_block_blocks_partial', block: block %>
     </div>
   <% end %>
   <%= content_tag('div',"#{(render 'blocks/sub_block/sub_blocks', block: block)}".html_safe, class: 'sub_block-container') if block.blocks.present? %>

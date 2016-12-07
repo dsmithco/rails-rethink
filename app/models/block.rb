@@ -21,7 +21,7 @@ class Block < ApplicationRecord
 
   TEXT_ALIGN_OPTIONS = ['left','right','center','justify']
   SYSTEM_BLOCK_TYPES = ['navigation','page_content']
-  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form', 'hero_images']
+  TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form', 'hero_images', 'nav_block']
   LOWER_LEVEL_BLOCKS = ['sub_block']
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
   ROWS = {

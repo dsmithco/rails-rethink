@@ -380,6 +380,10 @@ dl > dt > label {
   min-height: 40px;
   // overflow: hidden;
 }
+.category-page-list {
+  margin-top: 15px;
+
+}
 
 .block-container .block_with_bg_color.block {
     border: 0px solid transparent;
@@ -482,6 +486,7 @@ h1.block-title {
   position: absolute;
   right: 0px;
   top: 10px;
+  z-index: 100;
 }
 
 .sub_block .btn-group.block-edit .btn {
