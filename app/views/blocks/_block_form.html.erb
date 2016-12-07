@@ -1,7 +1,7 @@
 <div class="row">
   <% if can? :edit, block.form%>
   <div class="col-sm-12">
-    <%= link_to '<i class="fa fa-pencil"></i> Edit Form'.html_safe, edit_form_path(block.form, return_to: "#{request.fullpath}##{dom_id(block)}"), class: 'btn btn-sm btn-primary' %>
+    <%= link_to '<i class="fa fa-pencil"></i> Edit Form'.html_safe, edit_form_path(block.form, return_to: "#{request.fullpath}##{dom_id(block)}"), class: 'form_edit btn btn-sm btn-primary' %>
   </div>
   <% end %>
   <div class="col-sm-12">

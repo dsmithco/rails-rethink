@@ -457,8 +457,16 @@ dl > dt > label {
   margin-left: 0px;
 }
 
+.block_no_bg_color > .block-about:first-child {
+  margin-top: 0px;
+}
+
 .sub_block.block_no_bg_color {
   margin-top: 0px;
+}
+
+.form_edit {
+  margin-top: -40px;
 }
 
 
@@ -922,7 +930,13 @@ body:not(.snapjs-right) .snap-drawers{
 
 .block-main {
   position: relative;
-  padding: 25px 20px 35px;
+  padding: 15px 20px 25px;
+}
+
+.block-main h1:first-child,
+.block-main h1.block-title {
+  padding-top: 20px;
+  padding-top: 15px;
 }
 
 .block-main.hero_images-type {
