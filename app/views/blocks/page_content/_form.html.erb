@@ -6,6 +6,11 @@
 </div>
 <%= form_for(block, remote: true) do |f| %>
   <div class="modal-body">
+    <!-- MODAL HIDDEN FIELDS -->
+    <input type="hidden" value="<%= block.page_id %>" name="block[page_id]">
+    <input type="hidden" value="<%= @current_website.id %>" name="block[website_id]">
+    <input type="hidden" value="<%= block.block_type %>" name="block[block_type]">
+    <input type="hidden" value="<%= block.id %>" name="block[id]">
 
     <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#details">Block Details</a></li>

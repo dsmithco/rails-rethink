@@ -375,7 +375,9 @@ dl > dt > label {
 }
 
 .block-container .sub_block {
-  margin-top: 12px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  min-height: 40px;
   // overflow: hidden;
 }
 
@@ -403,6 +405,24 @@ dl > dt > label {
   margin-bottom: 18px;
 }
 
+.block_with_bg_color .sub_block-container {
+  padding: 20px;
+}
+
+.block-group.can_edit:hover > .block-container,
+.block-wrapper.can_edit:hover > .block-container{
+  outline: 1px dashed $brand-primary;
+}
+
+.block-has-background {
+  padding: 20px;
+}
+
+.dropdown.open {
+  z-index: 99999;
+  overflow: visible;
+}
+
 .block .block-title + .block-about {
   margin-top: -10px;
 }
@@ -423,26 +443,27 @@ dl > dt > label {
   height: auto;
 }
 
-.block_with_bg_color .block-title,
-.block_with_bg_color .block-about,
-.block_with_bg_color .block-link {
-  margin-right: 22px;
-  margin-left: 22px;
+.block_with_bg_color > .block-title,
+.block_with_bg_color > .block-about,
+.block_with_bg_color > .block-link {
+  margin-right: 22px !important;
+  margin-left: 22px !important;
 }
 
-.block_no_bg_color .block-title,
-.block_no_bg_color .block-about,
-.block_no_bg_color .block-link {
+.block_no_bg_color > .block-title,
+.block_no_bg_color > .block-about,
+.block_no_bg_color > .block-link {
   margin-right: 0px;
   margin-left: 0px;
 }
+
 
 .sub_block {
   position: relative;
 }
 
 h1.block-title {
-  margin: .5em 0;
+  margin: .5em 0 inherit;
 }
 
 .sub_block .btn-group.block-edit {
@@ -462,6 +483,7 @@ h1.block-title {
 .block-edit-btns {
   position: absolute;
   right: 10px;
+  top: 0px;
   transition: .2s;
   z-index: 11;
   opacity: 1;
@@ -473,11 +495,15 @@ a.block-handle:hover{
 
 
 .hero_images-type .block-edit-btns {
-  margin-top: 35px;
+  margin-top: 0px;
 }
 
 .dt-label {
   padding-top: $padding-base-vertical;
+}
+
+.block-edit-btns {
+  z-index: 99;
 }
 
 .block-wrapper:not(:hover) .block-edit-btns {

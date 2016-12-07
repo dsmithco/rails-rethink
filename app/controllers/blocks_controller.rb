@@ -20,10 +20,11 @@ class BlocksController < ApplicationController
     @block.block_type ||= params[:block_type]
     @block.block_id ||= params[:block_id]
     @block.front_page ||= params[:front_page]
+    @block.columns ||= params[:columns]
     @block.position ||= params[:position]
-    @block.save(validate: false)
-    @block.page_id = params[:page_id].to_i if params[:page_id].present?
-    @block.save(validate: false)
+    # @block.save(validate: false)
+    @block.page_id ||= params[:page_id].to_i if params[:page_id].present?
+    # @block.save(validate: false)
   end
 
   def sort
@@ -38,7 +39,6 @@ class BlocksController < ApplicationController
   # GET /blocks/1/edit
   def edit
     @block.block_type ||= params[:block_type]
-    @block.save(validate: false)
   end
 
   # POST /blocks

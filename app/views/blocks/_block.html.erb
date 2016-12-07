@@ -8,7 +8,30 @@
     <div class="btn-group block-edit">
       <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
       <a href="javascript:;" class="btn btn-sm btn-default sub_block-handle"><i class="fa fa-arrows"></i></a>
-      <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if can? :update, block  %>
+      <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id, columns: 1}), remote: true, class: 'btn btn-default btn-sm' %>
+      <% if (can? :edit, block) %>
+        <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if can? :delete, block  %>
+        <span class="dropdown">
+          <button class="btn btn-sm btn-default dropdown-toggle" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Rows
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenu1">
+            <% Block::ROWS.each do |key, row| %>
+              <li>
+                <%= link_to row[:name], block_path(block, {block: {columns: key}}), remote: true, method: :put, format: :js %>
+              </li>
+            <% end %>
+          </ul>
+        </span>
+      <% end %>
     </div>
   <% end %>
+  <% if block.form.present? || block.category.present?%>
+    <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
+      <%= render 'blocks/category_list/category_list', '@category': block.category if block.category.present? %>
+      <%= render 'blocks/block_form', block: block if block.form.present? %>
+    </div>
+  <% end %>
+  <%= content_tag('div',"#{(render 'blocks/sub_block/sub_blocks', block: block)}".html_safe, class: 'sub_block-container') if block.blocks.present? %>
 </div>

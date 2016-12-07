@@ -1,10 +1,10 @@
-<div class="row form-group">
+<div class="row">
   <% if can? :edit, block.form%>
-  <div class="col-sm-8 <%= block.text_align == 'center' ? 'col-sm-push-2':'' %> <%= block.text_align == 'right' ? 'col-sm-push-4':'' %> text-right">
+  <div class="col-sm-12">
     <%= link_to '<i class="fa fa-pencil"></i> Edit Form'.html_safe, edit_form_path(block.form, return_to: "#{request.fullpath}##{dom_id(block)}"), class: 'btn btn-sm btn-primary' %>
   </div>
   <% end %>
-  <div class="col-sm-8 <%= block.text_align == 'center' ? 'col-sm-push-2':'' %> <%= block.text_align == 'right' ? 'col-sm-push-4':'' %> text-left">
+  <div class="col-sm-12">
     <%= render 'forms/form_response', "@form_response": block.form.form_responses.build if block.form.present?%>
   </div>
 </div>

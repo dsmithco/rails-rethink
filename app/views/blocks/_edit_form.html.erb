@@ -11,12 +11,10 @@
     </div>
 
     <!-- MODAL HIDDEN FIELDS -->
-    <% if action_name == 'new' && params[:page_id].present? %>
-      <input type="hidden" value="<%= params[:page_id].to_i %>" name="block[page_id]">
-      <input type="hidden" value="<%= @current_website.id %>" name="block[website_id]">
-      <input type="hidden" value="<%= block.block_type %>" name="block[block_type]">
-      <input type="hidden" value="<%= block.id %>" name="block[id]">
-    <% end %>
+    <input type="hidden" value="<%= block.page_id %>" name="block[page_id]">
+    <input type="hidden" value="<%= @current_website.id %>" name="block[website_id]">
+    <input type="hidden" value="<%= block.block_type %>" name="block[block_type]">
+    <input type="hidden" value="<%= block.id %>" name="block[id]">
 
     <!-- MODAL BODY -->
     <div class="modal-body">
@@ -29,7 +27,7 @@
                   <%= link_to "
                       <strong class='text-primary'>#{t :name, scope: [:block_types, block_type.to_sym] }</strong><br/>
                       #{t :about, scope: [:block_types, block_type.to_sym] }
-                  ".html_safe, edit_block_path(block, {block_type: block_type, page_id: params[:page_id]}), class: 'list-group-item', remote: true %>
+                  ".html_safe, new_block_path(block, {block_type: block_type, page_id: params[:page_id]}), class: 'list-group-item', remote: true %>
               <% end %>
             </div>
           </div>

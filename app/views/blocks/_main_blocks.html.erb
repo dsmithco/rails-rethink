@@ -1,7 +1,7 @@
 <% blocks.where(block_id: [nil,'']).each do |block| %>
   <% cache [current_user, block, block.position, block.blocks, block.form, block.form.try(:questions), block.category, block.category.try(:pages)] do %>
     <% unless block.is_empty %>
-      <div id="<%= dom_id(block) %>" data-id="<%=block.id%>" class="block-wrapper">
+      <div id="<%= dom_id(block) %>" data-id="<%=block.id%>" class="block-wrapper <%= 'can_edit' if can? :edit, block %>">
         <% if block == blocks.select{|b|!b.is_empty}.first && (can? :edit, block.page) %>
           <div class="new-block new-block-above text-center">
             <%= link_to 'New Block <i class="ion-plus"></i>'.html_safe,

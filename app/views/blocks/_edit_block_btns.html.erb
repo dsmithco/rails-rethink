@@ -2,8 +2,8 @@
   <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
   <a href="javascript:;" class="btn btn-sm btn-default block-handle"><i class="fa fa-arrows"></i></a>
   <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-default' if can? :edit, block.category %>
-  <% if (can? :edit, block) && block.block_type == 'container' || block.block_type == 'page_content' %>
-    <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id, block_type: 'sub_block'}), remote: true, class: 'btn btn-default btn-sm' %>
+  <% if (can? :edit, block) %>
+    <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id}), remote: true, class: 'btn btn-default btn-sm' %>
     <span class="dropdown">
       <button class="btn btn-sm btn-default dropdown-toggle" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Rows

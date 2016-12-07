@@ -22,8 +22,8 @@
             <%= block.about.html_safe %>
           </div>
         <% end %>
-        <%= render 'blocks/sub_block/sub_blocks', block: block if block.block_type == 'container' %>
-        <div class="block-color">
+        <%= render 'blocks/sub_block/sub_blocks', block: block %>
+        <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
           <%= render 'blocks/category_list/category_list', '@category': block.category if block.block_type == 'category_list' %>
           <%= render 'blocks/block_form', block: block if block.block_type == 'form' %>
         </div>

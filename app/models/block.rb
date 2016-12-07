@@ -13,7 +13,7 @@ class Block < ApplicationRecord
   has_one :image, as: :attachable
   has_many :hero_images, -> { order(position: :asc) }, as: :attachable
   has_many :blocks
-  belongs_to :block
+  belongs_to :block, touch: true
   belongs_to :category
 
   # has_one :formable, as: :formable
@@ -45,6 +45,10 @@ class Block < ApplicationRecord
       name: '4 | 8',
       config: [4,8]
     },
+    '363':{
+      name: '3 | 6 | 3',
+      config: [3,6,3]
+    },
     '1':{
       name: '12',
       config: [12]
@@ -59,8 +63,6 @@ class Block < ApplicationRecord
   validate :sub_block_validation
 
   validate :page_content_validation
-
-  before_validation :adjust_block_params
 
   after_initialize :default_values
 
@@ -157,13 +159,6 @@ class Block < ApplicationRecord
   end
 
   private
-
-  def adjust_block_params
-    if self.block_id.present?
-      self.block_type = 'sub_block'
-      self.front_page = false
-    end
-  end
 
   def default_values
     if self.page_id.blank? && self.block.present?
