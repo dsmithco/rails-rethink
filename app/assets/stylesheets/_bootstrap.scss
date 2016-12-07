@@ -486,6 +486,7 @@ h1.block-title {
 
 .block-edit-btns {
   position: absolute;
+  z-index: 999;
   right: 10px;
   top: 0px;
   transition: .2s;
@@ -506,9 +507,6 @@ a.block-handle:hover{
   padding-top: $padding-base-vertical;
 }
 
-.block-edit-btns {
-  z-index: 99;
-}
 
 .block-wrapper:not(:hover) .block-edit-btns {
   opacity: .0;

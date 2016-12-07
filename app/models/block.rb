@@ -64,7 +64,7 @@ class Block < ApplicationRecord
 
   validate :page_content_validation
 
-  after_initialize :default_values
+  before_create :default_values
 
   before_destroy :check_content_block
 
@@ -158,12 +158,21 @@ class Block < ApplicationRecord
     # self.hero_images.blank?
   end
 
+  def next_position
+    if self.block.present?
+      return self.block.blocks.last.position + 1
+    else
+      return self.page.blocks.last.position + 1
+    end
+  end
+
   private
 
   def default_values
     if self.page_id.blank? && self.block.present?
       self.page_id = self.block.page_id
     end
+    self.position ||= self.next_position
   end
 
   def check_content_block
