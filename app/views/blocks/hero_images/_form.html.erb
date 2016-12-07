@@ -7,6 +7,7 @@
 <div class="modal-body">
   <fieldset id="edit_heroes_list">
     <%= form_for(block, remote: true) do |f| %>
+      <%= render 'blocks/hidden_fields', block: block %>
 
       <button type="submit" name="button" id="<%= dom_id(block) %>_button" class="hide">Save</button>
       <script type="text/javascript">

@@ -6,6 +6,8 @@
 </div>
 <%= form_for(block, remote: true) do |f| %>
 
+  <%= render 'blocks/hidden_fields', block: block %>
+
   <div class="modal-body">
 
 

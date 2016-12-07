@@ -39,6 +39,7 @@ class BlocksController < ApplicationController
   # GET /blocks/1/edit
   def edit
     @block.block_type ||= params[:block_type]
+    @block.save(validate: false)
   end
 
   # POST /blocks

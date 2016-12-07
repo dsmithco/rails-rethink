@@ -7,10 +7,7 @@
 </div>
 
 <%= form_for(block, remote: true) do |f| %>
-  <!-- MODAL HIDDEN FIELDS -->
-  <input type="hidden" value="<%= block.page_id %>" name="block[page_id]">
-  <input type="hidden" value="<%= block.block_type %>" name="block[block_type]">
-  <input type="hidden" value="<%= block.id %>" name="block[id]">
+  <%= render 'blocks/hidden_fields', block: block %>
 
   <!-- MODAL HIDDEN FIELDS -->
   <% if action_name == 'new' && params[:page_id].present? %>
