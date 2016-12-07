@@ -131,7 +131,8 @@ class Website < ApplicationRecord
           system("cd /etc/nginx/sites-enabled && echo '#{ENV['DEPLOY_PW']}' | sudo -S sed -i 's/server_name SERVER_NAME_2;//g' website_#{self.account_id}-#{self.id}")
         end
       end
-      system("echo '#{ENV['DEPLOY_PW']}' | sudo -S /home/deploy/certbot-auto certonly --webroot -w /home/deploy/rethinkwebdesign/current/public -d #{self.account_id}-#{self.id}.rethinkwebdesign.com --email dsmithco@gmail.com --agree-tos --expand")
+      system("echo '#{ENV['DEPLOY_PW']}' | sudo -S service nginx reload")
+      system("echo '#{ENV['DEPLOY_PW']}' | sudo -S /home/deploy/certbot-auto certonly --webroot -w /home/deploy/rethinkwebdesign/current/public -d #{self.account_id}-#{self.id}.rethinkwebdesign.com --email dsmithco@gmail.com --agree-tos --expand  --quiet")
       system("echo '#{ENV['DEPLOY_PW']}' | sudo -S service nginx reload")
     end
   end

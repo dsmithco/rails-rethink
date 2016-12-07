@@ -24,6 +24,32 @@ class Block < ApplicationRecord
   TOP_LEVEL_BLOCKS = ['category_list', 'container', 'custom', 'form', 'hero_images']
   LOWER_LEVEL_BLOCKS = ['sub_block']
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
+  ROWS = {
+    '4':{
+      name: '3 | 3 | 3 | 3',
+      config: [3,3,3,3]
+    },
+    '3':{
+      name: '4 | 4 | 4',
+      config: [4,4,4]
+    },
+    '2':{
+      name: '6 | 6',
+      config: [6,6]
+    },
+    '84':{
+      name: '8 | 4',
+      config: [8,4]
+    },
+    '48':{
+      name: '4 | 8',
+      config: [4,8]
+    },
+    '1':{
+      name: '12',
+      config: [12]
+    }
+  }
 
   attr_accessor :continue_edit, :display_page_name
 
@@ -41,6 +67,12 @@ class Block < ApplicationRecord
   before_destroy :check_content_block
 
   after_update :update_page_content
+
+  def column_config
+    if self.columns.present?
+      ROWS[self.columns.to_s.to_sym][:config]
+    end
+  end
 
   def sub_block_validation
     if self.block_type == 'sub_block' && !self.block.present?

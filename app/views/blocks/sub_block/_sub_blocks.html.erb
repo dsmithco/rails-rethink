@@ -1,7 +1,7 @@
 <% if block.blocks.present? %>
   <div class="row block-sortable-connect" data-block-id="<%= block.id %>" data-update-url="/blocks/sort.js?block_id=<%= block.id %>" id="<%= dom_id(block) %>">
     <% block.blocks.each_with_index do |sub_block, index| %>
-      <div data-id="<%= sub_block.id %>" style="position: relative;" class="block-group block-group-<%= index / block.columns %> text-<%= sub_block.text_align %> col-md-<%= 12 / block.columns %>
+      <div data-id="<%= sub_block.id %>" style="position: relative;" class="block-group block-group-<%= index / block.column_config.count %> text-<%= sub_block.text_align %> col-md-<%= block.column_config[index % block.column_config.count] %>
                  col-sm-6 <%= 'col-sm-push-3 col-md-push-0' if block.blocks.count.odd? && sub_block == block.blocks.last%>" id="<%= dom_id(sub_block) %>">
         <div class="block-group-<%=block.id%> block-container">
           <%= render 'blocks/block', block: sub_block %>
