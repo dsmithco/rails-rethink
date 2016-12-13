@@ -1,4 +1,4 @@
-<div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
+<div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>" data-id="<%= block.id %>">
   <% if block.bg_color.present? %>
     <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
   <% end %>

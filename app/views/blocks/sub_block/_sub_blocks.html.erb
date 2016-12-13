@@ -1,30 +1,33 @@
-<div class="row block-sortable-connect sub-block-highlight" data-block-id="<%= block.id %>" data-update-url="/blocks/sort.js?block_id=<%= block.id %>" id="<%= dom_id(block) %>-blocks">
+<div class="row block-sortable-connect sub-block-highlight" data-block-id="<%= block.id %>" data-id="<%= block.id %>" data-update-url="/blocks/sort.js?block_id=<%= block.id %>" id="<%= dom_id(block) %>-blocks">
   <% block.blocks.each_with_index do |sub_block, index| %>
     <div data-id="<%= sub_block.id %>" style="position: relative;" class="sortableblock-group <%= 'can_edit' if can? :update, block %> block-group-<%= block.id %>-<%= index / block.column_config.count %> text-<%= sub_block.text_align %> col-md-<%= block.column_config[index % block.column_config.count] %>" id="<%= dom_id(sub_block) %>">
       <div class="block-group-<%=block.id%> block-container">
         <%= render 'blocks/block', block: sub_block %>
       </div>
+      <script type="text/javascript">
+        setTimeout(function () {
+          $('.block-group-<%= block.id %>-<%= index / block.columns %>').matchHeight();
+        }, 100);
+      </script>
     </div>
-    <script type="text/javascript">
-      setTimeout(function () {
-        $('.block-group-<%= block.id %>-<%= index / block.columns %>').matchHeight();
-      }, 100);
-    </script>
-  <% end %>
-  <% if can? :edit, block %>
-    <script type="text/javascript">
-      document.addEventListener("turbolinks:load", function() {
-        if($('#<%= dom_id(block) %>-blocks').length){
-          Sortable.create(document.getElementById('<%= dom_id(block) %>-blocks'), {
-            group: 'blocks',
-            handle: '.page-block-handle',
-            animation: 150,
-            onSort: function(evt){
-              return $.post(evt.target.dataset.updateUrl, {'block': this.toArray(), 'block_id': evt.target.dataset.blockId});
-            }
-          });
-        }
-      });
-    </script>
   <% end %>
 </div>
+<% if can? :edit, block %>
+
+  <script type="text/javascript">
+    document.addEventListener("turbolinks:load", function() {
+      if($('#<%= dom_id(block) %>-blocks').length){
+        var sort = Sortable.create(document.getElementById('<%= dom_id(block) %>-blocks'), {
+          group: 'sub_blocks',
+          handle: '.page-block-handle',
+          animation: 150,
+          onSort: function(evt){
+            console.log(evt);
+            console.log(this.toArray());
+            return $.post(evt.target.dataset.updateUrl, {'block': sort.toArray(), 'block_id': evt.target.dataset.blockId});
+          }
+        });
+      }
+    });
+  </script>
+<% end %>

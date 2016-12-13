@@ -10,6 +10,7 @@
           animation: 150,
           onSort: function(evt){
             console.log(evt);
+            console.log(this.toArray());
             return $.post(evt.target.dataset.updateUrl, {'block': this.toArray(), 'block_id': null});
           }
         });
