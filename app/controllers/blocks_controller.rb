@@ -29,9 +29,12 @@ class BlocksController < ApplicationController
 
   def sort
     params[:block].each_with_index do |id, index|
-      Block.where(id: id).update_all(position: index + 1, block_id: params[:block_id].present? ? params[:block_id] : nil, page_id: params[:page_id])
-      if params[:block_id].present?
-        Block.find(params[:block_id]).touch
+      block = Block.where(id: id).first
+      if block.website.id == @current_website.id
+        block.update_columns(position: index + 1, block_id: params[:block_id].present? ? params[:block_id] : nil, page_id: params[:page_id])
+        if params[:block_id].present?
+          Block.find(params[:block_id]).update_columns(updated_at: Time.zone.now)
+        end
       end
     end
   end
