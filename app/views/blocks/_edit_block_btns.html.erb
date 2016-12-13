@@ -1,22 +1,26 @@
-<div class="btn-group pull-right block-edit-btns">
-  <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
-  <a href="javascript:;" class="btn btn-sm btn-default block-handle"><i class="fa fa-arrows"></i></a>
-  <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-default' if can? :edit, block.category %>
-  <% if (can? :edit, block) %>
-    <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id}), remote: true, class: 'btn btn-default btn-sm' %>
-    <span class="dropdown">
-      <button class="btn btn-sm btn-default dropdown-toggle" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Rows
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenu1">
-        <% Block::ROWS.each do |key, row| %>
-          <li>
-            <%= link_to row[:name], block_path(block, {block: {columns: key}}), remote: true, method: :put, format: :js %>
-          </li>
-        <% end %>
-      </ul>
-    </span>
-  <% end %>
-  <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if (can? :delete, block) && !block.blocks.present?  %>
-</div>
+<% if (can? :edit, block) %>
+
+  <div class="btn-group pull-right block-edit-btns">
+    <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
+    <a href="javascript:;" class="btn btn-sm btn-default page-block-handle"><i class="fa fa-arrows"></i></a>
+    <%= link_to "<i class='fa fa-plus'></i>".html_safe, new_page_path(category_ids:[block.category.id], return_to: request.path), remote: true, class: 'btn btn-sm btn-default' if can? :edit, block.category %>
+    <% if ['custom','container','page_content'].include?(block.block_type) %>
+      <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id}), remote: true, class: 'btn btn-default btn-sm' %>
+      <span class="dropdown">
+        <button class="btn btn-sm btn-default dropdown-toggle" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="fa fa-columns"></i>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenu1">
+          <% Block::ROWS.each do |key, row| %>
+            <li>
+              <%= link_to row[:name], block_path(block, {block: {columns: key}}), remote: true, method: :put, format: :js %>
+            </li>
+          <% end %>
+        </ul>
+      </span>
+    <% end %>
+    <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if (can? :delete, block) && !block.blocks.present?  %>
+  </div>
+
+<% end %>

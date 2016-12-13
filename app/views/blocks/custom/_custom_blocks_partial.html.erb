@@ -22,6 +22,8 @@
           </div>
         </div>
       <% end %>
+      <%= render 'blocks/sub_block/sub_blocks', block: block %>
+
     </div>
   </div>
   <% if can? :update, block %>
@@ -29,6 +31,7 @@
     interact('#<%= dom_id(block) %>')
       .resizable({
         preserveAspectRatio: false,
+        autoScroll: true,
         edges: { left: false, right: false, bottom: '.resize_s', top: false }
       })
       .on('resizemove', function (event) {

@@ -34,6 +34,7 @@
     interact('#<%= dom_id(block) %>')
       .resizable({
         preserveAspectRatio: false,
+        autoScroll: true,
         edges: { left: false, right: false, bottom: '.resize_s', top: false }
       })
       .on('resizemove', function (event) {

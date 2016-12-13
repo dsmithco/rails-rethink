@@ -22,18 +22,20 @@
 en:
   hello: "Hello world"
   block_types:
+    custom:
+      name: 'Block'
+      about: 'Customizable title and description block'
+      has_children: true
     container:
       name: 'Container'
       about: 'Can contain sub blocks with additional content'
+      disabled: true
     hero_images:
       name: 'Hero Images'
       about: 'Large image carousel with overlay text and call to action.'
     category_list:
       name: 'Category List'
       about: 'List of catergory pages.'
-    custom:
-      name: 'Custom'
-      about: 'Customizable title and description block'
     form:
       name: 'Form'
       about: 'Website form block'

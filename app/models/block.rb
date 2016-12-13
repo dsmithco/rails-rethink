@@ -26,31 +26,31 @@ class Block < ApplicationRecord
   BLOCK_TYPES = TOP_LEVEL_BLOCKS + LOWER_LEVEL_BLOCKS + SYSTEM_BLOCK_TYPES
   ROWS = {
     '4':{
-      name: '3 | 3 | 3 | 3',
+      name: '4 columns',
       config: [3,3,3,3]
     },
     '3':{
-      name: '4 | 4 | 4',
+      name: '3 columns',
       config: [4,4,4]
     },
     '2':{
-      name: '6 | 6',
+      name: '2 columns',
       config: [6,6]
     },
     '84':{
-      name: '8 | 4',
+      name: '2 columns (2:1)',
       config: [8,4]
     },
     '48':{
-      name: '4 | 8',
+      name: '2 col (1:2)',
       config: [4,8]
     },
     '363':{
-      name: '3 | 6 | 3',
+      name: '3 columns (1:3:1)',
       config: [3,6,3]
     },
     '1':{
-      name: '12',
+      name: '1 column',
       config: [12]
     }
   }

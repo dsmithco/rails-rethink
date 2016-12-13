@@ -13,13 +13,13 @@ $('#block_about').froalaEditor({
   imageUploadParam: 'asset',
   imageUploadURL: '/images.json',
   heightMin: 240,
-  imageUploadParams: {attachable_id: '<%= @block.page.id %>', attachable_type: 'Page'},
+  imageUploadParams: {attachable_id: '<%= @block.page_id %>', attachable_type: 'Page'},
   imageUploadMethod: 'POST',
   // imageMaxSize: 5 * 1024 * 1024,
   imageAllowedTypes: ['jpeg', 'jpg', 'png'],
   toolbarButtons: 	['paragraphFormat', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'align', 'format', 'formatUL', 'outdent', 'indent', 'quote', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html']
 });
-// 
+//
 // $('#block_about').on('froalaEditor.image.removed', function (e, editor, $img) {
 //   // Do something here.
 //   var id = $img.context.dataset.id;

@@ -1,4 +1,5 @@
 // require tinymce-jquery
+//= require Sortable.min
 
 //= require froala_editor.min.js
 //= require plugins/align.min.js
@@ -28,7 +29,6 @@
 //= require plugins/video.min.js
 //= require interact.min
 //= require jquery-fileupload/basic
-//= require jquery-ui/sortable
 //= require evol-colorpicker
 
 'use strict';

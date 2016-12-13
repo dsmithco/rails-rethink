@@ -2,19 +2,20 @@
   <%= content_tag('div', "#{render 'blocks/main_blocks', blocks: @page.blocks}".html_safe, data: {update_url: sort_blocks_path(page_id: @page.id, format: 'js')}, id: 'page_blocks', class: 'bottom_container main-sortable-connect') if @page.present? && @page.blocks.present? %>
   <% if can? :edit, @page%>
     <script type="text/javascript">
-      $( ".main-sortable-connect" ).sortable();
-      $( ".main-sortable-connect" ).sortable({
-        handle: '.block-handle',
-        connectWith: ".main-sortable-connect",
-        tolerance: 'pointer',
-        forcePlaceholderSize: true,
-        forceHelperSize: true,
-        placeholder: "ui-state-highlight",
-        forceHelperSize: true,
-        update: function( event, ui ) {
-          return $.post($(this).data('update-url'), $(this).sortable('serialize'));
-        }
+
+      document.addEventListener("turbolinks:load", function() {
+        var sortable = Sortable.create(document.getElementById("page_blocks"), {
+          group: 'blocks',
+          handle: '.page-block-handle',
+          animation: 150,
+          onSort: function(evt){
+            console.log(evt);
+            return $.post(evt.target.dataset.updateUrl, {'block': this.toArray(), 'block_id': null});
+          }
+        });
       });
+
+
     </script>
   <% end %>
 

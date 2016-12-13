@@ -1,4 +1,4 @@
-<div class="clearfix block sub_block <%= block.bg_color.present? ? 'block_with_bg_color' : 'block_no_bg_color' %>" id="<%= dom_id(block) %>" style="background-color: <%= block.bg_color %>">
+<div class="clearfix block sub_block <%= block.bg_color.present? ? 'block_with_bg_color' : 'block_no_bg_color' %>" id="<%= dom_id(block) %>" data-id="<%=block.id%>" style="background-color: <%= block.bg_color %>">
   <%= link_to (image_tag block.image.medium), block.link, class: 'block-image' if block.image.present? %>
   <%= content_tag('h4',block.name, class: 'block-title') if block.name.present? %>
   <%= content_tag('div',block.about.html_safe, class: 'block-about') if block.about.present? %>
@@ -7,13 +7,13 @@
   <% if can? :update, block %>
     <div class="btn-group block-edit">
       <%= link_to '<i class="fa fa-pencil"></i>'.html_safe, edit_block_path(block), remote: true, class: 'btn btn-default btn-sm' if can? :update, block  %>
-      <a href="javascript:;" class="btn btn-sm btn-default sub_block-handle"><i class="fa fa-arrows"></i></a>
-      <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id, columns: 1}), remote: true, class: 'btn btn-default btn-sm' %>
-      <% if (can? :edit, block) %>
-        <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if can? :delete, block  %>
+      <a href="javascript:;" class="btn btn-sm btn-default page-block-handle"><i class="fa fa-arrows"></i></a>
+      <%= link_to '<i class="fa fa-plus"></i>'.html_safe, new_block_path({block_id: block.id, page_id: @page.id, columns: 1}), remote: true, class: 'btn btn-default btn-sm' if (t :has_children, scope: [:block_types, block.block_type.to_sym]) == true %>
+      <%= link_to '<i class="fa fa-trash"></i>'.html_safe, block_path(block), method: :delete, remote: true, data: {confirm: "Delete this block?"}, class: 'btn btn-default btn-sm' if can? :delete, block  %>
+      <% if (t :has_children, scope: [:block_types, block.block_type.to_sym]) == true %>
         <span class="dropdown">
           <button class="btn btn-sm btn-default dropdown-toggle" style="border-top-left-radius: 0px; border-bottom-left-radius: 0px;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Rows
+            <i class="fa fa-columns"></i>
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenu1">
@@ -42,5 +42,13 @@
       <%= render 'blocks/nav_block/nav_block_blocks_partial', block: block %>
     </div>
   <% end %>
+  <% if block.block_type == 'hero_images' %>
+    <%= render "blocks/hero_images/hero_images_blocks_partial", block: block %>
+  <% end %>
   <%= content_tag('div',"#{(render 'blocks/sub_block/sub_blocks', block: block)}".html_safe, class: 'sub_block-container') if block.blocks.present? %>
+  <% if ['hero_images'].include?(block.block_type) && (can? :edit, block)%>
+    <div class="new-block new-block-below text-center">
+      <span class="resize_s btn btn-sm btn-default" style="cursor:row-resize;"><i class="fa fa-arrows-v"></i></span>
+    </div>
+  <% end %>
 </div>

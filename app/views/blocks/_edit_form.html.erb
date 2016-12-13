@@ -24,12 +24,14 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="list-group panel panel-default" style="box-shadow: 0px 1px 3px rgba(0,0,0,.3)">
-              <% Block::TOP_LEVEL_BLOCKS.each do |block_type|%>
+              <% Block::TOP_LEVEL_BLOCKS.each do |block_type| %>
+                <% unless (t :disabled, scope: [:block_types, block_type.to_sym]) == true %>
                   <%= link_to "
                       <strong class='text-primary'>#{t :name, scope: [:block_types, block_type.to_sym] }</strong><br/>
                       #{t :about, scope: [:block_types, block_type.to_sym] }
                   ".html_safe, edit_block_path(block, {block_type: block_type, page_id: params[:page_id]}), class: 'list-group-item', remote: true %>
-              <% end %>
+                  <% end %>
+                <% end %>
             </div>
           </div>
         </div>

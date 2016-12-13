@@ -23,10 +23,16 @@
           </div>
         <% end %>
         <%= render 'blocks/sub_block/sub_blocks', block: block %>
-        <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
-          <%= render 'blocks/category_list/category_list', '@category': block.category if block.block_type == 'category_list' %>
-          <%= render 'blocks/block_form', block: block if block.block_type == 'form' %>
-        </div>
+        <% if block.form.present?%>
+          <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
+            <%= render 'blocks/block_form', block: block %>
+          </div>
+        <% end %>
+        <% if block.category.present?%>
+          <div class="block-color <%= 'block-has-background' if block.bg_color.present? || block.image.present? %>">
+            <%= render 'blocks/category_list/category_list', '@category': block.category %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

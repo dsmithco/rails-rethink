@@ -29,7 +29,7 @@ class BlocksController < ApplicationController
 
   def sort
     params[:block].each_with_index do |id, index|
-      Block.where(id: id).update_all(position: index + 1, block_id: params[:block_id])
+      Block.where(id: id).update_all(position: index + 1, block_id: params[:block_id].present? ? params[:block_id] : nil, page_id: params[:page_id])
       if params[:block_id].present?
         Block.find(params[:block_id]).touch
       end
