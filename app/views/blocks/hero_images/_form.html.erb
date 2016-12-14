@@ -45,17 +45,14 @@
         <% end %>
       </div>
       <script type="text/javascript">
-        $( "#sortable_heros" ).sortable();
-        $( "#sortable_heros" ).sortable({
-          placeholder: "ui-state-highlight",
-          tolerence: 'intersect'
-        });
-        $( "#sortable_heros" ).on( "sortupdate", function( event, ui ) {
-          // console.log(event);
+
+      var sort = Sortable.create(document.getElementById('sortable_heros'), {
+        animation: 150,
+        onSort: function(evt){
           var id,url,position,item;
-          id = ui.item.context.dataset.id;
+          id = evt.item.dataset.id;
           url = "/hero_images/" + id + ".js";
-          position = $(ui.item).index() + 1;
+          position = evt.newIndex + 1;
           item = {'position': position};
           $.ajax({
               url: url,
@@ -65,7 +62,10 @@
                   // Do something with the result
               }
           });
-        });
+        }
+      });
+
+
       </script>
     </div>
     <script type="text/javascript">
