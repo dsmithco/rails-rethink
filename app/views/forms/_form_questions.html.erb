@@ -13,19 +13,19 @@
   <hr/>
 </div>
 <script type="text/javascript">
-  $( "#questions" ).sortable({
-    placeholder: "ui-state-highlight",
-    tolerence: 'intersect'
-  });
-  $( "#questions" ).on( "sortupdate", function( event, ui ) {
-    console.log(ui);
+
+var sort = Sortable.create(document.getElementById('questions'), {
+  animation: 150,
+  onSort: function(evt){
+    console.log(evt);
     // console.log(event);
-    $.each(ui.item.context.parentElement.children, function( index, value ) {
+    $.each(evt.target.children, function( index, value ) {
       var position;
-      position = $(ui.item.context.parentElement.children[index]).index();
-      $(ui.item.context.parentElement.children[index]).find('.position input').val(index + 1);
+      position = $(evt.target.children[index]).index();
+      $(evt.target.children[index]).find('.position input').val(index + 1);
     });
+  }
+});
 
 
-  });
 </script>
