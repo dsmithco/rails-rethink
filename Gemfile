@@ -7,7 +7,7 @@ gem 'rails', '~> 5.0.0'
 gem 'pg', '~> 0.18'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-gem 'mina-puma', :require => false
+gem 'mina-puma', '~> 0.3.1', :require => false
 gem 'delayed_job_active_record'
 gem 'rest-client'
 gem 'react-rails'
@@ -60,8 +60,8 @@ end
 group :test do
   gem 'rails-controller-testing'
 end
-gem 'mina'
-gem 'mina-delayed_job', require: false
+gem 'mina', '~> 0.3.8'
+gem 'mina-delayed_job', '~> 0.1.0', require: false
 gem 'daemons'
 
 group :development do
