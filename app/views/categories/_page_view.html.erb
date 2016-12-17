@@ -16,7 +16,9 @@
             <%= link_to '<i class="ion-edit"></i> Edit'.html_safe, edit_page_path(page, return_to: "#{request.fullpath}##{dom_id(page)}"), remote: true, class: 'btn btn-sm btn-default' if can? :edit, page %>
           </div>
         </h2>
-        <small class="text-muted"><%= page.updated_at.strftime('%A, %B %d, %Y') %></small>
+        <% if category.settings['hide_date'].blank? %>
+          <small class="text-muted"><%= page.created_at.strftime('%A, %B %d, %Y') %></small>
+        <% end %>
       </div>
 
       <div class="category-page-about">

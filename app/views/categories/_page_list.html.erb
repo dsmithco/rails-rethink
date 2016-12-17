@@ -7,7 +7,7 @@
 <% cache [@category, @pages, current_user] do %>
   <div class="text-left">
     <% @pages.each do |page| %>
-      <%= render 'categories/page_view', page: page %>
+      <%= render 'categories/page_view', page: page, category: @category %>
     <% end %>
   </div>
 <% end %>

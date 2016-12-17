@@ -48,6 +48,11 @@
 
       <%# f.text_field :category_id, class: "form-control" %>
     </dd>
+    <dt class="dt-title"></dt>
+    <dd class="form-group">
+      <input name='category[settings][hide_date]' type="hidden" value="">
+      <label><input type="checkbox" id="category_settings_hide_date" name='category[settings][hide_date]' <%=category.settings['hide_date'].present? ? 'checked' : '' %> value="true"> Hide Date</label>
+    </dd>
     <dd>
       <%= f.submit 'Save Category', class: 'btn btn-success' %>
     </dd>

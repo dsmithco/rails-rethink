@@ -98,6 +98,15 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name, :about, :subtitle, :description, :category_id, {:page_ids=>[]}, :continue_edit)
+      params.require(:category).permit(
+        :name,
+        :about,
+        :subtitle,
+        :description,
+        :category_id,
+        {:page_ids=>[]},
+        :continue_edit,
+        {:settings=>['hide_date']}
+        )
     end
 end
