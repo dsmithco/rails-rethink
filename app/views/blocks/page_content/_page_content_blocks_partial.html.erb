@@ -1,70 +1,68 @@
-<%= if block.is_empty.blank? || (can? :edit, block)%>
-  <div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
-    <% if block.bg_color.present? %>
-      <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
-    <% end %>
-    <% if block.image.present? %>
-      <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
-    <% end %>
-    <div class="block-contents text-<%= block.text_align %> resizable-block" data-id="<%= block.id %>" style="display: table; width: 100%; min-height: <%= block.style['min-height']%>">
-      <% if can? :update, block %>
-        <%= render 'blocks/edit_block_btns', block: block %>
-      <% end %>
-      <div class="block-contents-middle">
-        <% if block.display_page_name.present? %>
-          <h1 class="block-title">
-            <%= block.name.try(:html_safe) %>
-          </h1>
-        <% end %>
-        <div class="row">
-          <div class="col-sm-12">
-              <div class="text-<%= block.text_align %>">
-                <%= block.about.html_safe if block.about.present? %>
-              </div>
-              <% if @page.categories.present? %>
-                <%= render 'categories/page_footer', categories: @page.categories %>
-              <% end %>
-          </div>
-        </div>
-        <%= render 'blocks/sub_block/sub_blocks', block: block %>
-
-      </div>
-    </div>
+<div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
+  <% if block.bg_color.present? %>
+    <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
+  <% end %>
+  <% if block.image.present? %>
+    <div id="<%= dom_id(block) %>_bg_image" class="block_bg_image" style="background-image: url('<%= block.image.large if block.image.present? %>');"></div>
+  <% end %>
+  <div class="block-contents text-<%= block.text_align %> resizable-block" data-id="<%= block.id %>" style="display: table; width: 100%; min-height: <%= block.style['min-height']%>">
     <% if can? :update, block %>
-      <script type="text/javascript">
-      interact('#<%= dom_id(block) %>')
-        .resizable({
-          preserveAspectRatio: false,
-          autoScroll: true,
-          edges: { left: false, right: false, bottom: '.resize_s', top: false }
-        })
-        .on('resizemove', function (event) {
-
-          var target = event.target.querySelector('.resizable-block'),
-              y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-          // update the element's style
-          target.style.minHeight = event.rect.height - 82 + 'px';
-          target.setAttribute('data-y', y);
-          // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
-        }).on('resizeend', function (event) {
-            $.ajax({
-              method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
-              data: {'block': { 'style': {'min-height': event.target.offsetHeight - 62 +'px'}}}
-            }).done(function( msg ) {});
-          });
-      </script>
+      <%= render 'blocks/edit_block_btns', block: block %>
     <% end %>
-    <script type="text/javascript">
-        var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
-        if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
-          $('#<%= dom_id(block) %> h1, #<%= dom_id(block) %> h2, #<%= dom_id(block) %> h3, #<%= dom_id(block) %> h4, #<%= dom_id(block) %>').css({
-            'color': getContrastYIQ(rgb2hex(bg_color))
-          })
-          $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
-            'color': getContrastYIQ(rgb2hex(bg_color))
-          })
-        }
-    </script>
+    <div class="block-contents-middle">
+      <% if block.display_page_name.present? %>
+        <h1 class="block-title">
+          <%= block.name.try(:html_safe) %>
+        </h1>
+      <% end %>
+      <div class="row">
+        <div class="col-sm-12">
+            <div class="text-<%= block.text_align %>">
+              <%= block.about.html_safe if block.about.present? %>
+            </div>
+            <% if @page.categories.present? %>
+              <%= render 'categories/page_footer', categories: @page.categories %>
+            <% end %>
+        </div>
+      </div>
+      <%= render 'blocks/sub_block/sub_blocks', block: block %>
+
+    </div>
   </div>
-<% end %>
+  <% if can? :update, block %>
+    <script type="text/javascript">
+    interact('#<%= dom_id(block) %>')
+      .resizable({
+        preserveAspectRatio: false,
+        autoScroll: true,
+        edges: { left: false, right: false, bottom: '.resize_s', top: false }
+      })
+      .on('resizemove', function (event) {
+
+        var target = event.target.querySelector('.resizable-block'),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+        // update the element's style
+        target.style.minHeight = event.rect.height - 82 + 'px';
+        target.setAttribute('data-y', y);
+        // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
+      }).on('resizeend', function (event) {
+          $.ajax({
+            method: 'PUT', url: '/blocks/' + event.target.dataset.id + '.json',
+            data: {'block': { 'style': {'min-height': event.target.offsetHeight - 62 +'px'}}}
+          }).done(function( msg ) {});
+        });
+    </script>
+  <% end %>
+  <script type="text/javascript">
+      var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
+      if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
+        $('#<%= dom_id(block) %> h1, #<%= dom_id(block) %> h2, #<%= dom_id(block) %> h3, #<%= dom_id(block) %> h4, #<%= dom_id(block) %>').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+        $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
+          'color': getContrastYIQ(rgb2hex(bg_color))
+        })
+      }
+  </script>
+</div>
