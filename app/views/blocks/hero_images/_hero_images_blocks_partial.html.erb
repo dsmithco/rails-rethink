@@ -82,8 +82,12 @@
       var containerHeight;
       targets.forEach(function(target) {
         var y = (parseFloat(target.getAttribute('data-y')) || 0);
+        x = (parseFloat(target.getAttribute('data-x')) || 0);
+
         target.style.height = event.rect.height + 'px';
         target.setAttribute('data-y', y);
+        target.setAttribute('data-x', x);
+
         containerHeight = target.style.height;
       });
     })

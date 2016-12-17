@@ -40,11 +40,13 @@
       .on('resizemove', function (event) {
 
         var target = event.target.querySelector('.resizable-block'),
-            y = (parseFloat(target.getAttribute('data-y')) || 0);
+        y = (parseFloat(target.getAttribute('data-y')) || 0);
+        x = (parseFloat(target.getAttribute('data-x')) || 0);
 
         // update the element's style
         target.style.minHeight = event.rect.height - 82 + 'px';
         target.setAttribute('data-y', y);
+        target.setAttribute('data-x', x);
         // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
       }).on('resizeend', function (event) {
           $.ajax({
@@ -63,6 +65,6 @@
         $('#<%= dom_id(block) %> .block_no_bg_color, #<%= dom_id(block) %> .block_no_bg_color .block-title').css({
           'color': getContrastYIQ(rgb2hex(bg_color))
         })
-      } 
+      }
   </script>
 </div>
