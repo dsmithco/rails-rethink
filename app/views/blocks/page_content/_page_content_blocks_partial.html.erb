@@ -1,4 +1,4 @@
-<%= if !block.is_empty || (can? :edit, block)%>
+<%= if block.is_empty.blank? || (can? :edit, block)%>
   <div class="blocks block-main <%= block.block_type %>-type text-<%= block.text_align %>">
     <% if block.bg_color.present? %>
       <div id="<%= dom_id(block) %>_bg_color" class="block_bg_color" style=" background-color: <%= block.bg_color %>;"></div>
