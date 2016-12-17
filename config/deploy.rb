@@ -9,7 +9,7 @@ require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 # require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
 set :delayed_job, lambda { "bin/delayed_job --pool=*:2" }
-set :delayed_job_pid_dir, lambda { "#{:deploy_to}/#{:shared_dirs}/pids" }
+set :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/pids" }
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -29,8 +29,8 @@ set :environment, 'production'
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
-# They will be linked in the 'deploy:link_shared_dirss' step.
-set :shared_dirs, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp/pids', 'tmp/sockets']
+# They will be linked in the 'deploy:link_shared_paths' step.
+set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp/pids', 'tmp/sockets']
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
@@ -52,24 +52,24 @@ end
 # For Rails apps, we'll make some of the shared paths that are shared between
 # all releases.
 task :setup => :environment do
-  command! %[mkdir -p "#{:deploy_to}/#{:shared_dirs}/log"]
-  command! %[chmod g+rx,u+rwx "#{:deploy_to}/#{:shared_dirs}/log"]
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/log"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log"]
 
-  command! %[mkdir -p "#{:deploy_to}/#{:shared_dirs}/config"]
-  command! %[chmod g+rx,u+rwx "#{:deploy_to}/#{:shared_dirs}/config"]
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/config"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/config"]
 
-  command! %[mkdir -p "#{:deploy_to}/#{:shared_dirs}/tmp"]
-  command! %[chmod g+rx,u+rwx "#{:deploy_to}/#{:shared_dirs}/tmp"]
+  queue! %[mkdir -p "#{deploy_to}/#{shared_path}/tmp"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp"]
 
-  command! %[touch "#{:deploy_to}/#{:shared_dirs}/config/database.yml"]
-  command! %[touch "#{:deploy_to}/#{:shared_dirs}/config/secrets.yml"]
-  command  %[echo "-----> Be sure to edit '#{:deploy_to}/#{:shared_dirs}/config/database.yml' and 'secrets.yml'."]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/database.yml"]
+  queue! %[touch "#{deploy_to}/#{shared_path}/config/secrets.yml"]
+  queue  %[echo "-----> Be sure to edit '#{deploy_to}/#{shared_path}/config/database.yml' and 'secrets.yml'."]
 
   if repository
     repo_host = repository.split(%r{@|://}).last.split(%r{:|\/}).first
     repo_port = /:([0-9]+)/.match(repository) && /:([0-9]+)/.match(repository)[1] || '22'
 
-    command %[
+    queue %[
       if ! ssh-keygen -H  -F #{repo_host} &>/dev/null; then
         ssh-keyscan -t rsa -p #{repo_port} -H #{repo_host} >> ~/.ssh/known_hosts
       fi
@@ -79,7 +79,7 @@ end
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
-  on :before_hook do
+  to :before_hook do
     # Put things to run locally before ssh
   end
   deploy do
@@ -92,12 +92,12 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
-    on :launch do
-      # command "rm -f #{:deploy_to}/#{:current_path}/tmp/pids/rethinkwebdesign-puma.pid"
-      # command "rm -f #{:deploy_to}/#{:current_path}/tmp/sockets/rethinkwebdesign-puma.sock"
-      # command "cd #{:deploy_to}/#{:current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb stop"
-      command "ps -ef | grep puma | grep -v grep | awk '{print $2}' | xargs kill -9"
-      command "cd #{fetch(:current_path)} && RAILS_ENV=production /home/deploy/.rbenv/shims/bundle exec pumactl -F config/puma.rb start"
+    to :launch do
+      # queue "rm -f #{deploy_to}/#{current_path}/tmp/pids/rethinkwebdesign-puma.pid"
+      # queue "rm -f #{deploy_to}/#{current_path}/tmp/sockets/rethinkwebdesign-puma.sock"
+      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb stop"
+      queue "ps -ef | grep puma | grep -v grep | awk '{print $2}' | xargs kill -9"
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec pumactl -F config/puma.rb start"
       invoke :'delayed_job:stop'
       invoke :'delayed_job:start'
     end
