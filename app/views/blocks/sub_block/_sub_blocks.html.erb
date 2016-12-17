@@ -6,8 +6,8 @@
       </div>
       <script type="text/javascript">
         setTimeout(function () {
-          $('.block-group-<%= block.id %>-<%= index / block.columns %>').matchHeight();
-        }, 2000);
+          $('.block-group-<%= block.id %>-<%= index / block.columns %> .block').matchHeight();
+        }, 300);
       </script>
     </div>
   <% end %>
