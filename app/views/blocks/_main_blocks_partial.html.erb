@@ -38,7 +38,6 @@
   </div>
 
   <script type="text/javascript">
-    document.addEventListener("turbolinks:load", function() {
       var bg_color = $("#<%= dom_id(block) %>_bg_color").css('background-color');
       if(bg_color && bg_color.length && bg_color != "rgba(0, 0, 0, 0)" && bg_color != 'transparent'){
         $('#<%= dom_id(block) %> h1, #<%= dom_id(block) %> h2, #<%= dom_id(block) %> h3, #<%= dom_id(block) %> .block-color').attr({
@@ -48,6 +47,5 @@
           'style': 'color:' + getContrastYIQ(rgb2hex(bg_color)) + ' !important;'
         })
       }
-    });
   </script>
 </div>
