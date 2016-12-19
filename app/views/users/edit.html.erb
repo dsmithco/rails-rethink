@@ -1,6 +1,13 @@
-<h1>Editing User</h1>
-
-<%= render 'form', user: @user %>
-
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<br/>
+<div class="row">
+  <div class="col-sm-6 col-sm-push-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <strong>Editing User</strong>
+      </div>
+      <div class="panel-body">
+        <%= render 'form', user: @user %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
-<h2 class="page-title">
+<br/>
+<h1 class="page-title">
   <%= @user.name %>
   <small><%= @user.email %></small>
   <%= link_to "<i class='glyphicon glyphicon-pencil'></i> Edit".html_safe, edit_user_path(@user), class: 'btn pull-right btn-primary' %>
-
-</h2>
-
+</h1>
+<br/>
 <dl class="hide dl-horizontal well">
   <dt>Email</dt>
   <dd><%= @user.email %></dd>
@@ -17,60 +17,19 @@
     <% end %>
   <% end %>
 </dl>
-<ul class="nav nav-tabs">
+<!-- <ul class="nav nav-tabs">
   <li class="active">
-    <a href="#">Websites</a>
+    <%= link_to 'Websites', user_path(@user,{tab: ''}) %>
   </li>
   <li class="">
-    <a href="#">Profile</a>
+    <%= link_to 'Profile', user_path(@user,{tab: 'Profile'}) %>
   </li>
   <li class="">
-    <a href="#">Account</a>
+    <%= link_to 'Account', user_path(@user,{tab: 'Account'}) %>
   </li>
 </ul>
-<br/>
-<% @user.accounts.each do |account| %>
-  <div class="panel panel-default">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>
-              Website name
-            </th>
-            <th>
-              Domain URL
-            </th>
-            <th>
-              Pg count
-            </th>
-            <th>
+<br/> -->
 
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <% account.websites.each do |website| %>
-            <tr>
-              <td>
-                <%= website.name %>
-              </td>
-              <td>
-                <%= "#{website.rethink_url}, #{website.domain_url}" %>
-              </td>
-              <td>
-                <%= website.pages.count %>
-              </td>
-              <td class="text-right">
-                <%= link_to 'Go to', "#{website.rethink_href}", class: 'btn btn-primary btn-sm btn-block', target: '_blank' %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
-  <%= link_to 'New Website', new_website_path %>
-
-<% end %>
+<%= render 'users/user_websites', '@user': @user if params[:tab].blank? || params[:tab] == 'website' %>
+<%# render 'users/user_websites', '@user': @user if params[:tab] == 'profile' %>
+<%# render 'users/user_websites', '@user': @user if params[:tab] == 'account' %>

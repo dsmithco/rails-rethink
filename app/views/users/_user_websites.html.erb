@@ -1,0 +1,57 @@
+<% @user.accounts.each do |account| %>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= link_to 'New Website', new_website_path, class: 'pull-right btn-sm btn btn-success' %>
+
+      <strong>
+        Account ID: <%= link_to account.id, account %>
+      </strong>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              Website name
+            </th>
+            <th>
+              Account ID
+            </th>
+            <th>
+              Domain URL
+            </th>
+            <th>
+              Pg count
+            </th>
+            <th>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% account.websites.each do |website| %>
+            <tr>
+              <td>
+                <%= website.name %>
+              </td>
+              <td>
+                <%= website.account_id %>
+              </td>
+              <td>
+                <%= "#{website.rethink_url}, #{website.domain_url}" %>
+              </td>
+              <td>
+                <%= website.pages.count %>
+              </td>
+              <td class="text-right">
+                <%= link_to 'Edit', edit_website_path(website), class: 'btn btn-xs btn-info', target: '_blank' %>
+                <%= link_to 'Open', "#{website.rethink_href}", class: 'btn btn-xs btn-info', target: '_blank' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>

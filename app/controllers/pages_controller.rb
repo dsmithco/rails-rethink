@@ -33,6 +33,7 @@ class PagesController < ApplicationController
     @page.website_id = @current_website.id if @current_website.present?
     @page.page_id = params[:page_id] if params[:page_id].present?
     @page.position = params[:position] if params[:position].present?
+    @page.position ||= @page.top_menu.last.position + 1 if @page.top_menu.present?
     @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
     @page.is_published = true
     render layout: "themes/basic/layout"

@@ -90,12 +90,21 @@
             }).change();
           </script>
         </dd>
-        <dt class="show_in_menu_true">
-          <%= f.label :position %>
-        </dt>
-        <dd class="show_in_menu_true form-group" id="position">
-          <%= f.select :position, (1..20).to_a, {},class: 'form-control' %>
-        </dd>
+        <% if page.top_menu.present? %>
+          <dt class="show_in_menu_true">
+            <%= f.label :position %>
+          </dt>
+          <dd class="show_in_menu_true form-group" id="position">
+            <%# f.select :position, (1..page.top_menu.last.position+1).to_a, {},class: 'form-control' %>
+            <select class="form-control" name="page[position]" id="page_position">
+              <% page.top_menu.each do |menu_page| %>
+                <option selected="<%= page.position == menu_page.position %>" value="<%= menu_page.position %>">Before <%= menu_page.name %></option>
+              <% end %>
+              <option selected="<%= page.position == (page.top_menu.last.position + 1) %>" value="<%= page.top_menu.last.position + 1 %>">After <%= page.top_menu.last.name %></option>
+
+            </select>
+          </dd>
+        <% end %>
         <dt>
         </dt>
         <dt>

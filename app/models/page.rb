@@ -41,6 +41,14 @@ class Page < ApplicationRecord
     return self.block_images.first if self.block_images.present?
   end
 
+  def top_menu
+    if self.page_id
+      self.page.pages.where(show_in_menu: true).order('position asc')
+    else
+      self.website.top_menu
+    end
+  end
+
   handle_asynchronously :submit_sitemaps
 
   private

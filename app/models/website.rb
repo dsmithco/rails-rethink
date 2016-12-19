@@ -21,6 +21,10 @@ class Website < ApplicationRecord
     self.pages.where(is_homepage: true).first
   end
 
+  def top_menu
+    self.pages.where(page_id: [nil,''], show_in_menu: true).order('position asc')
+  end
+
   def set_default_styles
     self.style['brand-primary'] = '#009bff' unless self.style['brand-primary'].present?
     self.style['brand-info'] = '#5bc0de' unless self.style['brand-info'].present?

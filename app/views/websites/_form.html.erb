@@ -1,4 +1,3 @@
-<div class="panel panel-default panel-body">
   <div class="row" id="website_form" >
     <div class="col-sm-12">
       <% if website.errors.any? %>
@@ -134,13 +133,13 @@
                     <label><input type="checkbox" name="website[style][nav-fixed]" <%=@website.style['nav-fixed'].present? ? 'checked' : '' %> value="true"> Fixed Nav</label>
                   </dd>
                   <dt>
-                    Heading Font
+                    <label>Heading Font</label>
                   </dt>
                   <dd class="form-group">
                     <%= select_tag "website[style][headings-font-family]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['headings-font-family']), :class => 'form-control' %>
                   </dd>
                   <dt>
-                    Body font
+                    <label>Body font</label>
                   </dt>
                   <dd class="form-group">
                     <%= select_tag "website[style][font-family-sans-serif]", options_for_select(Website::FONT_FAMILY_OPTIONS, @website.style['font-family-sans-serif']), :class => 'form-control' %>
@@ -161,4 +160,3 @@
     </div>
 
   </div>
-</div>
