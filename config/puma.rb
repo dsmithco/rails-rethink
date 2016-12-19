@@ -13,15 +13,16 @@ threads threads_count, threads_count
 
 port ENV.fetch("PORT") { 3000 } if ENV['RAILS_ENV'] != 'production'
 
-bind "unix://tmp/sockets/rethinkwebdesign-puma.sock"  if ENV['RAILS_ENV'] == 'production'
-
 pidfile 'tmp/pids/rethinkwebdesign-puma.pid'
 
 state_path 'tmp/pids/rethinkwebdesign-puma.state'
 
-daemonize true if ENV['RAILS_ENV'] == 'production'
 
-stdout_redirect 'log/puma.log', 'log/puma_error.log', true
+if ENV['RAILS_ENV'] == 'production'
+  bind "unix://tmp/sockets/rethinkwebdesign-puma.sock"
+  daemonize true
+  stdout_redirect 'log/puma.log', 'log/puma_error.log', true
+end
 
 # Specifies the `environment` that Puma will run in.
 #
