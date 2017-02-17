@@ -12,7 +12,7 @@ gem 'delayed_job_active_record'
 gem 'rest-client'
 # gem 'react-rails'
 
-gem "react_on_rails", "~> 6"
+# gem "react_on_rails", "~> 6"
 
 
 # Use SCSS for stylesheets
@@ -78,3 +78,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'mini_racer', platforms: :ruby
