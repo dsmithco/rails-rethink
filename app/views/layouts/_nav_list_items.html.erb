@@ -5,7 +5,7 @@
     </li>
   <% end %>
   <% @current_website.pages.where(page_id: [nil,''], show_in_menu: true).each do |page| %>
-    <li class='dropdown <%= "active" if page.id == @page.try(:id) || page.try(:page_ids).include?(@page.try(:id))%> page_link'>
+    <li class='<%= "dropdown" if page.pages.where(show_in_menu: true).present? %> <%= "active" if page.id == @page.try(:id) || page.try(:page_ids).include?(@page.try(:id))%> page_link'>
       <% if page.style['navbar-btn'].present? %>
         <span>
           <%= link_to "#{page.name} #{'<span class="caret"></span>' if page.pages.present?}".html_safe, page_path(page, 'redirect'), class: "dropdown-toggle #{page.style['navbar-btn-class'].present? ? page.style['navbar-btn-class'] : 'btn btn-success'} navbar-btn", 'data-toggle': '' %>
