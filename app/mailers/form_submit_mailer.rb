@@ -8,7 +8,8 @@ class FormSubmitMailer < ApplicationMailer
   #
   def send_results(form_response)
     @form_response = form_response
-
-    mail to: "#{form_response.form.email_recipients}", subject: "#{form_response.form.name} submission"
+    reply_email = form_response.answers.includes(:question).where(questions:{question_type: 'email'}).try(:first).try(:answer_text)
+    reply_email ||= 'info@rethinkwebdesign.com'
+    mail(to: "#{form_response.form.email_recipients}", subject: "#{form_response.form.name} submission", reply_to: reply_email)
   end
 end
