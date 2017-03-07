@@ -68,18 +68,29 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1
   # PATCH/PUT /pages/1.json
   def update
-    @page.slug = nil
-    @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
+    if params[:field_update].present?
+      @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
+      @page.position = params[:position].try(:to_i)
 
-    respond_to do |format|
-      if @page.update(page_params)
-        format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully updated.' }
-        format.json { render :show, status: :ok, location: @page }
-        format.js { render :update }
-      else
-        format.html { render :edit }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
-        format.js { render :update }
+      @page.attributes = page_params
+      @update_form = true
+      respond_to do |format|
+        format.js { render :update_form }
+      end
+    else
+      @page.slug = nil
+      @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
+
+      respond_to do |format|
+        if @page.update(page_params)
+          format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully updated.' }
+          format.json { render :show, status: :ok, location: @page }
+          format.js { render :update }
+        else
+          format.html { render :edit }
+          format.json { render json: @page.errors, status: :unprocessable_entity }
+          format.js { render :update }
+        end
       end
     end
   end

@@ -1,3 +1,10 @@
+<script type="text/javascript">
+  $('#page form').change(function(){
+    console.log('form updated');
+    $(this).append("<input name='field_update' type='hidden' value='1'/>");
+    $(this).submit();
+  });
+</script>
 <div id="page">
   <%= form_for(page, remote: true, :url => { :action => (page.id.present? ? :update : :create), :id => page.id }) do |f| %>
     <input type="hidden" value="<%= @current_website.id %>" name="page[website_id]">
@@ -25,28 +32,21 @@
             <label><%= f.check_box :is_published %> &nbsp; Publish</label>
           </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span>
-            <label><%= f.check_box :show_in_menu, class:'page_show_in_menu' %> &nbsp; Show in menu</label>
+            <label><%= f.check_box :show_in_menu %> &nbsp; Show in menu</label>
           </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <span>
-            <label><%= f.check_box :is_homepage, class:'page_show_in_menu', disabled: @page.is_homepage %> &nbsp; Set as homepage</label>
+            <label><%= f.check_box :is_homepage, disabled: @page.is_homepage && !@page.is_homepage_changed? %> &nbsp; Set as homepage</label>
           </span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span>
-            <input name="page[style][navbar-btn]" type="hidden" value="">
-            <label><input type="checkbox" id="page_style_navbar_btn" name="page[style][navbar-btn]" <%=@page.style['navbar-btn'].present? ? 'checked' : '' %> value="true"> Navbar Button</label>
-          </span>
-          <script type="text/javascript">
-            show_in_menu_change = function(){
-              if ($('.page_show_in_menu').prop('checked') === true){
-                $('.show_in_menu_true').show();
-              }else{
-                $('.show_in_menu_true').hide();
-              }
-            }
-            $('.page_show_in_menu').change(show_in_menu_change);
-          </script>
+          <% if page.show_in_menu.present? %>
+            <span>
+              <input name="page[style][navbar-btn]" type="hidden" value="">
+              <label><input type="checkbox" id="page_style_navbar_btn" name="page[style][navbar-btn]" <%=@page.style['navbar-btn'].present? ? 'checked' : '' %> value="true"> Navbar Button</label>
+            </span>
+          <% end %>
+
         </dd>
         <% if page.pages.present? %>
-          <dd class="show_in_menu_true form-group">
+          <dd class="form-group">
             <div class="row">
               <div class="col-sm-push-8 col-sm-4">
                 This page has <%= page.pages.count %> sub pages
@@ -54,56 +54,40 @@
             </div>
           </dd>
         <% end %>
-        <div id="navbar-btn-class" class="form-group">
-          <dt>Nav Btn Class</dt>
-          <dd>
-            <%= f.text_field 'style[navbar-btn-class]', value: page['style']['navbar-btn-class'], class: 'form-control' %>
-          </dd>
-          <script type="text/javascript">
-            show_navbar_btn_class = function(){
-              if ($('#page_style_navbar_btn').prop('checked') === true){
-                $('#navbar-btn-class').show();
-              }else{
-                $('#navbar-btn-class').hide();
-              }
-            }
-            $('#page_style_navbar_btn').change(show_navbar_btn_class).change();
-          </script>
-        </div>
-        <dt class="show_in_menu_true"><%= f.label :page_id, "Parent <span class='text-muted'>(optional)</span>".html_safe %></dt>
-        <dd class="show_in_menu_true" id="page">
-          <div class="row">
-            <div class="col-sm-8 form-group">
-              <%= f.select :page_id, @current_website.pages.where.not(id: @page.id, show_in_menu: [false, nil]).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
-            </div>
-            <div class="col-sm-4 form-group" id="show_sub_menu">
-              <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
-            </div>
+        <% if page.style['navbar-btn'].present? %>
+          <div id="navbar-btn-class" class="form-group">
+            <dt>Nav Btn Class</dt>
+            <dd>
+              <%= f.text_field 'style[navbar-btn-class]', value: page['style']['navbar-btn-class'], class: 'form-control' %>
+            </dd>
           </div>
-          <script type="text/javascript">
-            $('#page select').change(function(){
-              if($(this).val() || "<%= page.pages.present? %>"=="true"){
-                $('#show_sub_menu input').prop("disabled",false);
-              }else{
-                $('#show_sub_menu input').prop("disabled",true);
-              }
-            }).change();
-          </script>
-        </dd>
-        <% if page.top_menu.present? %>
-          <dt class="show_in_menu_true">
-            <%= f.label :position %>
-          </dt>
-          <dd class="show_in_menu_true form-group" id="position">
-            <%# f.select :position, (1..page.top_menu.last.position+1).to_a, {},class: 'form-control' %>
-            <select class="form-control" name="page[position]" id="page_position">
-              <% page.top_menu.each do |menu_page| %>
-                <option selected="<%= page.position == menu_page.position %>" value="<%= menu_page.position %>">Before <%= menu_page.name %></option>
-              <% end %>
-              <option selected="<%= page.position == (page.top_menu.last.position + 1) %>" value="<%= page.top_menu.last.position + 1 %>">After <%= page.top_menu.last.name %></option>
-
-            </select>
+        <% end %>
+        <% if page.show_in_menu.present? %>
+          <dt><%= f.label :page_id, "Parent <span class='text-muted'>(optional)</span>".html_safe %></dt>
+          <dd id="page">
+            <div class="row">
+              <div class="col-sm-8 form-group">
+                <%= f.select :page_id, @current_website.pages.where.not(id: @page.id, show_in_menu: [false, nil]).select{ |w| (can? :update, w) && !w.page_id }.collect {|x| [x.name, x.id]}, {:include_blank => "-- No Parent Page --"}, disabled: @page.pages.present?, :class => 'form-control' %>
+              </div>
+              <div class="col-sm-4 form-group" id="show_sub_menu">
+                <label class="btn btn-default btn-block"><%= f.check_box :show_sub_menu %> &nbsp; Show Sub Menu</label>
+              </div>
+            </div>
           </dd>
+          <% if !page.page.present? || (page.page.present? && page.page.pages.present?) %>
+            <dt>
+              <%= f.label :position %>
+            </dt>
+            <dd class="show_in_menu_true form-group" id="position">
+              <%# f.select :position, (1..page.top_menu.last.position+1).to_a, {},class: 'form-control' %>
+              <select class="form-control" name="page[position]" id="page_position">
+                <% page.top_menu.each do |menu_page| %>
+                  <option <%= 'selected' if page.position == menu_page.position %> value="<%= menu_page.position %>">Before <%= menu_page.name %></option>
+                <% end %>
+                <option <%= 'selected' if page.position == (page.top_menu.last.position + 1) %> value="<%= page.top_menu.last.position + 1 %>">After <%= page.top_menu.last.name %></option>
+              </select>
+            </dd>
+          <% end %>
         <% end %>
         <dt>
         </dt>
