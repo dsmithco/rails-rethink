@@ -22,9 +22,9 @@ class BlocksController < ApplicationController
     @block.front_page ||= params[:front_page]
     @block.columns ||= params[:columns]
     @block.position ||= params[:position]
-    @block.save(validate: false)
+    # @block.save(validate: false)
     @block.page_id ||= params[:page_id].to_i if params[:page_id].present?
-    @block.save(validate: false)
+    # @block.save(validate: false)
   end
 
   def sort
@@ -49,8 +49,6 @@ class BlocksController < ApplicationController
   # POST /blocks.json
   def create
     @block = Block.new(block_params)
-    @block.page_id ||= params[:page_id] if params[:page_id].present?
-
     respond_to do |format|
       if @block.save
         format.html { redirect_to @block, notice: 'Block was successfully created.' }

@@ -10,7 +10,7 @@ gem 'puma', '~> 3.0'
 gem 'mina-puma', '~> 0.3.1', :require => false
 gem 'delayed_job_active_record'
 gem 'rest-client'
-gem 'react-rails'
+gem 'rails-assets-morphdom', source: 'https://rails-assets.org'
 
 # gem "react_on_rails", "~> 6"
 
@@ -80,3 +80,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'mini_racer', platforms: :ruby
+
+gem 'mini_racer', platforms: :ruby
+gem 'webpacker_lite'

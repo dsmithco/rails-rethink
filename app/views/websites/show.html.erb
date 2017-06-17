@@ -3,7 +3,6 @@
     <h1 class="text-center"><%= params[:keyword].titleize %></h1>
   </section>
 <% end %>
-<%= react_component('Label', label: 'This is a label') %>
 
 <% cache [@website, current_user] do %>
   <% if @website.about.present? %>

@@ -19,12 +19,14 @@
 //= require toastr
 //= require jquery.matchHeight-min
 //= require ie10-viewport-bug-workaround
-//= require react
-//= require react_ujs
-//= require components
+//= require morphdom
 //= require background-check.min
 
 // 'use strict';
+
+Turbolinks.SnapshotRenderer.prototype.assignNewBody = function() {
+  return morphdom(document.body, this.newBody, {});
+};
 
 var turbolinks_go = function(url, no_scroll){
   var scroll;
