@@ -12,9 +12,6 @@ gem 'delayed_job_active_record'
 gem 'rest-client'
 gem 'rails-assets-morphdom', source: 'https://rails-assets.org'
 
-# gem "react_on_rails", "~> 6"
-
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
