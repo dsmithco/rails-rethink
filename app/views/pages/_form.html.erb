@@ -1,9 +1,23 @@
 <script type="text/javascript">
+  var updateTimeout;
+
+  function updateTimeoutStart(form) {
+      updateTimeout = setTimeout(function () {
+        $(form).append("<input class='field_update' name='field_update' type='hidden' value='1'/>");
+        $(form).submit();
+        $('.field_update').remove();
+      }, 200);
+  }
+
+  function updateTimeoutClear() {
+      clearTimeout(updateTimeout);
+  }
+
   $('#page form').change(function(){
-    console.log('form updated');
-    $(this).append("<input name='field_update' type='hidden' value='1'/>");
-    $(this).submit();
+    // updateTimeoutClear();
+    updateTimeoutStart(this);
   });
+
 </script>
 <div id="page">
   <%= form_for(page, remote: true, :url => { :action => (page.id.present? ? :update : :create), :id => page.id }) do |f| %>
@@ -150,7 +164,7 @@
       </dl>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-success">
+      <button type="submit" class="btn btn-success" name="submit" value="1">
         Save
       </button>
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

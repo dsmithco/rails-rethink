@@ -52,17 +52,29 @@ class PagesController < ApplicationController
     @page = Page.new(page_params)
     @page.website_id = @current_website.id if @current_website.id.present?
 
-    respond_to do |format|
-      if @page.save
-        format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully created.' }
-        format.json { render :show, status: :created, location: @page }
-        format.js { }
-      else
-        format.html { render :new }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
-        format.js { }
+    if params[:field_update].present?
+      @page.category_ids = params[:category_ids].present? ? params[:category_ids] : nil
+      @page.position = params[:position].try(:to_i)
+
+      @page.attributes = page_params
+      @update_form = false
+      respond_to do |format|
+        format.js { render :update_form }
+      end
+    else
+      respond_to do |format|
+        if @page.save
+          format.html { redirect_to session.delete(:return_to) || @page, notice: 'Page was successfully created.' }
+          format.json { render :show, status: :created, location: @page }
+          format.js { }
+        else
+          format.html { render :new }
+          format.json { render json: @page.errors, status: :unprocessable_entity }
+          format.js { }
+        end
       end
     end
+
   end
 
   # PATCH/PUT /pages/1
