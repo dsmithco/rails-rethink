@@ -24,9 +24,9 @@
 
 // 'use strict';
 
-// Turbolinks.SnapshotRenderer.prototype.assignNewBody = function() {
-//   return morphdom(document.body, this.newBody, {});
-// };
+Turbolinks.SnapshotRenderer.prototype.assignNewBody = function() {
+  return morphdom(document.body, this.newBody, {});
+};
 
 var turbolinks_go = function(url, no_scroll){
   var scroll;
